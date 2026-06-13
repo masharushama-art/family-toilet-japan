@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 
 const MapView = dynamic(() => import("./MapView"), {
   ssr: false,
@@ -14,6 +15,15 @@ const MapView = dynamic(() => import("./MapView"), {
   ),
 });
 
+const CITY_CENTERS: Record<string, [number, number]> = {
+  tokyo: [35.681, 139.767],
+  osaka: [34.693, 135.502],
+  kyoto: [35.011, 135.768],
+};
+
 export default function MapPageClient() {
-  return <MapView />;
+  const searchParams = useSearchParams();
+  const city = searchParams.get("city") ?? "tokyo";
+  const initialCenter = CITY_CENTERS[city] ?? CITY_CENTERS.tokyo;
+  return <MapView initialCenter={initialCenter} />;
 }

@@ -52,7 +52,7 @@ function FlyToLocation({ position }: { position: [number, number] | null }) {
 
 const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
 
-export default function MapView() {
+export default function MapView({ initialCenter }: { initialCenter?: [number, number] }) {
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [selected, setSelected] = useState<Toilet | null>(null);
@@ -127,7 +127,7 @@ export default function MapView() {
 
       {/* 地図 */}
       <MapContainer
-        center={DEFAULT_CENTER}
+        center={initialCenter ?? DEFAULT_CENTER}
         zoom={13}
         className="w-full h-full"
         zoomControl={false}
