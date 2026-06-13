@@ -1,0 +1,195 @@
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import type { Toilet, FilterState } from "../types/toilet";
+import ToiletDetail from "./ToiletDetail";
+import FilterPanel from "./FilterPanel";
+import LanguageSwitcher from "./LanguageSwitcher";
+
+// Leafletデフォルトアイコン修正
+delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
+
+// おむつ替え台ありアイコン（青）
+const changingTableIcon = L.divIcon({
+  html: `<div style="background:#0ea5e9;width:14px;height:14px;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.4)"></div>`,
+  className: "",
+  iconSize: [14, 14],
+  iconAnchor: [7, 7],
+});
+
+// 通常トイレアイコン（グレー）
+const normalIcon = L.divIcon({
+  html: `<div style="background:#6b7280;width:10px;height:10px;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></div>`,
+  className: "",
+  iconSize: [10, 10],
+  iconAnchor: [5, 5],
+});
+
+// 現在地アイコン
+const locationIcon = L.divIcon({
+  html: `<div style="background:#ef4444;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.5)"></div>`,
+  className: "",
+  iconSize: [16, 16],
+  iconAnchor: [8, 8],
+});
+
+function FlyToLocation({ position }: { position: [number, number] | null }) {
+  const map = useMap();
+  useEffect(() => {
+    if (position) map.flyTo(position, 15, { duration: 1.5 });
+  }, [position, map]);
+  return null;
+}
+
+const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
+
+export default function MapView() {
+  const [toilets, setToilets] = useState<Toilet[]>([]);
+  const [userPos, setUserPos] = useState<[number, number] | null>(null);
+  const [selected, setSelected] = useState<Toilet | null>(null);
+  const [showFilter, setShowFilter] = useState(false);
+  const [gpsError, setGpsError] = useState("");
+  const [filters, setFilters] = useState<FilterState>({
+    familyFriendlyOnly: true,
+    changingTableOnly: false,
+    wheelchairOnly: false,
+    open24hOnly: false,
+  });
+
+  // トイレデータ読み込み
+  useEffect(() => {
+    fetch("/data/toilets.json")
+      .then((r) => r.json())
+      .then((data: Toilet[]) => setToilets(data))
+      .catch(console.error);
+  }, []);
+
+  const getLocation = useCallback(() => {
+    if (!navigator.geolocation) {
+      setGpsError("Geolocation is not supported by your browser.");
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserPos([pos.coords.latitude, pos.coords.longitude]);
+        setGpsError("");
+      },
+      () => setGpsError("Could not get your location. Please enable GPS.")
+    );
+  }, []);
+
+  // フィルタリング
+  const filtered = toilets.filter((t) => {
+    if (filters.changingTableOnly && !t.changingTable) return false;
+    if (filters.wheelchairOnly && !t.wheelchair) return false;
+    if (filters.open24hOnly && t.openingHours !== "24/7") return false;
+    return true;
+  });
+
+  return (
+    <div className="relative w-full h-screen">
+      {/* ヘッダー */}
+      <div className="absolute top-0 left-0 right-0 z-[1000] bg-white shadow-sm px-4 py-2 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-xl">🚽</span>
+          <span className="font-bold text-sky-700 text-sm">Family Toilet Japan</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <button
+            onClick={() => setShowFilter(!showFilter)}
+            className="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm font-medium"
+          >
+            Filters {filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly ? "●" : ""}
+          </button>
+        </div>
+      </div>
+
+      {/* 地図 */}
+      <MapContainer
+        center={DEFAULT_CENTER}
+        zoom={13}
+        className="w-full h-full"
+        zoomControl={false}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <FlyToLocation position={userPos} />
+
+        {/* 現在地 */}
+        {userPos && (
+          <Marker position={userPos} icon={locationIcon}>
+            <Popup>Your location</Popup>
+          </Marker>
+        )}
+
+        {/* トイレピン */}
+        {filtered.map((t) => (
+          <Marker
+            key={t.id}
+            position={[t.lat, t.lon]}
+            icon={t.changingTable ? changingTableIcon : normalIcon}
+            eventHandlers={{ click: () => setSelected(t) }}
+          />
+        ))}
+      </MapContainer>
+
+      {/* GPS ボタン */}
+      <button
+        onClick={getLocation}
+        className="absolute bottom-32 right-4 z-[1000] bg-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-xl"
+        title="Find my location"
+      >
+        📍
+      </button>
+
+      {/* 凡例 */}
+      <div className="absolute bottom-4 left-4 z-[1000] bg-white rounded-lg shadow px-3 py-2 text-xs">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="inline-block w-3 h-3 rounded-full bg-sky-400 border-2 border-white shadow"></span>
+          <span>With changing table</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="inline-block w-2.5 h-2.5 rounded-full bg-gray-500 border-2 border-white shadow"></span>
+          <span>Regular toilet</span>
+        </div>
+      </div>
+
+      {/* 件数表示 */}
+      <div className="absolute bottom-4 right-4 z-[1000] bg-white rounded-lg shadow px-3 py-2 text-xs text-gray-600">
+        {filtered.length.toLocaleString()} toilets
+      </div>
+
+      {/* GPSエラー */}
+      {gpsError && (
+        <div className="absolute top-16 left-4 right-4 z-[1000] bg-red-100 text-red-700 rounded-lg px-3 py-2 text-sm">
+          {gpsError}
+        </div>
+      )}
+
+      {/* フィルターパネル */}
+      {showFilter && (
+        <FilterPanel
+          filters={filters}
+          onChange={setFilters}
+          onClose={() => setShowFilter(false)}
+        />
+      )}
+
+      {/* 施設詳細 */}
+      {selected && (
+        <ToiletDetail toilet={selected} onClose={() => setSelected(null)} />
+      )}
+    </div>
+  );
+}
