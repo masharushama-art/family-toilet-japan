@@ -20,12 +20,16 @@ export default function FilterPanel({ filters, onChange, onClose }: Props) {
       </div>
 
       {[
+        { key: "familyFriendlyOnly" as const, label: "👨‍👩‍👧 Family friendly only", desc: "Excludes bars, pachinko, etc." },
         { key: "changingTableOnly" as const, label: "🍼 Baby changing table" },
         { key: "wheelchairOnly" as const, label: "♿ Wheelchair accessible" },
         { key: "open24hOnly" as const, label: "🕐 Open 24 hours" },
-      ].map(({ key, label }) => (
+      ].map(({ key, label, desc }) => (
         <label key={key} className="flex items-center justify-between py-2 border-b border-gray-100 cursor-pointer">
-          <span className="text-sm text-gray-700">{label}</span>
+          <div>
+            <span className="text-sm text-gray-700">{label}</span>
+            {desc && <p className="text-xs text-gray-400">{desc}</p>}
+          </div>
           <div
             onClick={() => toggle(key)}
             className={`w-10 h-6 rounded-full transition-colors ${

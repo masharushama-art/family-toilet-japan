@@ -86,8 +86,13 @@ export default function MapView() {
     );
   }, []);
 
-  // フィルタリング
+  // フィルタリング（データはすでにサーバーサイドでフィルタリング済み）
+  const BLACKLIST_NAMES = ["パチンコ", "スロット", "カラオケ", "バー", "スナック", "ナイトクラブ", "キャバクラ", "nightclub", "pachinko"];
   const filtered = toilets.filter((t) => {
+    if (filters.familyFriendlyOnly) {
+      const text = ((t.name || "") + (t.operator || "")).toLowerCase();
+      if (BLACKLIST_NAMES.some((kw) => text.includes(kw.toLowerCase()))) return false;
+    }
     if (filters.changingTableOnly && !t.changingTable) return false;
     if (filters.wheelchairOnly && !t.wheelchair) return false;
     if (filters.open24hOnly && t.openingHours !== "24/7") return false;
@@ -103,12 +108,17 @@ export default function MapView() {
           <span className="font-bold text-sky-700 text-sm">Family Toilet Japan</span>
         </div>
         <div className="flex items-center gap-2">
+          {filters.familyFriendlyOnly && (
+            <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full font-medium">
+              👨‍👩‍👧 Family
+            </span>
+          )}
           <LanguageSwitcher />
           <button
             onClick={() => setShowFilter(!showFilter)}
             className="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm font-medium"
           >
-            Filters {filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly ? "●" : ""}
+            Filters {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly) ? "●" : ""}
           </button>
         </div>
       </div>
