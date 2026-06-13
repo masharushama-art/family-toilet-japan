@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "./i18n/provider";
+import AdSense from "./components/AdSense";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,6 +50,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Family Toilet Japan" />
       </head>
       <body className="min-h-full flex flex-col">
+        <AdSense />
         <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
