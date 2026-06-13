@@ -1,24 +1,140 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
+  description: "Free map of 6,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, and Kyoto.",
+  keywords: [
+    "family friendly toilet japan",
+    "baby changing room tokyo",
+    "baby changing table japan",
+    "public toilet japan map",
+    "toilet with baby chair japan",
+    "clean public toilet japan",
+  ],
+};
+
+const cities = [
+  { slug: "tokyo", name: "Tokyo", count: "4,400+", icon: "🗼" },
+  { slug: "osaka", name: "Osaka", count: "1,200+", icon: "🏯" },
+  { slug: "kyoto", name: "Kyoto", count: "700+", icon: "⛩️" },
+];
+
+const guides = [
+  {
+    href: "/guide/how-to-use-japanese-toilet",
+    title: "How to Use a Japanese Toilet",
+    desc: "Washlet buttons, bidet guide, and tips for first-timers",
+    icon: "🚽",
+  },
+  {
+    href: "/guide/japan-travel-with-baby",
+    title: "Japan Travel with Baby & Toddler",
+    desc: "Changing rooms, strollers, eating out, and packing tips",
+    icon: "👶",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center min-h-screen bg-sky-50">
-      <main className="flex flex-col items-center gap-8 px-6 text-center">
-        <div className="text-6xl">🚽</div>
-        <h1 className="text-3xl font-bold text-sky-700">Family Toilet Japan</h1>
-        <p className="text-lg text-gray-600 max-w-sm">
-          Find family-friendly toilets with baby changing tables in Japan
+    <div className="min-h-screen bg-white">
+      {/* Hero */}
+      <div className="bg-sky-600 text-white px-6 py-14 text-center">
+        <div className="text-5xl mb-3">🚽</div>
+        <h1 className="text-3xl font-bold mb-3">Family Toilet Japan</h1>
+        <p className="text-sky-100 max-w-md mx-auto mb-6">
+          Find family-friendly toilets with baby changing tables in Japan.
+          6,000+ locations in Tokyo, Osaka &amp; Kyoto — free &amp; no sign-up.
         </p>
         <Link
           href="/map"
-          className="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-8 py-4 rounded-full text-lg transition-colors"
+          className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 transition-colors"
         >
-          Find Near Me 📍
+          📍 Find Toilets Near Me
         </Link>
-        <p className="text-sm text-gray-400">
-          Free · No registration required · Works offline
-        </p>
-      </main>
+        <p className="text-sky-200 text-xs mt-3">Works offline · PWA · No registration</p>
+      </div>
+
+      {/* Features */}
+      <div className="max-w-2xl mx-auto px-6 py-10">
+        <div className="grid grid-cols-3 gap-4 mb-12 text-center">
+          {[
+            { icon: "🍼", label: "Baby changing tables" },
+            { icon: "♿", label: "Wheelchair access" },
+            { icon: "🕐", label: "24-hour toilets" },
+          ].map(({ icon, label }) => (
+            <div key={label} className="bg-sky-50 rounded-2xl py-4 px-2">
+              <div className="text-3xl mb-1">{icon}</div>
+              <p className="text-xs text-gray-600 font-medium">{label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Cities */}
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Browse by City</h2>
+        <div className="grid grid-cols-3 gap-3 mb-12">
+          {cities.map(({ slug, name, count, icon }) => (
+            <Link
+              key={slug}
+              href={`/${slug}`}
+              className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-2xl py-5 text-center transition-colors"
+            >
+              <div className="text-3xl mb-1">{icon}</div>
+              <p className="font-bold text-gray-800 text-sm">{name}</p>
+              <p className="text-xs text-gray-500">{count} toilets</p>
+            </Link>
+          ))}
+        </div>
+
+        {/* Guides */}
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Travel Guides</h2>
+        <div className="space-y-3 mb-12">
+          {guides.map(({ href, title, desc, icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className="flex items-center gap-4 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-2xl px-5 py-4 transition-colors"
+            >
+              <span className="text-3xl">{icon}</span>
+              <div>
+                <p className="font-semibold text-gray-800 text-sm">{title}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+              <span className="text-gray-400 ml-auto">›</span>
+            </Link>
+          ))}
+        </div>
+
+        {/* About */}
+        <div className="bg-gray-50 rounded-2xl p-6 text-sm text-gray-600">
+          <h2 className="font-bold text-gray-800 mb-2">About Family Toilet Japan</h2>
+          <p className="mb-2">
+            Family Toilet Japan helps foreign families traveling in Japan quickly find
+            safe, clean toilets with baby-friendly facilities. All data comes from
+            OpenStreetMap and is updated regularly.
+          </p>
+          <p className="text-xs text-gray-400">
+            Data: © OpenStreetMap contributors (ODbL) · Free to use · No tracking
+          </p>
+        </div>
+      </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Family Toilet Japan",
+            url: "https://family-toilet-japan.vercel.app",
+            description: "Find family-friendly toilets with baby changing tables in Japan",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://family-toilet-japan.vercel.app/map",
+            },
+          }),
+        }}
+      />
     </div>
   );
 }
