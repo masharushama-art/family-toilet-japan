@@ -198,7 +198,7 @@ export default function MapView() {
 
       {/* 施設詳細 */}
       {selected && (
-        <ToiletDetail toilet={selected} onClose={() => setSelected(null)} />
+        <ToiletDetail toilet={selected} userPos={userPos} onClose={() => setSelected(null)} />
       )}
     </div>
   );
