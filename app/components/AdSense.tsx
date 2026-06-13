@@ -3,7 +3,7 @@
 import Script from "next/script";
 
 // AdSenseアカウント取得後にここを更新
-const PUBLISHER_ID = process.env.NEXT_PUBLIC_ADSENSE_ID || "";
+const PUBLISHER_ID = process.env.NEXT_PUBLIC_ADSENSE_ID || "ca-pub-9686216801075877";
 
 export default function AdSense() {
   if (!PUBLISHER_ID) return null;
