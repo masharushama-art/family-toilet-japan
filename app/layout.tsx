@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  verification: {
+    google: "CPvNg7WeDBQDJVze4wOc7083G_Tfpk43NKhqxIKPqd4",
+  },
   title: "Family Toilet Japan",
   description: "Find family-friendly toilets with baby changing tables in Japan",
   manifest: "/manifest.json",
