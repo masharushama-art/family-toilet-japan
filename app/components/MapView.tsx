@@ -74,6 +74,18 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
       .catch(console.error);
   }, []);
 
+  // マップ表示時に自動でGPS取得
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserPos([pos.coords.latitude, pos.coords.longitude]);
+        setGpsError("");
+      },
+      () => {} // 拒否された場合は無視（手動ボタンで再試行可能）
+    );
+  }, []);
+
   const getLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setGpsError("Geolocation is not supported by your browser.");
