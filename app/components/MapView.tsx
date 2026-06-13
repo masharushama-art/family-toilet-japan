@@ -8,6 +8,7 @@ import type { Toilet, FilterState } from "../types/toilet";
 import ToiletDetail from "./ToiletDetail";
 import FilterPanel from "./FilterPanel";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useI18n } from "../i18n/provider";
 
 // Leafletデフォルトアイコン修正
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -57,6 +58,7 @@ export default function MapView() {
   const [selected, setSelected] = useState<Toilet | null>(null);
   const [showFilter, setShowFilter] = useState(false);
   const [gpsError, setGpsError] = useState("");
+  const { t } = useI18n();
   const [filters, setFilters] = useState<FilterState>({
     familyFriendlyOnly: true,
     changingTableOnly: false,
@@ -82,7 +84,7 @@ export default function MapView() {
         setUserPos([pos.coords.latitude, pos.coords.longitude]);
         setGpsError("");
       },
-      () => setGpsError("Could not get your location. Please enable GPS.")
+      () => setGpsError(t("gpsError"))
     );
   }, []);
 
@@ -118,7 +120,7 @@ export default function MapView() {
             onClick={() => setShowFilter(!showFilter)}
             className="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm font-medium"
           >
-            Filters {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly) ? "●" : ""}
+            {t("filters")} {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly) ? "●" : ""}
           </button>
         </div>
       </div>
@@ -167,11 +169,11 @@ export default function MapView() {
       <div className="absolute bottom-4 left-4 z-[1000] bg-white rounded-lg shadow px-3 py-2 text-xs">
         <div className="flex items-center gap-2 mb-1">
           <span className="inline-block w-3 h-3 rounded-full bg-sky-400 border-2 border-white shadow"></span>
-          <span>With changing table</span>
+          <span>{t("changingTable")}</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="inline-block w-2.5 h-2.5 rounded-full bg-gray-500 border-2 border-white shadow"></span>
-          <span>Regular toilet</span>
+          <span>{t("facilityName")}</span>
         </div>
       </div>
 

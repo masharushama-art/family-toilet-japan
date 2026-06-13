@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { locales, localeNames, type Locale } from "../i18n/settings";
+import { locales, localeNames } from "../i18n/settings";
+import { useI18n } from "../i18n/provider";
 
 export default function LanguageSwitcher() {
-  const [locale, setLocale] = useState<Locale>("en");
+  const { locale, setLocale } = useI18n();
   const [open, setOpen] = useState(false);
 
   return (

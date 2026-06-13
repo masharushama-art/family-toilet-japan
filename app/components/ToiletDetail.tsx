@@ -3,6 +3,7 @@
 import type { Toilet } from "../types/toilet";
 import { getOpenStatus, formatHours } from "../lib/opening-hours";
 import { calcDistance, formatDistance } from "../lib/distance";
+import { useI18n } from "../i18n/provider";
 
 interface Props {
   toilet: Toilet;
@@ -10,11 +11,11 @@ interface Props {
   onClose: () => void;
 }
 
-function OpenBadge({ status }: { status: "open" | "closed" | "unknown" }) {
+function OpenBadge({ status, t }: { status: "open" | "closed" | "unknown"; t: (k: string) => string }) {
   if (status === "open")
-    return <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full font-medium">Open now</span>;
+    return <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full font-medium">{t("openNow")}</span>;
   if (status === "closed")
-    return <span className="bg-red-100 text-red-600 text-xs px-2 py-0.5 rounded-full font-medium">Closed</span>;
+    return <span className="bg-red-100 text-red-600 text-xs px-2 py-0.5 rounded-full font-medium">{t("closed")}</span>;
   return null;
 }
 
@@ -31,6 +32,7 @@ function Row({ icon, label, children }: { icon: string; label: string; children:
 }
 
 export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
+  const { t } = useI18n();
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${toilet.lat},${toilet.lon}&travelmode=walking`;
   const openStatus = getOpenStatus(toilet.openingHours);
   const distance =
@@ -49,7 +51,7 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
             {toilet.name || "Public Toilet"}
           </h2>
           <div className="flex items-center gap-2 mt-1 flex-wrap">
-            <OpenBadge status={openStatus} />
+            <OpenBadge status={openStatus} t={t} />
             {distance !== null && (
               <span className="text-xs text-gray-500">📍 {formatDistance(distance)}</span>
             )}
@@ -66,7 +68,7 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
         <div className="mx-5 mb-2 bg-sky-50 border border-sky-200 rounded-xl px-4 py-2.5 flex items-center gap-3">
           <span className="text-2xl">🍼</span>
           <div>
-            <p className="text-sky-700 font-semibold text-sm">Baby Changing Table</p>
+            <p className="text-sky-700 font-semibold text-sm">{t("changingTable")}</p>
             <p className="text-sky-600 text-xs">Available at this facility</p>
           </div>
         </div>
@@ -75,14 +77,14 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
       {/* 詳細情報 */}
       <div className="px-5 overflow-y-auto flex-1">
         {!toilet.changingTable && (
-          <Row icon="🍼" label="Baby changing table">
-            <span className="text-gray-400">Not available</span>
+          <Row icon="🍼" label={t("changingTable")}>
+            <span className="text-gray-400">{t("no")}</span>
           </Row>
         )}
-        <Row icon="♿" label="Wheelchair">
+        <Row icon="♿" label={t("wheelchair")}>
           {toilet.wheelchair
-            ? <span className="text-green-600">✓ Accessible</span>
-            : <span className="text-gray-400">Unknown</span>}
+            ? <span className="text-green-600">✓ {t("yes")}</span>
+            : <span className="text-gray-400">{t("unknown")}</span>}
         </Row>
         <Row icon="💴" label="Fee">
           {toilet.fee
@@ -90,14 +92,14 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
             : <span className="text-green-600">Free</span>}
         </Row>
         {toilet.openingHours && (
-          <Row icon="🕐" label="Hours">
+          <Row icon="🕐" label={t("hours")}>
             <span className="text-gray-700 max-w-[160px] text-right">
               {formatHours(toilet.openingHours)}
             </span>
           </Row>
         )}
         {toilet.operator && (
-          <Row icon="🏢" label="Operator">
+          <Row icon="🏢" label={t("facilityName")}>
             <span className="text-gray-700">{toilet.operator}</span>
           </Row>
         )}
@@ -113,7 +115,7 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3.5 rounded-xl transition-colors w-full"
         >
-          🗺️ Navigate with Google Maps
+          🗺️ {t("openInMaps")}
         </a>
       </div>
     </div>
