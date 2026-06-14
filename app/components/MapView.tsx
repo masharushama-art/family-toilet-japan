@@ -151,7 +151,7 @@ function GeocodedMarkers({
 
 const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
 
-export default function MapView({ initialCenter }: { initialCenter?: [number, number] }) {
+export default function MapView({ initialCenter, city = "tokyo" }: { initialCenter?: [number, number]; city?: string }) {
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [selected, setSelected] = useState<Toilet | null>(null);
@@ -168,11 +168,11 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
 
   // トイレデータ読み込み
   useEffect(() => {
-    fetch("/data/toilets.json")
+    fetch(`/data/cities/${city}.json`)
       .then((r) => r.json())
       .then((data: Toilet[]) => setToilets(data))
       .catch(console.error);
-  }, []);
+  }, [city]);
 
   // マップ表示時に自動でGPS取得
   useEffect(() => {
