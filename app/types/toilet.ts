@@ -5,6 +5,7 @@ export interface Toilet {
   name?: string;
   nameEn?: string;
   operator?: string;
+  address?: string;
   changingTable?: boolean;
   wheelchair?: boolean;
   openingHours?: string;

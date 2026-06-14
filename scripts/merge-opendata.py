@@ -118,6 +118,7 @@ def normalize_row(row: dict, city: str) -> dict | None:
 
     name_key = next((k for k in row if k in ("名称", "施設名")), None)
     name_en_key = next((k for k in row if "名称_英語" in k or "英語" in k), None)
+    addr_key = next((k for k in row if k in ("住所", "所在地", "address")), None)
     baby_key = next((k for k in row if "乳幼児" in k), None)
     wc_key = next((k for k in row if "車椅子" in k), None)
     img_key = next((k for k in row if "画像" in k and "ライセンス" not in k), None)
@@ -157,6 +158,8 @@ def normalize_row(row: dict, city: str) -> dict | None:
     }
     if val(name_key):
         record["name"] = val(name_key)
+    if val(addr_key):
+        record["address"] = val(addr_key)
     if val(name_en_key):
         record["nameEn"] = val(name_en_key)
     if changing is not None:
@@ -222,7 +225,7 @@ def merge(existing: list[dict], newcomers: list[dict], radius_m: float = MERGE_R
             if new.get("changingTable") is True and ex.get("changingTable") is not True:
                 ex["changingTable"] = True
                 changed = True
-            for k in ("nameEn", "image"):
+            for k in ("nameEn", "image", "address"):
                 if new.get(k) and not ex.get(k):
                     ex[k] = new[k]
                     changed = True
