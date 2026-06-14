@@ -37,6 +37,7 @@ const cities = [
   { slug: "nagoya", name: "Nagoya", count: "1,300+", icon: "🏰" },
   { slug: "yokohama", name: "Yokohama", count: "1,300+", icon: "🌉" },
   { slug: "fukuoka", name: "Fukuoka", count: "300+", icon: "🌸" },
+  { slug: "nara", name: "Nara", count: "150+", icon: "🦌" },
 ];
 
 const guides = [
