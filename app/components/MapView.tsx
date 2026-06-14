@@ -115,9 +115,11 @@ function AccurateMarkers({
 function GeocodedMarkers({
   groups,
   onSelect,
+  onSelectGroup,
 }: {
   groups: Map<string, Toilet[]>;
   onSelect: (t: Toilet) => void;
+  onSelectGroup: (g: Toilet[]) => void;
 }) {
   return (
     <>
@@ -130,7 +132,7 @@ function GeocodedMarkers({
               key={`cluster-${key}`}
               position={[t.lat, t.lon]}
               icon={clusterIcon(group.length, hasChanging)}
-              eventHandlers={{ click: () => onSelect(t) }}
+              eventHandlers={{ click: () => onSelectGroup(group) }}
             />
           );
         }
@@ -153,6 +155,7 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [selected, setSelected] = useState<Toilet | null>(null);
+  const [clusterGroup, setClusterGroup] = useState<Toilet[] | null>(null);
   const [showFilter, setShowFilter] = useState(false);
   const [gpsError, setGpsError] = useState("");
   const { t } = useI18n();
@@ -269,7 +272,11 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
         <AccurateMarkers toilets={accurate} onSelect={setSelected} />
 
         {/* 概算座標(geocoded)：クラスタバッジで全件描画（約97クラスタ） */}
-        <GeocodedMarkers groups={geoGroups} onSelect={setSelected} />
+        <GeocodedMarkers
+          groups={geoGroups}
+          onSelect={setSelected}
+          onSelectGroup={(g) => { setClusterGroup(g); setSelected(null); }}
+        />
       </MapContainer>
 
       {/* GPS ボタン */}
@@ -328,6 +335,48 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
           onChange={setFilters}
           onClose={() => setShowFilter(false)}
         />
+      )}
+
+      {/* クラスタグループ一覧（概算位置の複数トイレ） */}
+      {clusterGroup && !selected && (
+        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-10 h-1 bg-gray-200 rounded-full" />
+          </div>
+          <div className="px-5 pb-2 flex items-center justify-between">
+            <div>
+              <h2 className="font-bold text-gray-900 text-base">{clusterGroup.length} toilets nearby</h2>
+              <p className="text-xs text-amber-600 mt-0.5">📍 {t("approxLocation")}</p>
+            </div>
+            <button onClick={() => setClusterGroup(null)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+          </div>
+          <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-2">
+            {clusterGroup.map((toilet) => (
+              <button
+                key={toilet.id}
+                onClick={() => { setSelected(toilet); setClusterGroup(null); }}
+                className="w-full text-left bg-gray-50 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-800 text-sm truncate">
+                      {toilet.nameEn || toilet.name ||
+                        (toilet.changingTable ? t("unnamedToiletBaby") : t("unnamedToilet"))}
+                    </p>
+                    {toilet.address && (
+                      <p className="text-xs text-gray-500 truncate mt-0.5">{toilet.address}</p>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1.5 ml-3 flex-shrink-0">
+                    {toilet.changingTable && <span className="text-base">🍼</span>}
+                    {toilet.wheelchair && <span className="text-base">♿</span>}
+                    <span className="text-gray-400 text-sm">›</span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* 施設詳細 */}
