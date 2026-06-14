@@ -48,8 +48,11 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
       <div className="px-5 pb-2 flex items-start justify-between">
         <div className="flex-1 min-w-0">
           <h2 className="font-bold text-gray-900 text-base leading-tight truncate">
-            {toilet.name || "Public Toilet"}
+            {toilet.nameEn || toilet.name || "Public Toilet"}
           </h2>
+          {toilet.nameEn && toilet.name && toilet.nameEn !== toilet.name && (
+            <p className="text-xs text-gray-400 leading-tight truncate">{toilet.name}</p>
+          )}
           <div className="flex items-center gap-2 mt-1 flex-wrap">
             <OpenBadge status={openStatus} t={t} />
             {distance !== null && (
@@ -104,7 +107,11 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
           </Row>
         )}
         <Row icon="🌐" label="Source">
-          <span className="text-gray-400 text-xs">OpenStreetMap (ODbL)</span>
+          <span className="text-gray-400 text-xs">
+            {toilet.source === "opendata"
+              ? "Municipal Open Data (CC BY)"
+              : "OpenStreetMap (ODbL)"}
+          </span>
         </Row>
       </div>
 
