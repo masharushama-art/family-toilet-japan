@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
+const OG_IMAGE = "https://family-toilet-japan.vercel.app/og-image.png";
+
 export const metadata: Metadata = {
   title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
   description: "Free map of 6,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, and Kyoto.",
@@ -12,6 +14,19 @@ export const metadata: Metadata = {
     "toilet with baby chair japan",
     "clean public toilet japan",
   ],
+  openGraph: {
+    title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
+    description: "Free map of 6,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, and Kyoto.",
+    type: "website",
+    url: "https://family-toilet-japan.vercel.app",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Family Toilet Japan" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
+    description: "Free map of 6,000+ family-friendly toilets in Japan.",
+    images: [OG_IMAGE],
+  },
 };
 
 const cities = [
