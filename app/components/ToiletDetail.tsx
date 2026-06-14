@@ -112,6 +112,7 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
             {toilet.source === "opendata"
               ? "Municipal Open Data (CC BY)"
               : "OpenStreetMap (ODbL)"}
+            {toilet.geocoded && " · 国土地理院 (GSI)"}
           </span>
         </Row>
       </div>
