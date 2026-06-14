@@ -38,6 +38,7 @@ const cities = [
   { slug: "yokohama", name: "Yokohama", count: "1,300+", icon: "🌉" },
   { slug: "fukuoka", name: "Fukuoka", count: "300+", icon: "🌸" },
   { slug: "nara", name: "Nara", count: "150+", icon: "🦌" },
+  { slug: "chiba", name: "Chiba", count: "490+", icon: "🎡" },
 ];
 
 const guides = [
