@@ -5,7 +5,7 @@ const OG_IMAGE = "https://family-toilet-japan.vercel.app/og-image.png";
 
 export const metadata: Metadata = {
   title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
-  description: "Free map of 11,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, Nagoya & Yokohama.",
+  description: "Free map of 16,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, Nagoya & Yokohama.",
   keywords: [
     "family friendly toilet japan",
     "baby changing room tokyo",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
-    description: "Free map of 11,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, Nagoya & Yokohama.",
+    description: "Free map of 16,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, Nagoya & Yokohama.",
     type: "website",
     url: "https://family-toilet-japan.vercel.app",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Family Toilet Japan" }],
@@ -144,7 +144,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold mb-3">Family Toilet Japan</h1>
         <p className="text-sky-100 max-w-md mx-auto mb-6">
           Find family-friendly toilets with baby changing tables across Japan.
-          47 prefectures covered — free &amp; no sign-up.
+          16,000+ locations · all 47 prefectures — free &amp; no sign-up.
         </p>
         <Link
           href="/map"
