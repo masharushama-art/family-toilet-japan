@@ -3,13 +3,16 @@ export interface Toilet {
   lat: number;
   lon: number;
   name?: string;
+  nameEn?: string;
   operator?: string;
-  changingTable: boolean;
-  wheelchair: boolean;
+  changingTable?: boolean;
+  wheelchair?: boolean;
   openingHours?: string;
-  fee: boolean;
+  fee?: boolean;
+  image?: string;
   city: string;
-  source: "osm";
+  ward?: string;
+  source: "osm" | "opendata";
 }
 
 export interface FilterState {
