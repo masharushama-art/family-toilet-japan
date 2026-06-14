@@ -22,6 +22,7 @@ const CITY_CENTERS: Record<string, [number, number]> = {
   nagoya: [35.170, 136.882],
   yokohama: [35.443, 139.638],
   fukuoka: [33.590, 130.401],
+  nara: [34.685, 135.805],
 };
 
 export default function MapPageClient() {

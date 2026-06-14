@@ -58,6 +58,15 @@ const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
       "Fukuoka Tower and Seaside Momochi area have family-friendly facilities",
     ],
   },
+  nara: {
+    keywords: ["Nara Park", "Todaiji", "Kasuga Taisha", "Kintetsu Nara Station", "Deer Park"],
+    tips: [
+      "Nara Park has multiple public toilet blocks — essential with young children",
+      "Kintetsu Nara Station area has clean family restrooms",
+      "Todaiji and Kasuga Taisha have on-site facilities",
+      "Deer are friendly but watch food — keep snacks in bags",
+    ],
+  },
 };
 
 interface Props {
