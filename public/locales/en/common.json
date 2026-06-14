@@ -23,5 +23,7 @@
   "yes": "Yes",
   "no": "No",
   "unknown": "Unknown",
-  "back": "Back"
+  "back": "Back",
+  "unnamedToilet": "Public Toilet",
+  "unnamedToiletBaby": "Public Toilet (Baby Changing)"
 }

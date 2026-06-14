@@ -48,7 +48,8 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
       <div className="px-5 pb-2 flex items-start justify-between">
         <div className="flex-1 min-w-0">
           <h2 className="font-bold text-gray-900 text-base leading-tight truncate">
-            {toilet.nameEn || toilet.name || "Public Toilet"}
+            {toilet.nameEn || toilet.name ||
+              (toilet.changingTable ? t("unnamedToiletBaby") : t("unnamedToilet"))}
           </h2>
           {toilet.nameEn && toilet.name && toilet.nameEn !== toilet.name && (
             <p className="text-xs text-gray-400 leading-tight truncate">{toilet.name}</p>
