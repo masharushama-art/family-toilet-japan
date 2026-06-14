@@ -82,7 +82,7 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
         setUserPos([pos.coords.latitude, pos.coords.longitude]);
         setGpsError("");
       },
-      () => {} // 拒否された場合は無視（手動ボタンで再試行可能）
+      () => setGpsError("Location access denied. Tap 📍 to try again, or browse the map manually.")
     );
   }, []);
 
@@ -196,8 +196,17 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
 
       {/* GPSエラー */}
       {gpsError && (
-        <div className="absolute top-16 left-4 right-4 z-[1000] bg-red-100 text-red-700 rounded-lg px-3 py-2 text-sm">
-          {gpsError}
+        <div className="absolute top-16 left-4 right-4 z-[1000] bg-amber-50 border border-amber-200 text-amber-800 rounded-lg px-3 py-2 text-sm">
+          📍 {gpsError}
+        </div>
+      )}
+
+      {/* 0件フォールバック */}
+      {toilets.length > 0 && filtered.length === 0 && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000] bg-white rounded-2xl shadow-lg px-6 py-5 text-center max-w-xs">
+          <div className="text-3xl mb-2">🔍</div>
+          <p className="font-semibold text-gray-800 mb-1">No toilets found</p>
+          <p className="text-sm text-gray-500">Try relaxing the filters to see more results.</p>
         </div>
       )}
 
