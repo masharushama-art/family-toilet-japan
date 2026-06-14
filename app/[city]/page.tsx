@@ -49,6 +49,15 @@ const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
       "Chinatown area shopping centers have baby-friendly facilities nearby",
     ],
   },
+  fukuoka: {
+    keywords: ["Hakata Station", "Tenjin", "Canal City", "Ohori Park", "Fukuoka Tower"],
+    tips: [
+      "Hakata Station and Tenjin have clean family restrooms across multiple floors",
+      "Canal City Hakata shopping mall has well-maintained baby facilities",
+      "Ohori Park has public toilet blocks throughout the grounds",
+      "Fukuoka Tower and Seaside Momochi area have family-friendly facilities",
+    ],
+  },
 };
 
 interface Props {
