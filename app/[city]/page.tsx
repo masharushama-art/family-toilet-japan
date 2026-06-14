@@ -3,6 +3,45 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, CATEGORIES, getCityStats, type CitySlug } from "../lib/toilet-data";
 
+const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
+  tokyo: {
+    keywords: ["Shinjuku", "Shibuya", "Ueno", "Ginza", "Tokyo Station", "Akihabara"],
+    tips: [
+      "Shinjuku and Shibuya stations have large, clean restrooms with baby facilities",
+      "Department stores in Ginza and Ikebukuro have excellent family restrooms",
+      "Ueno Park and Yoyogi Park have multiple toilet blocks",
+      "Convenience stores (7-Eleven, Lawson, FamilyMart) are always open",
+    ],
+  },
+  osaka: {
+    keywords: ["Namba", "Umeda", "Shinsaibashi", "Dotonbori", "Shin-Osaka"],
+    tips: [
+      "Namba and Umeda stations have well-maintained family restrooms",
+      "Dotonbori area shopping malls offer clean facilities with changing tables",
+      "Universal Studios Japan has baby care rooms throughout the park",
+      "Osaka Castle Park and Tennoji Zoo have family toilet blocks",
+    ],
+  },
+  kyoto: {
+    keywords: ["Kyoto Station", "Gion", "Arashiyama", "Kinkakuji", "Fushimi Inari"],
+    tips: [
+      "Kyoto Station has family restrooms on multiple floors",
+      "Major temple complexes (Kinkakuji, Kiyomizudera) have on-site toilets",
+      "Arashiyama has public toilets near the bamboo grove",
+      "Nishiki Market area has facilities in nearby shopping centers",
+    ],
+  },
+  nagoya: {
+    keywords: ["Nagoya Station", "Sakae", "Osu", "Fushimi", "Yabachō", "Nagoya Castle"],
+    tips: [
+      "Nagoya Station's Takashimaya and JR Gate Tower have excellent family restrooms",
+      "Sakae underground mall (Central Park) has spacious facilities",
+      "Osu Shopping District has public restrooms at multiple points",
+      "Nagoya Castle and Higashiyama Zoo have well-maintained family toilet blocks",
+    ],
+  },
+};
+
 interface Props {
   params: Promise<{ city: string }>;
 }
@@ -23,6 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `baby changing room ${c.name.toLowerCase()}`,
       `public toilet ${c.name.toLowerCase()} japan`,
       `clean toilet ${c.name.toLowerCase()}`,
+      ...(CITY_META[city]?.keywords.map((k) => `toilet ${k.toLowerCase()} japan`) ?? []),
     ],
     openGraph: {
       title: `Family Friendly Toilets in ${c.name} | Family Toilet Japan`,
@@ -103,10 +143,14 @@ export default async function CityPage({ params }: Props) {
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
           <h3 className="font-bold text-amber-800 mb-2">💡 Tips for families in {c.name}</h3>
           <ul className="text-sm text-amber-700 space-y-1">
-            <li>• Department stores and shopping malls have the best facilities</li>
-            <li>• Train station toilets are clean and usually free</li>
-            <li>• Look for the 🍼 icon to find baby changing tables</li>
-            <li>• Convenience stores (7-Eleven, Lawson, FamilyMart) are always open</li>
+            {(CITY_META[city]?.tips ?? [
+              "Department stores and shopping malls have the best facilities",
+              "Train station toilets are clean and usually free",
+              "Look for the 🍼 icon to find baby changing tables",
+              "Convenience stores (7-Eleven, Lawson, FamilyMart) are always open",
+            ]).map((tip) => (
+              <li key={tip}>• {tip}</li>
+            ))}
           </ul>
         </div>
       </div>
