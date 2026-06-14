@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Toilet, FilterState } from "../types/toilet";
@@ -73,6 +73,78 @@ function FlyToLocation({ position }: { position: [number, number] | null }) {
     if (position) map.flyTo(position, 15, { duration: 1.5 });
   }, [position, map]);
   return null;
+}
+
+// ビューポート内の正確座標ピンのみ描画。moveend/zoomend で再計算。
+function AccurateMarkers({
+  toilets,
+  onSelect,
+}: {
+  toilets: Toilet[];
+  onSelect: (t: Toilet) => void;
+}) {
+  const map = useMap();
+  const [visible, setVisible] = useState<Toilet[]>([]);
+  const allRef = useRef(toilets);
+  allRef.current = toilets;
+
+  const update = useCallback(() => {
+    const bounds = map.getBounds().pad(0.2);
+    setVisible(allRef.current.filter((t) => bounds.contains([t.lat, t.lon])));
+  }, [map]);
+
+  useMapEvents({ moveend: update, zoomend: update });
+
+  useEffect(() => { update(); }, [update, toilets]);
+
+  return (
+    <>
+      {visible.map((t) => (
+        <Marker
+          key={t.id}
+          position={[t.lat, t.lon]}
+          icon={t.changingTable ? changingTableIcon : normalIcon}
+          eventHandlers={{ click: () => onSelect(t) }}
+        />
+      ))}
+    </>
+  );
+}
+
+// 概算座標クラスタ（geocoded）は件数が少ないので全件描画
+function GeocodedMarkers({
+  groups,
+  onSelect,
+}: {
+  groups: Map<string, Toilet[]>;
+  onSelect: (t: Toilet) => void;
+}) {
+  return (
+    <>
+      {Array.from(groups.entries()).map(([key, group]) => {
+        const t = group[0];
+        const hasChanging = group.some((g) => g.changingTable);
+        if (group.length > 1) {
+          return (
+            <Marker
+              key={`cluster-${key}`}
+              position={[t.lat, t.lon]}
+              icon={clusterIcon(group.length, hasChanging)}
+              eventHandlers={{ click: () => onSelect(t) }}
+            />
+          );
+        }
+        return (
+          <Marker
+            key={t.id}
+            position={[t.lat, t.lon]}
+            icon={t.changingTable ? geocodedChangingIcon : geocodedNormalIcon}
+            eventHandlers={{ click: () => onSelect(t) }}
+          />
+        );
+      })}
+    </>
+  );
 }
 
 const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
@@ -193,39 +265,11 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
           </Marker>
         )}
 
-        {/* 正確座標のトイレピン */}
-        {accurate.map((t) => (
-          <Marker
-            key={t.id}
-            position={[t.lat, t.lon]}
-            icon={t.changingTable ? changingTableIcon : normalIcon}
-            eventHandlers={{ click: () => setSelected(t) }}
-          />
-        ))}
+        {/* 正確座標：ビューポート内のみ描画 */}
+        <AccurateMarkers toilets={accurate} onSelect={setSelected} />
 
-        {/* 概算座標(geocoded)のピン。同一座標は数バッジでクラスタ表示 */}
-        {Array.from(geoGroups.entries()).map(([key, group]) => {
-          const t = group[0];
-          const hasChanging = group.some((g) => g.changingTable);
-          if (group.length > 1) {
-            return (
-              <Marker
-                key={`cluster-${key}`}
-                position={[t.lat, t.lon]}
-                icon={clusterIcon(group.length, hasChanging)}
-                eventHandlers={{ click: () => setSelected(t) }}
-              />
-            );
-          }
-          return (
-            <Marker
-              key={t.id}
-              position={[t.lat, t.lon]}
-              icon={t.changingTable ? geocodedChangingIcon : geocodedNormalIcon}
-              eventHandlers={{ click: () => setSelected(t) }}
-            />
-          );
-        })}
+        {/* 概算座標(geocoded)：クラスタバッジで全件描画（約97クラスタ） */}
+        <GeocodedMarkers groups={geoGroups} onSelect={setSelected} />
       </MapContainer>
 
       {/* GPS ボタン */}

@@ -99,9 +99,11 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
             : <span className="text-gray-400">{t("unknown")}</span>}
         </Row>
         <Row icon="💴" label="Fee">
-          {toilet.fee
+          {toilet.fee === true
             ? <span className="text-orange-500">Paid</span>
-            : <span className="text-green-600">Free</span>}
+            : toilet.fee === false
+            ? <span className="text-green-600">Free</span>
+            : <span className="text-gray-400">{t("unknown")}</span>}
         </Row>
         {toilet.openingHours && (
           <Row icon="🕐" label={t("hours")}>
