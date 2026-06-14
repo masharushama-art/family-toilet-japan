@@ -23,5 +23,7 @@
   "yes": "是",
   "no": "否",
   "unknown": "不明",
-  "back": "返回"
+  "back": "返回",
+  "unnamedToilet": "公共厕所",
+  "unnamedToiletBaby": "公共厕所（带尿布台）"
 }
