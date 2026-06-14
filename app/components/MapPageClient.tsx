@@ -30,5 +30,5 @@ export default function MapPageClient() {
   const searchParams = useSearchParams();
   const city = searchParams.get("city") ?? "tokyo";
   const initialCenter = CITY_CENTERS[city] ?? CITY_CENTERS.tokyo;
-  return <MapView initialCenter={initialCenter} />;
+  return <MapView initialCenter={initialCenter} city={city} />;
 }
