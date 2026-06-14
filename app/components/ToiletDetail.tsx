@@ -67,6 +67,14 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
         <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl ml-3 mt-0.5 flex-shrink-0">✕</button>
       </div>
 
+      {/* 概算位置の注記（ジオコーディング座標） */}
+      {toilet.geocoded && (
+        <div className="mx-5 mb-2 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 flex items-center gap-2">
+          <span className="text-base">📍</span>
+          <p className="text-amber-700 text-xs">{t("approxLocationNote")}</p>
+        </div>
+      )}
+
       {/* おむつ替え台 ハイライト */}
       {toilet.changingTable && (
         <div className="mx-5 mb-2 bg-sky-50 border border-sky-200 rounded-xl px-4 py-2.5 flex items-center gap-3">

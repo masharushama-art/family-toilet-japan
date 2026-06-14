@@ -25,5 +25,7 @@
   "unknown": "不明",
   "back": "返回",
   "unnamedToilet": "公共廁所",
-  "unnamedToiletBaby": "公共廁所（附尿布台）"
+  "unnamedToiletBaby": "公共廁所（附尿布台）",
+  "approxLocation": "大致位置",
+  "approxLocationNote": "大致位置（區域中心）"
 }
