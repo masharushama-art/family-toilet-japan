@@ -25,5 +25,7 @@
   "unknown": "알 수 없음",
   "back": "뒤로",
   "unnamedToilet": "공중화장실",
-  "unnamedToiletBaby": "공중화장실 (기저귀 교환대)"
+  "unnamedToiletBaby": "공중화장실 (기저귀 교환대)",
+  "approxLocation": "대략적인 위치",
+  "approxLocationNote": "대략적인 위치 (지역 중심)"
 }

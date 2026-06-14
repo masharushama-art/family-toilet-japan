@@ -42,6 +42,31 @@ const locationIcon = L.divIcon({
   iconAnchor: [8, 8],
 });
 
+// 概算位置（ジオコーディング）アイコン: 半透明アンバー＋破線で「正確でない」を表現
+const geocodedChangingIcon = L.divIcon({
+  html: `<div style="background:rgba(245,158,11,0.55);width:14px;height:14px;border-radius:50%;border:2px dashed #b45309"></div>`,
+  className: "",
+  iconSize: [14, 14],
+  iconAnchor: [7, 7],
+});
+const geocodedNormalIcon = L.divIcon({
+  html: `<div style="background:rgba(180,180,180,0.5);width:10px;height:10px;border-radius:50%;border:2px dashed #9ca3af"></div>`,
+  className: "",
+  iconSize: [10, 10],
+  iconAnchor: [5, 5],
+});
+
+// 重なりクラスタ用バッジ（概算位置が同一座標に複数集中）
+function clusterIcon(count: number, hasChanging: boolean) {
+  const bg = hasChanging ? "rgba(245,158,11,0.85)" : "rgba(148,163,184,0.85)";
+  return L.divIcon({
+    html: `<div style="background:${bg};min-width:22px;height:22px;padding:0 4px;border-radius:11px;border:2px dashed #b45309;color:#1f2937;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.3)">${count}</div>`,
+    className: "",
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+  });
+}
+
 function FlyToLocation({ position }: { position: [number, number] | null }) {
   const map = useMap();
   useEffect(() => {
@@ -113,6 +138,17 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
     return true;
   });
 
+  // 正確座標 / 概算座標(geocoded) に分離。概算は同一座標でまとめてクラスタ化。
+  const accurate = filtered.filter((t) => !t.geocoded);
+  const geoGroups = new Map<string, Toilet[]>();
+  for (const t of filtered) {
+    if (!t.geocoded) continue;
+    const key = `${t.lat},${t.lon}`;
+    const g = geoGroups.get(key);
+    if (g) g.push(t);
+    else geoGroups.set(key, [t]);
+  }
+
   return (
     <div className="relative w-full h-screen">
       {/* ヘッダー */}
@@ -157,8 +193,8 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
           </Marker>
         )}
 
-        {/* トイレピン */}
-        {filtered.map((t) => (
+        {/* 正確座標のトイレピン */}
+        {accurate.map((t) => (
           <Marker
             key={t.id}
             position={[t.lat, t.lon]}
@@ -166,6 +202,30 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
             eventHandlers={{ click: () => setSelected(t) }}
           />
         ))}
+
+        {/* 概算座標(geocoded)のピン。同一座標は数バッジでクラスタ表示 */}
+        {Array.from(geoGroups.entries()).map(([key, group]) => {
+          const t = group[0];
+          const hasChanging = group.some((g) => g.changingTable);
+          if (group.length > 1) {
+            return (
+              <Marker
+                key={`cluster-${key}`}
+                position={[t.lat, t.lon]}
+                icon={clusterIcon(group.length, hasChanging)}
+                eventHandlers={{ click: () => setSelected(t) }}
+              />
+            );
+          }
+          return (
+            <Marker
+              key={t.id}
+              position={[t.lat, t.lon]}
+              icon={t.changingTable ? geocodedChangingIcon : geocodedNormalIcon}
+              eventHandlers={{ click: () => setSelected(t) }}
+            />
+          );
+        })}
       </MapContainer>
 
       {/* GPS ボタン */}
@@ -183,9 +243,16 @@ export default function MapView({ initialCenter }: { initialCenter?: [number, nu
           <span className="inline-block w-3 h-3 rounded-full bg-sky-400 border-2 border-white shadow"></span>
           <span>{t("changingTable")}</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mb-1">
           <span className="inline-block w-2.5 h-2.5 rounded-full bg-gray-500 border-2 border-white shadow"></span>
           <span>{t("facilityName")}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span
+            className="inline-block w-3 h-3 rounded-full"
+            style={{ background: "rgba(245,158,11,0.55)", border: "2px dashed #b45309" }}
+          ></span>
+          <span>{t("approxLocation")}</span>
         </div>
       </div>
 
