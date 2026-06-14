@@ -14,6 +14,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const BASE_URL = "https://family-toilet-japan.vercel.app";
+
 export const metadata: Metadata = {
   verification: {
     google: "CPvNg7WeDBQDJVze4wOc7083G_Tfpk43NKhqxIKPqd4",
@@ -26,6 +28,14 @@ export const metadata: Metadata = {
     title: "Family Toilet Japan",
     description: "Find family-friendly toilets with baby changing tables in Japan",
     type: "website",
+    url: BASE_URL,
+    images: [{ url: `${BASE_URL}/opengraph-image`, width: 1200, height: 630, alt: "Family Toilet Japan" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Family Toilet Japan",
+    description: "Find family-friendly toilets with baby changing tables in Japan",
+    images: [`${BASE_URL}/opengraph-image`],
   },
 };
 
