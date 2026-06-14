@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 const BASE_URL = "https://family-toilet-japan.vercel.app";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   verification: {
     google: "CPvNg7WeDBQDJVze4wOc7083G_Tfpk43NKhqxIKPqd4",
   },
