@@ -8,6 +8,7 @@ scripts/yokohama_osm_raw.json に保存するスクリプト。
 
 import json
 import urllib.request
+import urllib.parse
 from pathlib import Path
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
@@ -24,10 +25,14 @@ out center;
 
 def main():
     print("Fetching Yokohama toilets from Overpass API...")
+    payload = urllib.parse.urlencode({"data": QUERY}).encode()
     req = urllib.request.Request(
         OVERPASS_URL,
-        data=QUERY.encode(),
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        data=payload,
+        headers={
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "FamilyToiletJapan/1.0 (https://family-toilet-japan.vercel.app)",
+        },
     )
     with urllib.request.urlopen(req, timeout=90) as resp:
         data = json.loads(resp.read())
