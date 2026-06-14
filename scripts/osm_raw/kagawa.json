@@ -1,0 +1,1683 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-06-14T16:44:30Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 558820005,
+      "lat": 34.3155177,
+      "lon": 134.056405,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 722521767,
+      "lat": 34.3325751,
+      "lon": 134.0496931,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 728078288,
+      "lat": 34.3194703,
+      "lon": 134.0565954,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 735016030,
+      "lat": 34.3141152,
+      "lon": 134.0551509,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 736398010,
+      "lat": 34.3647905,
+      "lon": 134.2085214,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 740877303,
+      "lat": 34.3228482,
+      "lon": 134.057647,
+      "tags": {
+        "amenity": "toilets",
+        "source": "survey;Bing(position)"
+      }
+    },
+    {
+      "type": "node",
+      "id": 740877317,
+      "lat": 34.3250394,
+      "lon": 134.0588341,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 742293893,
+      "lat": 34.3505878,
+      "lon": 134.0474629,
+      "tags": {
+        "amenity": "toilets",
+        "fee": "no",
+        "male": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 754591510,
+      "lat": 34.3199631,
+      "lon": 134.0452366,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 762939774,
+      "lat": 34.3246057,
+      "lon": 134.1782127,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 866837690,
+      "lat": 34.3241127,
+      "lon": 134.0610639,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 945748669,
+      "lat": 34.3187253,
+      "lon": 134.0650583,
+      "tags": {
+        "amenity": "toilets",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1006238544,
+      "lat": 34.3804687,
+      "lon": 134.1239535,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1308552795,
+      "lat": 34.3335967,
+      "lon": 134.1571573,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1352433574,
+      "lat": 34.2998244,
+      "lon": 134.0524331,
+      "tags": {
+        "amenity": "toilets",
+        "source": "Bing"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1396604803,
+      "lat": 34.3506686,
+      "lon": 134.0467738,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2024-04-03"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1396604813,
+      "lat": 34.3510671,
+      "lon": 134.0465208,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2347685767,
+      "lat": 34.3381387,
+      "lon": 134.0437817,
+      "tags": {
+        "amenity": "toilets",
+        "source": "survey;Bing(position)",
+        "survey_date": "2012-11-01"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2379713865,
+      "lat": 34.4054713,
+      "lon": 134.0546005,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2379713996,
+      "lat": 34.3895644,
+      "lon": 134.0523673,
+      "tags": {
+        "amenity": "toilets",
+        "fee": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2379713997,
+      "lat": 34.3913518,
+      "lon": 134.0531563,
+      "tags": {
+        "amenity": "toilets",
+        "fee": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2400936733,
+      "lat": 34.4195462,
+      "lon": 134.0573354,
+      "tags": {
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2401049237,
+      "lat": 34.421983,
+      "lon": 134.0545493,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2023-03-12",
+        "fee": "no",
+        "name": "男木町公衆便所",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2802679814,
+      "lat": 34.3199708,
+      "lon": 134.0793732,
+      "tags": {
+        "amenity": "toilets",
+        "source": "survey, 2014-04-12",
+        "unisex": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3375876793,
+      "lat": 34.3156112,
+      "lon": 134.0656147,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3390989339,
+      "lat": 34.4221709,
+      "lon": 134.0542667,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "drinking_water": "no",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3689625718,
+      "lat": 34.3108058,
+      "lon": 134.0659826,
+      "tags": {
+        "amenity": "toilets",
+        "source": "survey"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3692720212,
+      "lat": 34.3041534,
+      "lon": 134.0658032,
+      "tags": {
+        "amenity": "toilets",
+        "source": "survey"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3692759479,
+      "lat": 34.3023786,
+      "lon": 134.0638184,
+      "tags": {
+        "amenity": "toilets",
+        "source": "survey"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3965266102,
+      "lat": 34.4600105,
+      "lon": 133.9955896,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3965266457,
+      "lat": 34.4616595,
+      "lon": 133.9980181,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4349376593,
+      "lat": 34.3550908,
+      "lon": 134.1337928,
+      "tags": {
+        "amenity": "toilets",
+        "fee": "no",
+        "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4627855268,
+      "lat": 34.3519103,
+      "lon": 134.1340194,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4627926349,
+      "lat": 34.3447947,
+      "lon": 134.1092675,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4628155627,
+      "lat": 34.3438162,
+      "lon": 134.1462271,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4761625870,
+      "lat": 34.3349241,
+      "lon": 134.157446,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4771975683,
+      "lat": 34.3603424,
+      "lon": 134.1155707,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4836794480,
+      "lat": 34.3432869,
+      "lon": 133.9978646,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5154689321,
+      "lat": 34.3417388,
+      "lon": 134.1005962,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5259190922,
+      "lat": 34.4584925,
+      "lon": 133.9967966,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6970645387,
+      "lat": 34.351968,
+      "lon": 134.1069389,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7551116955,
+      "lat": 34.3478557,
+      "lon": 134.037155,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7834268190,
+      "lat": 34.3304948,
+      "lon": 134.0447109,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8779440140,
+      "lat": 34.3493998,
+      "lon": 134.0133528,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9031639840,
+      "lat": 34.3563354,
+      "lon": 134.0476639,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9505912550,
+      "lat": 34.343078,
+      "lon": 134.0541134,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9505914909,
+      "lat": 34.3544193,
+      "lon": 133.9966158,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9536712231,
+      "lat": 34.3572824,
+      "lon": 134.0885425,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9947875023,
+      "lat": 34.4218125,
+      "lon": 134.0639406,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10301708217,
+      "lat": 34.3385403,
+      "lon": 134.0666833,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2023-01-03",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10920707997,
+      "lat": 34.3507669,
+      "lon": 134.0495323,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11007884819,
+      "lat": 34.350585,
+      "lon": 134.0475227,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2025-03-10",
+        "fee": "no",
+        "female": "yes",
+        "level": "0",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11024643425,
+      "lat": 34.3540102,
+      "lon": 134.0486315,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "indoor": "yes",
+        "level": "0"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11041848018,
+      "lat": 34.3697327,
+      "lon": 134.0998653,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11299413816,
+      "lat": 34.3405974,
+      "lon": 134.0456216,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11984375206,
+      "lat": 34.333831,
+      "lon": 134.0436986,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12113874520,
+      "lat": 34.338573,
+      "lon": 134.0721776,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2024-08-16"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12609184230,
+      "lat": 34.446367,
+      "lon": 133.9978178,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12953133303,
+      "lat": 34.3532436,
+      "lon": 134.0456512,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12971339907,
+      "lat": 34.3169405,
+      "lon": 134.0389847,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12971339908,
+      "lat": 34.3155134,
+      "lon": 134.0386111,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13204078701,
+      "lat": 34.3460405,
+      "lon": 134.1003024,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13204263702,
+      "lat": 34.3394874,
+      "lon": 134.1541393,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13204605701,
+      "lat": 34.3606174,
+      "lon": 134.2128247,
+      "tags": {
+        "amenity": "toilets",
+        "opening_hours": "24/7"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13742077166,
+      "lat": 34.3513758,
+      "lon": 134.0467177,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2026-04-19",
+        "level": "1",
+        "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "way",
+      "id": 330453660,
+      "center": {
+        "lat": 34.4195455,
+        "lon": 134.0573387
+      },
+      "nodes": [
+        3374199269,
+        3374199263,
+        3374199253,
+        3374199264,
+        3374199269
+      ],
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "drinking_water": "no",
+        "name": "大井公衆便所",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 330454423,
+      "center": {
+        "lat": 34.4333923,
+        "lon": 134.0605819
+      },
+      "nodes": [
+        3374208316,
+        3374208317,
+        3374208313,
+        3374208312,
+        3374208316
+      ],
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "drinking_water": "no",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "toilets:position": "seated;urinal",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "way",
+      "id": 332534863,
+      "center": {
+        "lat": 34.3288486,
+        "lon": 134.0429216
+      },
+      "nodes": [
+        3396816811,
+        3396816809,
+        7866942414,
+        3396816802,
+        3396816806,
+        3396816811
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "source": "GSImaps/std"
+      }
+    },
+    {
+      "type": "way",
+      "id": 332541350,
+      "center": {
+        "lat": 34.3294322,
+        "lon": 134.0455885
+      },
+      "nodes": [
+        3396889193,
+        3396889092,
+        3396889090,
+        3396889091,
+        7867497584,
+        3396889193
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "source": "GSImaps/std"
+      }
+    },
+    {
+      "type": "way",
+      "id": 408225593,
+      "center": {
+        "lat": 34.3354786,
+        "lon": 134.078603
+      },
+      "nodes": [
+        4101919674,
+        4101919679,
+        4101919680,
+        4101919675,
+        4101919674
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 408225595,
+      "center": {
+        "lat": 34.3404637,
+        "lon": 134.0757696
+      },
+      "nodes": [
+        4101920265,
+        4101920261,
+        4101920262,
+        4101920266,
+        4101920265
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 408760117,
+      "center": {
+        "lat": 34.3374854,
+        "lon": 134.0696673
+      },
+      "nodes": [
+        4106829323,
+        4106829321,
+        4106829319,
+        4106829322,
+        4106829323
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "check_date": "2023-01-04"
+      }
+    },
+    {
+      "type": "way",
+      "id": 408817753,
+      "center": {
+        "lat": 34.2989103,
+        "lon": 134.0701515
+      },
+      "nodes": [
+        4107248988,
+        4107248985,
+        4107248984,
+        4107248987,
+        4107248988
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 408817755,
+      "center": {
+        "lat": 34.3085692,
+        "lon": 134.0643557
+      },
+      "nodes": [
+        4107250302,
+        4107250301,
+        4107250298,
+        4107250299,
+        4107250302
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 408824938,
+      "center": {
+        "lat": 34.3068725,
+        "lon": 134.0684514
+      },
+      "nodes": [
+        4107305911,
+        4107305908,
+        4107305907,
+        4107305909,
+        4107305911
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 413637417,
+      "center": {
+        "lat": 34.3459916,
+        "lon": 134.0585175
+      },
+      "nodes": [
+        4149198346,
+        4149198343,
+        4149198340,
+        4149198344,
+        4149198346
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 422803833,
+      "center": {
+        "lat": 34.3592891,
+        "lon": 134.1003703
+      },
+      "nodes": [
+        4225314789,
+        4225314780,
+        4225314776,
+        4225314781,
+        4225314789
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 422803834,
+      "center": {
+        "lat": 34.3579335,
+        "lon": 134.0990483
+      },
+      "nodes": [
+        4225314573,
+        4225314566,
+        4225314543,
+        4225314561,
+        4225314573
+      ],
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "drinking_water": "no",
+        "fee": "no",
+        "male": "no",
+        "toilets:disposal": "flush",
+        "toilets:position": "seated;urinal",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 422809035,
+      "center": {
+        "lat": 34.3570305,
+        "lon": 134.101097
+      },
+      "nodes": [
+        4225367691,
+        4225367689,
+        4225367690,
+        4225367692,
+        4225367691
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 422958589,
+      "center": {
+        "lat": 34.357962,
+        "lon": 134.1020247
+      },
+      "nodes": [
+        4226767325,
+        4226767324,
+        4226767304,
+        4226767311,
+        4226767325
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 426958250,
+      "center": {
+        "lat": 34.3426192,
+        "lon": 134.0120637
+      },
+      "nodes": [
+        4262086934,
+        4262086931,
+        4262086930,
+        4262086933,
+        4262086934
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 430291947,
+      "center": {
+        "lat": 34.3382654,
+        "lon": 134.0111895
+      },
+      "nodes": [
+        4295702271,
+        4295702270,
+        4295702272,
+        4295702273,
+        4295702271
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 430291948,
+      "center": {
+        "lat": 34.3403974,
+        "lon": 134.0135515
+      },
+      "nodes": [
+        4295702277,
+        4295702279,
+        4295702280,
+        4295702278,
+        4295702277
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 430291949,
+      "center": {
+        "lat": 34.3428582,
+        "lon": 134.0162716
+      },
+      "nodes": [
+        4295702286,
+        4295702285,
+        4295702283,
+        4295702284,
+        4295702286
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 455895442,
+      "center": {
+        "lat": 34.37248,
+        "lon": 134.1200194
+      },
+      "nodes": [
+        4522911587,
+        4522911585,
+        4522911584,
+        4522911586,
+        4522911587
+      ],
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 702074401,
+      "center": {
+        "lat": 34.3497777,
+        "lon": 134.0518943
+      },
+      "nodes": [
+        6593123958,
+        6593123959,
+        6593123960,
+        6593128260,
+        6593123958
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 705751165,
+      "center": {
+        "lat": 34.3511565,
+        "lon": 134.0497118
+      },
+      "nodes": [
+        6631420452,
+        6631420449,
+        6631420450,
+        6631420451,
+        6631420452
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 705874391,
+      "center": {
+        "lat": 34.3488811,
+        "lon": 134.0505986
+      },
+      "nodes": [
+        6632596779,
+        6632596778,
+        6632596777,
+        6632596776,
+        6632596779
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 712416540,
+      "center": {
+        "lat": 34.3420057,
+        "lon": 134.0473422
+      },
+      "nodes": [
+        6698298487,
+        6698298488,
+        6698298489,
+        6698298490,
+        6698298487
+      ],
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "check_date": "2023-01-07",
+        "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "way",
+      "id": 772690035,
+      "center": {
+        "lat": 34.2860767,
+        "lon": 134.0279904
+      },
+      "nodes": [
+        7213930336,
+        7213930326,
+        7213930337,
+        7213930340,
+        7213930339,
+        7213930338,
+        7213930325,
+        7213930335,
+        7213930336
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 772695359,
+      "center": {
+        "lat": 34.2865775,
+        "lon": 134.0260671
+      },
+      "nodes": [
+        7213983291,
+        7213983288,
+        7213983289,
+        7213983290,
+        7213983291
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 791216908,
+      "center": {
+        "lat": 34.3278421,
+        "lon": 134.0446304
+      },
+      "nodes": [
+        7396747713,
+        7867544287,
+        7867544289,
+        7396747717,
+        7396747714,
+        7396747719,
+        7396747713
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 802902695,
+      "center": {
+        "lat": 34.3293682,
+        "lon": 134.0447426
+      },
+      "nodes": [
+        7510493465,
+        7510493466,
+        7510493467,
+        7510493468,
+        7867019685,
+        7510493469,
+        7510493470,
+        7867010082,
+        7510493471,
+        7867010080,
+        7510493472,
+        7510493465
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 802902696,
+      "center": {
+        "lat": 34.3303278,
+        "lon": 134.0449355
+      },
+      "nodes": [
+        7510493473,
+        7510493474,
+        7865814193,
+        7510493475,
+        7510493476,
+        7510493473
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 802908259,
+      "center": {
+        "lat": 34.3270519,
+        "lon": 134.0417729
+      },
+      "nodes": [
+        7510547122,
+        7510547123,
+        7510547124,
+        7510547127,
+        7510547125,
+        7510547122
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 802908261,
+      "center": {
+        "lat": 34.3282607,
+        "lon": 134.0438626
+      },
+      "nodes": [
+        7510547128,
+        7510547129,
+        7865141169,
+        7510547130,
+        7510547131,
+        7510547128
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 802953706,
+      "center": {
+        "lat": 34.3322443,
+        "lon": 134.0430318
+      },
+      "nodes": [
+        7511003872,
+        7511003873,
+        7511003874,
+        7852260441,
+        7511003875,
+        7511003872
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 803192867,
+      "center": {
+        "lat": 34.3302372,
+        "lon": 134.0459816
+      },
+      "nodes": [
+        7513141160,
+        7513141161,
+        7863981184,
+        7863981183,
+        7864001385,
+        7513141162,
+        7513141163,
+        7863981153,
+        7513141160
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 837387271,
+      "center": {
+        "lat": 34.3412083,
+        "lon": 134.0727424
+      },
+      "nodes": [
+        7815344210,
+        7815344209,
+        7815344208,
+        7815344207,
+        7815344210
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 837387276,
+      "center": {
+        "lat": 34.3410626,
+        "lon": 134.07215
+      },
+      "nodes": [
+        7815344245,
+        7815344244,
+        7815344243,
+        7815344242,
+        7815344245
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 837387296,
+      "center": {
+        "lat": 34.3410514,
+        "lon": 134.0713571
+      },
+      "nodes": [
+        7815344367,
+        7815344366,
+        7815344365,
+        7815344364,
+        7815344367
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 837387416,
+      "center": {
+        "lat": 34.344855,
+        "lon": 134.070696
+      },
+      "nodes": [
+        7815345100,
+        7815345099,
+        7815345098,
+        7815345097,
+        7815345100
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 840968800,
+      "center": {
+        "lat": 34.3435845,
+        "lon": 134.0723954
+      },
+      "nodes": [
+        7846992181,
+        7846992180,
+        7846992179,
+        7846992178,
+        7846992181
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 840969056,
+      "center": {
+        "lat": 34.3403183,
+        "lon": 134.0681187
+      },
+      "nodes": [
+        7846993338,
+        7846993337,
+        7846993336,
+        7846993335,
+        7846993338
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 842770388,
+      "center": {
+        "lat": 34.3436034,
+        "lon": 134.0693681
+      },
+      "nodes": [
+        7862124204,
+        7862124203,
+        7862124202,
+        7862124201,
+        7862124204
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 855747784,
+      "center": {
+        "lat": 34.3842203,
+        "lon": 134.1532197
+      },
+      "nodes": [
+        7979818853,
+        7979818854,
+        7979818855,
+        7979818856,
+        7979818853
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 857584704,
+      "center": {
+        "lat": 34.343553,
+        "lon": 134.0634949
+      },
+      "nodes": [
+        7995503020,
+        7995503019,
+        7995503018,
+        7995503017,
+        7995503020
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 867564165,
+      "center": {
+        "lat": 34.3804431,
+        "lon": 134.1239622
+      },
+      "nodes": [
+        8086488682,
+        8086488683,
+        8086488684,
+        8086488685,
+        8086488667,
+        8086488668,
+        8086488669,
+        8086488670,
+        8086488671,
+        8086488672,
+        8086488679,
+        8086488680,
+        8086488681,
+        8086488673,
+        8086488674,
+        8086488675,
+        8086488676,
+        8086488677,
+        8086488678,
+        8086488682
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 888429130,
+      "center": {
+        "lat": 34.2712885,
+        "lon": 134.0495029
+      },
+      "nodes": [
+        8259876817,
+        8259876818,
+        8259876819,
+        8259876820,
+        8259876817
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 888429131,
+      "center": {
+        "lat": 34.2729497,
+        "lon": 134.0504422
+      },
+      "nodes": [
+        8259876821,
+        8259876822,
+        8259876823,
+        8259876824,
+        8259876821
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 888429132,
+      "center": {
+        "lat": 34.2716438,
+        "lon": 134.0462194
+      },
+      "nodes": [
+        8259876825,
+        8259876826,
+        8259876827,
+        8259876828,
+        8259876825
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "building:levels": "1",
+        "roof:colour": "#666666",
+        "roof:orientation": "across",
+        "roof:shape": "gabled"
+      }
+    },
+    {
+      "type": "way",
+      "id": 911845557,
+      "center": {
+        "lat": 34.3593013,
+        "lon": 134.1409895
+      },
+      "nodes": [
+        8467355817,
+        8467355818,
+        8467355819,
+        8467355820,
+        8467355817
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 975945671,
+      "center": {
+        "lat": 34.3547955,
+        "lon": 134.0460625
+      },
+      "nodes": [
+        9031596589,
+        9031596590,
+        9031596591,
+        9031596592,
+        9031596589
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1126003195,
+      "center": {
+        "lat": 34.3378851,
+        "lon": 134.0616018
+      },
+      "nodes": [
+        10296530817,
+        10296530818,
+        10296530819,
+        10296530820,
+        10296530817
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1337136652,
+      "center": {
+        "lat": 34.3117766,
+        "lon": 134.099795
+      },
+      "nodes": [
+        12367580989,
+        12367580986,
+        12367580987,
+        12367580988,
+        12367580989
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "toilets"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1514029660,
+      "center": {
+        "lat": 34.3218688,
+        "lon": 134.0650117
+      },
+      "nodes": [
+        13831216923,
+        13831216924,
+        13831216925,
+        13831216926,
+        13831216923
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    }
+  ]
+}
