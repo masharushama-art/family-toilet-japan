@@ -13,6 +13,7 @@ export interface Toilet {
   city: string;
   ward?: string;
   source: "osm" | "opendata";
+  geocoded?: boolean;
 }
 
 export interface FilterState {

@@ -5,7 +5,7 @@ const OG_IMAGE = "https://family-toilet-japan.vercel.app/og-image.png";
 
 export const metadata: Metadata = {
   title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
-  description: "Free map of 6,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, and Kyoto.",
+  description: "Free map of 7,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, and Nagoya.",
   keywords: [
     "family friendly toilet japan",
     "baby changing room tokyo",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
-    description: "Free map of 6,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, and Kyoto.",
+    description: "Free map of 7,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, and Nagoya.",
     type: "website",
     url: "https://family-toilet-japan.vercel.app",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Family Toilet Japan" }],
@@ -30,9 +30,10 @@ export const metadata: Metadata = {
 };
 
 const cities = [
-  { slug: "tokyo", name: "Tokyo", count: "4,400+", icon: "🗼" },
-  { slug: "osaka", name: "Osaka", count: "1,200+", icon: "🏯" },
-  { slug: "kyoto", name: "Kyoto", count: "700+", icon: "⛩️" },
+  { slug: "tokyo", name: "Tokyo", count: "5,000+", icon: "🗼" },
+  { slug: "osaka", name: "Osaka", count: "600+", icon: "🏯" },
+  { slug: "kyoto", name: "Kyoto", count: "500+", icon: "⛩️" },
+  { slug: "nagoya", name: "Nagoya", count: "1,300+", icon: "🏰" },
 ];
 
 const guides = [
@@ -59,7 +60,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold mb-3">Family Toilet Japan</h1>
         <p className="text-sky-100 max-w-md mx-auto mb-6">
           Find family-friendly toilets with baby changing tables in Japan.
-          6,000+ locations in Tokyo, Osaka &amp; Kyoto — free &amp; no sign-up.
+          7,000+ locations in Tokyo, Osaka, Kyoto &amp; Nagoya — free &amp; no sign-up.
         </p>
         <Link
           href="/map"
