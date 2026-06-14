@@ -30,15 +30,94 @@ export const metadata: Metadata = {
   },
 };
 
-const cities = [
-  { slug: "tokyo", name: "Tokyo", count: "5,000+", icon: "🗼" },
-  { slug: "osaka", name: "Osaka", count: "600+", icon: "🏯" },
-  { slug: "kyoto", name: "Kyoto", count: "500+", icon: "⛩️" },
-  { slug: "nagoya", name: "Nagoya", count: "1,300+", icon: "🏰" },
-  { slug: "yokohama", name: "Yokohama", count: "1,300+", icon: "🌉" },
-  { slug: "fukuoka", name: "Fukuoka", count: "300+", icon: "🌸" },
-  { slug: "nara", name: "Nara", count: "150+", icon: "🦌" },
-  { slug: "chiba", name: "Chiba", count: "490+", icon: "🎡" },
+const cityGroups = [
+  {
+    region: "Kanto",
+    cities: [
+      { slug: "tokyo",    name: "Tokyo",    icon: "🗼" },
+      { slug: "yokohama", name: "Yokohama", icon: "🌉" },
+      { slug: "chiba",    name: "Chiba",    icon: "🎡" },
+      { slug: "saitama",  name: "Saitama",  icon: "🏙️" },
+      { slug: "ibaraki",  name: "Mito",     icon: "⚔️" },
+      { slug: "tochigi",  name: "Utsunomiya", icon: "🍓" },
+      { slug: "gunma",    name: "Maebashi", icon: "♨️" },
+    ],
+  },
+  {
+    region: "Kansai",
+    cities: [
+      { slug: "osaka",    name: "Osaka",    icon: "🏯" },
+      { slug: "kyoto",    name: "Kyoto",    icon: "⛩️" },
+      { slug: "nara",     name: "Nara",     icon: "🦌" },
+      { slug: "kobe",     name: "Kobe",     icon: "🌉" },
+      { slug: "shiga",    name: "Otsu",     icon: "🚣" },
+      { slug: "wakayama", name: "Wakayama", icon: "🏯" },
+    ],
+  },
+  {
+    region: "Chubu",
+    cities: [
+      { slug: "nagoya",   name: "Nagoya",   icon: "🏰" },
+      { slug: "shizuoka", name: "Shizuoka", icon: "🗻" },
+      { slug: "kanazawa", name: "Kanazawa", icon: "🏯" },
+      { slug: "niigata",  name: "Niigata",  icon: "🌾" },
+      { slug: "nagano",   name: "Nagano",   icon: "⛷️" },
+      { slug: "gifu",     name: "Gifu",     icon: "🦅" },
+      { slug: "toyama",   name: "Toyama",   icon: "🏔️" },
+      { slug: "fukui",    name: "Fukui",    icon: "🦕" },
+      { slug: "yamanashi",name: "Kofu",     icon: "🍇" },
+      { slug: "mie",      name: "Tsu",      icon: "⛩️" },
+    ],
+  },
+  {
+    region: "Tohoku",
+    cities: [
+      { slug: "sendai",   name: "Sendai",   icon: "🌿" },
+      { slug: "aomori",   name: "Aomori",   icon: "🍎" },
+      { slug: "iwate",    name: "Morioka",  icon: "🐴" },
+      { slug: "akita",    name: "Akita",    icon: "🐕" },
+      { slug: "yamagata", name: "Yamagata", icon: "🍒" },
+      { slug: "fukushima",name: "Fukushima",icon: "🍑" },
+    ],
+  },
+  {
+    region: "Hokkaido",
+    cities: [
+      { slug: "sapporo",  name: "Sapporo",  icon: "❄️" },
+    ],
+  },
+  {
+    region: "Chugoku",
+    cities: [
+      { slug: "hiroshima",name: "Hiroshima",icon: "🕊️" },
+      { slug: "okayama",  name: "Okayama",  icon: "🍑" },
+      { slug: "yamaguchi",name: "Yamaguchi",icon: "🐡" },
+      { slug: "tottori",  name: "Tottori",  icon: "🏖️" },
+      { slug: "shimane",  name: "Matsue",   icon: "🏯" },
+    ],
+  },
+  {
+    region: "Shikoku",
+    cities: [
+      { slug: "kagawa",   name: "Takamatsu",icon: "🍜" },
+      { slug: "ehime",    name: "Matsuyama",icon: "🍊" },
+      { slug: "kochi",    name: "Kochi",    icon: "🐟" },
+      { slug: "tokushima",name: "Tokushima",icon: "💃" },
+    ],
+  },
+  {
+    region: "Kyushu & Okinawa",
+    cities: [
+      { slug: "fukuoka",  name: "Fukuoka",  icon: "🌸" },
+      { slug: "kumamoto", name: "Kumamoto", icon: "🏯" },
+      { slug: "nagasaki", name: "Nagasaki", icon: "⛪" },
+      { slug: "kagoshima",name: "Kagoshima",icon: "🌋" },
+      { slug: "oita",     name: "Oita",     icon: "♨️" },
+      { slug: "miyazaki", name: "Miyazaki", icon: "🌴" },
+      { slug: "saga",     name: "Saga",     icon: "🏺" },
+      { slug: "okinawa",  name: "Naha",     icon: "🐠" },
+    ],
+  },
 ];
 
 const guides = [
@@ -64,8 +143,8 @@ export default function Home() {
         <div className="text-5xl mb-3">🚽</div>
         <h1 className="text-3xl font-bold mb-3">Family Toilet Japan</h1>
         <p className="text-sky-100 max-w-md mx-auto mb-6">
-          Find family-friendly toilets with baby changing tables in Japan.
-          7,000+ locations in Tokyo, Osaka, Kyoto &amp; Nagoya — free &amp; no sign-up.
+          Find family-friendly toilets with baby changing tables across Japan.
+          47 prefectures covered — free &amp; no sign-up.
         </p>
         <Link
           href="/map"
@@ -91,19 +170,25 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Cities */}
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Browse by City</h2>
-        <div className="grid grid-cols-3 gap-3 mb-12">
-          {cities.map(({ slug, name, count, icon }) => (
-            <Link
-              key={slug}
-              href={`/${slug}`}
-              className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-2xl py-5 text-center transition-colors"
-            >
-              <div className="text-3xl mb-1">{icon}</div>
-              <p className="font-bold text-gray-800 text-sm">{name}</p>
-              <p className="text-xs text-gray-500">{count} toilets</p>
-            </Link>
+        {/* Cities by region */}
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Browse by Region</h2>
+        <div className="space-y-6 mb-12">
+          {cityGroups.map(({ region, cities }) => (
+            <div key={region}>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{region}</h3>
+              <div className="grid grid-cols-4 gap-2">
+                {cities.map(({ slug, name, icon }) => (
+                  <Link
+                    key={slug}
+                    href={`/${slug}`}
+                    className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
+                  >
+                    <div className="text-2xl mb-0.5">{icon}</div>
+                    <p className="font-medium text-gray-800 text-xs leading-tight">{name}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
 
