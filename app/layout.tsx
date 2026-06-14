@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     description: "Find family-friendly toilets with baby changing tables in Japan",
     type: "website",
     url: BASE_URL,
-    images: [{ url: `${BASE_URL}/opengraph-image`, width: 1200, height: 630, alt: "Family Toilet Japan" }],
+    images: [{ url: `${BASE_URL}/og-image.png`, width: 1200, height: 630, alt: "Family Toilet Japan" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Family Toilet Japan",
     description: "Find family-friendly toilets with baby changing tables in Japan",
-    images: [`${BASE_URL}/opengraph-image`],
+    images: [`${BASE_URL}/og-image.png`],
   },
 };
 
