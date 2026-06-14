@@ -40,6 +40,15 @@ const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
       "Nagoya Castle and Higashiyama Zoo have well-maintained family toilet blocks",
     ],
   },
+  yokohama: {
+    keywords: ["Yokohama Station", "Minato Mirai", "Chinatown", "Kannai", "Motomachi"],
+    tips: [
+      "Minato Mirai shopping malls (Mark Is, Queen's Square) have excellent family restrooms",
+      "Yokohama Station has clean facilities on multiple floors",
+      "Yamashita Park and Rinko Park have public toilet blocks",
+      "Chinatown area shopping centers have baby-friendly facilities nearby",
+    ],
+  },
 };
 
 interface Props {

@@ -5,7 +5,7 @@ const OG_IMAGE = "https://family-toilet-japan.vercel.app/og-image.png";
 
 export const metadata: Metadata = {
   title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
-  description: "Free map of 7,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, and Nagoya.",
+  description: "Free map of 9,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, Nagoya & Yokohama.",
   keywords: [
     "family friendly toilet japan",
     "baby changing room tokyo",
@@ -13,10 +13,11 @@ export const metadata: Metadata = {
     "public toilet japan map",
     "toilet with baby chair japan",
     "clean public toilet japan",
+    "public toilet yokohama",
   ],
   openGraph: {
     title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
-    description: "Free map of 7,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, and Nagoya.",
+    description: "Free map of 9,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, Nagoya & Yokohama.",
     type: "website",
     url: "https://family-toilet-japan.vercel.app",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Family Toilet Japan" }],
@@ -34,6 +35,7 @@ const cities = [
   { slug: "osaka", name: "Osaka", count: "600+", icon: "🏯" },
   { slug: "kyoto", name: "Kyoto", count: "500+", icon: "⛩️" },
   { slug: "nagoya", name: "Nagoya", count: "1,300+", icon: "🏰" },
+  { slug: "yokohama", name: "Yokohama", count: "1,000+", icon: "🌉" },
 ];
 
 const guides = [
