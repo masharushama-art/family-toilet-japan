@@ -112,6 +112,11 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
             </span>
           </Row>
         )}
+        {toilet.address && (
+          <Row icon="📮" label={t("address")}>
+            <span className="text-gray-700 max-w-[180px] text-right">{toilet.address}</span>
+          </Row>
+        )}
         {toilet.operator && (
           <Row icon="🏢" label={t("facilityName")}>
             <span className="text-gray-700">{toilet.operator}</span>

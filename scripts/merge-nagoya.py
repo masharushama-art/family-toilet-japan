@@ -118,6 +118,9 @@ def main():
                 best["wheelchair"] = True; ch = True
             if name and not best.get("name"):
                 best["name"] = name; ch = True
+            raw_addr = (r.get("住所") or "").strip()
+            if raw_addr and not best.get("address"):
+                best["address"] = "愛知県名古屋市" + raw_addr.split("、")[0].strip(); ch = True
             if ch: enriched += 1
         elif geo:
             # 新規追加（ジオコーディング座標）
@@ -129,6 +132,9 @@ def main():
             if name: rec["name"] = name
             if baby is not None: rec["changingTable"] = baby
             if wc is not None: rec["wheelchair"] = wc
+            raw_addr = (r.get("住所") or "").strip()
+            if raw_addr:
+                rec["address"] = "愛知県名古屋市" + raw_addr.split("、")[0].strip()
             osm.append(rec)  # OSMリストに足して以降の名寄せ基準にも含める
             added_geo += 1
         else:
