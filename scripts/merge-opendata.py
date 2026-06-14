@@ -308,6 +308,17 @@ def main():
     print(f"  New records added:            {stats['added']:,}")
     print(f"  Total after merge:            {len(toilets):,}")
 
+    # 名寄せサンプル（ランダム5件・誤統合の目視確認用）
+    if stats["samples"]:
+        import random as _r
+        _r.seed(42)
+        picks = _r.sample(stats["samples"], min(5, len(stats["samples"])))
+        print("\n=== 名寄せサンプル（ランダム5件・誤統合チェック） ===")
+        for dist, new_name, new_ll, ex_name, ex_ll in picks:
+            print(f"  距離 {dist:.1f}m")
+            print(f"    オープンデータ: {new_name}  ({new_ll[0]:.6f}, {new_ll[1]:.6f})")
+            print(f"    OSM既存施設  : {ex_name}  ({ex_ll[0]:.6f}, {ex_ll[1]:.6f})")
+
     if not args.dry_run:
         save_toilets(toilets)
         print("\nFinal counts:")
