@@ -11,6 +11,7 @@ export const CITIES = {
   yokohama: { name: "Yokohama", jaName: "横浜", lat: 35.443, lon: 139.638 },
   fukuoka: { name: "Fukuoka", jaName: "福岡", lat: 33.590, lon: 130.401 },
   nara: { name: "Nara", jaName: "奈良", lat: 34.685, lon: 135.805 },
+  chiba: { name: "Chiba", jaName: "千葉", lat: 35.605, lon: 140.123 },
 } as const;
 
 export type CitySlug = keyof typeof CITIES;

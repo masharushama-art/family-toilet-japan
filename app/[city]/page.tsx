@@ -67,6 +67,15 @@ const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
       "Deer are friendly but watch food — keep snacks in bags",
     ],
   },
+  chiba: {
+    keywords: ["Tokyo Disneyland", "Tokyo DisneySea", "Makuhari Messe", "Chiba Station", "Inage Seaside Park"],
+    tips: [
+      "Tokyo Disneyland and DisneySea have excellent baby care centers throughout",
+      "Chiba Station area shopping malls (Sogo, Mio) have family restrooms",
+      "Inage Seaside Park has public toilet blocks near the beach",
+      "Makuhari Messe area has clean facilities at the convention center",
+    ],
+  },
 };
 
 interface Props {
