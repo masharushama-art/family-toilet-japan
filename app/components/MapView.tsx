@@ -60,7 +60,7 @@ const geocodedNormalIcon = L.divIcon({
   iconAnchor: [5, 5],
 });
 
-// 重なりクラスタ用バッジ（概算位置が同一座標に複数集中）
+// 概算位置クラスタ用バッジ（同一座標に複数集中）
 function clusterIcon(count: number, hasChanging: boolean) {
   const bg = hasChanging ? "rgba(245,158,11,0.85)" : "rgba(148,163,184,0.85)";
   return L.divIcon({
@@ -68,6 +68,17 @@ function clusterIcon(count: number, hasChanging: boolean) {
     className: "",
     iconSize: [22, 22],
     iconAnchor: [11, 11],
+  });
+}
+
+// 正確座標クラスタ用バッジ（ズームアウト時のグリッドクラスタ）
+function accurateClusterIcon(count: number, hasChanging: boolean) {
+  const bg = hasChanging ? "#0ea5e9" : "#f97316";
+  return L.divIcon({
+    html: `<div style="background:${bg};min-width:28px;height:28px;padding:0 5px;border-radius:14px;border:2px solid white;color:white;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.35)">${count}</div>`,
+    className: "",
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
   });
 }
 
@@ -102,38 +113,83 @@ function FlyToLocation({ position }: { position: [number, number] | null }) {
   return null;
 }
 
-// ビューポート内の正確座標ピンのみ描画。moveend/zoomend で再計算。
+// ビューポート内の正確座標ピン。ズームに応じてグリッドクラスタリング。
 function AccurateMarkers({
   toilets,
   onSelect,
+  onSelectGroup,
 }: {
   toilets: Toilet[];
   onSelect: (t: Toilet) => void;
+  onSelectGroup: (g: Toilet[]) => void;
 }) {
   const map = useMap();
   const [visible, setVisible] = useState<Toilet[]>([]);
+  const [zoom, setZoom] = useState(() => map.getZoom());
   const allRef = useRef(toilets);
   allRef.current = toilets;
 
   const update = useCallback(() => {
     const bounds = map.getBounds().pad(0.2);
+    setZoom(map.getZoom());
     setVisible(allRef.current.filter((t) => bounds.contains([t.lat, t.lon])));
   }, [map]);
 
   useMapEvents({ moveend: update, zoomend: update });
-
   useEffect(() => { update(); }, [update, toilets]);
+
+  // ズームレベルに応じたグリッドサイズ（度単位）
+  const gridSize =
+    zoom >= 16 ? 0 :
+    zoom >= 14 ? 0.0015 :
+    zoom >= 12 ? 0.004 :
+    0.01;
+
+  type Cluster = { key: string; lat: number; lon: number; items: Toilet[] };
+  let clusters: Cluster[];
+
+  if (gridSize === 0) {
+    clusters = visible.map((t) => ({ key: t.id, lat: t.lat, lon: t.lon, items: [t] }));
+  } else {
+    const cells = new Map<string, Toilet[]>();
+    for (const t of visible) {
+      const k = `${Math.round(t.lat / gridSize)},${Math.round(t.lon / gridSize)}`;
+      const g = cells.get(k) ?? [];
+      g.push(t);
+      cells.set(k, g);
+    }
+    clusters = Array.from(cells.entries()).map(([key, items]) => ({
+      key,
+      lat: items.reduce((s, t) => s + t.lat, 0) / items.length,
+      lon: items.reduce((s, t) => s + t.lon, 0) / items.length,
+      items,
+    }));
+  }
 
   return (
     <>
-      {visible.map((t) => (
-        <Marker
-          key={t.id}
-          position={[t.lat, t.lon]}
-          icon={t.changingTable ? changingTableIcon : normalIcon}
-          eventHandlers={{ click: () => onSelect(t) }}
-        />
-      ))}
+      {clusters.map(({ key, lat, lon, items }) => {
+        if (items.length === 1) {
+          const t = items[0];
+          return (
+            <Marker
+              key={key}
+              position={[t.lat, t.lon]}
+              icon={t.changingTable ? changingTableIcon : normalIcon}
+              eventHandlers={{ click: () => onSelect(t) }}
+            />
+          );
+        }
+        const hasChanging = items.some((t) => t.changingTable);
+        return (
+          <Marker
+            key={key}
+            position={[lat, lon]}
+            icon={accurateClusterIcon(items.length, hasChanging)}
+            eventHandlers={{ click: () => onSelectGroup(items) }}
+          />
+        );
+      })}
     </>
   );
 }
@@ -403,8 +459,8 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           </Marker>
         )}
 
-        {/* 正確座標：ビューポート内のみ描画 */}
-        <AccurateMarkers toilets={accurate} onSelect={setSelected} />
+        {/* 正確座標：ビューポート内のみ描画（ズームアウト時はグリッドクラスタ） */}
+        <AccurateMarkers toilets={accurate} onSelect={setSelected} onSelectGroup={(g) => { setClusterGroup(g); setSelected(null); }} />
 
         {/* 概算座標(geocoded)：クラスタバッジで全件描画（約97クラスタ） */}
         <GeocodedMarkers
