@@ -13,6 +13,7 @@ import { getFavorites } from "../lib/favorites";
 import { getHistory } from "../lib/history";
 import { getNearestCity, CITIES_CONFIG } from "../lib/cities-config";
 import { calcDistance, formatDistance } from "../lib/distance";
+import { requestNotificationPermission, checkProximity } from "../lib/proximity-alert";
 
 // Leafletデフォルトアイコン修正
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -254,6 +255,8 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   const [historyIds, setHistoryIds] = useState<string[]>([]);
   const [gpsError, setGpsError] = useState("");
   const [listSort, setListSort] = useState<"distance" | "changing">("distance");
+  const [alertEnabled, setAlertEnabled] = useState(false);
+  const watchIdRef = useRef<number | null>(null);
   const mapRef = useRef<L.Map | null>(null);
 
   const loadCity = useCallback((slug: string) => {
@@ -287,6 +290,29 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
   // 初期都市をロード
   useEffect(() => { loadCity(city); }, [city, loadCity]);
+
+  // アラートON中にフィルター変化した場合も最新データを参照するためのref
+  // (filtered の宣言より後で .current を更新する)
+  const filteredRef = useRef<typeof toilets>([]);
+
+  // 近接アラートのon/off
+  const toggleAlert = useCallback(async () => {
+    if (alertEnabled) {
+      if (watchIdRef.current !== null) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+        watchIdRef.current = null;
+      }
+      setAlertEnabled(false);
+      return;
+    }
+    const granted = await requestNotificationPermission();
+    if (!granted) return;
+    const id = navigator.geolocation.watchPosition((pos) => {
+      checkProximity(pos.coords.latitude, pos.coords.longitude, filteredRef.current);
+    }, undefined, { enableHighAccuracy: true, maximumAge: 10000 });
+    watchIdRef.current = id;
+    setAlertEnabled(true);
+  }, [alertEnabled]);
 
   // シェアリンク経由: 指定IDのトイレを自動選択してflyTo
   const initialIdHandled = useRef(false);
@@ -368,6 +394,9 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
     return withDist.sort((a, b) => a._dist - b._dist);
   })().slice(0, 50);
 
+  // アラート用に常に最新のfiltered listをrefに同期
+  filteredRef.current = filtered;
+
   // 正確座標 / 概算座標(geocoded) に分離。概算は同一座標でまとめてクラスタ化。
   const accurate = filtered.filter((t) => !t.geocoded);
   const geoGroups = new Map<string, Toilet[]>();
@@ -421,6 +450,13 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
             className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"
           >
             🕐
+          </button>
+          <button
+            onClick={toggleAlert}
+            className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${alertEnabled ? "bg-amber-400 text-white" : "bg-gray-100 text-gray-600"}`}
+            title={alertEnabled ? "Disable nearby alerts" : "Enable nearby alerts (150m)"}
+          >
+            🔔
           </button>
           <button
             onClick={() => setShowFilter(!showFilter)}
