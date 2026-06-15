@@ -11,6 +11,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { useI18n } from "../i18n/provider";
 import { getFavorites } from "../lib/favorites";
 import { getNearestCity, CITIES_CONFIG } from "../lib/cities-config";
+import { calcDistance, formatDistance } from "../lib/distance";
 
 // Leafletデフォルトアイコン修正
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -166,6 +167,7 @@ const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
 export default function MapView({ initialCenter, city = "tokyo" }: { initialCenter?: [number, number]; city?: string }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [showList, setShowList] = useState(false);
   const [cityCache, setCityCache] = useState<Map<string, Toilet[]>>(new Map());
   const [currentCity, setCurrentCity] = useState(city);
   const loadingRef = useRef<Set<string>>(new Set());
@@ -247,6 +249,14 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
     return true;
   });
 
+  // 距離順リスト（現在地ある時のみ）
+  const nearbyList = userPos
+    ? [...filtered]
+        .map((t) => ({ ...t, _dist: calcDistance(userPos[0], userPos[1], t.lat, t.lon) }))
+        .sort((a, b) => a._dist - b._dist)
+        .slice(0, 30)
+    : filtered.slice(0, 30);
+
   // 正確座標 / 概算座標(geocoded) に分離。概算は同一座標でまとめてクラスタ化。
   const accurate = filtered.filter((t) => !t.geocoded);
   const geoGroups = new Map<string, Toilet[]>();
@@ -282,6 +292,12 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
             className={`px-3 py-1 rounded-full text-sm font-medium ${showSearch || searchQuery ? "bg-sky-500 text-white" : "bg-gray-100 text-gray-600"}`}
           >
             🔍
+          </button>
+          <button
+            onClick={() => setShowList(!showList)}
+            className={`px-3 py-1 rounded-full text-sm font-medium ${showList ? "bg-sky-500 text-white" : "bg-gray-100 text-gray-600"}`}
+          >
+            ≡
           </button>
           <button
             onClick={() => { setFavIds(getFavorites()); setShowFavs(true); }}
@@ -446,6 +462,58 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
                 </div>
               </button>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* 距離順リスト */}
+      {showList && (
+        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl flex flex-col" style={{ maxHeight: "60vh" }}>
+          <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
+            <div className="w-10 h-1 bg-gray-200 rounded-full" />
+          </div>
+          <div className="px-5 pb-2 flex items-center justify-between flex-shrink-0">
+            <div>
+              <h2 className="font-bold text-gray-900 text-base">
+                {userPos ? "📍 Nearest Toilets" : "🚽 Toilets List"}
+              </h2>
+              <p className="text-xs text-gray-400 mt-0.5">{filtered.length.toLocaleString()} total · showing {nearbyList.length}</p>
+            </div>
+            <button onClick={() => setShowList(false)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+          </div>
+          <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-2">
+            {nearbyList.map((toilet) => {
+              const dist = userPos ? calcDistance(userPos[0], userPos[1], toilet.lat, toilet.lon) : null;
+              return (
+                <button
+                  key={toilet.id}
+                  onClick={() => { setSelected(toilet); setShowList(false); }}
+                  className="w-full text-left bg-gray-50 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-gray-800 text-sm truncate">
+                        {toilet.nameEn || toilet.name || (toilet.changingTable ? "Baby-friendly Toilet" : "Public Toilet")}
+                      </p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        {dist !== null && (
+                          <span className="text-xs text-sky-600 font-medium">{formatDistance(dist)}</span>
+                        )}
+                        {toilet.address && (
+                          <span className="text-xs text-gray-400 truncate">{toilet.address}</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5 ml-3 flex-shrink-0">
+                      {toilet.changingTable && <span className="text-sm">🍼</span>}
+                      {toilet.wheelchair && <span className="text-sm">♿</span>}
+                      {toilet.fee === false && <span className="text-xs text-green-600 font-medium">Free</span>}
+                      <span className="text-gray-400 text-sm">›</span>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
