@@ -13,7 +13,16 @@ export const metadata: Metadata = {
     "おむつ替え 公衆トイレ",
     "ベビールーム 日本",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/ja" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/ja",
+    languages: {
+      "en":        "https://family-toilet-japan.vercel.app",
+      "ja":        "https://family-toilet-japan.vercel.app/ja",
+      "zh-TW":     "https://family-toilet-japan.vercel.app/zh",
+      "ko":        "https://family-toilet-japan.vercel.app/ko",
+      "x-default": "https://family-toilet-japan.vercel.app",
+    },
+  },
 };
 
 const cities = [

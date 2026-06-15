@@ -14,7 +14,16 @@ export const metadata: Metadata = {
     "日本旅遊 嬰兒",
     "日本公共廁所地圖",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/zh" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/zh",
+    languages: {
+      "en":        "https://family-toilet-japan.vercel.app",
+      "ja":        "https://family-toilet-japan.vercel.app/ja",
+      "zh-TW":     "https://family-toilet-japan.vercel.app/zh",
+      "ko":        "https://family-toilet-japan.vercel.app/ko",
+      "x-default": "https://family-toilet-japan.vercel.app",
+    },
+  },
 };
 
 const cities = [

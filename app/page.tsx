@@ -42,6 +42,16 @@ export const metadata: Metadata = {
     description: "Free map of 6,000+ family-friendly toilets in Japan.",
     images: [OG_IMAGE],
   },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app",
+    languages: {
+      "en":        "https://family-toilet-japan.vercel.app",
+      "ja":        "https://family-toilet-japan.vercel.app/ja",
+      "zh-TW":     "https://family-toilet-japan.vercel.app/zh",
+      "ko":        "https://family-toilet-japan.vercel.app/ko",
+      "x-default": "https://family-toilet-japan.vercel.app",
+    },
+  },
 };
 
 const cityGroups = [
