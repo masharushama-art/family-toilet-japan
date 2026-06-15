@@ -23,6 +23,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const guidePages = [
     "how-to-use-japanese-toilet",
     "japan-travel-with-baby",
+    "best-baby-changing-facilities-tokyo",
+    "japan-toilet-etiquette",
+    "osaka-family-travel-tips",
   ].map((slug) => ({
     url: `${BASE_URL}/guide/${slug}`,
     lastModified: new Date(),
