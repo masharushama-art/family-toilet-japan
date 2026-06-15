@@ -68,6 +68,7 @@ const CITY_CENTERS: Record<string, [number, number]> = {
 export default function MapPageClient() {
   const searchParams = useSearchParams();
   const city = searchParams.get("city") ?? "tokyo";
+  const initialToiletId = searchParams.get("id") ?? undefined;
   const initialCenter = CITY_CENTERS[city] ?? CITY_CENTERS.tokyo;
-  return <MapView initialCenter={initialCenter} city={city} />;
+  return <MapView initialCenter={initialCenter} city={city} initialToiletId={initialToiletId} />;
 }
