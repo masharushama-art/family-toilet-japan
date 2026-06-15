@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import fs from "fs";
 import path from "path";
 import CitySearch from "./components/CitySearch";
+import { AdUnit } from "./components/AdSense";
 
 function getCityCount(slug: string): number {
   try {
@@ -263,6 +264,9 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        {/* Ad */}
+        <AdUnit slot="7391048265" label="Top page — between regions and guides" />
 
         {/* Guides */}
         <h2 className="text-xl font-bold text-gray-800 mb-4">Travel Guides</h2>

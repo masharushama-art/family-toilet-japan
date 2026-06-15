@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, CATEGORIES, getCityStats, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
 import ShareButtons from "../components/ShareButtons";
+import { AdUnit } from "../components/AdSense";
 
 const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
   tokyo: {
@@ -184,6 +185,9 @@ export default async function CityPage({ params }: Props) {
             </Link>
           ))}
         </div>
+
+        {/* Ad */}
+        <AdUnit slot="2847361905" label="City page — between categories and tips" />
 
         {/* Tips */}
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
