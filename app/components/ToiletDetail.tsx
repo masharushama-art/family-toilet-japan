@@ -4,6 +4,7 @@ import type { Toilet } from "../types/toilet";
 import { getOpenStatus, formatHours } from "../lib/opening-hours";
 import { calcDistance, formatDistance } from "../lib/distance";
 import { useI18n } from "../i18n/provider";
+import ShareButtons from "./ShareButtons";
 
 interface Props {
   toilet: Toilet;
@@ -132,7 +133,7 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
         </Row>
       </div>
 
-      <div className="px-5 py-4">
+      <div className="px-5 py-4 space-y-3">
         <a
           href={mapsUrl}
           target="_blank"
@@ -141,6 +142,12 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
         >
           🗺️ {t("openInMaps")}
         </a>
+        <div className="flex justify-center">
+          <ShareButtons
+            url={`https://www.google.com/maps?q=${toilet.lat},${toilet.lon}`}
+            text={`${toilet.nameEn || toilet.name || "Family-friendly toilet"} — found on Family Toilet Japan 🚽🍼`}
+          />
+        </div>
       </div>
     </div>
   );
