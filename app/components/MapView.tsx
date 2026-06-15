@@ -30,12 +30,12 @@ const changingTableIcon = L.divIcon({
   iconAnchor: [7, 7],
 });
 
-// 通常トイレアイコン（グレー）
+// 通常トイレアイコン（オレンジ）
 const normalIcon = L.divIcon({
-  html: `<div style="background:#6b7280;width:10px;height:10px;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></div>`,
+  html: `<div style="background:#f97316;width:12px;height:12px;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></div>`,
   className: "",
-  iconSize: [10, 10],
-  iconAnchor: [5, 5],
+  iconSize: [12, 12],
+  iconAnchor: [6, 6],
 });
 
 // 現在地アイコン
@@ -456,7 +456,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           <span>{t("changingTable")}</span>
         </div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="inline-block w-3 h-3 rounded-full bg-gray-400 border-2 border-white shadow"></span>
+          <span className="inline-block w-3 h-3 rounded-full border-2 border-white shadow" style={{ background: "#f97316" }}></span>
           <span>{t("unnamedToilet")}</span>
         </div>
         <div className="flex items-center gap-2">
