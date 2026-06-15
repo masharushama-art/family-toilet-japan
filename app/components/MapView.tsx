@@ -70,12 +70,19 @@ function clusterIcon(count: number, hasChanging: boolean) {
   });
 }
 
-function AutoCityLoader({ onNearestCity }: { onNearestCity: (slug: string) => void }) {
+function AutoCityLoader({
+  onNearestCity,
+  onMoved,
+}: {
+  onNearestCity: (slug: string) => void;
+  onMoved: () => void;
+}) {
   const map = useMap();
   const cb = useCallback(() => {
     const c = map.getCenter();
     onNearestCity(getNearestCity(c.lat, c.lng));
-  }, [map, onNearestCity]);
+    onMoved();
+  }, [map, onNearestCity, onMoved]);
   useMapEvents({ moveend: cb, zoomend: cb });
   return null;
 }
@@ -168,6 +175,8 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [showList, setShowList] = useState(false);
+  const [showReSearch, setShowReSearch] = useState(false);
+  const isFirstMove = useRef(true);
   const [cityCache, setCityCache] = useState<Map<string, Toilet[]>>(new Map());
   const [currentCity, setCurrentCity] = useState(city);
   const loadingRef = useRef<Set<string>>(new Set());
@@ -346,6 +355,9 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
         <AutoCityLoader onNearestCity={(slug) => {
           setCurrentCity(slug);
           loadCity(slug);
+        }} onMoved={() => {
+          if (isFirstMove.current) { isFirstMove.current = false; return; }
+          setShowReSearch(true);
         }} />
         <FlyToLocation position={userPos} />
 
@@ -366,6 +378,18 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           onSelectGroup={(g) => { setClusterGroup(g); setSelected(null); }}
         />
       </MapContainer>
+
+      {/* 再検索ボタン */}
+      {showReSearch && (
+        <div className="absolute top-16 left-1/2 -translate-x-1/2 z-[1000] pointer-events-none flex justify-center">
+          <button
+            onClick={() => { loadCity(currentCity); setShowReSearch(false); }}
+            className="pointer-events-auto bg-white shadow-lg text-sky-700 font-semibold text-sm px-5 py-2 rounded-full border border-sky-200 hover:bg-sky-50 active:bg-sky-100 transition-colors"
+          >
+            🔍 Search this area
+          </button>
+        </div>
+      )}
 
       {/* GPS ボタン */}
       <button
