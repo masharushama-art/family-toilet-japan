@@ -16,13 +16,13 @@ const withPWA = require("next-pwa")({
         cacheableResponse: { statuses: [0, 200] },
       },
     },
-    // トイレデータJSONをキャッシュ
+    // 都市別トイレデータJSONをキャッシュ（訪問済み都市はオフラインでも使える）
     {
-      urlPattern: /\/data\/toilets\.json$/i,
-      handler: "CacheFirst",
+      urlPattern: /\/data\/cities\/.+\.json$/i,
+      handler: "StaleWhileRevalidate",
       options: {
-        cacheName: "toilet-data",
-        expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 7 },
+        cacheName: "toilet-data-cities",
+        expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 7 },
         cacheableResponse: { statuses: [0, 200] },
       },
     },
