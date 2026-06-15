@@ -208,6 +208,14 @@ export default async function CityPage({ params }: Props) {
           __html: JSON.stringify([
             {
               "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Family Toilet Japan", item: "https://family-toilet-japan.vercel.app" },
+                { "@type": "ListItem", position: 2, name: c.name, item: `https://family-toilet-japan.vercel.app/${city}` },
+              ],
+            },
+            {
+              "@context": "https://schema.org",
               "@type": "WebPage",
               name: `Family Friendly Toilets in ${c.name}`,
               description: `Find ${stats.total}+ family-friendly toilets in ${c.name}, Japan`,
