@@ -6,23 +6,23 @@ const withPWA = require("next-pwa")({
   register: true,
   skipWaiting: true,
   runtimeCaching: [
-    // OSMマップタイルをキャッシュ（オフライン地図）
+    // Esriマップタイルをキャッシュ（閲覧済みエリアはオフラインでも表示）
     {
-      urlPattern: /^https:\/\/[abc]\.tile\.openstreetmap\.org\/.*/i,
+      urlPattern: /^https:\/\/server\.arcgisonline\.com\/.*/i,
       handler: "CacheFirst",
       options: {
-        cacheName: "osm-tiles",
-        expiration: { maxEntries: 500, maxAgeSeconds: 60 * 60 * 24 * 30 },
+        cacheName: "esri-tiles",
+        expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 30 },
         cacheableResponse: { statuses: [0, 200] },
       },
     },
-    // 都市別トイレデータJSONをキャッシュ（訪問済み都市はオフラインでも使える）
+    // 都市別トイレデータJSON（訪問済み都市はオフラインでも使える・30日保持）
     {
       urlPattern: /\/data\/cities\/.+\.json$/i,
       handler: "StaleWhileRevalidate",
       options: {
         cacheName: "toilet-data-cities",
-        expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 7 },
+        expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 30 },
         cacheableResponse: { statuses: [0, 200] },
       },
     },
@@ -47,6 +47,9 @@ const withPWA = require("next-pwa")({
       },
     },
   ],
+  fallbacks: {
+    document: "/offline",
+  },
 });
 
 const nextConfig: NextConfig = {
