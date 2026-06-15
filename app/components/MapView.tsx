@@ -322,6 +322,21 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
     setAlertEnabled(true);
   }, [alertEnabled]);
 
+  // Escape キーで開いているパネルをすべて閉じる
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (selected) { setSelected(null); return; }
+      if (clusterGroup) { setClusterGroup(null); return; }
+      if (showList) { setShowList(false); return; }
+      if (showFavs) { setShowFavs(false); return; }
+      if (showHistory) { setShowHistory(false); return; }
+      if (showFilter) { setShowFilter(false); return; }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [selected, clusterGroup, showList, showFavs, showHistory, showFilter]);
+
   // シェアリンク経由: 指定IDのトイレを自動選択してflyTo
   const initialIdHandled = useRef(false);
   useEffect(() => {
@@ -437,37 +452,46 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
           <LanguageSwitcher />
           <button
             onClick={() => { setShowSearch(!showSearch); if (showSearch) setSearchQuery(""); }}
+            aria-label={showSearch ? "Close search" : "Search toilets"}
+            aria-expanded={showSearch}
             className={`px-3 py-1 rounded-full text-sm font-medium ${showSearch || searchQuery ? "bg-sky-500 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"}`}
           >
             🔍
           </button>
           <button
             onClick={() => setShowList(!showList)}
+            aria-label={showList ? "Close toilet list" : "Open toilet list"}
+            aria-expanded={showList}
             className={`px-3 py-1 rounded-full text-sm font-medium ${showList ? "bg-sky-500 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"}`}
           >
             ≡
           </button>
           <button
             onClick={() => { setFavIds(getFavorites()); setShowFavs(true); }}
+            aria-label="Open favorites"
             className="bg-red-50 dark:bg-red-900/30 text-red-500 px-3 py-1 rounded-full text-sm font-medium"
           >
             ♥
           </button>
           <button
             onClick={() => { setHistoryIds(getHistory()); setShowHistory(true); }}
+            aria-label="Open recently viewed"
             className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-sm font-medium"
           >
             🕐
           </button>
           <button
             onClick={toggleAlert}
+            aria-label={alertEnabled ? "Disable nearby alerts" : "Enable nearby alerts within 150m"}
+            aria-pressed={alertEnabled}
             className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${alertEnabled ? "bg-amber-400 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"}`}
-            title={alertEnabled ? "Disable nearby alerts" : "Enable nearby alerts (150m)"}
           >
             🔔
           </button>
           <button
             onClick={() => setShowFilter(!showFilter)}
+            aria-label="Toggle filters"
+            aria-expanded={showFilter}
             className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-400 px-3 py-1 rounded-full text-sm font-medium"
           >
             {t("filters")} {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly) ? "●" : ""}
@@ -565,8 +589,8 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
       {/* GPS ボタン */}
       <button
         onClick={getLocation}
+        aria-label="Find my location"
         className="absolute bottom-32 right-4 z-[1000] bg-white dark:bg-gray-800 shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-xl"
-        title="Find my location"
       >
         📍
       </button>
@@ -591,7 +615,11 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
       </div>
 
       {/* 件数表示 */}
-      <div className="absolute bottom-4 right-4 z-[1000] bg-white dark:bg-gray-800 rounded-lg shadow px-3 py-2 text-xs text-gray-600 dark:text-gray-400">
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        className="absolute bottom-4 right-4 z-[1000] bg-white dark:bg-gray-800 rounded-lg shadow px-3 py-2 text-xs text-gray-600 dark:text-gray-400"
+      >
         {filtered.length.toLocaleString()} toilets
       </div>
 
@@ -624,7 +652,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
       {/* クラスタグループ一覧（概算位置の複数トイレ） */}
       {clusterGroup && !selected && (
-        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
+        <div role="dialog" aria-modal="true" aria-label="Nearby toilets" className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>
@@ -666,7 +694,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
       {/* 距離順リスト */}
       {showList && (
-        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl flex flex-col" style={{ maxHeight: "60vh" }}>
+        <div role="dialog" aria-modal="true" aria-label="Toilet list" className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl flex flex-col" style={{ maxHeight: "60vh" }}>
           <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
             <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>
@@ -731,7 +759,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
       {/* お気に入り一覧 */}
       {showFavs && (
-        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
+        <div role="dialog" aria-modal="true" aria-label="Favorites" className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>
@@ -776,7 +804,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
       {/* 最近見たトイレ */}
       {showHistory && (
-        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
+        <div role="dialog" aria-modal="true" aria-label="Recently viewed toilets" className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>

@@ -65,7 +65,7 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
   const handleFav = () => { setFav(toggleFavorite(toilet.id)); };
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col">
+    <div role="dialog" aria-modal="true" aria-labelledby="toilet-detail-title" className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col">
       {/* ドラッグハンドル */}
       <div className="flex justify-center pt-3 pb-1">
         <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
@@ -73,7 +73,7 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
 
       <div className="px-5 pb-2 flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <h2 className="font-bold text-gray-900 dark:text-white text-base leading-tight truncate">
+          <h2 id="toilet-detail-title" className="font-bold text-gray-900 dark:text-white text-base leading-tight truncate">
             {toilet.nameEn || toilet.name ||
               (toilet.changingTable ? t("unnamedToiletBaby") : t("unnamedToilet"))}
           </h2>
@@ -98,7 +98,7 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
           >
             {fav ? "♥" : "♡"}
           </button>
-          <button onClick={onClose} className="bg-gray-100 hover:bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 text-sm transition-colors">✕</button>
+          <button onClick={onClose} aria-label="Close toilet details" className="bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 dark:text-gray-300 text-sm transition-colors">✕</button>
         </div>
       </div>
 
