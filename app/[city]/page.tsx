@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, CATEGORIES, getCityStats, type CitySlug } from "../lib/toilet-data";
+import ShareButtons from "../components/ShareButtons";
 
 const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
   tokyo: {
@@ -132,6 +133,12 @@ export default async function CityPage({ params }: Props) {
         >
           📍 Open Map
         </Link>
+        <div className="mt-4 flex justify-center">
+          <ShareButtons
+            url={`https://family-toilet-japan.vercel.app/${city}`}
+            text={`Find family-friendly toilets in ${c.name}, Japan — ${stats.total}+ locations with baby changing tables 🍼`}
+          />
+        </div>
       </div>
 
       {/* Stats */}
