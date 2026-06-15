@@ -70,7 +70,7 @@ export default function JaPage() {
           {cities.map(({ slug, name, icon, count }) => (
             <Link
               key={slug}
-              href={`/${slug}`}
+              href={`/ja/${slug}`}
               className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
             >
               <div className="text-2xl mb-0.5">{icon}</div>
