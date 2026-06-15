@@ -244,6 +244,9 @@ export default function Home() {
             OpenStreetMap and is updated regularly.
           </p>
           <p className="text-xs text-gray-400">
+            Last updated: June 2026 · 16,277 locations
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
             Data: © OpenStreetMap contributors (ODbL) + Municipal Open Data (CC BY) ·{" "}
             <Link href="/attribution" className="underline hover:text-gray-600">Data sources &amp; attribution</Link>
             {" "}·{" "}
