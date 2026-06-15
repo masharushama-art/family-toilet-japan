@@ -37,7 +37,9 @@ function Row({ icon, label, children }: { icon: string; label: string; children:
 
 export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
   const { t } = useI18n();
-  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${toilet.lat},${toilet.lon}&travelmode=walking`;
+  const [travelMode, setTravelMode] = useState<"walking"|"transit"|"driving">("walking");
+  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${toilet.lat},${toilet.lon}&travelmode=${travelMode}`;
+  const streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${toilet.lat},${toilet.lon}`;
   const openStatus = getOpenStatus(toilet.openingHours);
   const distance =
     userPos ? calcDistance(userPos[0], userPos[1], toilet.lat, toilet.lon) : null;
@@ -190,6 +192,21 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
       </div>
 
       <div className="px-5 py-4 space-y-3">
+        {/* 交通手段選択 */}
+        <div className="flex gap-2">
+          {(["walking","transit","driving"] as const).map((mode) => {
+            const labels = { walking: "🚶 Walk", transit: "🚇 Transit", driving: "🚗 Drive" };
+            return (
+              <button
+                key={mode}
+                onClick={() => setTravelMode(mode)}
+                className={`flex-1 text-xs font-medium py-2 rounded-lg transition-colors ${travelMode === mode ? "bg-sky-500 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+              >
+                {labels[mode]}
+              </button>
+            );
+          })}
+        </div>
         <a
           href={mapsUrl}
           target="_blank"
@@ -198,7 +215,15 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
         >
           🗺️ {t("openInMaps")}
         </a>
-        <div className="flex justify-center">
+        <div className="flex items-center justify-between">
+          <a
+            href={streetViewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-gray-400 hover:text-sky-600 transition-colors flex items-center gap-1"
+          >
+            🔭 Street View
+          </a>
           <ShareButtons
             url={`https://www.google.com/maps?q=${toilet.lat},${toilet.lon}`}
             text={`${toilet.nameEn || toilet.name || "Family-friendly toilet"} — found on Family Toilet Japan 🚽🍼`}
