@@ -253,6 +253,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
   const [showHistory, setShowHistory] = useState(false);
   const [historyIds, setHistoryIds] = useState<string[]>([]);
   const [gpsError, setGpsError] = useState("");
+  const [listSort, setListSort] = useState<"distance" | "changing">("distance");
   const mapRef = useRef<L.Map | null>(null);
 
   const loadCity = useCallback((slug: string) => {
@@ -342,13 +343,19 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
     return true;
   });
 
-  // 距離順リスト（現在地ある時のみ）
-  const nearbyList = userPos
-    ? [...filtered]
-        .map((t) => ({ ...t, _dist: calcDistance(userPos[0], userPos[1], t.lat, t.lon) }))
-        .sort((a, b) => a._dist - b._dist)
-        .slice(0, 30)
-    : filtered.slice(0, 30);
+  // リスト表示用ソート（距離順 or おむつ替え台優先）
+  const sortedList = (() => {
+    const withDist = userPos
+      ? filtered.map((t) => ({ ...t, _dist: calcDistance(userPos[0], userPos[1], t.lat, t.lon) }))
+      : filtered.map((t) => ({ ...t, _dist: Infinity }));
+    if (listSort === "changing") {
+      return withDist.sort((a, b) => {
+        if (a.changingTable !== b.changingTable) return a.changingTable ? -1 : 1;
+        return a._dist - b._dist;
+      });
+    }
+    return withDist.sort((a, b) => a._dist - b._dist);
+  })().slice(0, 50);
 
   // 正確座標 / 概算座標(geocoded) に分離。概算は同一座標でまとめてクラスタ化。
   const accurate = filtered.filter((t) => !t.geocoded);
@@ -604,15 +611,28 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           </div>
           <div className="px-5 pb-2 flex items-center justify-between flex-shrink-0">
             <div>
-              <h2 className="font-bold text-gray-900 text-base">
-                {userPos ? `📍 ${t("nearestToilets")}` : `🚽 ${t("toiletsList")}`}
-              </h2>
-              <p className="text-xs text-gray-400 mt-0.5">{filtered.length.toLocaleString()} total · showing {nearbyList.length}</p>
+              <h2 className="font-bold text-gray-900 text-base">🚽 {t("toiletsList")}</h2>
+              <p className="text-xs text-gray-400 mt-0.5">{filtered.length.toLocaleString()} total · showing {sortedList.length}</p>
             </div>
             <button onClick={() => setShowList(false)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
           </div>
+          {/* ソート切替 */}
+          <div className="px-5 pb-2 flex gap-2 flex-shrink-0">
+            {(["distance", "changing"] as const).map((mode) => {
+              const labels = { distance: "📍 Nearest", changing: "🍼 Baby first" };
+              return (
+                <button
+                  key={mode}
+                  onClick={() => setListSort(mode)}
+                  className={`flex-1 text-xs font-medium py-1.5 rounded-lg transition-colors ${listSort === mode ? "bg-sky-500 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+                >
+                  {labels[mode]}
+                </button>
+              );
+            })}
+          </div>
           <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-2">
-            {nearbyList.map((toilet) => {
+            {sortedList.map((toilet) => {
               const dist = userPos ? calcDistance(userPos[0], userPos[1], toilet.lat, toilet.lon) : null;
               return (
                 <button
