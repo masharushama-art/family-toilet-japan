@@ -30,6 +30,7 @@ const cities = [
 
 export default function ZhPage() {
   return (
+    <>
     <div className="min-h-screen bg-white">
       <div className="bg-sky-600 text-white px-6 py-14 text-center">
         <div className="text-5xl mb-3">🚽</div>
@@ -98,5 +99,22 @@ export default function ZhPage() {
         </div>
       </div>
     </div>
+
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            { "@type": "Question", name: "如何使用？", acceptedAnswer: { "@type": "Answer", text: "開啟地圖，點擊定位按鈕，即可看到附近有換尿布台的廁所。藍色標記代表有換尿布台的廁所。" } },
+            { "@type": "Question", name: "資料來源？", acceptedAnswer: { "@type": "Answer", text: "資料來自 OpenStreetMap 及各地方政府開放資料，全日本收錄超過 16,000 處。" } },
+            { "@type": "Question", name: "可以離線使用嗎？", acceptedAnswer: { "@type": "Answer", text: "安裝為 PWA 後，曾開啟過的區域可離線瀏覽地圖。" } },
+            { "@type": "Question", name: "需要付費嗎？", acceptedAnswer: { "@type": "Answer", text: "完全免費，無需註冊。" } },
+          ],
+        }),
+      }}
+    />
+    </>
   );
 }

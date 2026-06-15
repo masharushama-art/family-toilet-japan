@@ -30,6 +30,7 @@ const cities = [
 
 export default function KoPage() {
   return (
+    <>
     <div className="min-h-screen bg-white">
       <div className="bg-sky-600 text-white px-6 py-14 text-center">
         <div className="text-5xl mb-3">🚽</div>
@@ -99,5 +100,22 @@ export default function KoPage() {
         </div>
       </div>
     </div>
+
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            { "@type": "Question", name: "어떻게 사용하나요?", acceptedAnswer: { "@type": "Answer", text: "지도를 열고 위치 버튼을 누르면 근처의 기저귀 교환대가 있는 화장실이 표시됩니다. 파란 핀이 기저귀 교환대가 있는 화장실입니다." } },
+            { "@type": "Question", name: "데이터 출처는?", acceptedAnswer: { "@type": "Answer", text: "OpenStreetMap과 각 지자체 공개 데이터를 사용합니다. 전국 16,000곳 이상 수록." } },
+            { "@type": "Question", name: "오프라인에서 사용 가능한가요?", acceptedAnswer: { "@type": "Answer", text: "PWA로 설치하면 한 번 열었던 지역은 오프라인에서도 지도를 볼 수 있습니다." } },
+            { "@type": "Question", name: "유료인가요?", acceptedAnswer: { "@type": "Answer", text: "완전 무료이며 회원가입이 필요 없습니다." } },
+          ],
+        }),
+      }}
+    />
+    </>
   );
 }
