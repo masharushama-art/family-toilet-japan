@@ -146,6 +146,24 @@ const guides = [
     desc: "Changing rooms, strollers, eating out, and packing tips",
     icon: "👶",
   },
+  {
+    href: "/guide/best-baby-changing-facilities-tokyo",
+    title: "Best Baby Changing Facilities in Tokyo",
+    desc: "Shinjuku, Shibuya, Ginza, Ueno — area by area guide",
+    icon: "🗼",
+  },
+  {
+    href: "/guide/japan-toilet-etiquette",
+    title: "Japan Toilet Etiquette Guide",
+    desc: "Slippers, sound machines, washlets, and squat toilets explained",
+    icon: "🥿",
+  },
+  {
+    href: "/guide/osaka-family-travel-tips",
+    title: "Osaka Family Travel Tips",
+    desc: "Baby facilities, stroller access, and family dining in Osaka",
+    icon: "🏯",
+  },
 ];
 
 const allCities = cityGroups.flatMap(({ region, cities }) =>
