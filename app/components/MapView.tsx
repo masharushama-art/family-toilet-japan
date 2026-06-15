@@ -256,7 +256,9 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   const [gpsError, setGpsError] = useState("");
   const [listSort, setListSort] = useState<"distance" | "changing">("distance");
   const [alertEnabled, setAlertEnabled] = useState(false);
-  const watchIdRef = useRef<number | null>(null);
+  const alertEnabledRef = useRef(false);
+  const posWatchIdRef = useRef<number | null>(null);
+  const watchIdRef = useRef<number | null>(null); // kept for compat (unused after refactor)
   const [isDark, setIsDark] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -303,22 +305,16 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   // (filtered の宣言より後で .current を更新する)
   const filteredRef = useRef<typeof toilets>([]);
 
-  // 近接アラートのon/off
+  // 近接アラートのon/off（位置追跡は常時watchPositionが担うのでここではフラグのみ）
   const toggleAlert = useCallback(async () => {
     if (alertEnabled) {
-      if (watchIdRef.current !== null) {
-        navigator.geolocation.clearWatch(watchIdRef.current);
-        watchIdRef.current = null;
-      }
+      alertEnabledRef.current = false;
       setAlertEnabled(false);
       return;
     }
     const granted = await requestNotificationPermission();
     if (!granted) return;
-    const id = navigator.geolocation.watchPosition((pos) => {
-      checkProximity(pos.coords.latitude, pos.coords.longitude, filteredRef.current);
-    }, undefined, { enableHighAccuracy: true, maximumAge: 10000 });
-    watchIdRef.current = id;
+    alertEnabledRef.current = true;
     setAlertEnabled(true);
   }, [alertEnabled]);
 
@@ -348,42 +344,58 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
     mapRef.current?.flyTo([found.lat, found.lon], 16, { duration: 1 });
   }, [initialToiletId, toilets]);
 
-  // マップ表示時に自動でGPS取得 → 最寄り都市を即座にロード
+  // 常時 watchPosition で現在地を追跡（blue dot リアルタイム更新）
+  const initialGpsLoaded = useRef(false);
   useEffect(() => {
     if (!navigator.geolocation) return;
+    const id = navigator.geolocation.watchPosition(
+      (pos) => {
+        const p: [number, number] = [pos.coords.latitude, pos.coords.longitude];
+        setUserPos(p);
+        userPos_.current = p;
+        setGpsError("");
+        // 初回のみ都市ロード・flyTo
+        if (!initialGpsLoaded.current) {
+          initialGpsLoaded.current = true;
+          const nearest = getNearestCity(p[0], p[1]);
+          setCurrentCity(nearest);
+          loadCity(nearest);
+          isFirstMove.current = true;
+        }
+        // アラートON中は近接チェック
+        if (alertEnabledRef.current) {
+          checkProximity(p[0], p[1], filteredRef.current);
+        }
+      },
+      () => setGpsError("Location access denied. Tap 📍 to try again, or browse the map manually."),
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 }
+    );
+    posWatchIdRef.current = id;
+    return () => navigator.geolocation.clearWatch(id);
+  }, [loadCity]);
+
+  // 📍ボタン: 現在地に flyTo するだけ（watchPosition は常時稼働中）
+  const getLocation = useCallback(() => {
+    if (!navigator.geolocation) {
+      setGpsError("Geolocation is not supported by your browser.");
+      return;
+    }
+    if (userPos_.current) {
+      mapRef.current?.flyTo(userPos_.current, 15, { duration: 1 });
+      return;
+    }
+    // まだ位置が取れていない場合は一度だけ取得を試みる
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const p: [number, number] = [pos.coords.latitude, pos.coords.longitude];
         setUserPos(p);
         userPos_.current = p;
         setGpsError("");
-        const nearest = getNearestCity(p[0], p[1]);
-        setCurrentCity(nearest);
-        loadCity(nearest);
-        isFirstMove.current = true; // GPS移動後のflyToでreSearchが出ないよう初期化
-      },
-      () => setGpsError("Location access denied. Tap 📍 to try again, or browse the map manually.")
-    );
-  }, [loadCity]);
-
-  const getLocation = useCallback(() => {
-    if (!navigator.geolocation) {
-      setGpsError("Geolocation is not supported by your browser.");
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const p: [number, number] = [pos.coords.latitude, pos.coords.longitude];
-        setUserPos(p);
-        setGpsError("");
-        const nearest = getNearestCity(p[0], p[1]);
-        setCurrentCity(nearest);
-        loadCity(nearest);
-        isFirstMove.current = true;
+        mapRef.current?.flyTo(p, 15, { duration: 1 });
       },
       () => setGpsError(t("gpsError"))
     );
-  }, [loadCity, t]);
+  }, [t]);
 
   // フィルタリング（データはすでにサーバーサイドでフィルタリング済み）
   const BLACKLIST_NAMES = ["パチンコ", "スロット", "カラオケ", "バー", "スナック", "ナイトクラブ", "キャバクラ", "nightclub", "pachinko"];
