@@ -52,7 +52,7 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
       2 *
       Math.pow(2, zoom)
   );
-  const tileUrl = `https://tile.openstreetmap.org/${zoom}/${tileX}/${tileY}.png`;
+  const tileUrl = `https://a.basemaps.cartocdn.com/rastertiles/voyager/${zoom}/${tileX}/${tileY}.png`;
 
   return (
     <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col">
