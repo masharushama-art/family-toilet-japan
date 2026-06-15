@@ -10,6 +10,7 @@ import FilterPanel from "./FilterPanel";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useI18n } from "../i18n/provider";
 import { getFavorites } from "../lib/favorites";
+import { getNearestCity, CITIES_CONFIG } from "../lib/cities-config";
 
 // Leafletデフォルトアイコン修正
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -66,6 +67,16 @@ function clusterIcon(count: number, hasChanging: boolean) {
     iconSize: [22, 22],
     iconAnchor: [11, 11],
   });
+}
+
+function AutoCityLoader({ onNearestCity }: { onNearestCity: (slug: string) => void }) {
+  const map = useMap();
+  const cb = useCallback(() => {
+    const c = map.getCenter();
+    onNearestCity(getNearestCity(c.lat, c.lng));
+  }, [map, onNearestCity]);
+  useMapEvents({ moveend: cb, zoomend: cb });
+  return null;
 }
 
 function FlyToLocation({ position }: { position: [number, number] | null }) {
@@ -153,7 +164,10 @@ function GeocodedMarkers({
 const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
 
 export default function MapView({ initialCenter, city = "tokyo" }: { initialCenter?: [number, number]; city?: string }) {
-  const [toilets, setToilets] = useState<Toilet[]>([]);
+  const [cityCache, setCityCache] = useState<Map<string, Toilet[]>>(new Map());
+  const [currentCity, setCurrentCity] = useState(city);
+  const loadingRef = useRef<Set<string>>(new Set());
+  const userPos_ = useRef<[number, number] | null>(null);
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [selected, setSelected] = useState<Toilet | null>(null);
   const [clusterGroup, setClusterGroup] = useState<Toilet[] | null>(null);
@@ -161,6 +175,19 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
   const [showFavs, setShowFavs] = useState(false);
   const [favIds, setFavIds] = useState<string[]>([]);
   const [gpsError, setGpsError] = useState("");
+
+  const loadCity = useCallback((slug: string) => {
+    if (loadingRef.current.has(slug)) return;
+    loadingRef.current.add(slug);
+    fetch(`/data/cities/${slug}.json`)
+      .then((r) => r.json())
+      .then((data: Toilet[]) => {
+        setCityCache((prev) => new Map(prev).set(slug, data));
+      })
+      .catch(() => loadingRef.current.delete(slug));
+  }, []);
+
+  const toilets = Array.from(cityCache.values()).flat();
   const { t } = useI18n();
   const [filters, setFilters] = useState<FilterState>({
     familyFriendlyOnly: true,
@@ -169,20 +196,17 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
     open24hOnly: false,
   });
 
-  // トイレデータ読み込み
-  useEffect(() => {
-    fetch(`/data/cities/${city}.json`)
-      .then((r) => r.json())
-      .then((data: Toilet[]) => setToilets(data))
-      .catch(console.error);
-  }, [city]);
+  // 初期都市をロード
+  useEffect(() => { loadCity(city); }, [city, loadCity]);
 
   // マップ表示時に自動でGPS取得
   useEffect(() => {
     if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        setUserPos([pos.coords.latitude, pos.coords.longitude]);
+        const p: [number, number] = [pos.coords.latitude, pos.coords.longitude];
+        setUserPos(p);
+        userPos_.current = p;
         setGpsError("");
       },
       () => setGpsError("Location access denied. Tap 📍 to try again, or browse the map manually.")
@@ -233,7 +257,10 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
       <div className="absolute top-0 left-0 right-0 z-[1000] bg-white shadow-sm px-4 py-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-xl">🚽</span>
-          <span className="font-bold text-sky-700 text-sm">Family Toilet Japan</span>
+          <div>
+            <span className="font-bold text-sky-700 text-sm">Family Toilet Japan</span>
+            <span className="ml-2 text-xs text-gray-400">{CITIES_CONFIG[currentCity as keyof typeof CITIES_CONFIG]?.name ?? ""}</span>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           {filters.familyFriendlyOnly && (
@@ -268,6 +295,10 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
+        <AutoCityLoader onNearestCity={(slug) => {
+          setCurrentCity(slug);
+          loadCity(slug);
+        }} />
         <FlyToLocation position={userPos} />
 
         {/* 現在地 */}
