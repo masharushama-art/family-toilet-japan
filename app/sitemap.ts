@@ -28,6 +28,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "osaka-family-travel-tips",
     "nagoya-family-travel-tips",
     "kyoto-with-baby",
+    "sapporo-family-travel-tips",
+    "fukuoka-family-travel-tips",
   ].map((slug) => ({
     url: `${BASE_URL}/guide/${slug}`,
     lastModified: new Date(),

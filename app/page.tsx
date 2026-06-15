@@ -177,6 +177,18 @@ const guides = [
     desc: "Temples, bamboo groves, and stroller-friendly routes in Kyoto",
     icon: "⛩️",
   },
+  {
+    href: "/guide/sapporo-family-travel-tips",
+    title: "Sapporo Family Travel Tips",
+    desc: "Zoo, Snow Festival, and winter travel with a baby in Hokkaido",
+    icon: "❄️",
+  },
+  {
+    href: "/guide/fukuoka-family-travel-tips",
+    title: "Fukuoka Family Travel Tips",
+    desc: "Canal City, ramen, and Kyushu travel with kids",
+    icon: "🌸",
+  },
 ];
 
 const allCities = cityGroups.flatMap(({ region, cities }) =>
