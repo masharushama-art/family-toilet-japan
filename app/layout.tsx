@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "./i18n/provider";
 import InstallBanner from "./components/InstallBanner";
+import CookieConsent from "./components/CookieConsent";
 
 
 const geistSans = Geist({
@@ -80,6 +81,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <I18nProvider>{children}</I18nProvider>
         <InstallBanner />
+        <CookieConsent />
       </body>
     </html>
   );
