@@ -202,12 +202,21 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
 
   const toilets = Array.from(cityCache.values()).flat();
   const { t } = useI18n();
-  const [filters, setFilters] = useState<FilterState>({
-    familyFriendlyOnly: true,
-    changingTableOnly: false,
-    wheelchairOnly: false,
-    open24hOnly: false,
+
+  const FILTER_KEY = "ftj_filters";
+  const [filters, setFilters] = useState<FilterState>(() => {
+    if (typeof window === "undefined") return { familyFriendlyOnly: true, changingTableOnly: false, wheelchairOnly: false, open24hOnly: false };
+    try {
+      const saved = localStorage.getItem(FILTER_KEY);
+      if (saved) return JSON.parse(saved) as FilterState;
+    } catch { /* ignore */ }
+    return { familyFriendlyOnly: true, changingTableOnly: false, wheelchairOnly: false, open24hOnly: false };
   });
+
+  const setFiltersAndSave = useCallback((next: FilterState) => {
+    setFilters(next);
+    try { localStorage.setItem(FILTER_KEY, JSON.stringify(next)); } catch { /* ignore */ }
+  }, []);
 
   // 初期都市をロード
   useEffect(() => { loadCity(city); }, [city, loadCity]);
@@ -444,7 +453,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
       {showFilter && (
         <FilterPanel
           filters={filters}
-          onChange={setFilters}
+          onChange={setFiltersAndSave}
           onClose={() => setShowFilter(false)}
         />
       )}
