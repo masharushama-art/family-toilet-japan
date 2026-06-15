@@ -14,7 +14,16 @@ export const metadata: Metadata = {
     "일본 공중화장실 지도",
     "아이와 일본 관광",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/ko" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/ko",
+    languages: {
+      "en":        "https://family-toilet-japan.vercel.app",
+      "ja":        "https://family-toilet-japan.vercel.app/ja",
+      "zh-TW":     "https://family-toilet-japan.vercel.app/zh",
+      "ko":        "https://family-toilet-japan.vercel.app/ko",
+      "x-default": "https://family-toilet-japan.vercel.app",
+    },
+  },
 };
 
 const cities = [

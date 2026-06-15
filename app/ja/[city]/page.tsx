@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, getCityStats, type CitySlug } from "../../lib/toilet-data";
+import { cityAlternates, BASE } from "../../lib/lang-cities";
 
 interface Props {
   params: Promise<{ city: string }>;
@@ -30,10 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ],
     alternates: {
       canonical: `${BASE}/ja/${city}`,
-      languages: {
-        "en": `${BASE}/${city}`,
-        "ja": `${BASE}/ja/${city}`,
-      },
+      languages: cityAlternates(city),
     },
     openGraph: {
       title: `${c.jaName}のおむつ替え台・ファミリートイレ`,

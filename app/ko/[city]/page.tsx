@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, getCityStats, type CitySlug } from "../../lib/toilet-data";
+import { cityAlternates, BASE } from "../../lib/lang-cities";
 
 const KO_NAMES: Partial<Record<CitySlug, string>> = {
   tokyo: "도쿄", osaka: "오사카", kyoto: "교토", nagoya: "나고야",
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ],
     alternates: {
       canonical: `${BASE}/ko/${city}`,
-      languages: { "en": `${BASE}/${city}`, "ko": `${BASE}/ko/${city}`, "ja": `${BASE}/ja/${city}` },
+      languages: cityAlternates(city),
     },
     openGraph: {
       title: `${koName} 기저귀 교환대・가족 화장실`,
