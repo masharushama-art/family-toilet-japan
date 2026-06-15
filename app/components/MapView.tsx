@@ -87,6 +87,12 @@ function AutoCityLoader({
   return null;
 }
 
+function MapRefCapture({ onMap }: { onMap: (m: L.Map) => void }) {
+  const map = useMap();
+  useEffect(() => { onMap(map); }, [map, onMap]);
+  return null;
+}
+
 function FlyToLocation({ position }: { position: [number, number] | null }) {
   const map = useMap();
   useEffect(() => {
@@ -188,6 +194,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
   const [showFavs, setShowFavs] = useState(false);
   const [favIds, setFavIds] = useState<string[]>([]);
   const [gpsError, setGpsError] = useState("");
+  const mapRef = useRef<L.Map | null>(null);
 
   const loadCity = useCallback((slug: string) => {
     if (loadingRef.current.has(slug)) return;
@@ -361,6 +368,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           attribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Source: Esri, HERE, Garmin, USGS, NGA, EPA, NPS'
           maxZoom={20}
         />
+        <MapRefCapture onMap={(m) => { mapRef.current = m; }} />
         <AutoCityLoader onNearestCity={(slug) => {
           setCurrentCity(slug);
           loadCity(slug);
@@ -399,6 +407,20 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           </button>
         </div>
       )}
+
+      {/* ズームボタン */}
+      <div className="absolute bottom-48 right-4 z-[1000] flex flex-col shadow-lg rounded-xl overflow-hidden">
+        <button
+          onClick={() => mapRef.current?.zoomIn()}
+          className="bg-white w-12 h-12 flex items-center justify-center text-2xl font-light text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+          aria-label="Zoom in"
+        >+</button>
+        <button
+          onClick={() => mapRef.current?.zoomOut()}
+          className="bg-white w-12 h-12 flex items-center justify-center text-2xl font-light text-gray-700 hover:bg-gray-50"
+          aria-label="Zoom out"
+        >−</button>
+      </div>
 
       {/* GPS ボタン */}
       <button
