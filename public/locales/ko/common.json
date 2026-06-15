@@ -27,5 +27,9 @@
   "unnamedToilet": "공중화장실",
   "unnamedToiletBaby": "공중화장실 (기저귀 교환대)",
   "approxLocation": "대략적인 위치",
-  "approxLocationNote": "대략적인 위치 (지역 중심)"
+  "approxLocationNote": "대략적인 위치 (지역 중심)",
+  "searchThisArea": "이 지역 검색",
+  "nearestToilets": "가까운 화장실",
+  "toiletsList": "화장실 목록",
+  "toiletsNearby": "개 화장실"
 }
