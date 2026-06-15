@@ -71,6 +71,10 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Family Toilet Japan" />
+        {/* 主要都市データの先読み */}
+        {["tokyo","osaka","kyoto","nagoya","yokohama","fukuoka","sapporo","nara"].map((c) => (
+          <link key={c} rel="prefetch" href={`/data/cities/${c}.json`} as="fetch" crossOrigin="anonymous" />
+        ))}
         {/* Google Analytics GA4 */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QLENNWYR2" />
         <script
