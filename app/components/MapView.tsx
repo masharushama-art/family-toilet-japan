@@ -569,6 +569,8 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
           filters={filters}
           onChange={setFiltersAndSave}
           onClose={() => setShowFilter(false)}
+          filteredCount={filtered.length}
+          totalCount={toilets.length}
         />
       )}
 
