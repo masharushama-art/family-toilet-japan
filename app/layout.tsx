@@ -61,9 +61,10 @@ export default function RootLayout({
       <head>
         {/* hreflang: 多言語SEO */}
         <link rel="alternate" hrefLang="en" href={BASE_URL} />
-        <link rel="alternate" hrefLang="zh-TW" href={BASE_URL} />
-        <link rel="alternate" hrefLang="zh-CN" href={BASE_URL} />
-        <link rel="alternate" hrefLang="ko" href={BASE_URL} />
+        <link rel="alternate" hrefLang="ja" href={`${BASE_URL}/ja`} />
+        <link rel="alternate" hrefLang="zh-TW" href={`${BASE_URL}/zh`} />
+        <link rel="alternate" hrefLang="zh-CN" href={`${BASE_URL}/zh`} />
+        <link rel="alternate" hrefLang="ko" href={`${BASE_URL}/ko`} />
         <link rel="alternate" hrefLang="x-default" href={BASE_URL} />
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

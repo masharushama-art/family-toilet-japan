@@ -30,9 +30,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const langPages = ["ja", "zh", "ko"].map((lang) => ({
+    url: `${BASE_URL}/${lang}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.9,
+  }));
+
   return [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: "daily", priority: 1.0 },
     { url: `${BASE_URL}/map`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
+    ...langPages,
     ...guidePages,
     ...cityPages,
     ...categoryPages,
