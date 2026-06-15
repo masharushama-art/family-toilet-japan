@@ -395,7 +395,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
             onClick={() => { loadCity(currentCity); setShowReSearch(false); }}
             className="pointer-events-auto bg-white shadow-lg text-sky-700 font-semibold text-sm px-5 py-2 rounded-full border border-sky-200 hover:bg-sky-50 active:bg-sky-100 transition-colors"
           >
-            🔍 Search this area
+            🔍 {t("searchThisArea")}
           </button>
         </div>
       )}
@@ -509,7 +509,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           <div className="px-5 pb-2 flex items-center justify-between flex-shrink-0">
             <div>
               <h2 className="font-bold text-gray-900 text-base">
-                {userPos ? "📍 Nearest Toilets" : "🚽 Toilets List"}
+                {userPos ? `📍 ${t("nearestToilets")}` : `🚽 ${t("toiletsList")}`}
               </h2>
               <p className="text-xs text-gray-400 mt-0.5">{filtered.length.toLocaleString()} total · showing {nearbyList.length}</p>
             </div>

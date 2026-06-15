@@ -27,5 +27,9 @@
   "unnamedToilet": "公共厕所",
   "unnamedToiletBaby": "公共厕所（带尿布台）",
   "approxLocation": "大致位置",
-  "approxLocationNote": "大致位置（区域中心）"
+  "approxLocationNote": "大致位置（区域中心）",
+  "searchThisArea": "搜索此区域",
+  "nearestToilets": "附近厕所",
+  "toiletsList": "厕所列表",
+  "toiletsNearby": "个厕所"
 }
