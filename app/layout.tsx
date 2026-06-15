@@ -1,20 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { I18nProvider } from "./i18n/provider";
 import InstallBanner from "./components/InstallBanner";
 import CookieConsent from "./components/CookieConsent";
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const BASE_URL = "https://family-toilet-japan.vercel.app";
 
@@ -43,10 +32,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0ea5e9",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0ea5e9" },
+    { media: "(prefers-color-scheme: dark)",  color: "#1f2937" },
+  ],
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  // maximumScale は指定しない → Lighthouse アクセシビリティ改善・ユーザーのピンチズームを許可
 };
 
 export default function RootLayout({
@@ -55,18 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <head>
-        {/* hreflang: 多言語SEO */}
-        <link rel="alternate" hrefLang="en" href={BASE_URL} />
-        <link rel="alternate" hrefLang="ja" href={`${BASE_URL}/ja`} />
-        <link rel="alternate" hrefLang="zh-TW" href={`${BASE_URL}/zh`} />
-        <link rel="alternate" hrefLang="zh-CN" href={`${BASE_URL}/zh`} />
-        <link rel="alternate" hrefLang="ko" href={`${BASE_URL}/ko`} />
-        <link rel="alternate" hrefLang="x-default" href={BASE_URL} />
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -75,24 +57,28 @@ export default function RootLayout({
         {["tokyo","osaka","kyoto","nagoya","yokohama","fukuoka","sapporo","nara"].map((c) => (
           <link key={c} rel="prefetch" href={`/data/cities/${c}.json`} as="fetch" crossOrigin="anonymous" />
         ))}
-        {/* Google Analytics GA4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QLENNWYR2" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0QLENNWYR2');`,
-          }}
-        />
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9686216801075877"
-          crossOrigin="anonymous"
-        />
       </head>
       <body className="min-h-full flex flex-col">
         <I18nProvider>{children}</I18nProvider>
         <InstallBanner />
         <CookieConsent />
+        {/* GA4 — afterInteractive でメインスレッドをブロックしない */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0QLENNWYR2"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">{`
+          window.dataLayer=window.dataLayer||[];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js',new Date());
+          gtag('config','G-0QLENNWYR2');
+        `}</Script>
+        {/* AdSense — lazyOnload でページ読み込みへの影響を最小化 */}
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9686216801075877"
+          strategy="lazyOnload"
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );
