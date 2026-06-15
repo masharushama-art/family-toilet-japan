@@ -44,10 +44,37 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
   useEffect(() => { setFav(isFavorite(toilet.id)); }, [toilet.id]);
   const handleFav = () => { setFav(toggleFavorite(toilet.id)); };
 
+  // OSMタイルサムネイル用のタイル座標を計算
+  const zoom = 17;
+  const tileX = Math.floor(((toilet.lon + 180) / 360) * Math.pow(2, zoom));
+  const tileY = Math.floor(
+    (1 - Math.log(Math.tan((toilet.lat * Math.PI) / 180) + 1 / Math.cos((toilet.lat * Math.PI) / 180)) / Math.PI) /
+      2 *
+      Math.pow(2, zoom)
+  );
+  const tileUrl = `https://tile.openstreetmap.org/${zoom}/${tileX}/${tileY}.png`;
+
   return (
     <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col">
+      {/* 地図サムネイル */}
+      <div className="relative h-28 rounded-t-2xl overflow-hidden bg-gray-100">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={tileUrl}
+          alt="Location map"
+          className="w-full h-full object-cover"
+          style={{ imageRendering: "pixelated" }}
+        />
+        {/* 中央ピン */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-5 h-5 rounded-full bg-sky-500 border-3 border-white shadow-lg" style={{ border: "3px solid white" }} />
+        </div>
+        {/* 閉じるボタン（サムネイル上に重ねる） */}
+        <button onClick={onClose} className="absolute top-2 right-2 bg-white/80 rounded-full w-7 h-7 flex items-center justify-center text-gray-600 text-sm shadow">✕</button>
+      </div>
+
       {/* ドラッグハンドル */}
-      <div className="flex justify-center pt-3 pb-1">
+      <div className="flex justify-center pt-2 pb-1">
         <div className="w-10 h-1 bg-gray-200 rounded-full" />
       </div>
 
@@ -78,7 +105,6 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
           >
             {fav ? "♥" : "♡"}
           </button>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl mt-0.5">✕</button>
         </div>
       </div>
 
