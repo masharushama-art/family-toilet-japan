@@ -231,7 +231,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
   // 初期都市をロード
   useEffect(() => { loadCity(city); }, [city, loadCity]);
 
-  // マップ表示時に自動でGPS取得
+  // マップ表示時に自動でGPS取得 → 最寄り都市を即座にロード
   useEffect(() => {
     if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(
@@ -240,10 +240,14 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
         setUserPos(p);
         userPos_.current = p;
         setGpsError("");
+        const nearest = getNearestCity(p[0], p[1]);
+        setCurrentCity(nearest);
+        loadCity(nearest);
+        isFirstMove.current = true; // GPS移動後のflyToでreSearchが出ないよう初期化
       },
       () => setGpsError("Location access denied. Tap 📍 to try again, or browse the map manually.")
     );
-  }, []);
+  }, [loadCity]);
 
   const getLocation = useCallback(() => {
     if (!navigator.geolocation) {
@@ -252,12 +256,17 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
     }
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        setUserPos([pos.coords.latitude, pos.coords.longitude]);
+        const p: [number, number] = [pos.coords.latitude, pos.coords.longitude];
+        setUserPos(p);
         setGpsError("");
+        const nearest = getNearestCity(p[0], p[1]);
+        setCurrentCity(nearest);
+        loadCity(nearest);
+        isFirstMove.current = true;
       },
       () => setGpsError(t("gpsError"))
     );
-  }, []);
+  }, [loadCity, t]);
 
   // フィルタリング（データはすでにサーバーサイドでフィルタリング済み）
   const BLACKLIST_NAMES = ["パチンコ", "スロット", "カラオケ", "バー", "スナック", "ナイトクラブ", "キャバクラ", "nightclub", "pachinko"];

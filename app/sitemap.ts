@@ -26,6 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "best-baby-changing-facilities-tokyo",
     "japan-toilet-etiquette",
     "osaka-family-travel-tips",
+    "nagoya-family-travel-tips",
+    "kyoto-with-baby",
   ].map((slug) => ({
     url: `${BASE_URL}/guide/${slug}`,
     lastModified: new Date(),
