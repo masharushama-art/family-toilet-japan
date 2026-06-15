@@ -29,6 +29,7 @@ const cities = [
 
 export default function JaPage() {
   return (
+    <>
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <div className="bg-sky-600 text-white px-6 py-14 text-center">
@@ -102,5 +103,22 @@ export default function JaPage() {
         </div>
       </div>
     </div>
+
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            { "@type": "Question", name: "どうやって使うの？", acceptedAnswer: { "@type": "Answer", text: "マップを開いて現在地ボタンを押すと、近くのおむつ替え台付きトイレが表示されます。青いピンがおむつ替え台ありのトイレです。" } },
+            { "@type": "Question", name: "データはどこから？", acceptedAnswer: { "@type": "Answer", text: "OpenStreetMapと各自治体のオープンデータを使用しています。全国16,000件以上を収録。" } },
+            { "@type": "Question", name: "オフラインで使える？", acceptedAnswer: { "@type": "Answer", text: "PWAとしてインストールすれば、一度開いたエリアはオフラインでも地図が表示されます。" } },
+            { "@type": "Question", name: "無料で使える？", acceptedAnswer: { "@type": "Answer", text: "完全無料・会員登録不要です。" } },
+          ],
+        }),
+      }}
+    />
+    </>
   );
 }
