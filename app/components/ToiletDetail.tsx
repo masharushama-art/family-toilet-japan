@@ -12,6 +12,7 @@ import { addToHistory } from "../lib/history";
 interface Props {
   toilet: Toilet;
   userPos: [number, number] | null;
+  city?: string;
   onClose: () => void;
 }
 
@@ -35,9 +36,22 @@ function Row({ icon, label, children }: { icon: string; label: string; children:
   );
 }
 
-export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
+export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) {
   const { t } = useI18n();
   const [travelMode, setTravelMode] = useState<"walking"|"transit"|"driving">("walking");
+  const [copied, setCopied] = useState(false);
+
+  const shareLink = `https://family-toilet-japan.vercel.app/map?id=${toilet.id}${city ? `&city=${city}` : ""}`;
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback: prompt
+      prompt("Copy this link:", shareLink);
+    }
+  };
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${toilet.lat},${toilet.lon}&travelmode=${travelMode}`;
   const streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${toilet.lat},${toilet.lon}`;
   const openStatus = getOpenStatus(toilet.openingHours);
@@ -198,10 +212,18 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
           >
             🔭 Street View
           </a>
-          <ShareButtons
-            url={`https://www.google.com/maps?q=${toilet.lat},${toilet.lon}`}
-            text={`${toilet.nameEn || toilet.name || "Family-friendly toilet"} — found on Family Toilet Japan 🚽🍼`}
-          />
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleCopyLink}
+              className="text-xs text-gray-400 hover:text-sky-600 transition-colors flex items-center gap-1"
+            >
+              {copied ? "✅ Copied!" : "🔗 Copy link"}
+            </button>
+            <ShareButtons
+              url={`https://www.google.com/maps?q=${toilet.lat},${toilet.lon}`}
+              text={`${toilet.nameEn || toilet.name || "Family-friendly toilet"} — found on Family Toilet Japan 🚽🍼`}
+            />
+          </div>
         </div>
       </div>
     </div>

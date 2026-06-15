@@ -234,7 +234,7 @@ function GeocodedMarkers({
 
 const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
 
-export default function MapView({ initialCenter, city = "tokyo" }: { initialCenter?: [number, number]; city?: string }) {
+export default function MapView({ initialCenter, city = "tokyo", initialToiletId }: { initialCenter?: [number, number]; city?: string; initialToiletId?: string }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [showList, setShowList] = useState(false);
@@ -287,6 +287,17 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
 
   // 初期都市をロード
   useEffect(() => { loadCity(city); }, [city, loadCity]);
+
+  // シェアリンク経由: 指定IDのトイレを自動選択してflyTo
+  const initialIdHandled = useRef(false);
+  useEffect(() => {
+    if (!initialToiletId || initialIdHandled.current) return;
+    const found = toilets.find((t) => t.id === initialToiletId);
+    if (!found) return;
+    initialIdHandled.current = true;
+    setSelected(found);
+    mapRef.current?.flyTo([found.lat, found.lon], 16, { duration: 1 });
+  }, [initialToiletId, toilets]);
 
   // マップ表示時に自動でGPS取得 → 最寄り都市を即座にロード
   useEffect(() => {
@@ -762,7 +773,7 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
 
       {/* 施設詳細 */}
       {selected && (
-        <ToiletDetail toilet={selected} userPos={userPos} onClose={() => setSelected(null)} />
+        <ToiletDetail toilet={selected} userPos={userPos} city={currentCity} onClose={() => setSelected(null)} />
       )}
     </div>
   );
