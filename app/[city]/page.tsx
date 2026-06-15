@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CITIES, CATEGORIES, getCityStats, type CitySlug } from "../lib/toilet-data";
+import { CITIES, CATEGORIES, getCityStats, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
 import ShareButtons from "../components/ShareButtons";
 
 const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
@@ -114,6 +114,9 @@ export default async function CityPage({ params }: Props) {
 
   const c = CITIES[city as CitySlug];
   const stats = getCityStats(city as CitySlug);
+  const topToilets = getToiletsByCity(city as CitySlug)
+    .filter((t) => t.changingTable)
+    .slice(0, 10);
 
   return (
     <div className="min-h-screen bg-white">
@@ -202,13 +205,40 @@ export default async function CityPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            name: `Family Friendly Toilets in ${c.name}`,
-            description: `Find ${stats.total}+ family-friendly toilets in ${c.name}, Japan`,
-            url: `https://family-toilet-japan.vercel.app/${city}`,
-          }),
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: `Family Friendly Toilets in ${c.name}`,
+              description: `Find ${stats.total}+ family-friendly toilets in ${c.name}, Japan`,
+              url: `https://family-toilet-japan.vercel.app/${city}`,
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              name: `Family-friendly toilets with baby changing tables in ${c.name}`,
+              numberOfItems: topToilets.length,
+              itemListElement: topToilets.map((t, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                item: {
+                  "@type": "CivicStructure",
+                  name: t.nameEn || t.name || `Public Toilet ${i + 1}`,
+                  geo: {
+                    "@type": "GeoCoordinates",
+                    latitude: t.lat,
+                    longitude: t.lon,
+                  },
+                  ...(t.address ? { address: t.address } : {}),
+                  amenityFeature: [
+                    { "@type": "LocationFeatureSpecification", name: "Baby Changing Table", value: true },
+                    ...(t.wheelchair ? [{ "@type": "LocationFeatureSpecification", name: "Wheelchair Accessible", value: true }] : []),
+                    ...(t.fee === false ? [{ "@type": "LocationFeatureSpecification", name: "Free", value: true }] : []),
+                  ],
+                },
+              })),
+            },
+          ]),
         }}
       />
     </div>
