@@ -1,5 +1,17 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import fs from "fs";
+import path from "path";
+
+function getCityCount(slug: string): number {
+  try {
+    const file = path.join(process.cwd(), "public", "data", "cities", `${slug}.json`);
+    const data = JSON.parse(fs.readFileSync(file, "utf-8")) as unknown[];
+    return data.length;
+  } catch {
+    return 0;
+  }
+}
 
 const OG_IMAGE = "https://family-toilet-japan.vercel.app/og-image.png";
 
@@ -177,16 +189,22 @@ export default function Home() {
             <div key={region}>
               <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{region}</h3>
               <div className="grid grid-cols-4 gap-2">
-                {cities.map(({ slug, name, icon }) => (
-                  <Link
-                    key={slug}
-                    href={`/${slug}`}
-                    className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
-                  >
-                    <div className="text-2xl mb-0.5">{icon}</div>
-                    <p className="font-medium text-gray-800 text-xs leading-tight">{name}</p>
-                  </Link>
-                ))}
+                {cities.map(({ slug, name, icon }) => {
+                  const count = getCityCount(slug);
+                  return (
+                    <Link
+                      key={slug}
+                      href={`/${slug}`}
+                      className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
+                    >
+                      <div className="text-2xl mb-0.5">{icon}</div>
+                      <p className="font-medium text-gray-800 text-xs leading-tight">{name}</p>
+                      {count > 0 && (
+                        <p className="text-gray-400 text-[10px] mt-0.5">{count.toLocaleString()}</p>
+                      )}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           ))}
