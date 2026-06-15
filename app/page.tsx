@@ -302,6 +302,8 @@ export default function Home() {
             Data: © OpenStreetMap contributors (ODbL) + Municipal Open Data (CC BY) ·{" "}
             <Link href="/attribution" className="underline hover:text-gray-600">Data sources &amp; attribution</Link>
             {" "}·{" "}
+            <Link href="/faq" className="underline hover:text-gray-600">FAQ</Link>
+            {" "}·{" "}
             <Link href="/privacy" className="underline hover:text-gray-600">Privacy Policy</Link>
             {" "}· Free to use · No tracking
           </p>

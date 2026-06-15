@@ -7,6 +7,7 @@ import { calcDistance, formatDistance } from "../lib/distance";
 import { useI18n } from "../i18n/provider";
 import ShareButtons from "./ShareButtons";
 import { isFavorite, toggleFavorite } from "../lib/favorites";
+import { addToHistory } from "../lib/history";
 
 interface Props {
   toilet: Toilet;
@@ -41,7 +42,10 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
   const distance =
     userPos ? calcDistance(userPos[0], userPos[1], toilet.lat, toilet.lon) : null;
   const [fav, setFav] = useState(false);
-  useEffect(() => { setFav(isFavorite(toilet.id)); }, [toilet.id]);
+  useEffect(() => {
+    setFav(isFavorite(toilet.id));
+    addToHistory(toilet.id);
+  }, [toilet.id]);
   const handleFav = () => { setFav(toggleFavorite(toilet.id)); };
 
   // OSMタイルサムネイル用のタイル座標を計算
@@ -167,10 +171,22 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
           <span className="text-gray-400 text-xs">
             {toilet.source === "opendata"
               ? "Municipal Open Data (CC BY)"
-              : "OpenStreetMap (ODbL)"}
+              : <a href={`https://www.openstreetmap.org/node/${toilet.id}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">OpenStreetMap (ODbL)</a>}
             {toilet.geocoded && " · 国土地理院 (GSI)"}
           </span>
         </Row>
+        {toilet.source !== "opendata" && (
+          <div className="py-2">
+            <a
+              href={`https://www.openstreetmap.org/edit?node=${toilet.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-gray-400 hover:text-sky-600 transition-colors"
+            >
+              ✏️ Fix incorrect data on OpenStreetMap
+            </a>
+          </div>
+        )}
       </div>
 
       <div className="px-5 py-4 space-y-3">
