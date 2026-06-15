@@ -164,6 +164,8 @@ function GeocodedMarkers({
 const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
 
 export default function MapView({ initialCenter, city = "tokyo" }: { initialCenter?: [number, number]; city?: string }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
   const [cityCache, setCityCache] = useState<Map<string, Toilet[]>>(new Map());
   const [currentCity, setCurrentCity] = useState(city);
   const loadingRef = useRef<Set<string>>(new Set());
@@ -237,6 +239,11 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
     if (filters.changingTableOnly && !t.changingTable) return false;
     if (filters.wheelchairOnly && !t.wheelchair) return false;
     if (filters.open24hOnly && t.openingHours !== "24/7") return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const name = ((t.nameEn || "") + (t.name || "") + (t.operator || "") + (t.address || "")).toLowerCase();
+      if (!name.includes(q)) return false;
+    }
     return true;
   });
 
@@ -254,21 +261,28 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
   return (
     <div className="relative w-full h-screen">
       {/* ヘッダー */}
-      <div className="absolute top-0 left-0 right-0 z-[1000] bg-white shadow-sm px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🚽</span>
-          <div>
-            <span className="font-bold text-sky-700 text-sm">Family Toilet Japan</span>
-            <span className="ml-2 text-xs text-gray-400">{CITIES_CONFIG[currentCity as keyof typeof CITIES_CONFIG]?.name ?? ""}</span>
+      <div className="absolute top-0 left-0 right-0 z-[1000] bg-white shadow-sm px-4 py-2 flex flex-col gap-1">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-xl">🚽</span>
+            <div>
+              <span className="font-bold text-sky-700 text-sm">Family Toilet Japan</span>
+              <span className="ml-2 text-xs text-gray-400">{CITIES_CONFIG[currentCity as keyof typeof CITIES_CONFIG]?.name ?? ""}</span>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
           {filters.familyFriendlyOnly && (
             <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full font-medium">
               👨‍👩‍👧 Family
             </span>
           )}
           <LanguageSwitcher />
+          <button
+            onClick={() => { setShowSearch(!showSearch); if (showSearch) setSearchQuery(""); }}
+            className={`px-3 py-1 rounded-full text-sm font-medium ${showSearch || searchQuery ? "bg-sky-500 text-white" : "bg-gray-100 text-gray-600"}`}
+          >
+            🔍
+          </button>
           <button
             onClick={() => { setFavIds(getFavorites()); setShowFavs(true); }}
             className="bg-red-50 text-red-500 px-3 py-1 rounded-full text-sm font-medium"
@@ -281,7 +295,24 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           >
             {t("filters")} {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly) ? "●" : ""}
           </button>
+          </div>
         </div>
+        {showSearch && (
+          <div className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-1.5">
+            <span className="text-gray-400 text-sm">🔍</span>
+            <input
+              autoFocus
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by name, facility..."
+              className="flex-1 bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-none"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery("")} className="text-gray-400 text-sm">✕</button>
+            )}
+          </div>
+        )}
       </div>
 
       {/* 地図 */}
