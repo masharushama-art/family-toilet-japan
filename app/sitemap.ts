@@ -42,6 +42,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const zhKoCities = ["tokyo","osaka","kyoto","nagoya","yokohama","fukuoka","sapporo","nara","kobe","hiroshima","sendai","kanazawa","okinawa","chiba","saitama"];
+  const zhCityPages = zhKoCities.map((city) => ({
+    url: `${BASE_URL}/zh/${city}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+  const koCityPages = zhKoCities.map((city) => ({
+    url: `${BASE_URL}/ko/${city}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
   const langPages = ["ja", "zh", "ko"].map((lang) => ({
     url: `${BASE_URL}/${lang}`,
     lastModified: new Date(),
@@ -55,6 +69,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/faq`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     ...langPages,
     ...jaCityPages,
+    ...zhCityPages,
+    ...koCityPages,
     ...guidePages,
     ...cityPages,
     ...categoryPages,
