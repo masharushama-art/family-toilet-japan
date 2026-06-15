@@ -7,9 +7,11 @@ interface Props {
   filters: FilterState;
   onChange: (f: FilterState) => void;
   onClose: () => void;
+  filteredCount: number;
+  totalCount: number;
 }
 
-export default function FilterPanel({ filters, onChange, onClose }: Props) {
+export default function FilterPanel({ filters, onChange, onClose, filteredCount, totalCount }: Props) {
   const { t } = useI18n();
   const toggle = (key: keyof FilterState) =>
     onChange({ ...filters, [key]: !filters[key] });
@@ -20,6 +22,8 @@ export default function FilterPanel({ filters, onChange, onClose }: Props) {
     { key: "wheelchairOnly" as const, label: `♿ ${t("wheelchair")}` },
     { key: "open24hOnly" as const, label: `🕐 ${t("open24h")}` },
   ];
+
+  const isFiltered = filteredCount < totalCount;
 
   return (
     <div className="absolute top-14 right-4 z-[1001] bg-white rounded-2xl shadow-xl p-4 w-64">
@@ -48,6 +52,14 @@ export default function FilterPanel({ filters, onChange, onClose }: Props) {
           </div>
         </label>
       ))}
+
+      {/* 件数サマリー */}
+      <div className={`mt-3 rounded-xl px-3 py-2 text-center text-sm font-semibold transition-colors ${isFiltered ? "bg-sky-50 text-sky-700" : "bg-gray-50 text-gray-500"}`}>
+        {isFiltered
+          ? <><span className="text-sky-700">{filteredCount.toLocaleString()}</span><span className="font-normal text-xs text-sky-500"> / {totalCount.toLocaleString()} toilets match</span></>
+          : <span>{totalCount.toLocaleString()} toilets loaded</span>
+        }
+      </div>
     </div>
   );
 }
