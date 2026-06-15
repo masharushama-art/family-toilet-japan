@@ -456,8 +456,8 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
           <span>{t("changingTable")}</span>
         </div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-gray-500 border-2 border-white shadow"></span>
-          <span>{t("facilityName")}</span>
+          <span className="inline-block w-3 h-3 rounded-full bg-gray-400 border-2 border-white shadow"></span>
+          <span>{t("unnamedToilet")}</span>
         </div>
         <div className="flex items-center gap-2">
           <span
