@@ -257,6 +257,14 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   const [listSort, setListSort] = useState<"distance" | "changing">("distance");
   const [alertEnabled, setAlertEnabled] = useState(false);
   const watchIdRef = useRef<number | null>(null);
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    setIsDark(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
   const mapRef = useRef<L.Map | null>(null);
 
   const loadCity = useCallback((slug: string) => {
@@ -411,13 +419,13 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   return (
     <div className="relative w-full h-screen">
       {/* ヘッダー */}
-      <div className="absolute top-0 left-0 right-0 z-[1000] bg-white shadow-sm px-4 py-2 flex flex-col gap-1">
+      <div className="absolute top-0 left-0 right-0 z-[1000] bg-white dark:bg-gray-900 shadow-sm px-4 py-2 flex flex-col gap-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-xl">🚽</span>
             <div>
-              <span className="font-bold text-sky-700 text-sm">Family Toilet Japan</span>
-              <span className="ml-2 text-xs text-gray-400">{CITIES_CONFIG[currentCity as keyof typeof CITIES_CONFIG]?.name ?? ""}</span>
+              <span className="font-bold text-sky-600 dark:text-sky-400 text-sm">Family Toilet Japan</span>
+              <span className="ml-2 text-xs text-gray-400 dark:text-gray-500">{CITIES_CONFIG[currentCity as keyof typeof CITIES_CONFIG]?.name ?? ""}</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -429,45 +437,45 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
           <LanguageSwitcher />
           <button
             onClick={() => { setShowSearch(!showSearch); if (showSearch) setSearchQuery(""); }}
-            className={`px-3 py-1 rounded-full text-sm font-medium ${showSearch || searchQuery ? "bg-sky-500 text-white" : "bg-gray-100 text-gray-600"}`}
+            className={`px-3 py-1 rounded-full text-sm font-medium ${showSearch || searchQuery ? "bg-sky-500 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"}`}
           >
             🔍
           </button>
           <button
             onClick={() => setShowList(!showList)}
-            className={`px-3 py-1 rounded-full text-sm font-medium ${showList ? "bg-sky-500 text-white" : "bg-gray-100 text-gray-600"}`}
+            className={`px-3 py-1 rounded-full text-sm font-medium ${showList ? "bg-sky-500 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"}`}
           >
             ≡
           </button>
           <button
             onClick={() => { setFavIds(getFavorites()); setShowFavs(true); }}
-            className="bg-red-50 text-red-500 px-3 py-1 rounded-full text-sm font-medium"
+            className="bg-red-50 dark:bg-red-900/30 text-red-500 px-3 py-1 rounded-full text-sm font-medium"
           >
             ♥
           </button>
           <button
             onClick={() => { setHistoryIds(getHistory()); setShowHistory(true); }}
-            className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium"
+            className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-sm font-medium"
           >
             🕐
           </button>
           <button
             onClick={toggleAlert}
-            className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${alertEnabled ? "bg-amber-400 text-white" : "bg-gray-100 text-gray-600"}`}
+            className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${alertEnabled ? "bg-amber-400 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"}`}
             title={alertEnabled ? "Disable nearby alerts" : "Enable nearby alerts (150m)"}
           >
             🔔
           </button>
           <button
             onClick={() => setShowFilter(!showFilter)}
-            className="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm font-medium"
+            className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-400 px-3 py-1 rounded-full text-sm font-medium"
           >
             {t("filters")} {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly) ? "●" : ""}
           </button>
           </div>
         </div>
         {showSearch && (
-          <div className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-1.5">
+          <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-xl px-3 py-1.5">
             <span className="text-gray-400 text-sm">🔍</span>
             <input
               autoFocus
@@ -475,7 +483,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by name, facility..."
-              className="flex-1 bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-none"
+              className="flex-1 bg-transparent text-sm text-gray-800 dark:text-gray-100 placeholder-gray-400 outline-none"
             />
             {searchQuery && (
               <button onClick={() => setSearchQuery("")} className="text-gray-400 text-sm">✕</button>
@@ -492,9 +500,13 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
         zoomControl={false}
       >
         <TileLayer
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
-          attribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Source: Esri, HERE, Garmin, USGS, NGA, EPA, NPS'
-          maxZoom={20}
+          key={isDark ? "dark" : "light"}
+          url={isDark
+            ? "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+            : "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+          }
+          attribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a>'
+          maxZoom={16}
         />
         <MapRefCapture onMap={(m) => { mapRef.current = m; }} />
         <AutoCityLoader onNearestCity={(slug) => {
@@ -540,12 +552,12 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
       <div className="absolute bottom-48 right-4 z-[1000] flex flex-col shadow-lg rounded-xl overflow-hidden">
         <button
           onClick={() => mapRef.current?.zoomIn()}
-          className="bg-white w-12 h-12 flex items-center justify-center text-2xl font-light text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+          className="bg-white dark:bg-gray-800 w-12 h-12 flex items-center justify-center text-2xl font-light text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700"
           aria-label="Zoom in"
         >+</button>
         <button
           onClick={() => mapRef.current?.zoomOut()}
-          className="bg-white w-12 h-12 flex items-center justify-center text-2xl font-light text-gray-700 hover:bg-gray-50"
+          className="bg-white dark:bg-gray-800 w-12 h-12 flex items-center justify-center text-2xl font-light text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
           aria-label="Zoom out"
         >−</button>
       </div>
@@ -553,14 +565,14 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
       {/* GPS ボタン */}
       <button
         onClick={getLocation}
-        className="absolute bottom-32 right-4 z-[1000] bg-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-xl"
+        className="absolute bottom-32 right-4 z-[1000] bg-white dark:bg-gray-800 shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-xl"
         title="Find my location"
       >
         📍
       </button>
 
       {/* 凡例 */}
-      <div className="absolute bottom-4 left-4 z-[1000] bg-white rounded-lg shadow px-3 py-2 text-xs">
+      <div className="absolute bottom-4 left-4 z-[1000] bg-white dark:bg-gray-800 rounded-lg shadow px-3 py-2 text-xs text-gray-700 dark:text-gray-300">
         <div className="flex items-center gap-2 mb-1">
           <span className="inline-block w-3 h-3 rounded-full bg-sky-400 border-2 border-white shadow"></span>
           <span>{t("changingTable")}</span>
@@ -579,7 +591,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
       </div>
 
       {/* 件数表示 */}
-      <div className="absolute bottom-4 right-4 z-[1000] bg-white rounded-lg shadow px-3 py-2 text-xs text-gray-600">
+      <div className="absolute bottom-4 right-4 z-[1000] bg-white dark:bg-gray-800 rounded-lg shadow px-3 py-2 text-xs text-gray-600 dark:text-gray-400">
         {filtered.length.toLocaleString()} toilets
       </div>
 
@@ -612,13 +624,13 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
       {/* クラスタグループ一覧（概算位置の複数トイレ） */}
       {clusterGroup && !selected && (
-        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
+        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
           <div className="flex justify-center pt-3 pb-1">
-            <div className="w-10 h-1 bg-gray-200 rounded-full" />
+            <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>
           <div className="px-5 pb-2 flex items-center justify-between">
             <div>
-              <h2 className="font-bold text-gray-900 text-base">{clusterGroup.length} toilets nearby</h2>
+              <h2 className="font-bold text-gray-900 dark:text-white text-base">{clusterGroup.length} toilets nearby</h2>
               <p className="text-xs text-amber-600 mt-0.5">📍 {t("approxLocation")}</p>
             </div>
             <button onClick={() => setClusterGroup(null)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
@@ -628,16 +640,16 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
               <button
                 key={toilet.id}
                 onClick={() => { setSelected(toilet); setClusterGroup(null); }}
-                className="w-full text-left bg-gray-50 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+                className="w-full text-left bg-gray-50 dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-gray-700 rounded-xl px-4 py-3 transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-800 text-sm truncate">
+                    <p className="font-medium text-gray-800 dark:text-gray-100 text-sm truncate">
                       {toilet.nameEn || toilet.name ||
                         (toilet.changingTable ? t("unnamedToiletBaby") : t("unnamedToilet"))}
                     </p>
                     {toilet.address && (
-                      <p className="text-xs text-gray-500 truncate mt-0.5">{toilet.address}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">{toilet.address}</p>
                     )}
                   </div>
                   <div className="flex items-center gap-1.5 ml-3 flex-shrink-0">
@@ -654,13 +666,13 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
       {/* 距離順リスト */}
       {showList && (
-        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl flex flex-col" style={{ maxHeight: "60vh" }}>
+        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl flex flex-col" style={{ maxHeight: "60vh" }}>
           <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
-            <div className="w-10 h-1 bg-gray-200 rounded-full" />
+            <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>
           <div className="px-5 pb-2 flex items-center justify-between flex-shrink-0">
             <div>
-              <h2 className="font-bold text-gray-900 text-base">🚽 {t("toiletsList")}</h2>
+              <h2 className="font-bold text-gray-900 dark:text-white text-base">🚽 {t("toiletsList")}</h2>
               <p className="text-xs text-gray-400 mt-0.5">{filtered.length.toLocaleString()} total · showing {sortedList.length}</p>
             </div>
             <button onClick={() => setShowList(false)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
@@ -673,7 +685,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
                 <button
                   key={mode}
                   onClick={() => setListSort(mode)}
-                  className={`flex-1 text-xs font-medium py-1.5 rounded-lg transition-colors ${listSort === mode ? "bg-sky-500 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+                  className={`flex-1 text-xs font-medium py-1.5 rounded-lg transition-colors ${listSort === mode ? "bg-sky-500 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"}`}
                 >
                   {labels[mode]}
                 </button>
@@ -687,16 +699,16 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
                 <button
                   key={toilet.id}
                   onClick={() => { setSelected(toilet); setShowList(false); }}
-                  className="w-full text-left bg-gray-50 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+                  className="w-full text-left bg-gray-50 dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-gray-700 rounded-xl px-4 py-3 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-800 text-sm truncate">
+                      <p className="font-medium text-gray-800 dark:text-gray-100 text-sm truncate">
                         {toilet.nameEn || toilet.name || (toilet.changingTable ? "Baby-friendly Toilet" : "Public Toilet")}
                       </p>
                       <div className="flex items-center gap-2 mt-0.5">
                         {dist !== null && (
-                          <span className="text-xs text-sky-600 font-medium">{formatDistance(dist)}</span>
+                          <span className="text-xs text-sky-600 dark:text-sky-400 font-medium">{formatDistance(dist)}</span>
                         )}
                         {toilet.address && (
                           <span className="text-xs text-gray-400 truncate">{toilet.address}</span>
@@ -719,12 +731,12 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
       {/* お気に入り一覧 */}
       {showFavs && (
-        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
+        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
           <div className="flex justify-center pt-3 pb-1">
-            <div className="w-10 h-1 bg-gray-200 rounded-full" />
+            <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>
           <div className="px-5 pb-2 flex items-center justify-between">
-            <h2 className="font-bold text-gray-900 text-base">♥ Favorites ({favIds.length})</h2>
+            <h2 className="font-bold text-gray-900 dark:text-white text-base">♥ Favorites ({favIds.length})</h2>
             <button onClick={() => setShowFavs(false)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
           </div>
           <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-2">
@@ -738,15 +750,15 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
                 <button
                   key={toilet.id}
                   onClick={() => { setSelected(toilet); setShowFavs(false); }}
-                  className="w-full text-left bg-gray-50 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+                  className="w-full text-left bg-gray-50 dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-gray-700 rounded-xl px-4 py-3 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-800 text-sm truncate">
+                      <p className="font-medium text-gray-800 dark:text-gray-100 text-sm truncate">
                         {toilet.nameEn || toilet.name || (toilet.changingTable ? "Baby-friendly Toilet" : "Public Toilet")}
                       </p>
                       {toilet.address && (
-                        <p className="text-xs text-gray-500 truncate mt-0.5">{toilet.address}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">{toilet.address}</p>
                       )}
                     </div>
                     <div className="flex items-center gap-1.5 ml-3 flex-shrink-0">
@@ -764,12 +776,12 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
       {/* 最近見たトイレ */}
       {showHistory && (
-        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
+        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
           <div className="flex justify-center pt-3 pb-1">
-            <div className="w-10 h-1 bg-gray-200 rounded-full" />
+            <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>
           <div className="px-5 pb-2 flex items-center justify-between">
-            <h2 className="font-bold text-gray-900 text-base">🕐 Recently Viewed ({historyIds.length})</h2>
+            <h2 className="font-bold text-gray-900 dark:text-white text-base">🕐 Recently Viewed ({historyIds.length})</h2>
             <button onClick={() => setShowHistory(false)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
           </div>
           <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-2">
@@ -785,15 +797,15 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
                   <button
                     key={toilet.id}
                     onClick={() => { setSelected(toilet); setShowHistory(false); }}
-                    className="w-full text-left bg-gray-50 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+                    className="w-full text-left bg-gray-50 dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-gray-700 rounded-xl px-4 py-3 transition-colors"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-gray-800 text-sm truncate">
+                        <p className="font-medium text-gray-800 dark:text-gray-100 text-sm truncate">
                           {toilet.nameEn || toilet.name || (toilet.changingTable ? "Baby-friendly Toilet" : "Public Toilet")}
                         </p>
                         {toilet.address && (
-                          <p className="text-xs text-gray-500 truncate mt-0.5">{toilet.address}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">{toilet.address}</p>
                         )}
                       </div>
                       <div className="flex items-center gap-1.5 ml-3 flex-shrink-0">
