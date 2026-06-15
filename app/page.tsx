@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import fs from "fs";
 import path from "path";
+import CitySearch from "./components/CitySearch";
 
 function getCityCount(slug: string): number {
   try {
@@ -147,6 +148,10 @@ const guides = [
   },
 ];
 
+const allCities = cityGroups.flatMap(({ region, cities }) =>
+  cities.map((c) => ({ ...c, region }))
+);
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -165,6 +170,7 @@ export default function Home() {
           📍 Find Toilets Near Me
         </Link>
         <p className="text-sky-200 text-xs mt-3">Works offline · PWA · No registration</p>
+        <CitySearch cities={allCities} />
       </div>
 
       {/* Features */}
