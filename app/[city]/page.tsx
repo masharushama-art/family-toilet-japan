@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, CATEGORIES, getCityStats, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
+import { cityAlternates, BASE } from "../lib/lang-cities";
 import ShareButtons from "../components/ShareButtons";
 import { AdUnit } from "../components/AdSense";
 
@@ -102,16 +103,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `clean toilet ${c.name.toLowerCase()}`,
       ...(CITY_META[city]?.keywords.map((k) => `toilet ${k.toLowerCase()} japan`) ?? []),
     ],
+    alternates: {
+      canonical: `${BASE}/${city}`,
+      languages: cityAlternates(city),
+    },
     openGraph: {
       title: `Family Friendly Toilets in ${c.name} | Family Toilet Japan`,
       description: `Find ${getCityStats(city as CitySlug).total}+ toilets in ${c.name} with baby changing tables and wheelchair access.`,
-      images: [{ url: `https://family-toilet-japan.vercel.app/${city}/opengraph-image`, width: 1200, height: 630 }],
+      images: [{ url: `${BASE}/${city}/opengraph-image`, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: `Family Friendly Toilets in ${c.name} | Family Toilet Japan`,
       description: `Find ${getCityStats(city as CitySlug).total}+ toilets in ${c.name} with baby changing tables.`,
-      images: [`https://family-toilet-japan.vercel.app/${city}/opengraph-image`],
+      images: [`${BASE}/${city}/opengraph-image`],
     },
   };
 }
