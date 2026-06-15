@@ -26,16 +26,16 @@ export default function FilterPanel({ filters, onChange, onClose, filteredCount,
   const isFiltered = filteredCount < totalCount;
 
   return (
-    <div className="absolute top-14 right-4 z-[1001] bg-white rounded-2xl shadow-xl p-4 w-64">
+    <div className="absolute top-14 right-4 z-[1001] bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-4 w-64">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-bold text-gray-800">{t("filters")}</h3>
+        <h3 className="font-bold text-gray-800 dark:text-white">{t("filters")}</h3>
         <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-lg">✕</button>
       </div>
 
       {items.map(({ key, label, desc }) => (
-        <label key={key} className="flex items-center justify-between py-2 border-b border-gray-100 cursor-pointer">
+        <label key={key} className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 cursor-pointer">
           <div>
-            <span className="text-sm text-gray-700">{label}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
             {desc && <p className="text-xs text-gray-400">{desc}</p>}
           </div>
           <div

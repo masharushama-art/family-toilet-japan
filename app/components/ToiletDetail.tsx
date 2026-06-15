@@ -26,8 +26,8 @@ function OpenBadge({ status, t }: { status: "open" | "closed" | "unknown"; t: (k
 
 function Row({ icon, label, children }: { icon: string; label: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-start justify-between py-2.5 border-b border-gray-100 last:border-0">
-      <span className="text-gray-500 text-sm flex items-center gap-1.5">
+    <div className="flex items-start justify-between py-2.5 border-b border-gray-100 dark:border-gray-700 last:border-0">
+      <span className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1.5">
         <span>{icon}</span>
         <span>{label}</span>
       </span>
@@ -65,15 +65,15 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
   const handleFav = () => { setFav(toggleFavorite(toilet.id)); };
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col">
+    <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col">
       {/* ドラッグハンドル */}
       <div className="flex justify-center pt-3 pb-1">
-        <div className="w-10 h-1 bg-gray-200 rounded-full" />
+        <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
       </div>
 
       <div className="px-5 pb-2 flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <h2 className="font-bold text-gray-900 text-base leading-tight truncate">
+          <h2 className="font-bold text-gray-900 dark:text-white text-base leading-tight truncate">
             {toilet.nameEn || toilet.name ||
               (toilet.changingTable ? t("unnamedToiletBaby") : t("unnamedToilet"))}
           </h2>
@@ -122,7 +122,7 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
       )}
 
       {/* 詳細情報 */}
-      <div className="px-5 overflow-y-auto flex-1">
+      <div className="px-5 overflow-y-auto flex-1 text-gray-700 dark:text-gray-300">
         {!toilet.changingTable && (
           <Row icon="🍼" label={t("changingTable")}>
             <span className="text-gray-400">{t("no")}</span>
