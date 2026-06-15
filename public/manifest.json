@@ -7,6 +7,29 @@
   "background_color": "#ffffff",
   "theme_color": "#0ea5e9",
   "orientation": "portrait",
+  "shortcuts": [
+    {
+      "name": "Find Toilets Near Me",
+      "short_name": "Near Me",
+      "description": "Open map and find nearby toilets",
+      "url": "/map",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tokyo Toilets",
+      "short_name": "Tokyo",
+      "description": "Browse family-friendly toilets in Tokyo",
+      "url": "/tokyo",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Osaka Toilets",
+      "short_name": "Osaka",
+      "description": "Browse family-friendly toilets in Osaka",
+      "url": "/osaka",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
   "icons": [
     {
       "src": "/icons/icon-192.png",

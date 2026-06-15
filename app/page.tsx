@@ -165,6 +165,18 @@ const guides = [
     desc: "Baby facilities, stroller access, and family dining in Osaka",
     icon: "🏯",
   },
+  {
+    href: "/guide/nagoya-family-travel-tips",
+    title: "Nagoya Family Travel Tips",
+    desc: "LEGOLAND, Port Aquarium, and getting around Nagoya with kids",
+    icon: "🏰",
+  },
+  {
+    href: "/guide/kyoto-with-baby",
+    title: "Kyoto with Baby & Toddler",
+    desc: "Temples, bamboo groves, and stroller-friendly routes in Kyoto",
+    icon: "⛩️",
+  },
 ];
 
 const allCities = cityGroups.flatMap(({ region, cities }) =>
