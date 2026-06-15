@@ -1,10 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import type { Toilet } from "../types/toilet";
 import { getOpenStatus, formatHours } from "../lib/opening-hours";
 import { calcDistance, formatDistance } from "../lib/distance";
 import { useI18n } from "../i18n/provider";
 import ShareButtons from "./ShareButtons";
+import { isFavorite, toggleFavorite } from "../lib/favorites";
 
 interface Props {
   toilet: Toilet;
@@ -38,6 +40,9 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
   const openStatus = getOpenStatus(toilet.openingHours);
   const distance =
     userPos ? calcDistance(userPos[0], userPos[1], toilet.lat, toilet.lon) : null;
+  const [fav, setFav] = useState(false);
+  useEffect(() => { setFav(isFavorite(toilet.id)); }, [toilet.id]);
+  const handleFav = () => { setFav(toggleFavorite(toilet.id)); };
 
   return (
     <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col">
@@ -65,7 +70,16 @@ export default function ToiletDetail({ toilet, userPos, onClose }: Props) {
             )}
           </div>
         </div>
-        <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl ml-3 mt-0.5 flex-shrink-0">✕</button>
+        <div className="flex items-center gap-2 ml-3 flex-shrink-0">
+          <button
+            onClick={handleFav}
+            className={`text-2xl transition-transform active:scale-110 ${fav ? "text-red-500" : "text-gray-300"}`}
+            aria-label={fav ? "Remove from favorites" : "Add to favorites"}
+          >
+            {fav ? "♥" : "♡"}
+          </button>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl mt-0.5">✕</button>
+        </div>
       </div>
 
       {/* 概算位置の注記（ジオコーディング座標） */}
