@@ -27,5 +27,9 @@
   "unnamedToilet": "Public Toilet",
   "unnamedToiletBaby": "Public Toilet (Baby Changing)",
   "approxLocation": "Approximate location",
-  "approxLocationNote": "Approximate location (district center)"
+  "approxLocationNote": "Approximate location (district center)",
+  "searchThisArea": "Search this area",
+  "nearestToilets": "Nearest Toilets",
+  "toiletsList": "Toilets List",
+  "toiletsNearby": "toilets nearby"
 }
