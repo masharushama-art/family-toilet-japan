@@ -188,6 +188,36 @@ export default function Home() {
           ))}
         </div>
 
+        {/* Popular Cities */}
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Popular Cities</h2>
+        <div className="grid grid-cols-4 gap-2 mb-12">
+          {[
+            { slug: "tokyo",    name: "Tokyo",    icon: "🗼" },
+            { slug: "osaka",    name: "Osaka",    icon: "🏯" },
+            { slug: "kyoto",    name: "Kyoto",    icon: "⛩️" },
+            { slug: "nagoya",   name: "Nagoya",   icon: "🏰" },
+            { slug: "yokohama", name: "Yokohama", icon: "🌉" },
+            { slug: "fukuoka",  name: "Fukuoka",  icon: "🌸" },
+            { slug: "sapporo",  name: "Sapporo",  icon: "❄️" },
+            { slug: "nara",     name: "Nara",     icon: "🦌" },
+          ].map(({ slug, name, icon }) => {
+            const count = getCityCount(slug);
+            return (
+              <Link
+                key={slug}
+                href={`/${slug}`}
+                className="border-2 border-sky-100 hover:border-sky-400 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
+              >
+                <div className="text-2xl mb-0.5">{icon}</div>
+                <p className="font-semibold text-gray-800 text-xs leading-tight">{name}</p>
+                {count > 0 && (
+                  <p className="text-sky-500 text-[10px] mt-0.5 font-medium">{count.toLocaleString()}</p>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+
         {/* Cities by region */}
         <h2 className="text-xl font-bold text-gray-800 mb-4">Browse by Region</h2>
         <div className="space-y-6 mb-12">
