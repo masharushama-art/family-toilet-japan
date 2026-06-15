@@ -9,6 +9,7 @@ import ToiletDetail from "./ToiletDetail";
 import FilterPanel from "./FilterPanel";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useI18n } from "../i18n/provider";
+import { getFavorites } from "../lib/favorites";
 
 // Leafletデフォルトアイコン修正
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -157,6 +158,8 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
   const [selected, setSelected] = useState<Toilet | null>(null);
   const [clusterGroup, setClusterGroup] = useState<Toilet[] | null>(null);
   const [showFilter, setShowFilter] = useState(false);
+  const [showFavs, setShowFavs] = useState(false);
+  const [favIds, setFavIds] = useState<string[]>([]);
   const [gpsError, setGpsError] = useState("");
   const { t } = useI18n();
   const [filters, setFilters] = useState<FilterState>({
@@ -239,6 +242,12 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
             </span>
           )}
           <LanguageSwitcher />
+          <button
+            onClick={() => { setFavIds(getFavorites()); setShowFavs(true); }}
+            className="bg-red-50 text-red-500 px-3 py-1 rounded-full text-sm font-medium"
+          >
+            ♥
+          </button>
           <button
             onClick={() => setShowFilter(!showFilter)}
             className="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm font-medium"
@@ -375,6 +384,51 @@ export default function MapView({ initialCenter, city = "tokyo" }: { initialCent
                 </div>
               </button>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* お気に入り一覧 */}
+      {showFavs && (
+        <div className="absolute bottom-0 left-0 right-0 z-[1001] bg-white rounded-t-2xl shadow-2xl max-h-[60vh] flex flex-col">
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-10 h-1 bg-gray-200 rounded-full" />
+          </div>
+          <div className="px-5 pb-2 flex items-center justify-between">
+            <h2 className="font-bold text-gray-900 text-base">♥ Favorites ({favIds.length})</h2>
+            <button onClick={() => setShowFavs(false)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+          </div>
+          <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-2">
+            {favIds.length === 0 ? (
+              <div className="text-center py-10 text-gray-400">
+                <div className="text-4xl mb-2">♡</div>
+                <p className="text-sm">No favorites yet. Tap ♥ on a toilet to save it.</p>
+              </div>
+            ) : (
+              toilets.filter((t) => favIds.includes(t.id)).map((toilet) => (
+                <button
+                  key={toilet.id}
+                  onClick={() => { setSelected(toilet); setShowFavs(false); }}
+                  className="w-full text-left bg-gray-50 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-gray-800 text-sm truncate">
+                        {toilet.nameEn || toilet.name || (toilet.changingTable ? "Baby-friendly Toilet" : "Public Toilet")}
+                      </p>
+                      {toilet.address && (
+                        <p className="text-xs text-gray-500 truncate mt-0.5">{toilet.address}</p>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1.5 ml-3 flex-shrink-0">
+                      {toilet.changingTable && <span className="text-base">🍼</span>}
+                      {toilet.wheelchair && <span className="text-base">♿</span>}
+                      <span className="text-gray-400 text-sm">›</span>
+                    </div>
+                  </div>
+                </button>
+              ))
+            )}
           </div>
         </div>
       )}
