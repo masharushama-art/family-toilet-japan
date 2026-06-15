@@ -35,6 +35,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const jaCityPages = Object.keys(CITIES).map((city) => ({
+    url: `${BASE_URL}/ja/${city}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
   const langPages = ["ja", "zh", "ko"].map((lang) => ({
     url: `${BASE_URL}/${lang}`,
     lastModified: new Date(),
@@ -47,6 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/map`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE_URL}/faq`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     ...langPages,
+    ...jaCityPages,
     ...guidePages,
     ...cityPages,
     ...categoryPages,
