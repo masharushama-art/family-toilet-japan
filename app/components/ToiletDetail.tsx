@@ -60,8 +60,17 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
   const [fav, setFav] = useState(false);
   useEffect(() => {
     setFav(isFavorite(toilet.id));
-    addToHistory(toilet.id);
-  }, [toilet.id]);
+    addToHistory({
+      id: toilet.id,
+      city: city ?? "unknown",
+      nameEn: toilet.nameEn,
+      name: toilet.name,
+      changingTable: toilet.changingTable,
+      wheelchair: toilet.wheelchair,
+      lat: toilet.lat,
+      lon: toilet.lon,
+    });
+  }, [toilet.id, city, toilet.nameEn, toilet.name, toilet.changingTable, toilet.wheelchair, toilet.lat, toilet.lon]);
   const handleFav = () => { setFav(toggleFavorite(toilet.id)); };
 
   return (
