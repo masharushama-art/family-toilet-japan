@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Toilet, FilterState } from "../types/toilet";
@@ -10,7 +10,7 @@ import FilterPanel from "./FilterPanel";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useI18n } from "../i18n/provider";
 import { getFavorites } from "../lib/favorites";
-import { getHistory } from "../lib/history";
+import { getHistory, clearHistory, formatTimeAgo, type HistoryEntry } from "../lib/history";
 import { getNearestCity, CITIES_CONFIG } from "../lib/cities-config";
 import { calcDistance, formatDistance } from "../lib/distance";
 import { requestNotificationPermission, checkProximity } from "../lib/proximity-alert";
@@ -252,7 +252,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   const [showFavs, setShowFavs] = useState(false);
   const [favIds, setFavIds] = useState<string[]>([]);
   const [showHistory, setShowHistory] = useState(false);
-  const [historyIds, setHistoryIds] = useState<string[]>([]);
+  const [historyEntries, setHistoryEntries] = useState<import("../lib/history").HistoryEntry[]>([]);
   const [gpsError, setGpsError] = useState("");
   const [listSort, setListSort] = useState<"distance" | "changing">("distance");
   const [alertEnabled, setAlertEnabled] = useState(false);
@@ -486,7 +486,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
             ♥
           </button>
           <button
-            onClick={() => { setHistoryIds(getHistory()); setShowHistory(true); }}
+            onClick={() => { setHistoryEntries(getHistory()); setShowHistory(true); }}
             aria-label="Open recently viewed"
             className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-sm font-medium"
           >
@@ -570,6 +570,14 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
           onSelect={setSelected}
           onSelectGroup={(g) => { setClusterGroup(g); setSelected(null); }}
         />
+
+        {/* 現在地 → 選択トイレのルート線 */}
+        {selected && userPos && (
+          <Polyline
+            positions={[userPos, [selected.lat, selected.lon]]}
+            pathOptions={{ color: "#0ea5e9", weight: 3, dashArray: "8 6", opacity: 0.85 }}
+          />
+        )}
       </MapContainer>
 
       {/* 再検索ボタン */}
@@ -821,41 +829,67 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
             <div className="w-10 h-1 bg-gray-200 dark:bg-gray-700 rounded-full" />
           </div>
           <div className="px-5 pb-2 flex items-center justify-between">
-            <h2 className="font-bold text-gray-900 dark:text-white text-base">🕐 Recently Viewed ({historyIds.length})</h2>
-            <button onClick={() => setShowHistory(false)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+            <h2 className="font-bold text-gray-900 dark:text-white text-base">🕐 Recently Viewed ({historyEntries.length})</h2>
+            <div className="flex items-center gap-3">
+              {historyEntries.length > 0 && (
+                <button
+                  onClick={() => { clearHistory(); setHistoryEntries([]); }}
+                  className="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                >
+                  Clear all
+                </button>
+              )}
+              <button onClick={() => setShowHistory(false)} aria-label="Close history" className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+            </div>
           </div>
           <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-2">
-            {historyIds.length === 0 ? (
+            {historyEntries.length === 0 ? (
               <div className="text-center py-10 text-gray-400">
                 <div className="text-4xl mb-2">🕐</div>
                 <p className="text-sm">No recently viewed toilets yet.</p>
+                <p className="text-xs mt-1">Tap any toilet marker to view its details.</p>
               </div>
             ) : (
-              toilets.filter((t) => historyIds.includes(t.id))
-                .sort((a, b) => historyIds.indexOf(a.id) - historyIds.indexOf(b.id))
-                .map((toilet) => (
+              historyEntries.map((entry: HistoryEntry) => {
+                const label = entry.nameEn || entry.name || (entry.changingTable ? "Baby-friendly Toilet" : "Public Toilet");
+                const inCurrentCity = entry.city === currentCity;
+                const handleTap = () => {
+                  if (inCurrentCity) {
+                    const found = toilets.find((t) => t.id === entry.id);
+                    if (found) { setSelected(found); setShowHistory(false); return; }
+                  }
+                  // 別都市 → 都市をロードして地図を切り替え
+                  loadCity(entry.city);
+                  setCurrentCity(entry.city);
+                  setShowHistory(false);
+                };
+                return (
                   <button
-                    key={toilet.id}
-                    onClick={() => { setSelected(toilet); setShowHistory(false); }}
+                    key={entry.id}
+                    onClick={handleTap}
                     className="w-full text-left bg-gray-50 dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-gray-700 rounded-xl px-4 py-3 transition-colors"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-gray-800 dark:text-gray-100 text-sm truncate">
-                          {toilet.nameEn || toilet.name || (toilet.changingTable ? "Baby-friendly Toilet" : "Public Toilet")}
-                        </p>
-                        {toilet.address && (
-                          <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">{toilet.address}</p>
-                        )}
+                        <p className="font-medium text-gray-800 dark:text-gray-100 text-sm truncate">{label}</p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="text-xs text-gray-400 capitalize">{entry.city}</span>
+                          <span className="text-gray-300 text-xs">·</span>
+                          <span className="text-xs text-gray-400">{formatTimeAgo(entry.ts)}</span>
+                        </div>
                       </div>
                       <div className="flex items-center gap-1.5 ml-3 flex-shrink-0">
-                        {toilet.changingTable && <span className="text-base">🍼</span>}
-                        {toilet.wheelchair && <span className="text-base">♿</span>}
+                        {entry.changingTable && <span className="text-base">🍼</span>}
+                        {entry.wheelchair && <span className="text-base">♿</span>}
+                        {!inCurrentCity && (
+                          <span className="text-[10px] bg-sky-100 text-sky-600 px-1.5 py-0.5 rounded-full font-medium ml-1">switch</span>
+                        )}
                         <span className="text-gray-400 text-sm">›</span>
                       </div>
                     </div>
                   </button>
-                ))
+                );
+              })
             )}
           </div>
         </div>
