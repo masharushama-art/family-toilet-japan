@@ -199,6 +199,24 @@ const guides = [
     desc: "Canal City, ramen, and Kyushu travel with kids",
     icon: "🌸",
   },
+  {
+    href: "/guide/sendai-family-travel-tips",
+    title: "Sendai Family Travel Tips",
+    desc: "Tanabata Festival, Matsushima, and Tohoku travel with kids",
+    icon: "🌿",
+  },
+  {
+    href: "/guide/hiroshima-family-travel-tips",
+    title: "Hiroshima Family Travel Tips",
+    desc: "Peace Park, Miyajima deer, and okonomiyaki with a stroller",
+    icon: "🕊️",
+  },
+  {
+    href: "/guide/naha-okinawa-family-travel-tips",
+    title: "Naha & Okinawa Family Travel Tips",
+    desc: "Whale sharks, beaches, and tropical Japan with a baby",
+    icon: "🐠",
+  },
 ];
 
 const allCities = cityGroups.flatMap(({ region, cities }) =>
