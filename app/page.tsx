@@ -217,6 +217,42 @@ const guides = [
     desc: "Whale sharks, beaches, and tropical Japan with a baby",
     icon: "🐠",
   },
+  {
+    href: "/guide/yokohama-family-travel-tips",
+    title: "Yokohama Family Travel Tips",
+    desc: "Cup Noodles Museum, Chinatown, and Minato Mirai with kids",
+    icon: "🌉",
+  },
+  {
+    href: "/guide/tokyo-with-baby-winter",
+    title: "Tokyo with Baby in Winter",
+    desc: "Illuminations, indoor attractions, and cold weather tips",
+    icon: "❄️",
+  },
+  {
+    href: "/guide/japan-train-travel-with-stroller",
+    title: "Japan Train Travel with a Stroller",
+    desc: "Shinkansen seats, elevators, IC cards, and luggage forwarding",
+    icon: "🚅",
+  },
+  {
+    href: "/guide/best-baby-changing-facilities-osaka",
+    title: "Best Baby Changing Facilities in Osaka",
+    desc: "Namba, Umeda, Tennoji — area by area baby room guide",
+    icon: "🍼",
+  },
+  {
+    href: "/guide/japan-family-restaurants-guide",
+    title: "Japan Family Restaurants Guide",
+    desc: "Conveyor belt sushi, family chains, and convenience store hacks",
+    icon: "🍜",
+  },
+  {
+    href: "/guide/traveling-japan-with-toddler-checklist",
+    title: "Japan Toddler Travel Checklist",
+    desc: "What to pack, what to buy in Japan, and seasonal essentials",
+    icon: "✅",
+  },
 ];
 
 const allCities = cityGroups.flatMap(({ region, cities }) =>
@@ -356,8 +392,10 @@ export default function Home() {
             {" "}·{" "}
             <Link href="/faq" className="underline hover:text-gray-600">FAQ</Link>
             {" "}·{" "}
+            <Link href="/about" className="underline hover:text-gray-600">About</Link>
+            {" "}·{" "}
             <Link href="/privacy" className="underline hover:text-gray-600">Privacy Policy</Link>
-            {" "}· Free to use · No tracking
+            {" "}· Free to use
           </p>
         </div>
       </div>
