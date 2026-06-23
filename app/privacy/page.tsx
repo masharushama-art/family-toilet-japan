@@ -103,9 +103,9 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-base font-semibold text-gray-800 mb-2">7. Contact</h2>
             <p>
-              If you have any questions about this privacy policy, please contact us at{" "}
-              <a href="mailto:masharu.shama@gmail.com" className="text-sky-600 underline">
-                masharu.shama@gmail.com
+              If you have any questions about this privacy policy, please contact us via our{" "}
+              <a href="https://forms.gle/rs3vP7d6srW1pGHs7" className="text-sky-600 underline" target="_blank" rel="noopener noreferrer">
+                contact form
               </a>.
             </p>
           </section>

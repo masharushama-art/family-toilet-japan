@@ -101,11 +101,14 @@ export default function AboutPage() {
           <p className="text-gray-600 text-sm leading-relaxed mb-4">
             Have a question, suggestion, or found a bug? We&apos;d love to hear from you.
           </p>
-          <div className="border border-gray-100 rounded-xl p-4">
-            <p className="text-gray-600 text-sm">
-              Email: <a href="mailto:masharu.shama@gmail.com" className="text-sky-600 hover:underline">masharu.shama@gmail.com</a>
-            </p>
-          </div>
+          <a
+            href="https://forms.gle/rs3vP7d6srW1pGHs7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+          >
+            📩 Contact Form
+          </a>
         </div>
 
         <div className="bg-gray-50 rounded-2xl p-6 mb-8">
