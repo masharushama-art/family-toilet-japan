@@ -31,6 +31,12 @@ const GUIDE_SLUGS = [
   "sendai-family-travel-tips",
   "hiroshima-family-travel-tips",
   "naha-okinawa-family-travel-tips",
+  "yokohama-family-travel-tips",
+  "tokyo-with-baby-winter",
+  "japan-train-travel-with-stroller",
+  "best-baby-changing-facilities-osaka",
+  "japan-family-restaurants-guide",
+  "traveling-japan-with-toddler-checklist",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -91,6 +97,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: BASE_URL, lastModified: now, changeFrequency: "daily", priority: 1.0 },
     { url: `${BASE_URL}/map`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE_URL}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/privacy`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/attribution`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     ...langPages,
     ...guidePages,
     ...cityPages,

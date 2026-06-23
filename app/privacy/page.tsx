@@ -33,6 +33,16 @@ export default function PrivacyPage() {
               device&apos;s GPS location. This data is used solely to show nearby toilets on the map
               and is never transmitted to our servers or stored.
             </p>
+            <h3 className="font-medium text-gray-700 mt-3 mb-1">Analytics (Google Analytics 4)</h3>
+            <p>
+              We use Google Analytics 4 (GA4) to understand how visitors use our site — which
+              pages are visited, how long users stay, and which features are most popular. GA4
+              collects anonymous, aggregated data. No personally identifiable information is
+              collected. You can opt out using the{" "}
+              <a href="https://tools.google.com/dlpage/gaoptout" className="text-sky-600 underline" target="_blank" rel="noopener noreferrer">
+                Google Analytics Opt-out Browser Add-on
+              </a>.
+            </p>
             <h3 className="font-medium text-gray-700 mt-3 mb-1">Advertising (Google AdSense)</h3>
             <p>
               We use Google AdSense to display advertisements. Google may collect anonymous usage
@@ -55,6 +65,11 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-base font-semibold text-gray-800 mb-2">4. Third-Party Services</h2>
             <ul className="list-disc list-inside space-y-1">
+              <li>
+                <strong>Google Analytics 4</strong> — anonymous usage analytics (
+                <a href="https://policies.google.com/privacy" className="text-sky-600 underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>
+                )
+              </li>
               <li>
                 <strong>OpenStreetMap</strong> — map tiles and toilet data (
                 <a href="https://www.openstreetmap.org/copyright" className="text-sky-600 underline" target="_blank" rel="noopener noreferrer">ODbL license</a>
