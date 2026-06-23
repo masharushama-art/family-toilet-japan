@@ -56,6 +56,34 @@ const faqs = [
     q: "Does it work in rural Japan, not just cities?",
     a: "Yes, though coverage varies. Major cities have dense data. Rural areas and smaller towns have fewer entries but are still included where OpenStreetMap contributors have mapped them.",
   },
+  {
+    q: "Are Japanese train stations stroller-friendly?",
+    a: "Yes. Every major JR and private railway station has at least one elevator between the ticket gates and platforms. Strollers are allowed on all trains without folding. On the Shinkansen (bullet train), reserve the last row of a carriage — the space behind it fits a folded stroller. See our Japan Train Travel with Stroller guide for full details.",
+  },
+  {
+    q: "Where can I buy diapers and baby supplies in Japan?",
+    a: "Drug stores (Matsumoto Kiyoshi, Sundrug, Welcia) and supermarkets all sell diapers, wipes, baby food, and formula. Japanese diaper brands (Merries, Moony, Goo.N) are excellent quality and often better than Western brands. A pack of 50-60 diapers costs about ¥1,000-1,500. You can also find baby supplies at convenience stores in smaller quantities.",
+  },
+  {
+    q: "What is the best restaurant type for families with babies in Japan?",
+    a: "Conveyor belt sushi (kaitenzushi) is the single best option — kids love watching plates, the food arrives quickly, and chains like Sushiro and Kura Sushi have high chairs and English tablet ordering. Family restaurant chains (Gusto, Saizeriya, Jonathan's) are also excellent with kids' menus, high chairs, and late opening hours. See our Family Restaurants Guide for more.",
+  },
+  {
+    q: "Do I need to tip in Japan?",
+    a: "No. Tipping is not expected or practiced in Japan — at restaurants, hotels, taxis, or anywhere else. Attempting to tip can cause confusion. You pay at the register near the exit, not at the table.",
+  },
+  {
+    q: "Can babies use onsen (hot springs) in Japan?",
+    a: "Most public onsen do not allow babies in diapers. However, many ryokan and onsen resorts offer private family baths (貸切風呂 / kashikiri-buro) where babies are welcome. Foot baths (ashiyu) at onsen areas are always open to everyone including babies.",
+  },
+  {
+    q: "What languages does Family Toilet Japan support?",
+    a: "The interface is available in English, Japanese, Chinese (Traditional), and Korean. Toilet names and addresses are shown in both English and Japanese where available. The travel guides are currently in English only.",
+  },
+  {
+    q: "How do I share a specific toilet location with someone?",
+    a: "Tap any toilet on the map to open its details, then tap the '🔗 Copy link' button. This copies a direct link to that specific toilet that you can send via messaging apps, email, or social media. The recipient will see the map centered on that toilet.",
+  },
 ];
 
 export default function FaqPage() {
