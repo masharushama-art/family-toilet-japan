@@ -295,6 +295,30 @@ export default function Home() {
           ))}
         </div>
 
+        {/* Why */}
+        <div className="mb-12">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Why Family Toilet Japan?</h2>
+          <div className="space-y-4 text-sm text-gray-600 leading-relaxed">
+            <p>
+              Japan is one of the safest and most family-friendly countries to travel with young children.
+              But for parents with babies and toddlers, one challenge comes up again and again: finding
+              public toilets with baby changing tables — especially outside major tourist areas.
+            </p>
+            <p>
+              Department stores and train stations often have excellent baby rooms with changing tables,
+              nursing chairs, and even microwaves for heating formula. But knowing <em>which</em> stations
+              and <em>which</em> floor requires local knowledge that most visitors simply don&apos;t have.
+              Google Maps shows toilet pins but doesn&apos;t tell you whether they have a changing table.
+            </p>
+            <p>
+              Family Toilet Japan solves this. We&apos;ve mapped <strong>16,000+ toilet locations</strong> across
+              all 47 prefectures with filters for baby changing tables, wheelchair access, 24-hour
+              availability, and fees. The data comes from OpenStreetMap and official municipal open data —
+              completely free, works offline, and available in 4 languages.
+            </p>
+          </div>
+        </div>
+
         {/* Popular Cities */}
         <h2 className="text-xl font-bold text-gray-800 mb-4">Popular Cities</h2>
         <div className="grid grid-cols-4 gap-2 mb-12">
