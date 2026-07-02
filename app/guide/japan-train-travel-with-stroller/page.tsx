@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/japan-train-travel-with-stroller",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/japan-train-travel-with-stroller",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/japan-train-travel-with-stroller",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/japan-train-travel-with-stroller",
     },
   },
 };

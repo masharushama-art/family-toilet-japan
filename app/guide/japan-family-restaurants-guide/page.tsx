@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/japan-family-restaurants-guide",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/japan-family-restaurants-guide",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/japan-family-restaurants-guide",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/japan-family-restaurants-guide",
     },
   },
 };

@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/hiroshima-family-travel-tips",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/hiroshima-family-travel-tips",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/hiroshima-family-travel-tips",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/hiroshima-family-travel-tips",
     },
   },
 };
