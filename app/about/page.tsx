@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">About Family Toilet Japan</h1>
@@ -20,36 +20,36 @@ export default function AboutPage() {
 
       <div className="max-w-2xl mx-auto px-6 py-10">
         <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Why We Built This</h2>
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Why We Built This</h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
             Traveling in Japan with a baby is an incredible experience — the country is safe, clean, and welcoming to families. But one challenge kept coming up: finding toilets with baby changing tables, especially outside major tourist areas.
           </p>
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
             Department stores and train stations often have excellent baby rooms, but knowing which ones and where they are requires local knowledge that most visitors don&apos;t have. Google Maps shows toilet locations but doesn&apos;t tell you whether they have changing tables or wheelchair access.
           </p>
-          <p className="text-gray-600 text-sm leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
             Family Toilet Japan was built to solve this problem. We combined data from OpenStreetMap and municipal open data sources to create a comprehensive, free, and offline-capable map of family-friendly toilets across all 47 prefectures.
           </p>
         </div>
 
         <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">How Our Data Works</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">How Our Data Works</h2>
           <div className="space-y-3">
-            <div className="border border-gray-100 rounded-xl p-4">
-              <p className="font-semibold text-gray-800 text-sm mb-1">OpenStreetMap (OSM)</p>
-              <p className="text-gray-600 text-sm leading-relaxed">
+            <div className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+              <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">OpenStreetMap (OSM)</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                 The majority of our toilet data comes from OpenStreetMap, the world&apos;s largest open mapping project. OSM contributors across Japan have mapped thousands of public toilets with detailed attributes including baby changing tables, wheelchair access, opening hours, and fees. This data is licensed under ODbL.
               </p>
             </div>
-            <div className="border border-gray-100 rounded-xl p-4">
-              <p className="font-semibold text-gray-800 text-sm mb-1">Municipal Open Data</p>
-              <p className="text-gray-600 text-sm leading-relaxed">
+            <div className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+              <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">Municipal Open Data</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                 We supplement OSM data with official open data published by Japanese municipalities. Cities like Tokyo, Osaka, and Yokohama publish datasets of public toilet facilities under Creative Commons (CC BY) licenses. This data often includes details not available in OSM, such as operator names and facility-specific notes.
               </p>
             </div>
-            <div className="border border-gray-100 rounded-xl p-4">
-              <p className="font-semibold text-gray-800 text-sm mb-1">Data Quality & Updates</p>
-              <p className="text-gray-600 text-sm leading-relaxed">
+            <div className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+              <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">Data Quality & Updates</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                 Our database is updated regularly to reflect changes in OSM and municipal datasets. Currently we cover 16,000+ locations across Japan. Some locations are approximate (geocoded from addresses rather than GPS coordinates) — these are marked with a note in the detail view. If you find incorrect data, you can report it directly to OpenStreetMap through the link on each toilet&apos;s detail page.
               </p>
             </div>
@@ -57,7 +57,7 @@ export default function AboutPage() {
         </div>
 
         <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Features</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Features</h2>
           <div className="grid grid-cols-2 gap-3">
             {[
               { icon: "🍼", title: "Baby Changing Filter", desc: "Find toilets with diaper changing tables" },
@@ -69,17 +69,17 @@ export default function AboutPage() {
               { icon: "🔔", title: "Proximity Alerts", desc: "Get notified when near a family-friendly toilet" },
               { icon: "🌙", title: "Dark Mode", desc: "Automatic dark mode for nighttime use" },
             ].map(({ icon, title, desc }) => (
-              <div key={title} className="border border-gray-100 rounded-xl p-4">
+              <div key={title} className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
                 <div className="text-2xl mb-1">{icon}</div>
-                <p className="font-semibold text-gray-800 text-sm">{title}</p>
-                <p className="text-gray-500 text-xs">{desc}</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{title}</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs">{desc}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {[
               { q: "Is Family Toilet Japan free?", a: "Yes, completely free. No registration, no account needed. The app works in your browser and can be installed as a PWA on your phone's home screen." },
@@ -88,17 +88,17 @@ export default function AboutPage() {
               { q: "Can I contribute or fix data?", a: "Yes! Each toilet's detail page has a link to edit the corresponding OpenStreetMap entry. OSM is a community project and corrections from local users make the data better for everyone." },
               { q: "Does it cover rural areas?", a: "We cover all 47 prefectures, but rural areas naturally have fewer data points than cities. OpenStreetMap coverage continues to grow as more contributors map their local areas." },
             ].map(({ q, a }) => (
-              <div key={q} className="border border-gray-100 rounded-xl p-4">
-                <p className="font-semibold text-gray-800 text-sm mb-1">{q}</p>
-                <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
+              <div key={q} className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+                <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">{q}</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{a}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Contact</h2>
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Contact</h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
             Have a question, suggestion, or found a bug? We&apos;d love to hear from you.
           </p>
           <a
@@ -111,9 +111,9 @@ export default function AboutPage() {
           </a>
         </div>
 
-        <div className="bg-gray-50 rounded-2xl p-6 mb-8">
-          <h2 className="font-bold text-gray-800 mb-3">Start Finding Toilets</h2>
-          <p className="text-sm text-gray-600 mb-4">
+        <div className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 mb-8">
+          <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">Start Finding Toilets</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
             Browse 16,000+ family-friendly toilets across Japan — free, offline-capable, no sign-up.
           </p>
           <Link

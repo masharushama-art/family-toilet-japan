@@ -133,7 +133,7 @@ export default async function CityPage({ params }: Props) {
     .slice(0, 10);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       {/* Hero */}
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
@@ -146,7 +146,7 @@ export default async function CityPage({ params }: Props) {
         </p>
         <Link
           href={`/map?city=${city}`}
-          className="mt-6 inline-block bg-white text-sky-600 font-bold px-8 py-3 rounded-full hover:bg-sky-50 transition-colors"
+          className="mt-6 inline-block bg-white text-sky-600 font-bold px-8 py-3 rounded-full hover:bg-sky-50 dark:hover:bg-gray-800 transition-colors"
         >
           📍 Open Map
         </Link>
@@ -160,7 +160,7 @@ export default async function CityPage({ params }: Props) {
 
       {/* Stats */}
       <div className="max-w-2xl mx-auto px-6 py-10">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
           {c.name} Toilet Stats
         </h2>
         <div className="grid grid-cols-2 gap-4 mb-10">
@@ -170,28 +170,28 @@ export default async function CityPage({ params }: Props) {
             { label: "Wheelchair Accessible", value: stats.wheelchair, icon: "♿" },
             { label: "Free to Use", value: stats.free, icon: "💚" },
           ].map(({ label, value, icon }) => (
-            <div key={label} className="bg-sky-50 rounded-2xl p-4 text-center">
+            <div key={label} className="bg-sky-50 dark:bg-sky-900/20 rounded-2xl p-4 text-center">
               <div className="text-3xl mb-1">{icon}</div>
-              <div className="text-2xl font-bold text-sky-700">{value.toLocaleString()}</div>
-              <div className="text-sm text-gray-600">{label}</div>
+              <div className="text-2xl font-bold text-sky-700 dark:text-sky-300">{value.toLocaleString()}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">{label}</div>
             </div>
           ))}
         </div>
 
         {/* Categories */}
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Browse by Feature</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Browse by Feature</h2>
         <div className="space-y-3 mb-10">
           {Object.entries(CATEGORIES).map(([slug, cat]) => (
             <Link
               key={slug}
               href={`/${city}/${slug}`}
-              className="flex items-center justify-between bg-gray-50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
+              className="flex items-center justify-between bg-gray-50 dark:bg-gray-800/40 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl px-5 py-4 transition-colors"
             >
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{cat.icon}</span>
                 <div>
-                  <div className="font-semibold text-gray-800">{cat.name}</div>
-                  <div className="text-sm text-gray-500">{cat.description}</div>
+                  <div className="font-semibold text-gray-800 dark:text-gray-100">{cat.name}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">{cat.description}</div>
                 </div>
               </div>
               <span className="text-gray-400">›</span>
@@ -202,15 +202,15 @@ export default async function CityPage({ params }: Props) {
         {/* Popular areas (spot pages) */}
         {getSpotsByCity(city).length > 0 && (
           <div className="mb-10">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Popular Areas in {c.name}</h2>
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Popular Areas in {c.name}</h2>
             <div className="grid grid-cols-2 gap-2">
               {getSpotsByCity(city).map((s) => (
                 <Link
                   key={s.slug}
                   href={`/spot/${s.slug}`}
-                  className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+                  className="border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl px-4 py-3 transition-colors"
                 >
-                  <p className="text-sm font-medium text-gray-800">
+                  <p className="text-sm font-medium text-gray-800 dark:text-gray-100">
                     {s.type === "station" ? "🚉" : "📍"} {s.names.en}
                   </p>
                   <p className="text-xs text-gray-400 mt-0.5">Baby changing toilets nearby</p>
@@ -224,9 +224,9 @@ export default async function CityPage({ params }: Props) {
         <AdUnit slot="2847361905" label="City page — between categories and tips" />
 
         {/* Tips */}
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
-          <h3 className="font-bold text-amber-800 mb-2">💡 Tips for families in {c.name}</h3>
-          <ul className="text-sm text-amber-700 space-y-1">
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-5">
+          <h3 className="font-bold text-amber-800 dark:text-amber-200 mb-2">💡 Tips for families in {c.name}</h3>
+          <ul className="text-sm text-amber-700 dark:text-amber-300 space-y-1">
             {(CITY_META[city]?.tips ?? [
               "Department stores and shopping malls have the best facilities",
               "Train station toilets are clean and usually free",

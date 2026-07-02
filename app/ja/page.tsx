@@ -39,7 +39,7 @@ const cities = [
 export default function JaPage() {
   return (
     <>
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       {/* Hero */}
       <div className="bg-sky-600 text-white px-6 py-14 text-center">
         <div className="text-5xl mb-3">🚽</div>
@@ -52,7 +52,7 @@ export default function JaPage() {
         </p>
         <Link
           href="/map"
-          className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 transition-colors"
+          className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 dark:hover:bg-gray-800 transition-colors"
         >
           📍 近くのトイレを探す
         </Link>
@@ -67,29 +67,29 @@ export default function JaPage() {
             { icon: "♿", label: "車椅子対応" },
             { icon: "🕐", label: "24時間トイレ" },
           ].map(({ icon, label }) => (
-            <div key={label} className="bg-sky-50 rounded-2xl py-4 px-2">
+            <div key={label} className="bg-sky-50 dark:bg-sky-900/20 rounded-2xl py-4 px-2">
               <div className="text-3xl mb-1">{icon}</div>
-              <p className="text-xs text-gray-600 font-medium">{label}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">{label}</p>
             </div>
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 mb-4">主要都市から探す</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">主要都市から探す</h2>
         <div className="grid grid-cols-4 gap-2 mb-10">
           {cities.map(({ slug, name, icon, count }) => (
             <Link
               key={slug}
               href={`/ja/${slug}`}
-              className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
+              className="border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl py-3 text-center transition-colors"
             >
               <div className="text-2xl mb-0.5">{icon}</div>
-              <p className="font-medium text-gray-800 text-xs">{name}</p>
+              <p className="font-medium text-gray-800 dark:text-gray-100 text-xs">{name}</p>
               <p className="text-gray-400 text-[10px] mt-0.5">{count}</p>
             </Link>
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 mb-4">お役立ちガイド</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">お役立ちガイド</h2>
         <div className="space-y-3 mb-10">
           {[
             { slug: "best-baby-changing-facilities-tokyo", icon: "🗼", title: "東京のおむつ替え・授乳室ガイド", desc: "新宿・渋谷・上野・銀座・東京駅のおすすめベビールーム" },
@@ -112,18 +112,18 @@ export default function JaPage() {
             <Link
               key={slug}
               href={`/ja/guide/${slug}`}
-              className="flex items-start gap-3 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl p-4 transition-colors"
+              className="flex items-start gap-3 border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl p-4 transition-colors"
             >
               <span className="text-2xl">{icon}</span>
               <div>
-                <p className="font-semibold text-gray-800 text-sm">{title}</p>
-                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{title}</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{desc}</p>
               </div>
             </Link>
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 mb-4">よくある質問</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">よくある質問</h2>
         <div className="space-y-4 mb-10">
           {[
             { q: "どうやって使うの？", a: "マップを開いて現在地ボタンを押すと、近くのおむつ替え台付きトイレが表示されます。青いピンがおむつ替え台ありのトイレです。" },
@@ -131,9 +131,9 @@ export default function JaPage() {
             { q: "オフラインで使える？", a: "PWAとしてインストールすれば、一度開いたエリアはオフラインでも地図が表示されます。" },
             { q: "無料で使える？", a: "完全無料・会員登録不要です。" },
           ].map(({ q, a }) => (
-            <div key={q} className="bg-gray-50 rounded-xl p-4">
-              <p className="font-semibold text-gray-800 text-sm mb-1">Q. {q}</p>
-              <p className="text-gray-600 text-sm">A. {a}</p>
+            <div key={q} className="bg-gray-50 dark:bg-gray-800/40 rounded-xl p-4">
+              <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">Q. {q}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm">A. {a}</p>
             </div>
           ))}
         </div>
