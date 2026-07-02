@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "hakata with kids",
     "kyushu family travel",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/fukuoka-family-travel-tips" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/fukuoka-family-travel-tips",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/fukuoka-family-travel-tips",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/fukuoka-family-travel-tips",
+    },
+  },
 };
 
 const sections = [

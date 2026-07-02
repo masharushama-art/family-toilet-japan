@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "okinawa beach with toddler",
     "ryukyu family travel",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/naha-okinawa-family-travel-tips" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/naha-okinawa-family-travel-tips",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/naha-okinawa-family-travel-tips",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/naha-okinawa-family-travel-tips",
+    },
+  },
 };
 
 const sections = [

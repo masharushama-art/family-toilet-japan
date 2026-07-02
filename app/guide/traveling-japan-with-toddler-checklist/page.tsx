@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "baby formula japan",
     "japan travel with toddler packing",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/traveling-japan-with-toddler-checklist" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/traveling-japan-with-toddler-checklist",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/traveling-japan-with-toddler-checklist",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/traveling-japan-with-toddler-checklist",
+    },
+  },
 };
 
 const sections = [
