@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import GuideAreaLinks from "../../components/GuideAreaLinks";
 
 export const metadata: Metadata = {
   title: "Best Baby Changing Facilities in Osaka — Area by Area Guide 2026 | Family Toilet Japan",
@@ -100,6 +101,8 @@ export default function OsakaBabyChangingPage() {
             </div>
           </div>
         ))}
+
+        <GuideAreaLinks slug="best-baby-changing-facilities-osaka" lang="en" />
 
         <div className="bg-gray-50 rounded-2xl p-6 mb-8">
           <h2 className="font-bold text-gray-800 mb-3">Find All Toilets in Osaka</h2>

@@ -69,6 +69,10 @@ export default function MapPageClient() {
   const searchParams = useSearchParams();
   const city = searchParams.get("city") ?? "tokyo";
   const initialToiletId = searchParams.get("id") ?? undefined;
-  const initialCenter = CITY_CENTERS[city] ?? CITY_CENTERS.tokyo;
-  return <MapView initialCenter={initialCenter} city={city} initialToiletId={initialToiletId} />;
+  const lat = parseFloat(searchParams.get("lat") ?? "");
+  const lon = parseFloat(searchParams.get("lon") ?? "");
+  const embed = searchParams.get("embed") === "1";
+  const initialCenter: [number, number] =
+    !isNaN(lat) && !isNaN(lon) ? [lat, lon] : (CITY_CENTERS[city] ?? CITY_CENTERS.tokyo);
+  return <MapView initialCenter={initialCenter} city={city} initialToiletId={initialToiletId} embed={embed} />;
 }
