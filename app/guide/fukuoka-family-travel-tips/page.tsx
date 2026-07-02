@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/fukuoka-family-travel-tips",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/fukuoka-family-travel-tips",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/fukuoka-family-travel-tips",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/fukuoka-family-travel-tips",
     },
   },
 };

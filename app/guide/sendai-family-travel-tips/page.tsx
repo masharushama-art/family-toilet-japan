@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/sendai-family-travel-tips",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/sendai-family-travel-tips",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/sendai-family-travel-tips",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/sendai-family-travel-tips",
     },
   },
 };

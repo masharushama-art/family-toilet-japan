@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/traveling-japan-with-toddler-checklist",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/traveling-japan-with-toddler-checklist",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/traveling-japan-with-toddler-checklist",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/traveling-japan-with-toddler-checklist",
     },
   },
 };

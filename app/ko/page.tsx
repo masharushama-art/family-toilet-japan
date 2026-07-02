@@ -93,6 +93,18 @@ export default function KoPage() {
             { slug: "best-baby-changing-facilities-osaka", icon: "🏯", title: "오사카 기저귀 교환대・수유실 가이드", desc: "난바, 우메다, 텐노지, USJ 주변 육아 시설 총정리" },
             { slug: "kyoto-with-baby", icon: "⛩️", title: "아기와 함께하는 교토 여행 가이드", desc: "유모차 친화 명소・이동 방법・아이와 외식" },
             { slug: "japan-travel-with-baby", icon: "👶", title: "아기와 함께하는 일본 여행 가이드", desc: "기저귀 교환 시설 찾는 법・준비물・이동 팁" },
+            { slug: "japan-train-travel-with-stroller", icon: "🚅", title: "유모차로 전철・신칸센 타는 팁", desc: "신칸센 좌석 선택・다목적실・택배 활용법" },
+            { slug: "japan-family-restaurants-guide", icon: "🍽️", title: "아이와 함께하는 외식 완벽 가이드", desc: "패밀리 레스토랑 비교・회전초밥・우동 체인 공략법" },
+            { slug: "traveling-japan-with-toddler-checklist", icon: "🧳", title: "아이와 여행 준비물 체크리스트", desc: "가져갈 것・현지 구매・계절별 준비" },
+            { slug: "tokyo-with-baby-winter", icon: "🧣", title: "겨울철 아기와 함께하는 도쿄", desc: "일루미네이션・실내 명소・방한 대책" },
+            { slug: "yokohama-family-travel-tips", icon: "🌉", title: "요코하마 가족 여행 가이드", desc: "호빵맨 뮤지엄・미나토미라이・차이나타운" },
+            { slug: "osaka-family-travel-tips", icon: "🎡", title: "오사카 가족 여행 가이드", desc: "가족 친화 지역・USJ・유모차 이동 팁" },
+            { slug: "nagoya-family-travel-tips", icon: "🏰", title: "나고야 가족 여행 가이드", desc: "레고랜드・나고야항 수족관・나고야 명물 요리" },
+            { slug: "fukuoka-family-travel-tips", icon: "🌸", title: "후쿠오카 가족 여행 가이드", desc: "캐널시티・동식물원・아이와 라멘 공략법" },
+            { slug: "sapporo-family-travel-tips", icon: "❄️", title: "삿포로 가족 여행 가이드", desc: "마루야마 동물원・눈축제・겨울 아기 방한" },
+            { slug: "sendai-family-travel-tips", icon: "🌿", title: "센다이 가족 여행 가이드", desc: "야기야마 동물공원・바다의 숲 수족관・마츠시마" },
+            { slug: "hiroshima-family-travel-tips", icon: "⛩️", title: "히로시마 가족 여행 가이드", desc: "미야지마・평화기념공원・오코노미야키 공략법" },
+            { slug: "naha-okinawa-family-travel-tips", icon: "🌺", title: "오키나와・나하 가족 여행 가이드", desc: "츄라우미 수족관・렌터카・아기와 해변" },
           ].map(({ slug, icon, title, desc }) => (
             <Link
               key={slug}
