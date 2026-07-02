@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "baby room tokyo station",
     "changing table tokyo department store",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-tokyo" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-tokyo",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-tokyo",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/best-baby-changing-facilities-tokyo",
+    },
+  },
 };
 
 const spots = [

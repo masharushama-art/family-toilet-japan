@@ -39,6 +39,13 @@ const GUIDE_SLUGS = [
   "traveling-japan-with-toddler-checklist",
 ];
 
+const JA_GUIDE_SLUGS = [
+  "best-baby-changing-facilities-tokyo",
+  "best-baby-changing-facilities-osaka",
+  "kyoto-with-baby",
+  "japan-travel-with-baby",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
@@ -63,6 +70,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.8,
+  }));
+
+  const jaGuidePages = JA_GUIDE_SLUGS.map((slug) => ({
+    url: `${BASE_URL}/ja/guide/${slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
   }));
 
   const jaCityPages = CITY_SLUGS.map((city) => ({
@@ -102,6 +116,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/attribution`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     ...langPages,
     ...guidePages,
+    ...jaGuidePages,
     ...cityPages,
     ...jaCityPages,
     ...zhCityPages,
