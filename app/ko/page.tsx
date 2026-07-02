@@ -86,6 +86,28 @@ export default function KoPage() {
           ))}
         </div>
 
+        <h2 className="text-xl font-bold text-gray-800 mb-4">유용한 가이드</h2>
+        <div className="space-y-3 mb-10">
+          {[
+            { slug: "best-baby-changing-facilities-tokyo", icon: "🗼", title: "도쿄 기저귀 교환대・수유실 가이드", desc: "신주쿠, 시부야, 우에노, 긴자, 도쿄역 추천 육아실" },
+            { slug: "best-baby-changing-facilities-osaka", icon: "🏯", title: "오사카 기저귀 교환대・수유실 가이드", desc: "난바, 우메다, 텐노지, USJ 주변 육아 시설 총정리" },
+            { slug: "kyoto-with-baby", icon: "⛩️", title: "아기와 함께하는 교토 여행 가이드", desc: "유모차 친화 명소・이동 방법・아이와 외식" },
+            { slug: "japan-travel-with-baby", icon: "👶", title: "아기와 함께하는 일본 여행 가이드", desc: "기저귀 교환 시설 찾는 법・준비물・이동 팁" },
+          ].map(({ slug, icon, title, desc }) => (
+            <Link
+              key={slug}
+              href={`/ko/guide/${slug}`}
+              className="flex items-start gap-3 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl p-4 transition-colors"
+            >
+              <span className="text-2xl">{icon}</span>
+              <div>
+                <p className="font-semibold text-gray-800 text-sm">{title}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+
         <h2 className="text-xl font-bold text-gray-800 mb-4">자주 묻는 질문</h2>
         <div className="space-y-4 mb-10">
           {[

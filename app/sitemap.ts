@@ -39,6 +39,13 @@ const GUIDE_SLUGS = [
   "traveling-japan-with-toddler-checklist",
 ];
 
+const ZH_KO_GUIDE_SLUGS = [
+  "best-baby-changing-facilities-tokyo",
+  "best-baby-changing-facilities-osaka",
+  "kyoto-with-baby",
+  "japan-travel-with-baby",
+];
+
 const JA_GUIDE_SLUGS = [
   "best-baby-changing-facilities-tokyo",
   "best-baby-changing-facilities-osaka",
@@ -91,6 +98,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const zhGuidePages = ZH_KO_GUIDE_SLUGS.map((slug) => ({
+    url: `${BASE_URL}/zh/guide/${slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  const koGuidePages = ZH_KO_GUIDE_SLUGS.map((slug) => ({
+    url: `${BASE_URL}/ko/guide/${slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
   const jaCityPages = CITY_SLUGS.map((city) => ({
     url: `${BASE_URL}/ja/${city}`,
     lastModified: now,
@@ -129,6 +150,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...langPages,
     ...guidePages,
     ...jaGuidePages,
+    ...zhGuidePages,
+    ...koGuidePages,
     ...cityPages,
     ...jaCityPages,
     ...zhCityPages,

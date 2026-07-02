@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/kyoto-with-baby",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/kyoto-with-baby",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/kyoto-with-baby",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/kyoto-with-baby",
     },
   },
 };
