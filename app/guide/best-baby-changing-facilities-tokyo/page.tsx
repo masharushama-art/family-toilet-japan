@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-tokyo",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/best-baby-changing-facilities-tokyo",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/best-baby-changing-facilities-tokyo",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/best-baby-changing-facilities-tokyo",
     },
   },
 };

@@ -85,6 +85,28 @@ export default function ZhPage() {
           ))}
         </div>
 
+        <h2 className="text-xl font-bold text-gray-800 mb-4">實用指南</h2>
+        <div className="space-y-3 mb-10">
+          {[
+            { slug: "best-baby-changing-facilities-tokyo", icon: "🗼", title: "東京換尿布台・哺乳室指南", desc: "新宿、澀谷、上野、銀座、東京車站推薦育嬰室" },
+            { slug: "best-baby-changing-facilities-osaka", icon: "🏯", title: "大阪換尿布台・哺乳室指南", desc: "難波、梅田、天王寺、USJ周邊育嬰設施總整理" },
+            { slug: "kyoto-with-baby", icon: "⛩️", title: "帶寶寶遊京都指南", desc: "推車友善景點・交通方式・親子美食" },
+            { slug: "japan-travel-with-baby", icon: "👶", title: "帶寶寶遊日本指南", desc: "換尿布設施尋找方式・行李清單・交通技巧" },
+          ].map(({ slug, icon, title, desc }) => (
+            <Link
+              key={slug}
+              href={`/zh/guide/${slug}`}
+              className="flex items-start gap-3 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl p-4 transition-colors"
+            >
+              <span className="text-2xl">{icon}</span>
+              <div>
+                <p className="font-semibold text-gray-800 text-sm">{title}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+
         <h2 className="text-xl font-bold text-gray-800 mb-4">常見問題</h2>
         <div className="space-y-4 mb-10">
           {[
