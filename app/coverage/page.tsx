@@ -27,7 +27,7 @@ export default function CoveragePage() {
   const updated = new Date().toISOString().slice(0, 10);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">Data Coverage</h1>
@@ -41,7 +41,7 @@ export default function CoveragePage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-gray-400 text-xs border-b border-gray-100">
+              <tr className="text-left text-gray-400 text-xs border-b border-gray-100 dark:border-gray-800">
                 <th className="py-2 pr-2">City</th>
                 <th className="py-2 pr-2 text-right">Total</th>
                 <th className="py-2 pr-2 text-right">🍼 Changing</th>
@@ -56,17 +56,17 @@ export default function CoveragePage() {
                       {r.name}
                     </Link>
                   </td>
-                  <td className="py-2.5 pr-2 text-right text-gray-700">{r.total.toLocaleString()}</td>
-                  <td className="py-2.5 pr-2 text-right text-gray-700">{r.withChangingTable.toLocaleString()}</td>
-                  <td className="py-2.5 text-right text-gray-700">{r.wheelchair.toLocaleString()}</td>
+                  <td className="py-2.5 pr-2 text-right text-gray-700 dark:text-gray-300">{r.total.toLocaleString()}</td>
+                  <td className="py-2.5 pr-2 text-right text-gray-700 dark:text-gray-300">{r.withChangingTable.toLocaleString()}</td>
+                  <td className="py-2.5 text-right text-gray-700 dark:text-gray-300">{r.wheelchair.toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <div className="bg-gray-50 rounded-2xl p-5 mt-8 text-sm text-gray-600">
-          <p className="font-semibold text-gray-800 mb-1">About this data</p>
+        <div className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-5 mt-8 text-sm text-gray-600 dark:text-gray-300">
+          <p className="font-semibold text-gray-800 dark:text-gray-100 mb-1">About this data</p>
           <p>
             Sourced from OpenStreetMap (ODbL) and municipal open data across Japan, refreshed with each site deployment. Found something incorrect? Each toilet&apos;s detail page links to its OpenStreetMap entry where you can submit a fix. See <Link href="/attribution" className="text-sky-600 underline">data sources</Link> for licensing.
           </p>

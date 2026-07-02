@@ -88,7 +88,7 @@ const faqs = [
 
 export default function FaqPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">Frequently Asked Questions</h1>
@@ -100,16 +100,16 @@ export default function FaqPage() {
       <div className="max-w-2xl mx-auto px-5 py-10">
         <div className="space-y-4 mb-12">
           {faqs.map(({ q, a }) => (
-            <div key={q} className="border border-gray-100 rounded-2xl p-5">
-              <p className="font-semibold text-gray-900 text-sm mb-2">Q. {q}</p>
-              <p className="text-gray-600 text-sm leading-relaxed">A. {a}</p>
+            <div key={q} className="border border-gray-100 dark:border-gray-800 rounded-2xl p-5">
+              <p className="font-semibold text-gray-900 dark:text-white text-sm mb-2">Q. {q}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">A. {a}</p>
             </div>
           ))}
         </div>
 
-        <div className="bg-sky-50 rounded-2xl p-6 text-center mb-8">
-          <p className="text-sky-800 font-semibold mb-1">Still have a question?</p>
-          <p className="text-sky-700 text-sm mb-4">Check our travel guides for more detailed information.</p>
+        <div className="bg-sky-50 dark:bg-sky-900/20 rounded-2xl p-6 text-center mb-8">
+          <p className="text-sky-800 dark:text-sky-200 font-semibold mb-1">Still have a question?</p>
+          <p className="text-sky-700 dark:text-sky-300 text-sm mb-4">Check our travel guides for more detailed information.</p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link href="/guide/japan-travel-with-baby" className="bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium px-4 py-2 rounded-xl transition-colors">
               👶 Japan with Baby

@@ -40,7 +40,7 @@ const cities = [
 export default function KoPage() {
   return (
     <>
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="bg-sky-600 text-white px-6 py-14 text-center">
         <div className="text-5xl mb-3">🚽</div>
         <h1 className="text-3xl font-bold mb-3">일본 가족 화장실 지도</h1>
@@ -51,7 +51,7 @@ export default function KoPage() {
         </p>
         <Link
           href="/map"
-          className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 transition-colors"
+          className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 dark:hover:bg-gray-800 transition-colors"
         >
           📍 근처 화장실 찾기
         </Link>
@@ -65,28 +65,28 @@ export default function KoPage() {
             { icon: "♿", label: "휠체어 접근" },
             { icon: "🕐", label: "24시간 화장실" },
           ].map(({ icon, label }) => (
-            <div key={label} className="bg-sky-50 rounded-2xl py-4 px-2">
+            <div key={label} className="bg-sky-50 dark:bg-sky-900/20 rounded-2xl py-4 px-2">
               <div className="text-3xl mb-1">{icon}</div>
-              <p className="text-xs text-gray-600 font-medium">{label}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">{label}</p>
             </div>
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 mb-4">도시별 검색</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">도시별 검색</h2>
         <div className="grid grid-cols-4 gap-2 mb-10">
           {cities.map(({ slug, name, icon }) => (
             <Link
               key={slug}
               href={`/${slug}`}
-              className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
+              className="border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl py-3 text-center transition-colors"
             >
               <div className="text-2xl mb-0.5">{icon}</div>
-              <p className="font-medium text-gray-800 text-xs">{name}</p>
+              <p className="font-medium text-gray-800 dark:text-gray-100 text-xs">{name}</p>
             </Link>
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 mb-4">유용한 가이드</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">유용한 가이드</h2>
         <div className="space-y-3 mb-10">
           {[
             { slug: "best-baby-changing-facilities-tokyo", icon: "🗼", title: "도쿄 기저귀 교환대・수유실 가이드", desc: "신주쿠, 시부야, 우에노, 긴자, 도쿄역 추천 육아실" },
@@ -109,18 +109,18 @@ export default function KoPage() {
             <Link
               key={slug}
               href={`/ko/guide/${slug}`}
-              className="flex items-start gap-3 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl p-4 transition-colors"
+              className="flex items-start gap-3 border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl p-4 transition-colors"
             >
               <span className="text-2xl">{icon}</span>
               <div>
-                <p className="font-semibold text-gray-800 text-sm">{title}</p>
-                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{title}</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">{desc}</p>
               </div>
             </Link>
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 mb-4">자주 묻는 질문</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">자주 묻는 질문</h2>
         <div className="space-y-4 mb-10">
           {[
             { q: "어떻게 사용하나요?", a: "지도를 열고 위치 버튼을 누르면 근처의 기저귀 교환대가 있는 화장실이 표시됩니다. 파란 핀이 기저귀 교환대가 있는 화장실입니다." },
@@ -128,9 +128,9 @@ export default function KoPage() {
             { q: "오프라인에서 사용 가능한가요?", a: "PWA로 설치하면 한 번 열었던 지역은 오프라인에서도 지도를 볼 수 있습니다." },
             { q: "유료인가요?", a: "완전 무료이며 회원가입이 필요 없습니다." },
           ].map(({ q, a }) => (
-            <div key={q} className="bg-gray-50 rounded-xl p-4">
-              <p className="font-semibold text-gray-800 text-sm mb-1">Q. {q}</p>
-              <p className="text-gray-600 text-sm">A. {a}</p>
+            <div key={q} className="bg-gray-50 dark:bg-gray-800/40 rounded-xl p-4">
+              <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">Q. {q}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm">A. {a}</p>
             </div>
           ))}
         </div>

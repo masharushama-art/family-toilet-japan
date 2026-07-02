@@ -261,7 +261,7 @@ const allCities = cityGroups.flatMap(({ region, cities }) =>
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       {/* Hero */}
       <div className="relative overflow-hidden bg-gradient-to-br from-sky-700 via-sky-600 to-sky-400 text-white px-6 py-16 text-center">
         {/* 装飾円 */}
@@ -281,7 +281,7 @@ export default function Home() {
           </p>
           <Link
             href="/map"
-            className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 hover:scale-[1.02] transition-all shadow-lg shadow-sky-900/20"
+            className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 dark:hover:bg-gray-800 hover:scale-[1.02] transition-all shadow-lg shadow-sky-900/20"
           >
             📍 Find Toilets Near Me
           </Link>
@@ -291,7 +291,7 @@ export default function Home() {
       </div>
 
       {/* 数字カウンター帯 */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-2xl mx-auto px-6 py-5 grid grid-cols-4 gap-2 text-center">
           {[
             { n: "16,000+", label: "Toilets" },
@@ -315,16 +315,16 @@ export default function Home() {
             { icon: "♿", label: "Wheelchair access" },
             { icon: "🕐", label: "24-hour toilets" },
           ].map(({ icon, label }) => (
-            <div key={label} className="bg-sky-50 rounded-2xl py-4 px-2">
+            <div key={label} className="bg-sky-50 dark:bg-sky-900/20 rounded-2xl py-4 px-2">
               <div className="text-3xl mb-1">{icon}</div>
-              <p className="text-xs text-gray-600 font-medium">{label}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">{label}</p>
             </div>
           ))}
         </div>
 
         {/* 人気スポット */}
         <div className="mb-12">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Popular Areas</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Popular Areas</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {[
               { slug: "shinjuku-station", icon: "🚉", name: "Shinjuku Station" },
@@ -337,10 +337,10 @@ export default function Home() {
               <Link
                 key={slug}
                 href={`/spot/${slug}`}
-                className="flex items-center gap-2 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl px-3 py-3 transition-colors"
+                className="flex items-center gap-2 border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl px-3 py-3 transition-colors"
               >
                 <span className="text-xl">{icon}</span>
-                <span className="text-sm font-medium text-gray-800">{name}</span>
+                <span className="text-sm font-medium text-gray-800 dark:text-gray-100">{name}</span>
               </Link>
             ))}
           </div>
@@ -348,8 +348,8 @@ export default function Home() {
 
         {/* Why */}
         <div className="mb-12">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Why Family Toilet Japan?</h2>
-          <div className="space-y-4 text-sm text-gray-600 leading-relaxed">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Why Family Toilet Japan?</h2>
+          <div className="space-y-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
             <p>
               Japan is one of the safest and most family-friendly countries to travel with young children.
               But for parents with babies and toddlers, one challenge comes up again and again: finding
@@ -371,7 +371,7 @@ export default function Home() {
         </div>
 
         {/* Popular Cities */}
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Popular Cities</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Popular Cities</h2>
         <div className="grid grid-cols-4 gap-2 mb-12">
           {[
             { slug: "tokyo",    name: "Tokyo",    icon: "🗼" },
@@ -388,10 +388,10 @@ export default function Home() {
               <Link
                 key={slug}
                 href={`/${slug}`}
-                className="border-2 border-sky-100 hover:border-sky-400 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
+                className="border-2 border-sky-100 hover:border-sky-400 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl py-3 text-center transition-colors"
               >
                 <div className="text-2xl mb-0.5">{icon}</div>
-                <p className="font-semibold text-gray-800 text-xs leading-tight">{name}</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-100 text-xs leading-tight">{name}</p>
                 {count > 0 && (
                   <p className="text-sky-500 text-[10px] mt-0.5 font-medium">{count.toLocaleString()}</p>
                 )}
@@ -401,7 +401,7 @@ export default function Home() {
         </div>
 
         {/* Cities by region */}
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Browse by Region</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Browse by Region</h2>
         <div className="space-y-6 mb-12">
           {cityGroups.map(({ region, cities }) => (
             <div key={region}>
@@ -413,10 +413,10 @@ export default function Home() {
                     <Link
                       key={slug}
                       href={`/${slug}`}
-                      className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl py-3 text-center transition-colors"
+                      className="border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-xl py-3 text-center transition-colors"
                     >
                       <div className="text-2xl mb-0.5">{icon}</div>
-                      <p className="font-medium text-gray-800 text-xs leading-tight">{name}</p>
+                      <p className="font-medium text-gray-800 dark:text-gray-100 text-xs leading-tight">{name}</p>
                       {count > 0 && (
                         <p className="text-gray-400 text-[10px] mt-0.5">{count.toLocaleString()}</p>
                       )}
@@ -432,18 +432,18 @@ export default function Home() {
         <AdUnit slot="7391048265" label="Top page — between regions and guides" />
 
         {/* Guides */}
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Travel Guides</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Travel Guides</h2>
         <div className="space-y-3 mb-12">
           {guides.map(({ href, title, desc, icon }) => (
             <Link
               key={href}
               href={href}
-              className="flex items-center gap-4 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-2xl px-5 py-4 transition-colors"
+              className="flex items-center gap-4 border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-2xl px-5 py-4 transition-colors"
             >
               <span className="text-3xl">{icon}</span>
               <div>
-                <p className="font-semibold text-gray-800 text-sm">{title}</p>
-                <p className="text-xs text-gray-500">{desc}</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{title}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{desc}</p>
               </div>
               <span className="text-gray-400 ml-auto">›</span>
             </Link>
@@ -451,8 +451,8 @@ export default function Home() {
         </div>
 
         {/* About */}
-        <div className="bg-gray-50 rounded-2xl p-6 text-sm text-gray-600">
-          <h2 className="font-bold text-gray-800 mb-2">About Family Toilet Japan</h2>
+        <div className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 text-sm text-gray-600 dark:text-gray-300">
+          <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-2">About Family Toilet Japan</h2>
           <p className="mb-2">
             Family Toilet Japan helps foreign families traveling in Japan quickly find
             safe, clean toilets with baby-friendly facilities. All data comes from

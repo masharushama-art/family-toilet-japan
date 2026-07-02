@@ -76,7 +76,7 @@ const spots = [
 
 export default function TokyoBabyChangingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">Best Baby Changing Facilities in Tokyo</h1>
@@ -86,11 +86,11 @@ export default function TokyoBabyChangingPage() {
       </div>
 
       <div className="max-w-2xl mx-auto px-6 py-10">
-        <div className="bg-sky-50 rounded-2xl p-5 mb-8 flex items-start gap-3">
+        <div className="bg-sky-50 dark:bg-sky-900/20 rounded-2xl p-5 mb-8 flex items-start gap-3">
           <span className="text-2xl">💡</span>
-          <div className="text-sm text-sky-800">
+          <div className="text-sm text-sky-800 dark:text-sky-200">
             <p className="font-semibold mb-1">Quick Tips</p>
-            <ul className="space-y-1 text-sky-700">
+            <ul className="space-y-1 text-sky-700 dark:text-sky-300">
               <li>• Department stores (&quot;depato&quot;) have the best facilities — usually free, clean, and open to non-shoppers</li>
               <li>• Look for <strong>多目的トイレ</strong> (multipurpose restroom) or <strong>ベビールーム</strong> (baby room) signs</li>
               <li>• Convenience stores (7-Eleven, Lawson) are always open and usually have changing tables</li>
@@ -101,12 +101,12 @@ export default function TokyoBabyChangingPage() {
 
         {spots.map(({ area, icon, places }) => (
           <div key={area} className="mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">{icon} {area}</h2>
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">{icon} {area}</h2>
             <div className="space-y-3">
               {places.map(({ name, tip }) => (
-                <div key={name} className="border border-gray-100 rounded-xl p-4">
-                  <p className="font-semibold text-gray-800 text-sm mb-1">📍 {name}</p>
-                  <p className="text-gray-600 text-sm">{tip}</p>
+                <div key={name} className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+                  <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">📍 {name}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{tip}</p>
                 </div>
               ))}
             </div>
@@ -115,9 +115,9 @@ export default function TokyoBabyChangingPage() {
 
         <GuideAreaLinks slug="best-baby-changing-facilities-tokyo" lang="en" />
 
-        <div className="bg-gray-50 rounded-2xl p-6 mb-8">
-          <h2 className="font-bold text-gray-800 mb-3">Find More on the Map</h2>
-          <p className="text-sm text-gray-600 mb-4">
+        <div className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 mb-8">
+          <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">Find More on the Map</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
             Use our interactive map to find all 3,400+ toilets in Tokyo with baby changing tables — including real-time distance from your location.
           </p>
           <Link

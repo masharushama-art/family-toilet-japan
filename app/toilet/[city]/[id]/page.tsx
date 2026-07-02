@@ -45,12 +45,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 function FeatureRow({ icon, label, value, positive }: { icon: string; label: string; value: string; positive?: boolean }) {
   return (
-    <div className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-      <span className="text-gray-500 text-sm flex items-center gap-2">
+    <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800 last:border-0">
+      <span className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-2">
         <span>{icon}</span>
         <span>{label}</span>
       </span>
-      <span className={`text-sm font-medium ${positive ? "text-green-600" : "text-gray-700"}`}>{value}</span>
+      <span className={`text-sm font-medium ${positive ? "text-green-600" : "text-gray-700 dark:text-gray-300"}`}>{value}</span>
     </div>
   );
 }
@@ -69,7 +69,7 @@ export default async function ToiletPage({ params }: { params: Params }) {
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${toilet.lat},${toilet.lon}&travelmode=walking`;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="max-w-2xl mx-auto px-5 py-8">
         {/* Breadcrumb */}
         <nav className="text-xs text-gray-400 mb-4 flex items-center gap-1.5 flex-wrap">
@@ -79,32 +79,32 @@ export default async function ToiletPage({ params }: { params: Params }) {
           <span>›</span>
           <Link href={`/${city}/changing-table`} className="hover:text-sky-600">Baby Changing</Link>
           <span>›</span>
-          <span className="text-gray-500 truncate max-w-[180px]">{name}</span>
+          <span className="text-gray-500 dark:text-gray-400 truncate max-w-[180px]">{name}</span>
         </nav>
 
-        <h1 className="text-xl font-bold text-gray-900 leading-tight">{name}</h1>
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white leading-tight">{name}</h1>
         {toilet.name && toilet.nameEn && toilet.name !== toilet.nameEn && (
           <p className="text-sm text-gray-400 mt-0.5">{toilet.name}</p>
         )}
 
         <div className="flex items-center gap-2 mt-3 flex-wrap">
-          <span className="bg-sky-100 text-sky-700 text-xs px-2.5 py-1 rounded-full font-medium">🍼 Baby Changing Table</span>
+          <span className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-xs px-2.5 py-1 rounded-full font-medium">🍼 Baby Changing Table</span>
           {toilet.wheelchair && (
-            <span className="bg-green-100 text-green-700 text-xs px-2.5 py-1 rounded-full font-medium">♿ Wheelchair Accessible</span>
+            <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs px-2.5 py-1 rounded-full font-medium">♿ Wheelchair Accessible</span>
           )}
           {toilet.fee === false && (
-            <span className="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-medium">💚 Free</span>
+            <span className="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs px-2.5 py-1 rounded-full font-medium">💚 Free</span>
           )}
         </div>
 
         {toilet.geocoded && (
-          <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 text-amber-700 text-xs">
+          <div className="mt-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl px-4 py-2.5 text-amber-700 dark:text-amber-300 text-xs">
             📍 This location is approximate (geocoded from address). Verify on the map before visiting.
           </div>
         )}
 
         {/* Map */}
-        <div className="mt-5 rounded-2xl overflow-hidden border border-gray-100">
+        <div className="mt-5 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800">
           <iframe
             src={embedUrl}
             title={`Map showing ${name}`}
@@ -128,14 +128,14 @@ export default async function ToiletPage({ params }: { params: Params }) {
           </a>
           <Link
             href={`/map?id=${toilet.id}&city=${city}`}
-            className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition-colors text-sm"
+            className="flex items-center justify-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-700 dark:text-gray-300 font-semibold py-3 rounded-xl transition-colors text-sm"
           >
             📍 Open in App Map
           </Link>
         </div>
 
         {/* Details */}
-        <div className="mt-6 border border-gray-100 rounded-2xl px-5 py-2">
+        <div className="mt-6 border border-gray-100 dark:border-gray-800 rounded-2xl px-5 py-2">
           <FeatureRow icon="🍼" label="Baby changing table" value="✓ Available" positive />
           <FeatureRow icon="♿" label="Wheelchair access" value={toilet.wheelchair ? "✓ Yes" : "Unknown"} positive={toilet.wheelchair} />
           <FeatureRow icon="💴" label="Fee" value={toilet.fee === true ? "Paid" : toilet.fee === false ? "Free" : "Unknown"} positive={toilet.fee === false} />
@@ -154,15 +154,15 @@ export default async function ToiletPage({ params }: { params: Params }) {
         {/* Nearby */}
         {nearby.length > 0 && (
           <div className="mt-8">
-            <h2 className="font-bold text-gray-800 mb-3">Nearby toilets with baby changing tables</h2>
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">Nearby toilets with baby changing tables</h2>
             <div className="space-y-2">
               {nearby.map((n) => (
                 <Link
                   key={n.id}
                   href={`/toilet/${city}/${n.id}`}
-                  className="block border border-gray-100 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 transition-colors"
+                  className="block border border-gray-100 dark:border-gray-800 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 dark:hover:bg-gray-800 transition-colors"
                 >
-                  <p className="text-sm font-medium text-gray-800 truncate">{displayName(n, c.name)}</p>
+                  <p className="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">{displayName(n, c.name)}</p>
                   <p className="text-xs text-gray-400 mt-0.5">
                     {n.wheelchair && "♿ "}
                     {n.fee === false && "Free · "}
@@ -183,10 +183,10 @@ export default async function ToiletPage({ params }: { params: Params }) {
             <div className="mt-8">
               {spots.length > 0 && (
                 <>
-                  <h2 className="font-bold text-gray-800 mb-3 text-sm">📍 Nearby areas</h2>
+                  <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3 text-sm">📍 Nearby areas</h2>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {spots.map((s) => (
-                      <Link key={s.slug} href={`/spot/${s.slug}`} className="text-xs bg-gray-50 text-gray-700 px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors">
+                      <Link key={s.slug} href={`/spot/${s.slug}`} className="text-xs bg-gray-50 dark:bg-gray-800/40 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                         {s.type === "station" ? "🚉" : "📍"} {s.names.en}
                       </Link>
                     ))}
@@ -195,10 +195,10 @@ export default async function ToiletPage({ params }: { params: Params }) {
               )}
               {guides.length > 0 && (
                 <>
-                  <h2 className="font-bold text-gray-800 mb-3 text-sm">📖 Travel guides for {c.name}</h2>
+                  <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3 text-sm">📖 Travel guides for {c.name}</h2>
                   <div className="flex flex-wrap gap-2">
                     {guides.map((g) => (
-                      <Link key={g.slug} href={`/guide/${g.slug}`} className="text-xs bg-sky-50 text-sky-700 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors">
+                      <Link key={g.slug} href={`/guide/${g.slug}`} className="text-xs bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors">
                         {g.en}
                       </Link>
                     ))}
@@ -209,8 +209,8 @@ export default async function ToiletPage({ params }: { params: Params }) {
           );
         })()}
 
-        <div className="mt-8 bg-gray-50 rounded-2xl p-5 text-center">
-          <p className="text-sm text-gray-600 mb-3">
+        <div className="mt-8 bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-5 text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
             Browse all {c.name} toilets with baby changing tables on the interactive map.
           </p>
           <Link

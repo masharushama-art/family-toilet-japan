@@ -145,49 +145,49 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
     const inner = (
       <>
         <div className="flex items-center justify-between gap-2">
-          <p className="text-sm font-medium text-gray-800 truncate">{name}</p>
+          <p className="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">{name}</p>
           <span className="text-xs text-gray-400 shrink-0">{fmtDist(d)} {t.distAway}</span>
         </div>
         <div className="flex items-center gap-2 mt-1 flex-wrap">
-          {toilet.changingTable && <span className="text-[10px] bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded-full">{t.changingBadge}</span>}
-          {toilet.wheelchair && <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full">{t.wheelchairBadge}</span>}
-          {toilet.fee === false && <span className="text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full">{t.freeBadge}</span>}
+          {toilet.changingTable && <span className="text-[10px] bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 px-1.5 py-0.5 rounded-full">{t.changingBadge}</span>}
+          {toilet.wheelchair && <span className="text-[10px] bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 px-1.5 py-0.5 rounded-full">{t.wheelchairBadge}</span>}
+          {toilet.fee === false && <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.5 rounded-full">{t.freeBadge}</span>}
         </div>
       </>
     );
     if (toilet.changingTable) {
       return (
-        <Link key={toilet.id} href={`/toilet/${spot.city}/${toilet.id}`} className="block border border-gray-100 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 transition-colors">
+        <Link key={toilet.id} href={`/toilet/${spot.city}/${toilet.id}`} className="block border border-gray-100 dark:border-gray-800 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 dark:hover:bg-gray-800 transition-colors">
           {inner}
         </Link>
       );
     }
     return (
-      <Link key={toilet.id} href={`/map?id=${toilet.id}&city=${spot.city}`} className="block border border-gray-100 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 transition-colors">
+      <Link key={toilet.id} href={`/map?id=${toilet.id}&city=${spot.city}`} className="block border border-gray-100 dark:border-gray-800 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 dark:hover:bg-gray-800 transition-colors">
         {inner}
       </Link>
     );
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="max-w-2xl mx-auto px-5 py-8">
         <nav className="text-xs text-gray-400 mb-4 flex items-center gap-1.5 flex-wrap">
           <Link href={homeHref} className="hover:text-sky-600">{t.back}</Link>
           <span>›</span>
           <Link href={lang === "ja" ? `/ja/${spot.city}` : `/${spot.city}`} className="hover:text-sky-600">{cityName}</Link>
           <span>›</span>
-          <span className="text-gray-500">{spotName}</span>
+          <span className="text-gray-500 dark:text-gray-400">{spotName}</span>
         </nav>
 
-        <h1 className="text-xl font-bold text-gray-900">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white">
           {spot.type === "station" ? "🚉" : "📍"} {spotName}
         </h1>
 
-        <div className="flex items-center gap-3 mt-3 flex-wrap text-xs text-gray-600">
-          <span className="bg-gray-100 px-2.5 py-1 rounded-full font-medium">{stats.total} {t.toiletsNear}</span>
-          <span className="bg-sky-100 text-sky-700 px-2.5 py-1 rounded-full font-medium">🍼 {stats.ct} {t.changingTables}</span>
-          <span className="bg-green-100 text-green-700 px-2.5 py-1 rounded-full font-medium">♿ {stats.wc} {t.wheelchair}</span>
+        <div className="flex items-center gap-3 mt-3 flex-wrap text-xs text-gray-600 dark:text-gray-300">
+          <span className="bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-full font-medium">{stats.total} {t.toiletsNear}</span>
+          <span className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 px-2.5 py-1 rounded-full font-medium">🍼 {stats.ct} {t.changingTables}</span>
+          <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 px-2.5 py-1 rounded-full font-medium">♿ {stats.wc} {t.wheelchair}</span>
         </div>
 
         {/* Mini map */}
@@ -204,8 +204,8 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
         </p>
 
         {/* Map CTA */}
-        <div className="mt-4 bg-sky-50 rounded-2xl p-5">
-          <p className="text-sm text-sky-800 mb-3">{t.mapDesc}</p>
+        <div className="mt-4 bg-sky-50 dark:bg-sky-900/20 rounded-2xl p-5">
+          <p className="text-sm text-sky-800 dark:text-sky-200 mb-3">{t.mapDesc}</p>
           <Link
             href={`/map?city=${spot.city}&lat=${spot.lat}&lon=${spot.lon}`}
             className="inline-block bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
@@ -217,7 +217,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
         {/* Changing table list */}
         {withCT.length > 0 && (
           <div className="mt-8">
-            <h2 className="font-bold text-gray-800 mb-3">🍼 {t.listTitle}</h2>
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">🍼 {t.listTitle}</h2>
             <div className="space-y-2">{withCT.map(row)}</div>
           </div>
         )}
@@ -227,7 +227,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
         {/* Others */}
         {others.length > 0 && (
           <div className="mt-6">
-            <h2 className="font-bold text-gray-800 mb-3">🚻 {t.otherTitle}</h2>
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">🚻 {t.otherTitle}</h2>
             <div className="space-y-2">{others.map(row)}</div>
           </div>
         )}
@@ -235,10 +235,10 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
         {/* Guides */}
         {guides.length > 0 && (
           <div className="mt-8">
-            <h2 className="font-bold text-gray-800 mb-3 text-sm">📖 {t.guides}</h2>
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3 text-sm">📖 {t.guides}</h2>
             <div className="flex flex-wrap gap-2">
               {guides.map((g) => (
-                <Link key={g.slug} href={guideHref(lang, g.slug)} className="text-xs bg-sky-50 text-sky-700 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors">
+                <Link key={g.slug} href={guideHref(lang, g.slug)} className="text-xs bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors">
                   {g[lang]}
                 </Link>
               ))}
@@ -249,10 +249,10 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
         {/* Nearby spots */}
         {nearbySpots.length > 0 && (
           <div className="mt-6 mb-8">
-            <h2 className="font-bold text-gray-800 mb-3 text-sm">{t.nearbySpots} {cityName}</h2>
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3 text-sm">{t.nearbySpots} {cityName}</h2>
             <div className="flex flex-wrap gap-2">
               {nearbySpots.map((s) => (
-                <Link key={s.slug} href={spotHref(lang, s.slug)} className="text-xs bg-gray-50 text-gray-700 px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors">
+                <Link key={s.slug} href={spotHref(lang, s.slug)} className="text-xs bg-gray-50 dark:bg-gray-800/40 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                   {s.type === "station" ? "🚉" : "📍"} {s.names[lang]}
                 </Link>
               ))}

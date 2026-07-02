@@ -30,7 +30,7 @@ const buttons = [
 
 export default function HowToUseJapaneseToilet() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       {/* Header */}
       <div className="bg-sky-600 text-white px-6 py-10">
         <div className="max-w-2xl mx-auto">
@@ -48,7 +48,7 @@ export default function HowToUseJapaneseToilet() {
 
         {/* Intro */}
         <section>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
             Japanese toilets are famous worldwide for their advanced features. If you&apos;re visiting Japan with your family,
             don&apos;t be intimidated by the control panel — this guide explains everything you need to know.
           </p>
@@ -56,7 +56,7 @@ export default function HowToUseJapaneseToilet() {
 
         {/* Types */}
         <section>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Types of Toilets in Japan</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Types of Toilets in Japan</h2>
           <div className="space-y-4">
             {[
               {
@@ -78,11 +78,11 @@ export default function HowToUseJapaneseToilet() {
                 freq: "~5% — becoming rare",
               },
             ].map((t) => (
-              <div key={t.title} className="border border-gray-100 rounded-xl p-4 flex gap-4">
+              <div key={t.title} className="border border-gray-100 dark:border-gray-800 rounded-xl p-4 flex gap-4">
                 <span className="text-3xl">{t.icon}</span>
                 <div>
-                  <h3 className="font-semibold text-gray-800">{t.title}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{t.desc}</p>
+                  <h3 className="font-semibold text-gray-800 dark:text-gray-100">{t.title}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{t.desc}</p>
                   <span className="text-xs text-sky-600 font-medium mt-1 block">{t.freq}</span>
                 </div>
               </div>
@@ -92,7 +92,7 @@ export default function HowToUseJapaneseToilet() {
 
         {/* Step by step */}
         <section>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Step-by-Step: Using a Washlet</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Step-by-Step: Using a Washlet</h2>
           <ol className="space-y-3">
             {[
               "Sit down on the seat — it will likely be warm (heated seat is standard).",
@@ -108,7 +108,7 @@ export default function HowToUseJapaneseToilet() {
                 <span className="bg-sky-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5">
                   {i + 1}
                 </span>
-                <p className="text-gray-700 text-sm">{step}</p>
+                <p className="text-gray-700 dark:text-gray-300 text-sm">{step}</p>
               </li>
             ))}
           </ol>
@@ -116,22 +116,22 @@ export default function HowToUseJapaneseToilet() {
 
         {/* Button guide */}
         <section>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Common Button Guide</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Common Button Guide</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="bg-sky-50">
-                  <th className="text-left px-3 py-2 font-semibold text-gray-700">Japanese</th>
-                  <th className="text-left px-3 py-2 font-semibold text-gray-700">Meaning</th>
-                  <th className="text-left px-3 py-2 font-semibold text-gray-700 hidden sm:table-cell">Description</th>
+                <tr className="bg-sky-50 dark:bg-sky-900/20">
+                  <th className="text-left px-3 py-2 font-semibold text-gray-700 dark:text-gray-300">Japanese</th>
+                  <th className="text-left px-3 py-2 font-semibold text-gray-700 dark:text-gray-300">Meaning</th>
+                  <th className="text-left px-3 py-2 font-semibold text-gray-700 dark:text-gray-300 hidden sm:table-cell">Description</th>
                 </tr>
               </thead>
               <tbody>
                 {buttons.map((b) => (
-                  <tr key={b.symbol} className="border-b border-gray-100">
-                    <td className="px-3 py-2 font-medium text-sky-700 whitespace-nowrap">{b.symbol}</td>
-                    <td className="px-3 py-2 text-gray-800">{b.label}</td>
-                    <td className="px-3 py-2 text-gray-500 hidden sm:table-cell">{b.desc}</td>
+                  <tr key={b.symbol} className="border-b border-gray-100 dark:border-gray-800">
+                    <td className="px-3 py-2 font-medium text-sky-700 dark:text-sky-300 whitespace-nowrap">{b.symbol}</td>
+                    <td className="px-3 py-2 text-gray-800 dark:text-gray-100">{b.label}</td>
+                    <td className="px-3 py-2 text-gray-500 dark:text-gray-400 hidden sm:table-cell">{b.desc}</td>
                   </tr>
                 ))}
               </tbody>
@@ -141,8 +141,8 @@ export default function HowToUseJapaneseToilet() {
 
         {/* Family tips */}
         <section>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">🍼 Tips for Families with Young Children</h2>
-          <div className="bg-sky-50 rounded-2xl p-5 space-y-3">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">🍼 Tips for Families with Young Children</h2>
+          <div className="bg-sky-50 dark:bg-sky-900/20 rounded-2xl p-5 space-y-3">
             {[
               "Look for the 🍼 baby changing table symbol — most train stations, department stores, and shopping malls have dedicated family restrooms (多目的トイレ / ファミリートイレ).",
               "Family restrooms (ファミリートイレ) are large, private rooms with changing tables, a baby seat on the wall, and sometimes a children's toilet.",
@@ -151,7 +151,7 @@ export default function HowToUseJapaneseToilet() {
               "Convenience stores (7-Eleven, Lawson, FamilyMart) always have clean, free toilets open 24/7.",
               "Department store (デパート) restrooms are usually the cleanest and best-equipped for families.",
             ].map((tip, i) => (
-              <div key={i} className="flex gap-2 items-start text-sm text-gray-700">
+              <div key={i} className="flex gap-2 items-start text-sm text-gray-700 dark:text-gray-300">
                 <span className="text-sky-500 font-bold shrink-0">•</span>
                 <p>{tip}</p>
               </div>
@@ -160,15 +160,15 @@ export default function HowToUseJapaneseToilet() {
         </section>
 
         {/* CTA */}
-        <section className="bg-gray-50 rounded-2xl p-6 text-center">
-          <p className="text-gray-700 font-medium mb-3">Find family-friendly toilets near you in Japan</p>
+        <section className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 text-center">
+          <p className="text-gray-700 dark:text-gray-300 font-medium mb-3">Find family-friendly toilets near you in Japan</p>
           <Link
             href="/map"
             className="inline-block bg-sky-500 hover:bg-sky-600 text-white font-bold px-8 py-3 rounded-full transition-colors"
           >
             📍 Open Map
           </Link>
-          <div className="mt-4 flex justify-center gap-4 text-sm text-gray-500">
+          <div className="mt-4 flex justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
             <Link href="/tokyo" className="hover:text-sky-600">Tokyo</Link>
             <Link href="/osaka" className="hover:text-sky-600">Osaka</Link>
             <Link href="/kyoto" className="hover:text-sky-600">Kyoto</Link>
