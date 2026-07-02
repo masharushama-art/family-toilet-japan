@@ -238,6 +238,8 @@ const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
 export default function MapView({ initialCenter, city = "tokyo", initialToiletId }: { initialCenter?: [number, number]; city?: string; initialToiletId?: string }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [placeResults, setPlaceResults] = useState<{ name: string; lat: number; lon: number }[]>([]);
+  const [placeSearching, setPlaceSearching] = useState(false);
   const [showList, setShowList] = useState(false);
   const [showReSearch, setShowReSearch] = useState(false);
   const isFirstMove = useRef(true);
@@ -282,6 +284,40 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
   const toilets = Array.from(cityCache.values()).flat();
   const { t } = useI18n();
+
+  // 場所検索（駅名・観光地など）: Nominatim で日本国内をジオコーディング
+  const searchPlace = useCallback(async (query: string) => {
+    if (!query.trim()) return;
+    setPlaceSearching(true);
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=jsonv2&countrycodes=jp&limit=4&q=${encodeURIComponent(query)}`,
+        { headers: { "Accept-Language": "en" } }
+      );
+      const data: { display_name: string; lat: string; lon: string }[] = await res.json();
+      setPlaceResults(
+        data.map((d) => ({
+          name: d.display_name.split(",").slice(0, 3).join(","),
+          lat: parseFloat(d.lat),
+          lon: parseFloat(d.lon),
+        }))
+      );
+    } catch {
+      setPlaceResults([]);
+    } finally {
+      setPlaceSearching(false);
+    }
+  }, []);
+
+  const goToPlace = useCallback((lat: number, lon: number) => {
+    setPlaceResults([]);
+    setSearchQuery("");
+    setShowSearch(false);
+    const nearest = getNearestCity(lat, lon);
+    setCurrentCity(nearest);
+    loadCity(nearest);
+    mapRef.current?.flyTo([lat, lon], 15, { duration: 1.5 });
+  }, [loadCity]);
 
   const FILTER_KEY = "ftj_filters";
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -517,13 +553,29 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
               autoFocus
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by name, facility..."
+              onChange={(e) => { setSearchQuery(e.target.value); setPlaceResults([]); }}
+              onKeyDown={(e) => { if (e.key === "Enter") searchPlace(searchQuery); }}
+              placeholder="Toilet name, or station/place + Enter..."
               className="flex-1 bg-transparent text-sm text-gray-800 dark:text-gray-100 placeholder-gray-400 outline-none"
             />
+            {placeSearching && <span className="text-gray-400 text-xs">…</span>}
             {searchQuery && (
-              <button onClick={() => setSearchQuery("")} className="text-gray-400 text-sm">✕</button>
+              <button onClick={() => { setSearchQuery(""); setPlaceResults([]); }} className="text-gray-400 text-sm">✕</button>
             )}
+          </div>
+        )}
+        {showSearch && placeResults.length > 0 && (
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+            {placeResults.map((p) => (
+              <button
+                key={`${p.lat},${p.lon}`}
+                onClick={() => goToPlace(p.lat, p.lon)}
+                className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-sky-50 dark:hover:bg-gray-700 flex items-center gap-2 border-b border-gray-50 dark:border-gray-700 last:border-0"
+              >
+                <span>📍</span>
+                <span className="truncate">{p.name}</span>
+              </button>
+            ))}
           </div>
         )}
       </div>
