@@ -89,6 +89,28 @@ export default function JaPage() {
           ))}
         </div>
 
+        <h2 className="text-xl font-bold text-gray-800 mb-4">お役立ちガイド</h2>
+        <div className="space-y-3 mb-10">
+          {[
+            { slug: "best-baby-changing-facilities-tokyo", icon: "🗼", title: "東京のおむつ替え・授乳室ガイド", desc: "新宿・渋谷・上野・銀座・東京駅のおすすめベビールーム" },
+            { slug: "best-baby-changing-facilities-osaka", icon: "🏯", title: "大阪のおむつ替え・授乳室ガイド", desc: "なんば・梅田・天王寺・USJ周辺のベビー設備を網羅" },
+            { slug: "kyoto-with-baby", icon: "⛩️", title: "赤ちゃん連れ京都観光ガイド", desc: "ベビーカーで回れる観光地・移動手段・子連れグルメ" },
+            { slug: "japan-travel-with-baby", icon: "👶", title: "赤ちゃん連れ日本旅行ガイド", desc: "おむつ替え場所の探し方・持ち物・移動のコツ" },
+          ].map(({ slug, icon, title, desc }) => (
+            <Link
+              key={slug}
+              href={`/ja/guide/${slug}`}
+              className="flex items-start gap-3 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl p-4 transition-colors"
+            >
+              <span className="text-2xl">{icon}</span>
+              <div>
+                <p className="font-semibold text-gray-800 text-sm">{title}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+
         <h2 className="text-xl font-bold text-gray-800 mb-4">よくある質問</h2>
         <div className="space-y-4 mb-10">
           {[

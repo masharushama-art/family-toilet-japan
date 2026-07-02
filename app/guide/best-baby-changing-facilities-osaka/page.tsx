@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "osaka diaper changing",
     "osaka family facilities",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-osaka" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-osaka",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-osaka",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/best-baby-changing-facilities-osaka",
+    },
+  },
 };
 
 const sections = [
