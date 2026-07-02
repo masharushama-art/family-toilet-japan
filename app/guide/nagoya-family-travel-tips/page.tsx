@@ -71,7 +71,7 @@ const sections = [
 
 export default function NagoyaFamilyPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">Nagoya Family Travel Tips</h1>
@@ -81,21 +81,21 @@ export default function NagoyaFamilyPage() {
       </div>
 
       <div className="max-w-2xl mx-auto px-6 py-10">
-        <div className="bg-sky-50 rounded-2xl p-5 mb-8 flex items-start gap-3">
+        <div className="bg-sky-50 dark:bg-sky-900/20 rounded-2xl p-5 mb-8 flex items-start gap-3">
           <span className="text-2xl">⭐</span>
-          <p className="text-sm text-sky-800">
+          <p className="text-sm text-sky-800 dark:text-sky-200">
             <strong>Nagoya is an underrated family destination.</strong> LEGOLAND Japan, the Port Aquarium, and Nagoya Castle make it a great city for kids. The infrastructure is modern, uncrowded compared to Tokyo and Osaka, and navigation with a stroller is straightforward.
           </p>
         </div>
 
         {sections.map(({ title, icon, items }) => (
           <div key={title} className="mb-10">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">{icon} {title}</h2>
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">{icon} {title}</h2>
             <div className="space-y-3">
               {items.map(({ name, desc }) => (
-                <div key={name} className="border border-gray-100 rounded-xl p-4">
-                  <p className="font-semibold text-gray-800 text-sm mb-1">{name}</p>
-                  <p className="text-gray-600 text-sm leading-relaxed">{desc}</p>
+                <div key={name} className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+                  <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">{name}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
@@ -104,9 +104,9 @@ export default function NagoyaFamilyPage() {
 
         <GuideAreaLinks slug="nagoya-family-travel-tips" lang="en" />
 
-        <div className="bg-gray-50 rounded-2xl p-6 mb-8">
-          <h2 className="font-bold text-gray-800 mb-3">Find Toilets in Nagoya</h2>
-          <p className="text-sm text-gray-600 mb-4">
+        <div className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 mb-8">
+          <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">Find Toilets in Nagoya</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
             Browse 900+ family-friendly toilets in Nagoya with baby changing tables, wheelchair access, and opening hours.
           </p>
           <Link

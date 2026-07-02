@@ -63,7 +63,7 @@ const rules = [
 
 export default function ToiletEtiquettePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">Japan Toilet Etiquette Guide</h1>
@@ -73,29 +73,29 @@ export default function ToiletEtiquettePage() {
       </div>
 
       <div className="max-w-2xl mx-auto px-6 py-10">
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-8">
-          <p className="text-amber-800 text-sm">
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-5 mb-8">
+          <p className="text-amber-800 dark:text-amber-200 text-sm">
             <strong>Good news:</strong> Japan has some of the cleanest and most well-maintained public toilets in the world. Most are free, stocked with toilet paper, and feature high-tech amenities you won&apos;t find elsewhere.
           </p>
         </div>
 
         <div className="space-y-5 mb-10">
           {rules.map(({ icon, title, content }) => (
-            <div key={title} className="border border-gray-100 rounded-2xl p-5">
+            <div key={title} className="border border-gray-100 dark:border-gray-800 rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-2xl">{icon}</span>
-                <h2 className="font-bold text-gray-800">{title}</h2>
+                <h2 className="font-bold text-gray-800 dark:text-gray-100">{title}</h2>
               </div>
-              <p className="text-gray-600 text-sm leading-relaxed">{content}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{content}</p>
             </div>
           ))}
         </div>
 
         <GuideAreaLinks slug="japan-toilet-etiquette" lang="en" />
 
-        <div className="bg-gray-50 rounded-2xl p-6 mb-8">
-          <h2 className="font-bold text-gray-800 mb-3">Find Clean Toilets Near You</h2>
-          <p className="text-sm text-gray-600 mb-4">
+        <div className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 mb-8">
+          <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">Find Clean Toilets Near You</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
             Use our map to find family-friendly public toilets across all 47 prefectures of Japan — with baby changing tables, wheelchair access, and 24-hour availability.
           </p>
           <Link

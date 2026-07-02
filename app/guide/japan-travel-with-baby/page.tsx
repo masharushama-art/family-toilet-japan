@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function JapanTravelWithBaby() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <div className="bg-sky-600 text-white px-6 py-10">
         <div className="max-w-2xl mx-auto">
           <Link href="/" className="text-sky-200 text-sm hover:text-white">← Family Toilet Japan</Link>
@@ -38,7 +38,7 @@ export default function JapanTravelWithBaby() {
       <div className="max-w-2xl mx-auto px-6 py-10 space-y-10">
 
         <section>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
             Japan is one of the most family-friendly travel destinations in the world.
             Clean public facilities, helpful locals, and excellent infrastructure make traveling with
             babies and toddlers surprisingly smooth — if you know where to look.
@@ -46,8 +46,8 @@ export default function JapanTravelWithBaby() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">🍼 Finding Baby Changing Rooms</h2>
-          <div className="space-y-3 text-sm text-gray-700">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">🍼 Finding Baby Changing Rooms</h2>
+          <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
             <p>Japan has one of the highest densities of baby changing facilities in Asia. Here&apos;s where to find them:</p>
             <div className="space-y-2">
               {[
@@ -58,7 +58,7 @@ export default function JapanTravelWithBaby() {
                 { place: "Parks and tourist sites", detail: "Major attractions like Tokyo Disneyland, Universal Studios Japan, and national parks have family restrooms." },
               ].map(({ place, detail }) => (
                 <div key={place} className="border-l-4 border-sky-300 pl-4 py-1">
-                  <p className="font-semibold text-gray-800">{place}</p>
+                  <p className="font-semibold text-gray-800 dark:text-gray-100">{place}</p>
                   <p dangerouslySetInnerHTML={{ __html: detail }} />
                 </div>
               ))}
@@ -67,7 +67,7 @@ export default function JapanTravelWithBaby() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">🛒 What to Pack</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">🛒 What to Pack</h2>
           <div className="grid grid-cols-1 gap-2">
             {[
               { item: "Diapers & wipes", note: "Available everywhere in Japan (Merries, Pampers). Prices are similar to home." },
@@ -77,11 +77,11 @@ export default function JapanTravelWithBaby() {
               { item: "Stroller rain cover", note: "Japan weather can be unpredictable, especially in spring/fall." },
               { item: "Baby carrier", note: "Essential for narrow shopping streets, crowded trains, and steps." },
             ].map(({ item, note }) => (
-              <div key={item} className="flex gap-3 bg-gray-50 rounded-xl px-4 py-3">
+              <div key={item} className="flex gap-3 bg-gray-50 dark:bg-gray-800/40 rounded-xl px-4 py-3">
                 <span className="text-green-500 font-bold shrink-0">✓</span>
                 <div className="text-sm">
-                  <span className="font-medium text-gray-800">{item}</span>
-                  <span className="text-gray-500"> — {note}</span>
+                  <span className="font-medium text-gray-800 dark:text-gray-100">{item}</span>
+                  <span className="text-gray-500 dark:text-gray-400"> — {note}</span>
                 </div>
               </div>
             ))}
@@ -89,8 +89,8 @@ export default function JapanTravelWithBaby() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">🚃 Getting Around with a Stroller</h2>
-          <div className="space-y-2 text-sm text-gray-700">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">🚃 Getting Around with a Stroller</h2>
+          <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
             {[
               "Most major train stations have elevators — look for the ♿ or EV signs on station maps.",
               "Folding your stroller on crowded trains is expected — practice folding quickly.",
@@ -107,8 +107,8 @@ export default function JapanTravelWithBaby() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">🍜 Eating with Kids</h2>
-          <div className="space-y-2 text-sm text-gray-700">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">🍜 Eating with Kids</h2>
+          <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
             {[
               "Family restaurants (ファミレス) like Saizeriya, Gusto, and Denny's Japan are great for kids — high chairs, kids menus, and long hours.",
               "Conveyor belt sushi (回転寿司) is a huge hit with children.",
@@ -123,9 +123,9 @@ export default function JapanTravelWithBaby() {
           </div>
         </section>
 
-        <section className="bg-gray-50 rounded-2xl p-6 text-center">
-          <p className="font-medium text-gray-800 mb-1">Find changing tables & family toilets near you</p>
-          <p className="text-sm text-gray-500 mb-4">6,000+ locations across Tokyo, Osaka & Kyoto</p>
+        <section className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 text-center">
+          <p className="font-medium text-gray-800 dark:text-gray-100 mb-1">Find changing tables & family toilets near you</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">6,000+ locations across Tokyo, Osaka & Kyoto</p>
           <Link href="/map" className="inline-block bg-sky-500 hover:bg-sky-600 text-white font-bold px-8 py-3 rounded-full">
             📍 Open Map
           </Link>
