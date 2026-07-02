@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     languages: {
       en: "https://family-toilet-japan.vercel.app/guide/japan-travel-with-baby",
       ja: "https://family-toilet-japan.vercel.app/ja/guide/japan-travel-with-baby",
+      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/japan-travel-with-baby",
+      ko: "https://family-toilet-japan.vercel.app/ko/guide/japan-travel-with-baby",
     },
   },
 };
