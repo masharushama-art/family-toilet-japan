@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import GuideAreaLinks from "../../components/GuideAreaLinks";
 
 export const metadata: Metadata = {
   title: "Kyoto with Baby & Toddler — Family Travel Guide 2026 | Family Toilet Japan",
@@ -100,6 +101,8 @@ export default function KyotoWithBabyPage() {
             </div>
           </div>
         ))}
+
+        <GuideAreaLinks slug="kyoto-with-baby" lang="en" />
 
         <div className="bg-gray-50 rounded-2xl p-6 mb-8">
           <h2 className="font-bold text-gray-800 mb-3">Find Toilets in Kyoto</h2>

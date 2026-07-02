@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SPOT_SLUGS } from "./lib/spots";
 
 const BASE_URL = "https://family-toilet-japan.vercel.app";
 
@@ -145,6 +146,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const spotPages = SPOT_SLUGS.flatMap((slug) => [
+    { url: `${BASE_URL}/spot/${slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/ja/spot/${slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.6 },
+    { url: `${BASE_URL}/zh/spot/${slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.6 },
+    { url: `${BASE_URL}/ko/spot/${slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.6 },
+  ]);
+
   const langPages = ["ja", "zh", "ko"].map((lang) => ({
     url: `${BASE_URL}/${lang}`,
     lastModified: now,
@@ -159,11 +167,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/privacy`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/attribution`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/coverage`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
+    { url: `${BASE_URL}/widget`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     ...langPages,
     ...guidePages,
     ...jaGuidePages,
     ...zhGuidePages,
     ...koGuidePages,
+    ...spotPages,
     ...cityPages,
     ...jaCityPages,
     ...zhCityPages,

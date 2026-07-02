@@ -9,6 +9,8 @@ import {
   type CitySlug,
 } from "../../../lib/toilet-data";
 import { AdUnit } from "../../../components/AdSense";
+import { getNearbySpots } from "../../../lib/spots";
+import { CITY_GUIDE_SLUGS } from "../../../components/SpotPageView";
 
 const BASE = "https://family-toilet-japan.vercel.app";
 
@@ -171,6 +173,41 @@ export default async function ToiletPage({ params }: { params: Params }) {
             </div>
           </div>
         )}
+
+        {/* Nearby areas & guides — internal linking */}
+        {(() => {
+          const spots = getNearbySpots(toilet.lat, toilet.lon, city);
+          const guides = CITY_GUIDE_SLUGS[city] ?? [];
+          if (spots.length === 0 && guides.length === 0) return null;
+          return (
+            <div className="mt-8">
+              {spots.length > 0 && (
+                <>
+                  <h2 className="font-bold text-gray-800 mb-3 text-sm">📍 Nearby areas</h2>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {spots.map((s) => (
+                      <Link key={s.slug} href={`/spot/${s.slug}`} className="text-xs bg-gray-50 text-gray-700 px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors">
+                        {s.type === "station" ? "🚉" : "📍"} {s.names.en}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              )}
+              {guides.length > 0 && (
+                <>
+                  <h2 className="font-bold text-gray-800 mb-3 text-sm">📖 Travel guides for {c.name}</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {guides.map((g) => (
+                      <Link key={g.slug} href={`/guide/${g.slug}`} className="text-xs bg-sky-50 text-sky-700 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors">
+                        {g.en}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })()}
 
         <div className="mt-8 bg-gray-50 rounded-2xl p-5 text-center">
           <p className="text-sm text-gray-600 mb-3">

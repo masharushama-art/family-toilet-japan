@@ -5,6 +5,7 @@ import { CITIES, CATEGORIES, getCityStats, getToiletsByCity, type CitySlug } fro
 import { cityAlternates, BASE } from "../lib/lang-cities";
 import ShareButtons from "../components/ShareButtons";
 import { AdUnit } from "../components/AdSense";
+import { getSpotsByCity } from "../lib/spots";
 
 const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
   tokyo: {
@@ -197,6 +198,27 @@ export default async function CityPage({ params }: Props) {
             </Link>
           ))}
         </div>
+
+        {/* Popular areas (spot pages) */}
+        {getSpotsByCity(city).length > 0 && (
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Popular Areas in {c.name}</h2>
+            <div className="grid grid-cols-2 gap-2">
+              {getSpotsByCity(city).map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/spot/${s.slug}`}
+                  className="border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl px-4 py-3 transition-colors"
+                >
+                  <p className="text-sm font-medium text-gray-800">
+                    {s.type === "station" ? "🚉" : "📍"} {s.names.en}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-0.5">Baby changing toilets nearby</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Ad */}
         <AdUnit slot="2847361905" label="City page — between categories and tips" />
