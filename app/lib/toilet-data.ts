@@ -104,6 +104,30 @@ export function getToiletsByCityAndCategory(city: CitySlug, category: CategorySl
   return getToiletsByCity(city).filter(CATEGORIES[category].filter);
 }
 
+export function getToilet(city: CitySlug, id: string): Toilet | undefined {
+  return getToiletsByCity(city).find((t) => t.id === id);
+}
+
+// 個別ページを生成する対象（おむつ交換台付きのみ）
+export function getDetailPageToilets(city: CitySlug): Toilet[] {
+  return getToiletsByCity(city).filter((t) => t.changingTable);
+}
+
+export function getAllDetailPageParams(): { city: string; id: string }[] {
+  return (Object.keys(CITIES) as CitySlug[]).flatMap((city) =>
+    getDetailPageToilets(city).map((t) => ({ city, id: t.id }))
+  );
+}
+
+export function getNearbyToilets(city: CitySlug, target: Toilet, limit = 5): Toilet[] {
+  const dist = (t: Toilet) =>
+    (t.lat - target.lat) ** 2 + (t.lon - target.lon) ** 2;
+  return getToiletsByCity(city)
+    .filter((t) => t.id !== target.id && t.changingTable)
+    .sort((a, b) => dist(a) - dist(b))
+    .slice(0, limit);
+}
+
 export function getCityStats(city: CitySlug) {
   const all = getToiletsByCity(city);
   return {

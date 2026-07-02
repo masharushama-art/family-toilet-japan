@@ -213,6 +213,16 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
           🗺️ {t("openInMaps")}
         </a>
         <div className="flex items-center justify-between">
+          {toilet.changingTable && city ? (
+            <a
+              href={`/toilet/${city}/${toilet.id}`}
+              className="text-xs text-gray-400 hover:text-sky-600 transition-colors flex items-center gap-1"
+            >
+              📄 Details
+            </a>
+          ) : (
+            <span />
+          )}
           <a
             href={streetViewUrl}
             target="_blank"
