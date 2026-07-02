@@ -44,6 +44,18 @@ const ZH_KO_GUIDE_SLUGS = [
   "best-baby-changing-facilities-osaka",
   "kyoto-with-baby",
   "japan-travel-with-baby",
+  "osaka-family-travel-tips",
+  "nagoya-family-travel-tips",
+  "fukuoka-family-travel-tips",
+  "sapporo-family-travel-tips",
+  "sendai-family-travel-tips",
+  "hiroshima-family-travel-tips",
+  "naha-okinawa-family-travel-tips",
+  "yokohama-family-travel-tips",
+  "tokyo-with-baby-winter",
+  "japan-train-travel-with-stroller",
+  "japan-family-restaurants-guide",
+  "traveling-japan-with-toddler-checklist",
 ];
 
 const JA_GUIDE_SLUGS = [
