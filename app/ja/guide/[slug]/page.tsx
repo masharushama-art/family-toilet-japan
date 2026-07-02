@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import GuideAreaLinks from "../../../components/GuideAreaLinks";
+import { AdUnit } from "../../../components/AdSense";
 import { JA_GUIDES, JA_GUIDE_SLUGS } from "../../../lib/guides-ja";
 
 const BASE = "https://family-toilet-japan.vercel.app";
@@ -55,7 +57,7 @@ export default async function JaGuidePage({ params }: { params: Params }) {
           <p className="text-sm text-sky-800">{g.intro}</p>
         </div>
 
-        {g.sections.map(({ title, icon, items }) => (
+        {g.sections.map(({ title, icon, items }, sectionIndex) => (
           <div key={title} className="mb-10">
             <h2 className="text-xl font-bold text-gray-800 mb-4">{icon} {title}</h2>
             <div className="space-y-3">
@@ -66,8 +68,11 @@ export default async function JaGuidePage({ params }: { params: Params }) {
                 </div>
               ))}
             </div>
+            {sectionIndex === 1 && <AdUnit slot="guide-mid" />}
           </div>
         ))}
+
+        <GuideAreaLinks slug={slug} lang="ja" />
 
         <div className="bg-gray-50 rounded-2xl p-6 mb-8">
           <h2 className="font-bold text-gray-800 mb-3">{g.mapTitle}</h2>

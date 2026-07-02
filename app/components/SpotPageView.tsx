@@ -1,0 +1,284 @@
+import Link from "next/link";
+import type { Spot } from "../lib/spots";
+import { spotDistanceKm, getSpotsByCity } from "../lib/spots";
+import { CITIES, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
+import { AdUnit } from "./AdSense";
+
+const BASE = "https://family-toilet-japan.vercel.app";
+
+export type SpotLang = "en" | "ja" | "zh" | "ko";
+
+const STRINGS: Record<SpotLang, Record<string, string>> = {
+  en: {
+    back: "Family Toilet Japan",
+    toiletsNear: "toilets within 1 km",
+    changingTables: "with baby changing tables",
+    wheelchair: "wheelchair accessible",
+    free: "free to use",
+    listTitle: "Nearest toilets with baby changing tables",
+    otherTitle: "Other nearby toilets",
+    openMap: "📍 Open this area on the map",
+    mapDesc: "See all toilets around this spot on the interactive map with GPS distance.",
+    nearbySpots: "Other areas in",
+    guides: "Travel guides",
+    detail: "Details",
+    distAway: "away",
+    changingBadge: "🍼 Changing table",
+    wheelchairBadge: "♿ Accessible",
+    freeBadge: "💚 Free",
+    cityMap: "toilet map",
+  },
+  ja: {
+    back: "Family Toilet Japan",
+    toiletsNear: "件のトイレ（1km圏内）",
+    changingTables: "おむつ交換台あり",
+    wheelchair: "車いす対応",
+    free: "無料",
+    listTitle: "最寄りのおむつ交換台付きトイレ",
+    otherTitle: "その他の近隣トイレ",
+    openMap: "📍 このエリアを地図で開く",
+    mapDesc: "このスポット周辺のすべてのトイレを、現在地からの距離付きの地図で確認できます。",
+    nearbySpots: "他のエリア：",
+    guides: "関連ガイド",
+    detail: "詳細",
+    distAway: "",
+    changingBadge: "🍼 おむつ交換台",
+    wheelchairBadge: "♿ 車いす対応",
+    freeBadge: "💚 無料",
+    cityMap: "のトイレマップ",
+  },
+  zh: {
+    back: "Family Toilet Japan",
+    toiletsNear: "處廁所（1公里內）",
+    changingTables: "設有換尿布台",
+    wheelchair: "無障礙設施",
+    free: "免費",
+    listTitle: "最近的換尿布台廁所",
+    otherTitle: "其他鄰近廁所",
+    openMap: "📍 在地圖上開啟此區域",
+    mapDesc: "在互動地圖上查看此景點周邊的所有廁所，並顯示與您的距離。",
+    nearbySpots: "其他區域：",
+    guides: "相關指南",
+    detail: "詳情",
+    distAway: "",
+    changingBadge: "🍼 換尿布台",
+    wheelchairBadge: "♿ 無障礙",
+    freeBadge: "💚 免費",
+    cityMap: "廁所地圖",
+  },
+  ko: {
+    back: "Family Toilet Japan",
+    toiletsNear: "곳의 화장실(1km 이내)",
+    changingTables: "기저귀 교환대 있음",
+    wheelchair: "휠체어 이용 가능",
+    free: "무료",
+    listTitle: "가장 가까운 기저귀 교환대 화장실",
+    otherTitle: "그 외 주변 화장실",
+    openMap: "📍 이 지역을 지도에서 열기",
+    mapDesc: "이 명소 주변의 모든 화장실을 거리 표시와 함께 지도에서 확인할 수 있습니다.",
+    nearbySpots: "다른 지역:",
+    guides: "관련 가이드",
+    detail: "상세",
+    distAway: "",
+    changingBadge: "🍼 기저귀 교환대",
+    wheelchairBadge: "♿ 휠체어",
+    freeBadge: "💚 무료",
+    cityMap: " 화장실 지도",
+  },
+};
+
+// 都市→関連ガイドのマッピング（言語別のリンク先はレンダリング側で調整）
+export const CITY_GUIDE_SLUGS: Record<string, { slug: string; en: string; ja: string; zh: string; ko: string }[]> = {
+  tokyo: [
+    { slug: "best-baby-changing-facilities-tokyo", en: "Best Baby Changing Facilities in Tokyo", ja: "東京のおむつ替え・授乳室ガイド", zh: "東京換尿布台・哺乳室指南", ko: "도쿄 기저귀 교환대・수유실 가이드" },
+    { slug: "tokyo-with-baby-winter", en: "Tokyo with Baby in Winter", ja: "冬の東京を赤ちゃんと楽しむ", zh: "冬季帶寶寶遊東京", ko: "겨울철 아기와 함께하는 도쿄" },
+  ],
+  osaka: [
+    { slug: "best-baby-changing-facilities-osaka", en: "Best Baby Changing Facilities in Osaka", ja: "大阪のおむつ替え・授乳室ガイド", zh: "大阪換尿布台・哺乳室指南", ko: "오사카 기저귀 교환대・수유실 가이드" },
+    { slug: "osaka-family-travel-tips", en: "Osaka Family Travel Tips", ja: "子連れ大阪観光ガイド", zh: "大阪親子旅遊指南", ko: "오사카 가족 여행 가이드" },
+  ],
+  kyoto: [{ slug: "kyoto-with-baby", en: "Kyoto with Baby & Toddler", ja: "赤ちゃん連れ京都観光ガイド", zh: "帶寶寶遊京都指南", ko: "아기와 함께하는 교토 여행 가이드" }],
+  nagoya: [{ slug: "nagoya-family-travel-tips", en: "Nagoya Family Travel Tips", ja: "子連れ名古屋観光ガイド", zh: "名古屋親子旅遊指南", ko: "나고야 가족 여행 가이드" }],
+  fukuoka: [{ slug: "fukuoka-family-travel-tips", en: "Fukuoka Family Travel Tips", ja: "子連れ福岡観光ガイド", zh: "福岡親子旅遊指南", ko: "후쿠오카 가족 여행 가이드" }],
+  sapporo: [{ slug: "sapporo-family-travel-tips", en: "Sapporo Family Travel Tips", ja: "子連れ札幌観光ガイド", zh: "札幌親子旅遊指南", ko: "삿포로 가족 여행 가이드" }],
+  sendai: [{ slug: "sendai-family-travel-tips", en: "Sendai Family Travel Tips", ja: "子連れ仙台観光ガイド", zh: "仙台親子旅遊指南", ko: "센다이 가족 여행 가이드" }],
+  hiroshima: [{ slug: "hiroshima-family-travel-tips", en: "Hiroshima Family Travel Tips", ja: "子連れ広島観光ガイド", zh: "廣島親子旅遊指南", ko: "히로시마 가족 여행 가이드" }],
+  okinawa: [{ slug: "naha-okinawa-family-travel-tips", en: "Naha & Okinawa Family Travel Tips", ja: "子連れ沖縄・那覇観光ガイド", zh: "沖繩・那霸親子旅遊指南", ko: "오키나와・나하 가족 여행 가이드" }],
+  yokohama: [{ slug: "yokohama-family-travel-tips", en: "Yokohama Family Travel Tips", ja: "子連れ横浜観光ガイド", zh: "橫濱親子旅遊指南", ko: "요코하마 가족 여행 가이드" }],
+};
+
+function guideHref(lang: SpotLang, slug: string): string {
+  return lang === "en" ? `/guide/${slug}` : `/${lang}/guide/${slug}`;
+}
+
+function spotHref(lang: SpotLang, slug: string): string {
+  return lang === "en" ? `/spot/${slug}` : `/${lang}/spot/${slug}`;
+}
+
+export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLang }) {
+  const t = STRINGS[lang];
+  const c = CITIES[spot.city as CitySlug];
+  const cityName = lang === "ja" ? c.jaName : c.name;
+  const spotName = spot.names[lang];
+
+  const all = getToiletsByCity(spot.city as CitySlug)
+    .map((toilet) => ({ toilet, d: spotDistanceKm(spot.lat, spot.lon, toilet.lat, toilet.lon) }))
+    .filter(({ d }) => d <= 1.0)
+    .sort((a, b) => a.d - b.d);
+
+  const withCT = all.filter(({ toilet }) => toilet.changingTable).slice(0, 12);
+  const others = all.filter(({ toilet }) => !toilet.changingTable).slice(0, 8);
+  const stats = {
+    total: all.length,
+    ct: all.filter(({ toilet }) => toilet.changingTable).length,
+    wc: all.filter(({ toilet }) => toilet.wheelchair).length,
+  };
+
+  const nearbySpots = getSpotsByCity(spot.city).filter((s) => s.slug !== spot.slug).slice(0, 5);
+  const guides = CITY_GUIDE_SLUGS[spot.city] ?? [];
+  const homeHref = lang === "en" ? "/" : `/${lang}`;
+
+  const fmtDist = (d: number) => (d < 1 ? `${Math.round(d * 1000)}m` : `${d.toFixed(1)}km`);
+
+  const row = ({ toilet, d }: { toilet: (typeof all)[number]["toilet"]; d: number }) => {
+    const name = toilet.nameEn || toilet.name || `${spotName} toilet`;
+    const inner = (
+      <>
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-sm font-medium text-gray-800 truncate">{name}</p>
+          <span className="text-xs text-gray-400 shrink-0">{fmtDist(d)} {t.distAway}</span>
+        </div>
+        <div className="flex items-center gap-2 mt-1 flex-wrap">
+          {toilet.changingTable && <span className="text-[10px] bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded-full">{t.changingBadge}</span>}
+          {toilet.wheelchair && <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full">{t.wheelchairBadge}</span>}
+          {toilet.fee === false && <span className="text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full">{t.freeBadge}</span>}
+        </div>
+      </>
+    );
+    if (toilet.changingTable) {
+      return (
+        <Link key={toilet.id} href={`/toilet/${spot.city}/${toilet.id}`} className="block border border-gray-100 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 transition-colors">
+          {inner}
+        </Link>
+      );
+    }
+    return (
+      <Link key={toilet.id} href={`/map?id=${toilet.id}&city=${spot.city}`} className="block border border-gray-100 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 transition-colors">
+        {inner}
+      </Link>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="max-w-2xl mx-auto px-5 py-8">
+        <nav className="text-xs text-gray-400 mb-4 flex items-center gap-1.5 flex-wrap">
+          <Link href={homeHref} className="hover:text-sky-600">{t.back}</Link>
+          <span>›</span>
+          <Link href={lang === "ja" ? `/ja/${spot.city}` : `/${spot.city}`} className="hover:text-sky-600">{cityName}</Link>
+          <span>›</span>
+          <span className="text-gray-500">{spotName}</span>
+        </nav>
+
+        <h1 className="text-xl font-bold text-gray-900">
+          {spot.type === "station" ? "🚉" : "📍"} {spotName}
+        </h1>
+
+        <div className="flex items-center gap-3 mt-3 flex-wrap text-xs text-gray-600">
+          <span className="bg-gray-100 px-2.5 py-1 rounded-full font-medium">{stats.total} {t.toiletsNear}</span>
+          <span className="bg-sky-100 text-sky-700 px-2.5 py-1 rounded-full font-medium">🍼 {stats.ct} {t.changingTables}</span>
+          <span className="bg-green-100 text-green-700 px-2.5 py-1 rounded-full font-medium">♿ {stats.wc} {t.wheelchair}</span>
+        </div>
+
+        {/* Map CTA */}
+        <div className="mt-5 bg-sky-50 rounded-2xl p-5">
+          <p className="text-sm text-sky-800 mb-3">{t.mapDesc}</p>
+          <Link
+            href={`/map?city=${spot.city}&lat=${spot.lat}&lon=${spot.lon}`}
+            className="inline-block bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
+          >
+            {t.openMap}
+          </Link>
+        </div>
+
+        {/* Changing table list */}
+        {withCT.length > 0 && (
+          <div className="mt-8">
+            <h2 className="font-bold text-gray-800 mb-3">🍼 {t.listTitle}</h2>
+            <div className="space-y-2">{withCT.map(row)}</div>
+          </div>
+        )}
+
+        <AdUnit slot="spot-page" />
+
+        {/* Others */}
+        {others.length > 0 && (
+          <div className="mt-6">
+            <h2 className="font-bold text-gray-800 mb-3">🚻 {t.otherTitle}</h2>
+            <div className="space-y-2">{others.map(row)}</div>
+          </div>
+        )}
+
+        {/* Guides */}
+        {guides.length > 0 && (
+          <div className="mt-8">
+            <h2 className="font-bold text-gray-800 mb-3 text-sm">📖 {t.guides}</h2>
+            <div className="flex flex-wrap gap-2">
+              {guides.map((g) => (
+                <Link key={g.slug} href={guideHref(lang, g.slug)} className="text-xs bg-sky-50 text-sky-700 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors">
+                  {g[lang]}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Nearby spots */}
+        {nearbySpots.length > 0 && (
+          <div className="mt-6 mb-8">
+            <h2 className="font-bold text-gray-800 mb-3 text-sm">{t.nearbySpots} {cityName}</h2>
+            <div className="flex flex-wrap gap-2">
+              {nearbySpots.map((s) => (
+                <Link key={s.slug} href={spotHref(lang, s.slug)} className="text-xs bg-gray-50 text-gray-700 px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors">
+                  {s.type === "station" ? "🚉" : "📍"} {s.names[lang]}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Family Toilet Japan", item: BASE },
+                { "@type": "ListItem", position: 2, name: c.name, item: `${BASE}/${spot.city}` },
+                { "@type": "ListItem", position: 3, name: spot.names.en, item: `${BASE}${spotHref(lang, spot.slug)}` },
+              ],
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              name: `Baby changing toilets near ${spot.names.en}`,
+              numberOfItems: withCT.length,
+              itemListElement: withCT.map(({ toilet }, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                item: {
+                  "@type": "CivicStructure",
+                  name: toilet.nameEn || toilet.name || `Public toilet near ${spot.names.en}`,
+                  geo: { "@type": "GeoCoordinates", latitude: toilet.lat, longitude: toilet.lon },
+                },
+              })),
+            },
+          ]),
+        }}
+      />
+    </div>
+  );
+}

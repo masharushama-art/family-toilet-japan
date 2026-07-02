@@ -235,7 +235,7 @@ function GeocodedMarkers({
 
 const DEFAULT_CENTER: [number, number] = [35.681, 139.767]; // 東京駅
 
-export default function MapView({ initialCenter, city = "tokyo", initialToiletId }: { initialCenter?: [number, number]; city?: string; initialToiletId?: string }) {
+export default function MapView({ initialCenter, city = "tokyo", initialToiletId, embed = false }: { initialCenter?: [number, number]; city?: string; initialToiletId?: string; embed?: boolean }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [placeResults, setPlaceResults] = useState<{ name: string; lat: number; lon: number }[]>([]);
@@ -481,7 +481,8 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
   return (
     <div className="relative w-full h-screen">
-      {/* ヘッダー */}
+      {/* ヘッダー（embedモードでは非表示） */}
+      {!embed && (
       <div className="absolute top-0 left-0 right-0 z-[1000] bg-white dark:bg-gray-900 shadow-sm px-4 py-2 flex flex-col gap-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -579,6 +580,19 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
           </div>
         )}
       </div>
+      )}
+
+      {/* embedモード: 出典リンク */}
+      {embed && (
+        <a
+          href="https://family-toilet-japan.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-2 left-2 z-[1000] bg-white/90 text-sky-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm hover:bg-white"
+        >
+          🚽 Family Toilet Japan
+        </a>
+      )}
 
       {/* 地図 */}
       <MapContainer

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import GuideAreaLinks from "../../components/GuideAreaLinks";
 
 export const metadata: Metadata = {
   title: "Japan Toilet Etiquette Guide for Tourists 2026 | Family Toilet Japan",
@@ -89,6 +90,8 @@ export default function ToiletEtiquettePage() {
             </div>
           ))}
         </div>
+
+        <GuideAreaLinks slug="japan-toilet-etiquette" lang="en" />
 
         <div className="bg-gray-50 rounded-2xl p-6 mb-8">
           <h2 className="font-bold text-gray-800 mb-3">Find Clean Toilets Near You</h2>

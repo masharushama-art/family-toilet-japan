@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import GuideAreaLinks from "../../components/GuideAreaLinks";
 
 export const metadata: Metadata = {
   title: "Naha & Okinawa Family Travel Tips — Traveling with Baby & Kids 2026 | Family Toilet Japan",
@@ -100,6 +101,8 @@ export default function NahaFamilyPage() {
             </div>
           </div>
         ))}
+
+        <GuideAreaLinks slug="naha-okinawa-family-travel-tips" lang="en" />
 
         <div className="bg-gray-50 rounded-2xl p-6 mb-8">
           <h2 className="font-bold text-gray-800 mb-3">Find Toilets in Okinawa (Naha)</h2>
