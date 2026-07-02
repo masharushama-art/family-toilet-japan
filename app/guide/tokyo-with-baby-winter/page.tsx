@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "tokyo christmas with baby",
     "japan onsen with baby",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/tokyo-with-baby-winter" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/tokyo-with-baby-winter",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/tokyo-with-baby-winter",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/tokyo-with-baby-winter",
+    },
+  },
 };
 
 const sections = [

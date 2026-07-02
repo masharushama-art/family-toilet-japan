@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "universal studios japan baby",
     "osaka kids travel tips",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/osaka-family-travel-tips" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/osaka-family-travel-tips",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/osaka-family-travel-tips",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/osaka-family-travel-tips",
+    },
+  },
 };
 
 const sections = [

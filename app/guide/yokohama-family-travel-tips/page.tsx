@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "cosmo world toddler",
     "yokohama baby friendly",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/yokohama-family-travel-tips" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/yokohama-family-travel-tips",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/yokohama-family-travel-tips",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/yokohama-family-travel-tips",
+    },
+  },
 };
 
 const sections = [

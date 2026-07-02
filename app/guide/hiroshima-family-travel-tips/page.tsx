@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "onomichi family travel",
     "hiroshima peace park baby",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/hiroshima-family-travel-tips" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/hiroshima-family-travel-tips",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/hiroshima-family-travel-tips",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/hiroshima-family-travel-tips",
+    },
+  },
 };
 
 const sections = [

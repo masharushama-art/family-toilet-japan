@@ -96,6 +96,18 @@ export default function JaPage() {
             { slug: "best-baby-changing-facilities-osaka", icon: "🏯", title: "大阪のおむつ替え・授乳室ガイド", desc: "なんば・梅田・天王寺・USJ周辺のベビー設備を網羅" },
             { slug: "kyoto-with-baby", icon: "⛩️", title: "赤ちゃん連れ京都観光ガイド", desc: "ベビーカーで回れる観光地・移動手段・子連れグルメ" },
             { slug: "japan-travel-with-baby", icon: "👶", title: "赤ちゃん連れ日本旅行ガイド", desc: "おむつ替え場所の探し方・持ち物・移動のコツ" },
+            { slug: "japan-train-travel-with-stroller", icon: "🚅", title: "ベビーカーで電車・新幹線に乗るコツ", desc: "新幹線の座席選び・多目的室・宅急便の活用術" },
+            { slug: "japan-family-restaurants-guide", icon: "🍽️", title: "子連れ外食完全ガイド", desc: "ファミレス比較・回転寿司・うどんチェーンの子連れ攻略" },
+            { slug: "traveling-japan-with-toddler-checklist", icon: "🧳", title: "子連れ旅行の持ち物チェックリスト", desc: "持っていくもの・現地で買うもの・季節別の準備" },
+            { slug: "tokyo-with-baby-winter", icon: "🧣", title: "冬の東京を赤ちゃんと楽しむ", desc: "イルミネーション・屋内スポット・防寒対策" },
+            { slug: "yokohama-family-travel-tips", icon: "🌉", title: "子連れ横浜観光ガイド", desc: "アンパンマンミュージアム・みなとみらい・中華街" },
+            { slug: "osaka-family-travel-tips", icon: "🎡", title: "子連れ大阪観光ガイド", desc: "ファミリー向けエリア・USJ・ベビーカー移動のコツ" },
+            { slug: "nagoya-family-travel-tips", icon: "🏰", title: "子連れ名古屋観光ガイド", desc: "レゴランド・名古屋港水族館・名古屋めし攻略" },
+            { slug: "fukuoka-family-travel-tips", icon: "🌸", title: "子連れ福岡観光ガイド", desc: "キャナルシティ・動植物園・子連れラーメン攻略" },
+            { slug: "sapporo-family-travel-tips", icon: "❄️", title: "子連れ札幌観光ガイド", desc: "円山動物園・雪まつり・冬の赤ちゃん防寒対策" },
+            { slug: "sendai-family-travel-tips", icon: "🌿", title: "子連れ仙台観光ガイド", desc: "八木山動物公園・うみの杜水族館・松島日帰り旅行" },
+            { slug: "hiroshima-family-travel-tips", icon: "⛩️", title: "子連れ広島観光ガイド", desc: "宮島・平和記念公園・お好み焼き子連れ攻略" },
+            { slug: "naha-okinawa-family-travel-tips", icon: "🌺", title: "子連れ沖縄・那覇観光ガイド", desc: "美ら海水族館・レンタカー・赤ちゃん連れビーチ" },
           ].map(({ slug, icon, title, desc }) => (
             <Link
               key={slug}
