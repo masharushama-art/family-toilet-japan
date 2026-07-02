@@ -190,8 +190,21 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
           <span className="bg-green-100 text-green-700 px-2.5 py-1 rounded-full font-medium">♿ {stats.wc} {t.wheelchair}</span>
         </div>
 
+        {/* Mini map */}
+        <div className="mt-5 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700">
+          <iframe
+            src={`https://www.openstreetmap.org/export/embed.html?bbox=${spot.lon - 0.008}%2C${spot.lat - 0.005}%2C${spot.lon + 0.008}%2C${spot.lat + 0.005}&layer=mapnik&marker=${spot.lat}%2C${spot.lon}`}
+            title={`Map of ${spot.names.en}`}
+            className="w-full h-56 border-0"
+            loading="lazy"
+          />
+        </div>
+        <p className="text-[10px] text-gray-400 mt-1 text-right">
+          © <a href="https://www.openstreetmap.org/copyright" className="underline" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>
+        </p>
+
         {/* Map CTA */}
-        <div className="mt-5 bg-sky-50 rounded-2xl p-5">
+        <div className="mt-4 bg-sky-50 rounded-2xl p-5">
           <p className="text-sm text-sky-800 mb-3">{t.mapDesc}</p>
           <Link
             href={`/map?city=${spot.city}&lat=${spot.lat}&lon=${spot.lon}`}

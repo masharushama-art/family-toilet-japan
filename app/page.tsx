@@ -263,21 +263,48 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <div className="bg-sky-600 text-white px-6 py-14 text-center">
-        <div className="text-5xl mb-3">🚽</div>
-        <h1 className="text-3xl font-bold mb-3">Family Toilet Japan</h1>
-        <p className="text-sky-100 max-w-md mx-auto mb-6">
-          Find family-friendly toilets with baby changing tables across Japan.
-          16,000+ locations · all 47 prefectures — free &amp; no sign-up.
-        </p>
-        <Link
-          href="/map"
-          className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 transition-colors"
-        >
-          📍 Find Toilets Near Me
-        </Link>
-        <p className="text-sky-200 text-xs mt-3">Works offline · PWA · No registration</p>
-        <CitySearch cities={allCities} />
+      <div className="relative overflow-hidden bg-gradient-to-br from-sky-700 via-sky-600 to-sky-400 text-white px-6 py-16 text-center">
+        {/* 装飾円 */}
+        <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/10" aria-hidden />
+        <div className="absolute -bottom-24 -left-10 w-80 h-80 rounded-full bg-white/5" aria-hidden />
+        {/* 地図風グリッド装飾 */}
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          aria-hidden
+          style={{ backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)", backgroundSize: "48px 48px" }}
+        />
+        <div className="relative">
+          <div className="text-5xl mb-3">🚽</div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold mb-3 tracking-tight">Family Toilet Japan</h1>
+          <p className="text-sky-100 max-w-md mx-auto mb-7">
+            Find family-friendly toilets with baby changing tables across Japan — free &amp; no sign-up.
+          </p>
+          <Link
+            href="/map"
+            className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 hover:scale-[1.02] transition-all shadow-lg shadow-sky-900/20"
+          >
+            📍 Find Toilets Near Me
+          </Link>
+          <p className="text-sky-200 text-xs mt-3">Works offline · PWA · No registration</p>
+          <CitySearch cities={allCities} />
+        </div>
+      </div>
+
+      {/* 数字カウンター帯 */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="max-w-2xl mx-auto px-6 py-5 grid grid-cols-4 gap-2 text-center">
+          {[
+            { n: "16,000+", label: "Toilets" },
+            { n: "47", label: "Prefectures" },
+            { n: "1,100+", label: "Changing tables" },
+            { n: "4", label: "Languages" },
+          ].map(({ n, label }) => (
+            <div key={label}>
+              <p className="text-lg sm:text-xl font-extrabold text-sky-600">{n}</p>
+              <p className="text-[11px] text-gray-400 font-medium">{label}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Features */}
@@ -293,6 +320,30 @@ export default function Home() {
               <p className="text-xs text-gray-600 font-medium">{label}</p>
             </div>
           ))}
+        </div>
+
+        {/* 人気スポット */}
+        <div className="mb-12">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Popular Areas</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {[
+              { slug: "shinjuku-station", icon: "🚉", name: "Shinjuku Station" },
+              { slug: "tokyo-station", icon: "🚄", name: "Tokyo Station" },
+              { slug: "asakusa-sensoji", icon: "🏮", name: "Asakusa" },
+              { slug: "universal-studios-japan", icon: "🎢", name: "Universal Studios" },
+              { slug: "kyoto-station", icon: "⛩️", name: "Kyoto Station" },
+              { slug: "maihama-disney", icon: "🏰", name: "Tokyo Disney Resort" },
+            ].map(({ slug, icon, name }) => (
+              <Link
+                key={slug}
+                href={`/spot/${slug}`}
+                className="flex items-center gap-2 border border-gray-100 hover:border-sky-300 hover:bg-sky-50 rounded-xl px-3 py-3 transition-colors"
+              >
+                <span className="text-xl">{icon}</span>
+                <span className="text-sm font-medium text-gray-800">{name}</span>
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Why */}
