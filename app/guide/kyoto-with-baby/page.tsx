@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "kyoto temple baby facilities",
     "kyoto kids travel tips",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/kyoto-with-baby" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/kyoto-with-baby",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/kyoto-with-baby",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/kyoto-with-baby",
+    },
+  },
 };
 
 const sections = [

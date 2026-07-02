@@ -13,6 +13,13 @@ export const metadata: Metadata = {
     "diaper change japan",
     "family friendly japan",
   ],
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/japan-travel-with-baby",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/japan-travel-with-baby",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/japan-travel-with-baby",
+    },
+  },
 };
 
 export default function JapanTravelWithBaby() {
