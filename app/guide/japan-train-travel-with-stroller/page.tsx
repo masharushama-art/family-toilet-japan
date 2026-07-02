@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "japan travel stroller tips",
     "bullet train with stroller",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/japan-train-travel-with-stroller" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/japan-train-travel-with-stroller",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/japan-train-travel-with-stroller",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/japan-train-travel-with-stroller",
+    },
+  },
 };
 
 const sections = [

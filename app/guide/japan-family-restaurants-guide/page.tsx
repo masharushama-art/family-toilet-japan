@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     "conveyor belt sushi kids japan",
     "japan convenience store baby food",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/japan-family-restaurants-guide" },
+  alternates: {
+    canonical: "https://family-toilet-japan.vercel.app/guide/japan-family-restaurants-guide",
+    languages: {
+      en: "https://family-toilet-japan.vercel.app/guide/japan-family-restaurants-guide",
+      ja: "https://family-toilet-japan.vercel.app/ja/guide/japan-family-restaurants-guide",
+    },
+  },
 };
 
 const sections = [
