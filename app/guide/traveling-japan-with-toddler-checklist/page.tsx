@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import GuideAreaLinks from "../../components/GuideAreaLinks";
+import { GearAffiliateBox } from "../../components/AffiliateBox";
 import GuideScrollTracker from "../../components/GuideScrollTracker";
 
 export const metadata: Metadata = {
@@ -103,6 +104,16 @@ export default function ToddlerChecklistPage() {
             </div>
           </div>
         ))}
+
+        <GearAffiliateBox
+          lang="en"
+          items={[
+            { name: "Babyzen YOYO2 Stroller", asin: "B0BGLVWT63" },
+            { name: "Ergobaby OMNI Breeze Carrier", asin: "B093L84C7H" },
+            { name: "Anker 10,000mAh Power Bank", asin: "B0CQX67KTW" },
+            { name: "Ziploc Freezer Bags (M)", asin: "B0DYYMMBQD" },
+          ]}
+        />
 
         <GuideAreaLinks slug="traveling-japan-with-toddler-checklist" lang="en" />
 
