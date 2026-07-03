@@ -1,12 +1,17 @@
 {
-  "name": "Family Toilet Japan",
+  "name": "Family Toilet Japan — Baby Changing Table Finder",
   "short_name": "FTJ",
-  "description": "Find family-friendly toilets in Japan",
+  "description": "Find family-friendly toilets with baby changing tables in Japan. 16,000+ locations, works offline, no sign-up.",
   "start_url": "/",
+  "id": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0ea5e9",
   "orientation": "portrait",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["travel", "lifestyle", "navigation"],
   "shortcuts": [
     {
       "name": "Find Toilets Near Me",
@@ -34,12 +39,26 @@
     {
       "src": "/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

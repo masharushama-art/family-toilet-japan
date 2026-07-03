@@ -139,6 +139,21 @@ export default async function ToiletPage({ params }: { params: Params }) {
         {/* Details */}
         <div className="mt-6 border border-gray-100 dark:border-gray-800 rounded-2xl px-5 py-2">
           <FeatureRow icon="🍼" label="Baby changing table" value="✓ Available" positive />
+          {toilet.changingTableLocation && (
+            <FeatureRow
+              icon="🚻"
+              label="Changing table location"
+              value={
+                toilet.changingTableLocation === "male" ? "Men's toilet too"
+                  : toilet.changingTableLocation === "unisex" ? "Unisex"
+                  : toilet.changingTableLocation === "dedicated_room" ? "Dedicated room"
+                  : toilet.changingTableLocation
+              }
+              positive
+            />
+          )}
+          {toilet.level && <FeatureRow icon="🏢" label="Floor" value={`${toilet.level}F`} />}
+          {toilet.ostomate && <FeatureRow icon="🩹" label="Ostomate friendly" value="✓ Yes" positive />}
           <FeatureRow icon="♿" label="Wheelchair access" value={toilet.wheelchair ? "✓ Yes" : "Unknown"} positive={toilet.wheelchair} />
           <FeatureRow icon="💴" label="Fee" value={toilet.fee === true ? "Paid" : toilet.fee === false ? "Free" : "Unknown"} positive={toilet.fee === false} />
           {toilet.openingHours && <FeatureRow icon="🕐" label="Opening hours" value={toilet.openingHours} />}
