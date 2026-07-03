@@ -319,7 +319,8 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   const loadCity = useCallback((slug: string) => {
     if (loadingRef.current.has(slug)) return;
     loadingRef.current.add(slug);
-    fetch(`/data/cities/${slug}.json`)
+    // priority: "low" — 初回表示ではタイル画像（LCP要素）に帯域を譲る
+    fetch(`/data/cities/${slug}.json`, { priority: "low" } as RequestInit)
       .then((r) => r.json())
       .then((data: Toilet[]) => {
         setCityCache((prev) => new Map(prev).set(slug, data));

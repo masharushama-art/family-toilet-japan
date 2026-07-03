@@ -54,6 +54,24 @@ const withPWA = require("next-pwa")({
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        // トイレデータJSONは月次更新のみなので長期キャッシュ（PSI「効率的なキャッシュ保存期間」対策）
+        source: "/data/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=2592000" },
+        ],
+      },
+      {
+        // アイコン等の静的画像も同様
+        source: "/icons/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=604800, immutable" },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = withPWA(nextConfig);
