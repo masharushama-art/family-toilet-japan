@@ -26,4 +26,5 @@ export interface FilterState {
   changingTableOnly: boolean;
   wheelchairOnly: boolean;
   open24hOnly: boolean;
+  ostomateOnly: boolean;
 }

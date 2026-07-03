@@ -21,6 +21,7 @@ export default function FilterPanel({ filters, onChange, onClose, filteredCount,
     { key: "changingTableOnly" as const, label: `🍼 ${t("changingTable")}` },
     { key: "wheelchairOnly" as const, label: `♿ ${t("wheelchair")}` },
     { key: "open24hOnly" as const, label: `🕐 ${t("open24h")}` },
+    { key: "ostomateOnly" as const, label: `🩹 ${t("ostomate")}` },
   ];
 
   const isFiltered = filteredCount < totalCount;
