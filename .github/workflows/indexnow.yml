@@ -1,0 +1,17 @@
+name: IndexNow notify
+
+# master への push（=Vercelデプロイのトリガー）から数分待ってサイトマップを送信
+# Vercelのデプロイ完了を厳密に待つ仕組みはないため、デプロイが十分終わる時間をおく
+on:
+  push:
+    branches: [master]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for Vercel deploy to finish
+        run: sleep 180
+      - name: Notify IndexNow
+        run: node scripts/indexnow.js
