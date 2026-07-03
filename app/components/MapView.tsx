@@ -385,12 +385,12 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
 
   const FILTER_KEY = "ftj_filters";
   const [filters, setFilters] = useState<FilterState>(() => {
-    if (typeof window === "undefined") return { familyFriendlyOnly: true, changingTableOnly: false, wheelchairOnly: false, open24hOnly: false };
+    if (typeof window === "undefined") return { familyFriendlyOnly: true, changingTableOnly: false, wheelchairOnly: false, open24hOnly: false, ostomateOnly: false };
     try {
       const saved = localStorage.getItem(FILTER_KEY);
       if (saved) return JSON.parse(saved) as FilterState;
     } catch { /* ignore */ }
-    return { familyFriendlyOnly: true, changingTableOnly: false, wheelchairOnly: false, open24hOnly: false };
+    return { familyFriendlyOnly: true, changingTableOnly: false, wheelchairOnly: false, open24hOnly: false, ostomateOnly: false };
   });
 
   const setFiltersAndSave = useCallback((next: FilterState) => {
@@ -507,6 +507,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
     if (filters.changingTableOnly && !t.changingTable) return false;
     if (filters.wheelchairOnly && !t.wheelchair) return false;
     if (filters.open24hOnly && t.openingHours !== "24/7") return false;
+    if (filters.ostomateOnly && !t.ostomate) return false;
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       const name = ((t.nameEn || "") + (t.name || "") + (t.operator || "") + (t.address || "")).toLowerCase();
@@ -611,7 +612,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
             aria-expanded={showFilter}
             className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-400 px-3 py-1 rounded-full text-sm font-medium"
           >
-            {t("filters")} {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly) ? "●" : ""}
+            {t("filters")} {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly || filters.ostomateOnly) ? "●" : ""}
           </button>
           <button
             onClick={() => setShowRoute(!showRoute)}
