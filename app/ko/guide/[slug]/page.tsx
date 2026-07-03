@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HotelAffiliateBox } from "../../../components/AffiliateBox";
+import { getCityForGuideSlug } from "../../../components/GuideAreaLinks";
+import { CITIES, type CitySlug } from "../../../lib/toilet-data";
 import GuideAreaLinks from "../../../components/GuideAreaLinks";
 import GuideScrollTracker from "../../../components/GuideScrollTracker";
 import { AdUnit } from "../../../components/AdSense";
@@ -72,6 +75,8 @@ export default async function KoGuidePage({ params }: { params: Params }) {
             {sectionIndex === 1 && <AdUnit slot="guide-mid" />}
           </div>
         ))}
+
+        <HotelAffiliateBox cityNameJa={(() => { const c = getCityForGuideSlug(slug); return c ? CITIES[c as CitySlug].jaName : ""; })()} lang="ko" />
 
         <GuideAreaLinks slug={slug} lang="ko" />
 

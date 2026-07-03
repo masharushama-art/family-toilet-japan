@@ -1,30 +1,35 @@
 # Family Toilet Japan — 改善ロードマップ
 
-最終更新: 2026-07-02（このファイルは実装のたびに更新する）
+最終更新: 2026-07-03（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
 - ビルド: 1,538ページ（トイレ個別919 / ガイド64 / スポット260 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、OGP画像動的生成済み、ダークモード済み
 - AdSense: 審査中（承認後に `NEXT_PUBLIC_ADSENSE_APPROVED=true` をVercelに設定）
-- 集客: Reddit（japan_travel_dad）でカルマ構築中、GA4導入済み
+- 集客: Reddit（japan_travel_dad）でカルマ構築中
+- **GA4イベント計測: 実装済み**（2026-07-03）— `directions_click` `toilet_detail_open` `spot_view` `guide_scroll_complete` 等。`app/lib/analytics.ts`
+- **アフィリエイト土台: 実装済み**（2026-07-03、要ID登録）— `app/components/AffiliateBox.tsx`。下記「有効化手順」参照
 
 ---
 
-## P1: 収益に直結（優先実装）
+## ✅ 実装済み: GA4イベント計測（2026-07-03）
+- `app/lib/analytics.ts`: `track.*` ヘルパー群
+- `ToiletDetail.tsx`: 詳細パネル表示・Directionsクリック
+- `PageViewTracker.tsx`: SSGページ（トイレ個別・スポット）のビュー計測用の薄いクライアント発火体
+- `GuideScrollTracker.tsx`: ガイド90%スクロールで読了イベント（英語ガイド16本中14本＋ja/zh/ko共通テンプレートに適用済み。`how-to-use-japanese-toilet`と`japan-travel-with-baby`は構造が違うため未適用 — 次回手動で追加）
+- GA4管理画面で「カスタムイベント」からこれらのイベント名を確認できる。数週間データが溜まったら、どの導線が実際にクリックされているか（Directions率、スポット→ガイド遷移率）を見て優先順位を再判断する
 
-### 1. アフィリエイト導入（AdSenseより単価が高い可能性大）
-- **楽天トラベル / じゃらんアフィリエイト**: 日本語ガイド16本の都市ごとに「子連れ歓迎ホテル」セクションを追加しリンク
-- **Klook / GetYourGuide**: 英語・zh・koガイドにUSJ・ディズニー・美ら海のチケットリンク（訪日客は事前購入需要が高い）
-- **Amazonアソシエイト**: 持ち物チェックリストページのベビーカー（YOYO等）・抱っこ紐・変換プラグに商品リンク
-- 実装: `AffiliateBox` コンポーネント1つ＋ガイドデータに `affiliates` フィールド追加
-- 注意: 広告表記（PR明記）を各言語で入れる
+## ✅ 実装済み: アフィリエイト土台（2026-07-03・要有効化）
+- `app/components/AffiliateBox.tsx`: `HotelAffiliateBox`（楽天トラベル）/ `ActivityAffiliateBox`（Klook）/ `GearAffiliateBox`（Amazon）
+- `HotelAffiliateBox` は ja/zh/ko ガイドテンプレートの `GuideAreaLinks` 直前に設置済み。都市に紐づかないガイド（旅行基本ガイド等）では自動非表示
+- **未実施＝次回のアクション**:
+  1. 楽天アフィリエイト（楽天トラベル）に登録 → 発行されたIDをVercel環境変数 `NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID` に設定するだけで全ガイドに自動表示される
+  2. Klookアフィリエイトに登録 → `NEXT_PUBLIC_KLOOK_AFFILIATE_ID` を設定。`ActivityAffiliateBox` はまだどのページにも配置していないので、USJ・ディズニー系スポットページ（`app/components/SpotPageView.tsx`）に追加する
+  3. Amazonアソシエイトに登録 → `NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG` を設定。`GearAffiliateBox` は `traveling-japan-with-toddler-checklist` ガイド（持ち物リスト）に配置するのが最適。ASINは商品ページURLから取得
+  4. 各広告に「広告」「PR」表記が言語ごとに入っている（法令・各プログラム規約対応済み）ので追加対応不要
+  5. 登録には運営者情報・銀行口座等が必要（Claude Codeでは代行不可、ユーザー本人の作業）
 
-### 2. GA4イベント計測強化（改善判断の土台）
-- 計測イベント: 地図起動、Directionsクリック、個別ページ→地図遷移、ガイド読了（スクロール90%）、スポット→ガイド回遊
-- 実装: `lib/analytics.ts` に `trackEvent()` を作り既存ボタンに仕込む
-- これがないと今後の施策のA/B判断ができない
-
-### 3. IndexNow + Bing Webmaster
+### 3. IndexNow + Bing Webmaster（次回実装）
 - 1,538ページのインデックスを加速。BingはIndexNow対応でデプロイ時に自動通知可能
 - 実装: ビルド後スクリプトでIndexNow APIにサイトマップURL送信＋Bing Webmaster Toolsにサイト登録（手動作業あり）
 
