@@ -81,21 +81,26 @@
 - 個別ページ・詳細パネルに表示。UGCで再訪問動機とページ独自性を作る
 - 実装: Route Handler `/api/vote` + Upstash。個人情報なしなのでプライバシー影響小
 
-### 9. データ更新パイプライン自動化
-- GitHub Actions で月次: Overpass APIからOSM再取得 → cities/*.json更新 → 自動PR
-- 「更新され続けるサイト」シグナル＋coverage ページの数字が動く
+## ✅ 実装済み: データ更新パイプライン自動化（2026-07-03）
+- `.github/workflows/monthly-data-refresh.yml`: 毎月1日正午JSTに自動実行（`workflow_dispatch`で手動実行も可）
+- `fetch-all-prefectures.py --force` → `merge-all-prefectures.py` → `split-by-city.py` の順で実行し、差分があれば自動でPRを作成（**自動マージはしない**——データ異常の混入を防ぐ安全策）
+- PR本文に確認事項（差分件数・ビルド通過・coverageページの統計）を明記
 
-### 10. ルート沿いトイレ検索
+## ✅ 実装済み: フィルター拡張・データフィールド強化（2026-07-03）
+- `merge-all-prefectures.py`（月次自動更新で使われるスクリプト）が `changing_table:location`（男性トイレ側の交換台）、`level`（階数）、`ostomate`（オストメイト対応）を取り込むよう拡張
+- `Toilet`型に `changingTableLocation` / `level` / `ostomate` を追加（オプショナルなので既存データは影響なし）
+- `ToiletDetail.tsx`（地図の詳細パネル）とトイレ個別ページ（919枚）両方で、データがある場合のみ表示
+- **注意**: 既存の東京・大阪等のデータはこれらのタグをまだ持っていない（次回の月次自動更新でOSMから再取得された時に反映される）。個別の `merge-tokyo-wards.py` 等の手動マージスクリプトは今回未修正——必要なら同様の3行を追加する
+
+### 10. ルート沿いトイレ検索（次回・未着手）
 - 「東京駅→ディズニー」のような2点間ルート沿いのトイレ表示（直線バッファでも実用的）
 - 地図に「経路モード」追加。子連れ移動の実需にドンピシャ
 
-### 11. フィルター拡張（データ強化）
-- OSMタグ `changing_table:location`（男性トイレ側にあるか）、`ostomate`、授乳室タグを取り込み
-- 「パパでも替えられる」フィルターは日本語圏で差別化になる
-
-### 12. PWA仕上げ
-- manifest に screenshots / maskable icon 追加（インストールプロンプトがリッチに）
-- オフライン時のフォールバックページ改善
+## ✅ 実装済み: PWA仕上げ（2026-07-03・一部要フォロー）
+- `manifest.json`: `id`/`scope`/`lang`/`dir`/`categories` 追加、`purpose: "maskable"` アイコンエントリ追加
+- **既知の制約**: maskable用に新規デザインした画像ではなく既存の `icon-512.png` を流用しているため、Android等でロゴがセーフゾーン外にクロップされる可能性がある。理想的には中央80%に収まるロゴの専用maskable画像を用意すべき（次回、画像生成ツールで対応）
+- オフラインページ（`app/offline/page.tsx`）は既に実装済みで良好な状態だったため変更なし
+- **screenshots未追加**: PWAインストールプロンプト用のアプリスクリーンショットは、プレビュー環境のスクリーンショットツールが本セッションでタイムアウトし続けたため撮影できず。次回、環境が安定していれば `/map` と `/toilet/tokyo/{id}` の実機スクリーンショットを撮ってmanifestに追加する
 
 ## P4: 集客（サイト外）
 
