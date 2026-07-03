@@ -12,7 +12,7 @@ import { useI18n } from "../i18n/provider";
 import { getFavorites } from "../lib/favorites";
 import { getHistory, clearHistory, formatTimeAgo, type HistoryEntry } from "../lib/history";
 import { getNearestCity, CITIES_CONFIG } from "../lib/cities-config";
-import { calcDistance, formatDistance } from "../lib/distance";
+import { calcDistance, formatDistance, distancePointToSegment } from "../lib/distance";
 import { requestNotificationPermission, checkProximity } from "../lib/proximity-alert";
 
 // Leafletデフォルトアイコン修正
@@ -37,6 +37,20 @@ const normalIcon = L.divIcon({
   className: "",
   iconSize: [12, 12],
   iconAnchor: [6, 6],
+});
+
+// ルート検索の出発地・目的地アイコン
+const routeStartIcon = L.divIcon({
+  html: `<div style="background:#22c55e;width:20px;height:20px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.4)"></div>`,
+  className: "",
+  iconSize: [20, 20],
+  iconAnchor: [10, 20],
+});
+const routeEndIcon = L.divIcon({
+  html: `<div style="background:#ef4444;width:20px;height:20px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.4)"></div>`,
+  className: "",
+  iconSize: [20, 20],
+  iconAnchor: [10, 20],
 });
 
 // 現在地アイコン
@@ -240,6 +254,37 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   const [showSearch, setShowSearch] = useState(false);
   const [placeResults, setPlaceResults] = useState<{ name: string; lat: number; lon: number }[]>([]);
   const [placeSearching, setPlaceSearching] = useState(false);
+
+  // ルート沿いトイレ検索（ROADMAP P3-10）
+  const [showRoute, setShowRoute] = useState(false);
+  type RoutePoint = { name: string; lat: number; lon: number };
+  const [routeStart, setRouteStart] = useState<RoutePoint | null>(null);
+  const [routeEnd, setRouteEnd] = useState<RoutePoint | null>(null);
+  const [routeField, setRouteField] = useState<"start" | "end" | null>(null);
+  const [routeQuery, setRouteQuery] = useState("");
+  const [routeResults, setRouteResults] = useState<{ name: string; lat: number; lon: number }[]>([]);
+  const [routeSearching, setRouteSearching] = useState(false);
+  const ROUTE_BUFFER_M = 400; // ルートから何m以内のトイレを拾うか
+
+  const searchRoutePlace = useCallback(async (query: string) => {
+    if (!query.trim()) return;
+    setRouteSearching(true);
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=jsonv2&countrycodes=jp&limit=4&q=${encodeURIComponent(query)}`,
+        { headers: { "Accept-Language": "en" } }
+      );
+      const data: { display_name: string; lat: string; lon: string }[] = await res.json();
+      setRouteResults(
+        data.map((d) => ({ name: d.display_name.split(",").slice(0, 3).join(","), lat: parseFloat(d.lat), lon: parseFloat(d.lon) }))
+      );
+    } catch {
+      setRouteResults([]);
+    } finally {
+      setRouteSearching(false);
+    }
+  }, []);
+
   const [showList, setShowList] = useState(false);
   const [showReSearch, setShowReSearch] = useState(false);
   const isFirstMove = useRef(true);
@@ -318,6 +363,25 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
     loadCity(nearest);
     mapRef.current?.flyTo([lat, lon], 15, { duration: 1.5 });
   }, [loadCity]);
+
+  const pickRoutePoint = useCallback((p: { name: string; lat: number; lon: number }) => {
+    loadCity(getNearestCity(p.lat, p.lon));
+    if (routeField === "start") setRouteStart(p);
+    else if (routeField === "end") setRouteEnd(p);
+    setRouteField(null);
+    setRouteQuery("");
+    setRouteResults([]);
+  }, [routeField, loadCity]);
+
+  // 両地点が揃ったら地図をルート全体にフィット
+  useEffect(() => {
+    if (routeStart && routeEnd && mapRef.current) {
+      mapRef.current.fitBounds(
+        [[routeStart.lat, routeStart.lon], [routeEnd.lat, routeEnd.lon]],
+        { padding: [60, 60] }
+      );
+    }
+  }, [routeStart, routeEnd]);
 
   const FILTER_KEY = "ftj_filters";
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -448,6 +512,10 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
       const name = ((t.nameEn || "") + (t.name || "") + (t.operator || "") + (t.address || "")).toLowerCase();
       if (!name.includes(q)) return false;
     }
+    if (routeStart && routeEnd) {
+      const d = distancePointToSegment(t.lat, t.lon, routeStart.lat, routeStart.lon, routeEnd.lat, routeEnd.lon);
+      if (d > ROUTE_BUFFER_M) return false;
+    }
     return true;
   });
 
@@ -545,8 +613,75 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
           >
             {t("filters")} {(filters.changingTableOnly || filters.wheelchairOnly || filters.open24hOnly) ? "●" : ""}
           </button>
+          <button
+            onClick={() => setShowRoute(!showRoute)}
+            aria-label={showRoute ? "Close route search" : "Search toilets along a route"}
+            aria-expanded={showRoute}
+            className={`px-3 py-1 rounded-full text-sm font-medium ${showRoute || (routeStart && routeEnd) ? "bg-sky-500 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"}`}
+          >
+            🛣️
+          </button>
           </div>
         </div>
+        {showRoute && (
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 space-y-2">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Find toilets along a route</p>
+            {(["start", "end"] as const).map((field) => {
+              const point = field === "start" ? routeStart : routeEnd;
+              const label = field === "start" ? "From" : "To";
+              return (
+                <div key={field} className="flex items-center gap-2 bg-white dark:bg-gray-900 rounded-lg px-3 py-1.5">
+                  <span className="text-xs text-gray-400 w-8 shrink-0">{label}</span>
+                  {point && routeField !== field ? (
+                    <>
+                      <span className="flex-1 text-sm text-gray-800 dark:text-gray-100 truncate">📍 {point.name}</span>
+                      <button
+                        onClick={() => { setRouteField(field); setRouteQuery(""); }}
+                        className="text-gray-400 text-xs"
+                      >
+                        Change
+                      </button>
+                    </>
+                  ) : (
+                    <input
+                      autoFocus={routeField === field}
+                      type="text"
+                      value={routeField === field ? routeQuery : ""}
+                      onFocus={() => { setRouteField(field); setRouteQuery(""); setRouteResults([]); }}
+                      onChange={(e) => { setRouteQuery(e.target.value); setRouteResults([]); }}
+                      onKeyDown={(e) => { if (e.key === "Enter") searchRoutePlace(routeQuery); }}
+                      placeholder={field === "start" ? "Station or place..." : "Destination..."}
+                      className="flex-1 bg-transparent text-sm text-gray-800 dark:text-gray-100 placeholder-gray-400 outline-none"
+                    />
+                  )}
+                </div>
+              );
+            })}
+            {routeSearching && <p className="text-xs text-gray-400 px-1">Searching…</p>}
+            {routeField && routeResults.length > 0 && (
+              <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
+                {routeResults.map((p) => (
+                  <button
+                    key={`${p.lat},${p.lon}`}
+                    onClick={() => pickRoutePoint(p)}
+                    className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-sky-50 dark:hover:bg-gray-700 flex items-center gap-2 border-b border-gray-50 dark:border-gray-700 last:border-0"
+                  >
+                    <span>📍</span>
+                    <span className="truncate">{p.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+            {(routeStart || routeEnd) && (
+              <button
+                onClick={() => { setRouteStart(null); setRouteEnd(null); setRouteField(null); setRouteQuery(""); setRouteResults([]); }}
+                className="text-xs text-gray-400 hover:text-red-500 px-1"
+              >
+                ✕ Clear route
+              </button>
+            )}
+          </div>
+        )}
         {showSearch && (
           <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-xl px-3 py-1.5">
             <span className="text-gray-400 text-sm">🔍</span>
@@ -643,6 +778,22 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
             positions={[userPos, [selected.lat, selected.lon]]}
             pathOptions={{ color: "#0ea5e9", weight: 3, dashArray: "8 6", opacity: 0.85 }}
           />
+        )}
+
+        {/* ルート沿い検索モード: 出発地→目的地の線と両端マーカー */}
+        {routeStart && routeEnd && (
+          <>
+            <Polyline
+              positions={[[routeStart.lat, routeStart.lon], [routeEnd.lat, routeEnd.lon]]}
+              pathOptions={{ color: "#f97316", weight: 4, opacity: 0.7 }}
+            />
+            <Marker position={[routeStart.lat, routeStart.lon]} icon={routeStartIcon}>
+              <Popup>🚩 Start: {routeStart.name}</Popup>
+            </Marker>
+            <Marker position={[routeEnd.lat, routeEnd.lon]} icon={routeEndIcon}>
+              <Popup>🏁 End: {routeEnd.name}</Popup>
+            </Marker>
+          </>
         )}
       </MapContainer>
 
