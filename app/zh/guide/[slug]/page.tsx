@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import GuideAreaLinks from "../../../components/GuideAreaLinks";
+import GuideScrollTracker from "../../../components/GuideScrollTracker";
 import { AdUnit } from "../../../components/AdSense";
 import { ZH_GUIDES, ZH_GUIDE_SLUGS } from "../../../lib/guides-zh";
 
@@ -40,6 +41,7 @@ export default async function ZhGuidePage({ params }: { params: Params }) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
+      <GuideScrollTracker slug={slug} lang="zh" />
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/zh" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">{g.title}</h1>
