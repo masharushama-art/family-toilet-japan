@@ -6,10 +6,11 @@ import {
   getToilet,
   getNearbyToilets,
   getAllDetailPageParams,
+  getToiletAreaContext,
   type CitySlug,
 } from "../../../lib/toilet-data";
 import { AdUnit } from "../../../components/AdSense";
-import { getNearbySpots } from "../../../lib/spots";
+import { getNearbySpots, spotDistanceKm } from "../../../lib/spots";
 import { CITY_GUIDE_SLUGS } from "../../../components/SpotPageView";
 import PageViewTracker from "../../../components/PageViewTracker";
 import CleanlinessVote from "../../../components/CleanlinessVote";
@@ -111,6 +112,33 @@ export default async function ToiletPage({ params }: { params: Params }) {
             📍 This location is approximate (geocoded from address). Verify on the map before visiting.
           </div>
         )}
+
+        {/* エリアコンテキスト（ページ固有の数値入り説明文 — thin content対策） */}
+        {(() => {
+          const ctx = getToiletAreaContext(city as CitySlug, toilet);
+          const nearestSpot = getNearbySpots(toilet.lat, toilet.lon, city, 1)[0];
+          const distText = nearestSpot
+            ? (() => {
+                const km = spotDistanceKm(toilet.lat, toilet.lon, nearestSpot.lat, nearestSpot.lon);
+                return km < 1 ? `about ${Math.max(50, Math.round((km * 1000) / 50) * 50)} m` : `about ${km.toFixed(1)} km`;
+              })()
+            : null;
+          return (
+            <div className="mt-4">
+              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                {name} is a public toilet with a baby changing table in {c.name}.
+                {nearestSpot && distText && <> It is {distText} from {nearestSpot.names.en}.</>}
+                {" "}
+                {ctx.changingTablesWithin500m > 0
+                  ? `If it is occupied, there ${ctx.changingTablesWithin500m === 1 ? "is 1 more changing-table toilet" : `are ${ctx.changingTablesWithin500m} more changing-table toilets`} within a 500 m walk.`
+                  : "This is the only changing-table toilet within 500 m, so plan your visit accordingly."}
+              </p>
+              <p className="text-xs text-gray-400 mt-2">
+                {c.name} overall: 🍼 {ctx.cityStats.withChangingTable.toLocaleString()} changing tables · ♿ {ctx.cityStats.wheelchair.toLocaleString()} wheelchair accessible · 💚 {ctx.cityStats.free.toLocaleString()} free — of {ctx.cityStats.total.toLocaleString()} mapped toilets
+              </p>
+            </div>
+          );
+        })()}
 
         {/* Map */}
         <div className="mt-5 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800">

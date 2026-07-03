@@ -137,3 +137,22 @@ export function getCityStats(city: CitySlug) {
     free: all.filter((t) => !t.fee).length,
   };
 }
+
+// 個別ページの説明文生成に使う周辺コンテキスト。
+// ページごとに固有の数値が入ることでthin content対策になる。
+export function getToiletAreaContext(city: CitySlug, target: Toilet) {
+  const KM_PER_DEG_LAT = 111;
+  const kmPerDegLon = 111 * Math.cos((target.lat * Math.PI) / 180);
+  const within = (t: Toilet, km: number) => {
+    const dLat = (t.lat - target.lat) * KM_PER_DEG_LAT;
+    const dLon = (t.lon - target.lon) * kmPerDegLon;
+    return dLat * dLat + dLon * dLon <= km * km;
+  };
+  const all = getToiletsByCity(city);
+  return {
+    changingTablesWithin500m: all.filter(
+      (t) => t.id !== target.id && t.changingTable && within(t, 0.5)
+    ).length,
+    cityStats: getCityStats(city),
+  };
+}
