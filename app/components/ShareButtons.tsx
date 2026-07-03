@@ -3,11 +3,14 @@
 interface Props {
   url: string;
   text: string;
+  /** Pinterest Pin It用の画像URL（省略時はPinterestボタンを出さない） */
+  imageUrl?: string;
 }
 
-export default function ShareButtons({ url, text }: Props) {
+export default function ShareButtons({ url, text, imageUrl }: Props) {
   const encoded = encodeURIComponent(url);
   const encodedText = encodeURIComponent(text);
+  const encodedImage = imageUrl ? encodeURIComponent(imageUrl) : "";
 
   const share = async () => {
     if (navigator.share) {
@@ -34,6 +37,16 @@ export default function ShareButtons({ url, text }: Props) {
       >
         LINE
       </a>
+      {imageUrl && (
+        <a
+          href={`https://pinterest.com/pin/create/button/?url=${encoded}&media=${encodedImage}&description=${encodedText}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#E60023] text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-[#c2001d] transition-colors"
+        >
+          Pin
+        </a>
+      )}
       {typeof navigator !== "undefined" && "share" in navigator && (
         <button
           onClick={share}

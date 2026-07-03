@@ -4,6 +4,7 @@ import Link from "next/link";
 import { HotelAffiliateBox } from "../../../components/AffiliateBox";
 import { getCityForGuideSlug } from "../../../components/GuideAreaLinks";
 import { CITIES, type CitySlug } from "../../../lib/toilet-data";
+import ShareButtons from "../../../components/ShareButtons";
 import GuideAreaLinks from "../../../components/GuideAreaLinks";
 import GuideScrollTracker from "../../../components/GuideScrollTracker";
 import { AdUnit } from "../../../components/AdSense";
@@ -49,6 +50,10 @@ export default async function JaGuidePage({ params }: { params: Params }) {
         <Link href="/ja" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">{g.title}</h1>
         <p className="text-sky-100 max-w-lg mx-auto text-sm">{g.heroDesc}</p>
+      </div>
+
+      <div className="max-w-2xl mx-auto px-6 pt-4">
+        <ShareButtons url={`${BASE}/ja/guide/${slug}`} text={g.title} imageUrl={`${BASE}/ja/guide/${slug}/opengraph-image`} />
       </div>
 
       <div className="max-w-2xl mx-auto px-6 py-10">
