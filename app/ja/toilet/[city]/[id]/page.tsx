@@ -6,10 +6,11 @@ import {
   getToilet,
   getNearbyToilets,
   getAllDetailPageParams,
+  getToiletAreaContext,
   type CitySlug,
 } from "../../../../lib/toilet-data";
 import { AdUnit } from "../../../../components/AdSense";
-import { getNearbySpots } from "../../../../lib/spots";
+import { getNearbySpots, spotDistanceKm } from "../../../../lib/spots";
 import { CITY_GUIDE_SLUGS } from "../../../../components/SpotPageView";
 import PageViewTracker from "../../../../components/PageViewTracker";
 import CleanlinessVote from "../../../../components/CleanlinessVote";
@@ -115,6 +116,32 @@ export default async function JaToiletPage({ params }: { params: Params }) {
             📍 この位置は住所からの推定です。訪問前に地図でご確認ください。
           </div>
         )}
+
+        {/* エリアコンテキスト（ページ固有の数値入り説明文 — thin content対策） */}
+        {(() => {
+          const ctx = getToiletAreaContext(city as CitySlug, toilet);
+          const nearestSpot = getNearbySpots(toilet.lat, toilet.lon, city, 1)[0];
+          const distText = nearestSpot
+            ? (() => {
+                const km = spotDistanceKm(toilet.lat, toilet.lon, nearestSpot.lat, nearestSpot.lon);
+                return km < 1 ? `約${Math.max(50, Math.round((km * 1000) / 50) * 50)}m` : `約${km.toFixed(1)}km`;
+              })()
+            : null;
+          return (
+            <div className="mt-4">
+              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                {name}は{c.jaName}にあるおむつ交換台付きの公衆トイレです。
+                {nearestSpot && distText && <>{nearestSpot.names.ja}から{distText}の場所にあります。</>}
+                {ctx.changingTablesWithin500m > 0
+                  ? `混雑時には、徒歩500m圏内に他${ctx.changingTablesWithin500m}ヶ所のおむつ交換台付きトイレがあります。`
+                  : "500m圏内でおむつ交換台があるのはここだけなので、計画的な利用がおすすめです。"}
+              </p>
+              <p className="text-xs text-gray-400 mt-2">
+                {c.jaName}全体: 🍼 交換台{ctx.cityStats.withChangingTable.toLocaleString()}ヶ所 · ♿ 車いす対応{ctx.cityStats.wheelchair.toLocaleString()}ヶ所 · 💚 無料{ctx.cityStats.free.toLocaleString()}ヶ所（登録トイレ{ctx.cityStats.total.toLocaleString()}件中）
+              </p>
+            </div>
+          );
+        })()}
 
         {/* 地図 */}
         <div className="mt-5 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800">
