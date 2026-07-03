@@ -29,9 +29,22 @@
   4. 各広告に「広告」「PR」表記が言語ごとに入っている（法令・各プログラム規約対応済み）ので追加対応不要
   5. 登録には運営者情報・銀行口座等が必要（Claude Codeでは代行不可、ユーザー本人の作業）
 
-### 3. IndexNow + Bing Webmaster（次回実装）
-- 1,538ページのインデックスを加速。BingはIndexNow対応でデプロイ時に自動通知可能
-- 実装: ビルド後スクリプトでIndexNow APIにサイトマップURL送信＋Bing Webmaster Toolsにサイト登録（手動作業あり）
+## ✅ 実装済み: IndexNow（2026-07-03・要手動確認）
+- キーファイル: `public/e8442e45ff5c4ebd9ce220c08394d63f.txt`
+- 通知スクリプト: `scripts/indexnow.js`（`npm run indexnow` で手動実行可）。sitemap.xml + sitemap-toilets.xmlの全URLをBing/Yandex等に一括通知
+- GitHub Actions: `.github/workflows/indexnow.yml` — masterへのpush（Vercelデプロイ）から3分後に自動実行
+- **未実施＝次回のアクション**:
+  1. デプロイ後、ブラウザで `https://family-toilet-japan.vercel.app/e8442e45ff5c4ebd9ce220c08394d63f.txt` を開いてキーが正しく返るか確認
+  2. [Bing Webmaster Tools](https://www.bing.com/webmasters) にサイトを手動登録（Google Search Consoleと同様の認証が必要、これはユーザー本人の作業）
+  3. GitHub Actionsが正常に動いているかリポジトリの Actions タブで確認
+
+## ✅ 実装済み: Klookアフィリエイト配置（2026-07-03・要ID）
+- `SpotPageView.tsx` の `TICKETED_SPOTS` に8スポット（USJ・ディズニー・スカイツリー・首里城等）を指定済み。`NEXT_PUBLIC_KLOOK_AFFILIATE_ID` 設定で自動表示
+
+## ⏸ 保留: Amazonアフィリエイト（ASIN要手動確認）
+- `GearAffiliateBox` は実装済みだが、まだどのガイドにも配置していない
+- 理由: ASIN（Amazon商品コード）を推測すると誤った商品にリンクしてしまうため、実データなしでは設置を見送った
+- **次回のアクション**: Amazon.co.jpで実際に「ベビーゼン YOYO2」「サイベックス Libelle」等を検索し、商品ページURLから正しいASINを取得 → `traveling-japan-with-toddler-checklist` ガイドに `GearAffiliateBox` を追加
 
 ## P2: コンテンツ拡張（検索流入の面を広げる）
 

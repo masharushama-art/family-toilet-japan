@@ -4,6 +4,19 @@ import { spotDistanceKm, getSpotsByCity } from "../lib/spots";
 import { CITIES, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
 import { AdUnit } from "./AdSense";
 import PageViewTracker from "./PageViewTracker";
+import { ActivityAffiliateBox } from "./AffiliateBox";
+
+// チケット予約需要のある大型観光施設のみKlookボックスを出す（駅・商店街等は対象外）
+const TICKETED_SPOTS: Record<string, string> = {
+  "universal-studios-japan": "Universal Studios Japan",
+  "maihama-disney": "Tokyo Disney Resort",
+  "tokyo-skytree": "Tokyo Skytree",
+  "shuri-castle": "Shuri Castle Okinawa",
+  "nara-park": "Nara Park deer",
+  "kenrokuen": "Kenroku-en Kanazawa",
+  "fushimi-inari": "Kyoto tour",
+  "arashiyama": "Arashiyama bamboo tour",
+};
 
 const BASE = "https://family-toilet-japan.vercel.app";
 
@@ -204,6 +217,11 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
         <p className="text-[10px] text-gray-400 mt-1 text-right">
           © <a href="https://www.openstreetmap.org/copyright" className="underline" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>
         </p>
+
+        {/* Ticket affiliate (Klook) — 対象スポットのみ */}
+        {TICKETED_SPOTS[spot.slug] && (
+          <ActivityAffiliateBox query={TICKETED_SPOTS[spot.slug]} lang={lang} />
+        )}
 
         {/* Map CTA */}
         <div className="mt-4 bg-sky-50 dark:bg-sky-900/20 rounded-2xl p-5">
