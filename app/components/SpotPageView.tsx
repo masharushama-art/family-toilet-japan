@@ -5,6 +5,7 @@ import { CITIES, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
 import { AdUnit } from "./AdSense";
 import PageViewTracker from "./PageViewTracker";
 import { ActivityAffiliateBox } from "./AffiliateBox";
+import ShareButtons from "./ShareButtons";
 
 // チケット予約需要のある大型観光施設のみKlookボックスを出す（駅・商店街等は対象外）
 const TICKETED_SPOTS: Record<string, string> = {
@@ -251,6 +252,14 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
         <h1 className="text-xl font-bold text-gray-900 dark:text-white">
           {spot.type === "station" ? "🚉" : "📍"} {spotName}
         </h1>
+
+        <div className="mt-3">
+          <ShareButtons
+            url={`${BASE}${spotHref(lang, spot.slug)}`}
+            text={`${spotName} — ${stats.ct} toilets with baby changing tables nearby 🍼`}
+            imageUrl={`${BASE}${spotHref(lang, spot.slug)}/opengraph-image`}
+          />
+        </div>
 
         <div className="flex items-center gap-3 mt-3 flex-wrap text-xs text-gray-600 dark:text-gray-300">
           <span className="bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-full font-medium">{stats.total} {t.toiletsNear}</span>
