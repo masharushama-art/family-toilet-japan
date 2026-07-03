@@ -40,7 +40,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title,
     description,
-    alternates: { canonical: `${BASE}/toilet/${city}/${id}` },
+    alternates: {
+      canonical: `${BASE}/toilet/${city}/${id}`,
+      languages: {
+        en: `${BASE}/toilet/${city}/${id}`,
+        ja: `${BASE}/ja/toilet/${city}/${id}`,
+      },
+    },
     openGraph: { title, description, url: `${BASE}/toilet/${city}/${id}` },
   };
 }
