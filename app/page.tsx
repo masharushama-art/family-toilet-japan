@@ -265,6 +265,12 @@ const guides = [
     desc: "Best timing, stroller-friendly spots, and layering for the cold",
     icon: "🍁",
   },
+  {
+    href: "/guide/cherry-blossoms-with-kids-japan",
+    title: "Cherry Blossoms (Sakura) with Kids",
+    desc: "Best timing, stroller-friendly hanami spots, and crowd avoidance",
+    icon: "🌸",
+  },
 ];
 
 const allCities = cityGroups.flatMap(({ region, cities }) =>

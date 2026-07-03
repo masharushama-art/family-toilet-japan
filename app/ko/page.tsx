@@ -98,6 +98,7 @@ export default function KoPage() {
             { slug: "traveling-japan-with-toddler-checklist", icon: "🧳", title: "아이와 여행 준비물 체크리스트", desc: "가져갈 것・현지 구매・계절별 준비" },
             { slug: "summer-festivals-with-kids-japan", icon: "🎆", title: "아기와 함께하는 여름 축제・불꽃놀이", desc: "인파 피하기・열사병 대책・화장실 찾기" },
             { slug: "autumn-foliage-with-kids-japan", icon: "🍁", title: "아기와 함께하는 일본 단풍 여행", desc: "절정 시기・명소・방한 대책" },
+            { slug: "cherry-blossoms-with-kids-japan", icon: "🌸", title: "아기와 함께하는 일본 벚꽃놀이", desc: "개화 시기・명소・혼잡 피하기" },
             { slug: "tokyo-with-baby-winter", icon: "🧣", title: "겨울철 아기와 함께하는 도쿄", desc: "일루미네이션・실내 명소・방한 대책" },
             { slug: "yokohama-family-travel-tips", icon: "🌉", title: "요코하마 가족 여행 가이드", desc: "호빵맨 뮤지엄・미나토미라이・차이나타운" },
             { slug: "osaka-family-travel-tips", icon: "🎡", title: "오사카 가족 여행 가이드", desc: "가족 친화 지역・USJ・유모차 이동 팁" },
