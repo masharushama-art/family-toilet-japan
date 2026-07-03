@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import GuideAreaLinks from "../../components/GuideAreaLinks";
+import GuideScrollTracker from "../../components/GuideScrollTracker";
 
 export const metadata: Metadata = {
   title: "Sapporo Family Travel Tips — Traveling with Baby & Kids 2026 | Family Toilet Japan",
@@ -72,6 +73,7 @@ const sections = [
 export default function SapporoFamilyPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
+      <GuideScrollTracker slug="sapporo-family-travel-tips" lang="en" />
       <div className="bg-sky-600 text-white px-6 py-12 text-center">
         <Link href="/" className="text-sky-200 text-sm mb-4 block hover:text-white">← Family Toilet Japan</Link>
         <h1 className="text-2xl font-bold mb-2">Sapporo Family Travel Tips</h1>

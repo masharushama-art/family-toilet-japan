@@ -8,6 +8,7 @@ import { useI18n } from "../i18n/provider";
 import ShareButtons from "./ShareButtons";
 import { isFavorite, toggleFavorite } from "../lib/favorites";
 import { addToHistory } from "../lib/history";
+import { track } from "../lib/analytics";
 
 interface Props {
   toilet: Toilet;
@@ -60,6 +61,7 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
   const [fav, setFav] = useState(false);
   useEffect(() => {
     setFav(isFavorite(toilet.id));
+    track.toiletDetailOpen(toilet.id, city ?? "unknown", "map");
     addToHistory({
       id: toilet.id,
       city: city ?? "unknown",
@@ -208,6 +210,7 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => track.directionsClick(toilet.id, city ?? "unknown")}
           className="flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3.5 rounded-xl transition-colors w-full"
         >
           🗺️ {t("openInMaps")}
