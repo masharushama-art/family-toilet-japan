@@ -33,6 +33,16 @@ export default function AboutPage() {
         </div>
 
         <div className="mb-10">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Who&apos;s Behind This</h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
+            Family Toilet Japan is built and maintained by a dad living in Japan who has traveled the country with a baby and a toddler — including the moments of pushing a stroller through an unfamiliar station at nap time, urgently looking for somewhere to change a diaper. The features on this site (offline maps, the route-based toilet search, proximity alerts) all come from situations we actually ran into on those trips.
+          </p>
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+            The site is independently run. It is supported by ads and affiliate links, which are always shown separately from the toilet data itself — facility information is never sponsored or ranked for pay.
+          </p>
+        </div>
+
+        <div className="mb-10">
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">How Our Data Works</h2>
           <div className="space-y-3">
             <div className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
@@ -50,7 +60,10 @@ export default function AboutPage() {
             <div className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
               <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">Data Quality & Updates</p>
               <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                Our database is updated regularly to reflect changes in OSM and municipal datasets. Currently we cover 16,000+ locations across Japan. Some locations are approximate (geocoded from addresses rather than GPS coordinates) — these are marked with a note in the detail view. If you find incorrect data, you can report it directly to OpenStreetMap through the link on each toilet&apos;s detail page.
+                Our database is refreshed monthly from OSM and municipal datasets via an automated pipeline, with every change reviewed before publishing. Currently we cover 16,000+ locations across Japan. Some locations are approximate (geocoded from addresses rather than GPS coordinates) — these are marked with a note in the detail view. If you find incorrect data, you can report it directly to OpenStreetMap through the link on each toilet&apos;s detail page.
+              </p>
+              <p className="text-xs text-gray-400 mt-2">
+                Site last built: {new Date().toISOString().slice(0, 10)}
               </p>
             </div>
           </div>
