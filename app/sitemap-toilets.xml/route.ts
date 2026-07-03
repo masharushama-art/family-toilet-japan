@@ -9,7 +9,8 @@ export function GET() {
   const urls = getAllDetailPageParams()
     .map(
       ({ city, id }) =>
-        `<url><loc>${BASE}/toilet/${city}/${id}</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>`
+        `<url><loc>${BASE}/toilet/${city}/${id}</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>` +
+        `<url><loc>${BASE}/ja/toilet/${city}/${id}</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>`
     )
     .join("");
 
