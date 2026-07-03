@@ -11,6 +11,7 @@ import {
 import { AdUnit } from "../../../components/AdSense";
 import { getNearbySpots } from "../../../lib/spots";
 import { CITY_GUIDE_SLUGS } from "../../../components/SpotPageView";
+import PageViewTracker from "../../../components/PageViewTracker";
 
 const BASE = "https://family-toilet-japan.vercel.app";
 
@@ -70,6 +71,7 @@ export default async function ToiletPage({ params }: { params: Params }) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
+      <PageViewTracker event="toilet_detail_open" params={{ toilet_id: toilet.id, city, source: "direct" }} />
       <div className="max-w-2xl mx-auto px-5 py-8">
         {/* Breadcrumb */}
         <nav className="text-xs text-gray-400 mb-4 flex items-center gap-1.5 flex-wrap">

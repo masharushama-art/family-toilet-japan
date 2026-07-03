@@ -3,6 +3,7 @@ import type { Spot } from "../lib/spots";
 import { spotDistanceKm, getSpotsByCity } from "../lib/spots";
 import { CITIES, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
 import { AdUnit } from "./AdSense";
+import PageViewTracker from "./PageViewTracker";
 
 const BASE = "https://family-toilet-japan.vercel.app";
 
@@ -171,6 +172,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
+      <PageViewTracker event="spot_view" params={{ spot_slug: spot.slug, city: spot.city, lang }} />
       <div className="max-w-2xl mx-auto px-5 py-8">
         <nav className="text-xs text-gray-400 mb-4 flex items-center gap-1.5 flex-wrap">
           <Link href={homeHref} className="hover:text-sky-600">{t.back}</Link>
