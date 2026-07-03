@@ -7,12 +7,12 @@ import {
   getNearbyToilets,
   getAllDetailPageParams,
   type CitySlug,
-} from "../../../lib/toilet-data";
-import { AdUnit } from "../../../components/AdSense";
-import { getNearbySpots } from "../../../lib/spots";
-import { CITY_GUIDE_SLUGS } from "../../../components/SpotPageView";
-import PageViewTracker from "../../../components/PageViewTracker";
-import CleanlinessVote from "../../../components/CleanlinessVote";
+} from "../../../../lib/toilet-data";
+import { AdUnit } from "../../../../components/AdSense";
+import { getNearbySpots } from "../../../../lib/spots";
+import { CITY_GUIDE_SLUGS } from "../../../../components/SpotPageView";
+import PageViewTracker from "../../../../components/PageViewTracker";
+import CleanlinessVote from "../../../../components/CleanlinessVote";
 
 const BASE = "https://family-toilet-japan.vercel.app";
 
@@ -24,8 +24,9 @@ export function generateStaticParams() {
 
 type Params = Promise<{ city: string; id: string }>;
 
-function displayName(t: { nameEn?: string; name?: string }, cityName: string) {
-  return t.nameEn || t.name || `Family Toilet in ${cityName}`;
+// 日本語ページでは日本語名を優先表示する
+function displayName(t: { name?: string; nameEn?: string }, cityJaName: string) {
+  return t.name || t.nameEn || `${cityJaName}のファミリートイレ`;
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
@@ -34,20 +35,20 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!c) return {};
   const toilet = getToilet(city as CitySlug, id);
   if (!toilet) return {};
-  const name = displayName(toilet, c.name);
-  const title = `${name} — Baby Changing Table in ${c.name} | Family Toilet Japan`;
-  const description = `${name} in ${c.name}, Japan has a baby changing table${toilet.wheelchair ? " and wheelchair access" : ""}${toilet.fee === false ? ", free to use" : ""}. Address, opening hours, map and directions.`;
+  const name = displayName(toilet, c.jaName);
+  const title = `${name} — ${c.jaName}のおむつ替え台付きトイレ | Family Toilet Japan`;
+  const description = `${c.jaName}の「${name}」はおむつ交換台あり${toilet.wheelchair ? "・車いす対応" : ""}${toilet.fee === false ? "・無料" : ""}。住所・営業時間・地図・経路案内はこちら。`;
   return {
     title,
     description,
     alternates: {
-      canonical: `${BASE}/toilet/${city}/${id}`,
+      canonical: `${BASE}/ja/toilet/${city}/${id}`,
       languages: {
         en: `${BASE}/toilet/${city}/${id}`,
         ja: `${BASE}/ja/toilet/${city}/${id}`,
       },
     },
-    openGraph: { title, description, url: `${BASE}/toilet/${city}/${id}` },
+    openGraph: { title, description, url: `${BASE}/ja/toilet/${city}/${id}` },
   };
 }
 
@@ -63,14 +64,14 @@ function FeatureRow({ icon, label, value, positive }: { icon: string; label: str
   );
 }
 
-export default async function ToiletPage({ params }: { params: Params }) {
+export default async function JaToiletPage({ params }: { params: Params }) {
   const { city, id } = await params;
   const c = CITIES[city as CitySlug];
   if (!c) notFound();
   const toilet = getToilet(city as CitySlug, id);
   if (!toilet) notFound();
 
-  const name = displayName(toilet, c.name);
+  const name = displayName(toilet, c.jaName);
   const nearby = getNearbyToilets(city as CitySlug, toilet);
   const bboxD = 0.004;
   const embedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${toilet.lon - bboxD}%2C${toilet.lat - bboxD}%2C${toilet.lon + bboxD}%2C${toilet.lat + bboxD}&layer=mapnik&marker=${toilet.lat}%2C${toilet.lon}`;
@@ -78,45 +79,48 @@ export default async function ToiletPage({ params }: { params: Params }) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
-      <PageViewTracker event="toilet_detail_open" params={{ toilet_id: toilet.id, city, source: "direct" }} />
+      <PageViewTracker event="toilet_detail_open" params={{ toilet_id: toilet.id, city, source: "direct", lang: "ja" }} />
       <div className="max-w-2xl mx-auto px-5 py-8">
-        {/* Breadcrumb */}
+        {/* パンくず */}
         <nav className="text-xs text-gray-400 mb-4 flex items-center gap-1.5 flex-wrap">
-          <Link href="/" className="hover:text-sky-600">Home</Link>
+          <Link href="/ja" className="hover:text-sky-600">ホーム</Link>
           <span>›</span>
-          <Link href={`/${city}`} className="hover:text-sky-600">{c.name}</Link>
-          <span>›</span>
-          <Link href={`/${city}/changing-table`} className="hover:text-sky-600">Baby Changing</Link>
+          <Link href={`/${city}`} className="hover:text-sky-600">{c.jaName}</Link>
           <span>›</span>
           <span className="text-gray-500 dark:text-gray-400 truncate max-w-[180px]">{name}</span>
         </nav>
 
         <h1 className="text-xl font-bold text-gray-900 dark:text-white leading-tight">{name}</h1>
-        {toilet.name && toilet.nameEn && toilet.name !== toilet.nameEn && (
-          <p className="text-sm text-gray-400 mt-0.5">{toilet.name}</p>
+        {toilet.nameEn && toilet.name && toilet.name !== toilet.nameEn && (
+          <p className="text-sm text-gray-400 mt-0.5">{toilet.nameEn}</p>
         )}
 
+        {/* 言語切替 */}
+        <div className="mt-2 text-xs text-gray-400">
+          <Link href={`/toilet/${city}/${id}`} className="hover:text-sky-600 underline">English version</Link>
+        </div>
+
         <div className="flex items-center gap-2 mt-3 flex-wrap">
-          <span className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-xs px-2.5 py-1 rounded-full font-medium">🍼 Baby Changing Table</span>
+          <span className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-xs px-2.5 py-1 rounded-full font-medium">🍼 おむつ交換台あり</span>
           {toilet.wheelchair && (
-            <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs px-2.5 py-1 rounded-full font-medium">♿ Wheelchair Accessible</span>
+            <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs px-2.5 py-1 rounded-full font-medium">♿ 車いす対応</span>
           )}
           {toilet.fee === false && (
-            <span className="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs px-2.5 py-1 rounded-full font-medium">💚 Free</span>
+            <span className="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs px-2.5 py-1 rounded-full font-medium">💚 無料</span>
           )}
         </div>
 
         {toilet.geocoded && (
           <div className="mt-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl px-4 py-2.5 text-amber-700 dark:text-amber-300 text-xs">
-            📍 This location is approximate (geocoded from address). Verify on the map before visiting.
+            📍 この位置は住所からの推定です。訪問前に地図でご確認ください。
           </div>
         )}
 
-        {/* Map */}
+        {/* 地図 */}
         <div className="mt-5 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800">
           <iframe
             src={embedUrl}
-            title={`Map showing ${name}`}
+            title={`${name}の地図`}
             className="w-full h-64 border-0"
             loading="lazy"
           />
@@ -125,7 +129,7 @@ export default async function ToiletPage({ params }: { params: Params }) {
           © <a href="https://www.openstreetmap.org/copyright" className="underline" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>
         </p>
 
-        {/* Actions */}
+        {/* アクション */}
         <div className="mt-4 grid grid-cols-2 gap-3">
           <a
             href={mapsUrl}
@@ -133,43 +137,43 @@ export default async function ToiletPage({ params }: { params: Params }) {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 rounded-xl transition-colors text-sm"
           >
-            🗺️ Directions
+            🗺️ 経路案内
           </a>
           <Link
             href={`/map?id=${toilet.id}&city=${city}`}
             className="flex items-center justify-center gap-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-700 dark:text-gray-300 font-semibold py-3 rounded-xl transition-colors text-sm"
           >
-            📍 Open in App Map
+            📍 アプリ地図で開く
           </Link>
         </div>
 
-        {/* Details */}
+        {/* 設備詳細 */}
         <div className="mt-6 border border-gray-100 dark:border-gray-800 rounded-2xl px-5 py-2">
-          <FeatureRow icon="🍼" label="Baby changing table" value="✓ Available" positive />
+          <FeatureRow icon="🍼" label="おむつ交換台" value="✓ あり" positive />
           {toilet.changingTableLocation && (
             <FeatureRow
               icon="🚻"
-              label="Changing table location"
+              label="交換台の場所"
               value={
-                toilet.changingTableLocation === "male" ? "Men's toilet too"
-                  : toilet.changingTableLocation === "unisex" ? "Unisex"
-                  : toilet.changingTableLocation === "dedicated_room" ? "Dedicated room"
+                toilet.changingTableLocation === "male" ? "男性トイレにもあり"
+                  : toilet.changingTableLocation === "unisex" ? "男女共用"
+                  : toilet.changingTableLocation === "dedicated_room" ? "専用室"
                   : toilet.changingTableLocation
               }
               positive
             />
           )}
-          {toilet.level && <FeatureRow icon="🏢" label="Floor" value={`${toilet.level}F`} />}
-          {toilet.ostomate && <FeatureRow icon="🩹" label="Ostomate friendly" value="✓ Yes" positive />}
-          <FeatureRow icon="♿" label="Wheelchair access" value={toilet.wheelchair ? "✓ Yes" : "Unknown"} positive={toilet.wheelchair} />
-          <FeatureRow icon="💴" label="Fee" value={toilet.fee === true ? "Paid" : toilet.fee === false ? "Free" : "Unknown"} positive={toilet.fee === false} />
-          {toilet.openingHours && <FeatureRow icon="🕐" label="Opening hours" value={toilet.openingHours} />}
-          {toilet.address && <FeatureRow icon="📮" label="Address" value={toilet.address} />}
-          {toilet.operator && <FeatureRow icon="🏢" label="Operator" value={toilet.operator} />}
+          {toilet.level && <FeatureRow icon="🏢" label="フロア" value={`${toilet.level}F`} />}
+          {toilet.ostomate && <FeatureRow icon="🩹" label="オストメイト対応" value="✓ あり" positive />}
+          <FeatureRow icon="♿" label="車いす対応" value={toilet.wheelchair ? "✓ あり" : "不明"} positive={toilet.wheelchair} />
+          <FeatureRow icon="💴" label="利用料金" value={toilet.fee === true ? "有料" : toilet.fee === false ? "無料" : "不明"} positive={toilet.fee === false} />
+          {toilet.openingHours && <FeatureRow icon="🕐" label="利用可能時間" value={toilet.openingHours} />}
+          {toilet.address && <FeatureRow icon="📮" label="住所" value={toilet.address} />}
+          {toilet.operator && <FeatureRow icon="🏢" label="管理者" value={toilet.operator} />}
           <FeatureRow
             icon="🌐"
-            label="Data source"
-            value={toilet.source === "opendata" ? "Municipal Open Data (CC BY)" : "OpenStreetMap (ODbL)"}
+            label="データ出典"
+            value={toilet.source === "opendata" ? "自治体オープンデータ (CC BY)" : "OpenStreetMap (ODbL)"}
           />
         </div>
 
@@ -177,22 +181,22 @@ export default async function ToiletPage({ params }: { params: Params }) {
 
         <AdUnit slot="toilet-detail" />
 
-        {/* Nearby */}
+        {/* 近くのトイレ */}
         {nearby.length > 0 && (
           <div className="mt-8">
-            <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">Nearby toilets with baby changing tables</h2>
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3">近くのおむつ交換台付きトイレ</h2>
             <div className="space-y-2">
               {nearby.map((n) => (
                 <Link
                   key={n.id}
-                  href={`/toilet/${city}/${n.id}`}
+                  href={`/ja/toilet/${city}/${n.id}`}
                   className="block border border-gray-100 dark:border-gray-800 rounded-xl px-4 py-3 hover:border-sky-200 hover:bg-sky-50 dark:hover:bg-gray-800 transition-colors"
                 >
-                  <p className="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">{displayName(n, c.name)}</p>
+                  <p className="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">{displayName(n, c.jaName)}</p>
                   <p className="text-xs text-gray-400 mt-0.5">
                     {n.wheelchair && "♿ "}
-                    {n.fee === false && "Free · "}
-                    {n.address || `${c.name}, Japan`}
+                    {n.fee === false && "無料 · "}
+                    {n.address || `${c.jaName}`}
                   </p>
                 </Link>
               ))}
@@ -200,7 +204,7 @@ export default async function ToiletPage({ params }: { params: Params }) {
           </div>
         )}
 
-        {/* Nearby areas & guides — internal linking */}
+        {/* 周辺エリア・ガイドへの内部リンク */}
         {(() => {
           const spots = getNearbySpots(toilet.lat, toilet.lon, city);
           const guides = CITY_GUIDE_SLUGS[city] ?? [];
@@ -209,11 +213,11 @@ export default async function ToiletPage({ params }: { params: Params }) {
             <div className="mt-8">
               {spots.length > 0 && (
                 <>
-                  <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3 text-sm">📍 Nearby areas</h2>
+                  <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3 text-sm">📍 周辺エリア</h2>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {spots.map((s) => (
-                      <Link key={s.slug} href={`/spot/${s.slug}`} className="text-xs bg-gray-50 dark:bg-gray-800/40 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                        {s.type === "station" ? "🚉" : "📍"} {s.names.en}
+                      <Link key={s.slug} href={`/ja/spot/${s.slug}`} className="text-xs bg-gray-50 dark:bg-gray-800/40 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        {s.type === "station" ? "🚉" : "📍"} {s.names.ja}
                       </Link>
                     ))}
                   </div>
@@ -221,11 +225,11 @@ export default async function ToiletPage({ params }: { params: Params }) {
               )}
               {guides.length > 0 && (
                 <>
-                  <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3 text-sm">📖 Travel guides for {c.name}</h2>
+                  <h2 className="font-bold text-gray-800 dark:text-gray-100 mb-3 text-sm">📖 {c.jaName}の子連れ観光ガイド</h2>
                   <div className="flex flex-wrap gap-2">
                     {guides.map((g) => (
-                      <Link key={g.slug} href={`/guide/${g.slug}`} className="text-xs bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors">
-                        {g.en}
+                      <Link key={g.slug} href={`/ja/guide/${g.slug}`} className="text-xs bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors">
+                        {g.ja}
                       </Link>
                     ))}
                   </div>
@@ -237,13 +241,13 @@ export default async function ToiletPage({ params }: { params: Params }) {
 
         <div className="mt-8 bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-5 text-center">
           <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-            Browse all {c.name} toilets with baby changing tables on the interactive map.
+            {c.jaName}のおむつ交換台付きトイレを地図でまとめて見られます。
           </p>
           <Link
             href={`/${city}/changing-table`}
             className="inline-block bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
           >
-            🍼 All Baby Changing Toilets in {c.name}
+            🍼 {c.jaName}のおむつ替えトイレ一覧
           </Link>
         </div>
       </div>
@@ -256,16 +260,17 @@ export default async function ToiletPage({ params }: { params: Params }) {
               "@context": "https://schema.org",
               "@type": "BreadcrumbList",
               itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Family Toilet Japan", item: BASE },
-                { "@type": "ListItem", position: 2, name: c.name, item: `${BASE}/${city}` },
-                { "@type": "ListItem", position: 3, name, item: `${BASE}/toilet/${city}/${id}` },
+                { "@type": "ListItem", position: 1, name: "Family Toilet Japan", item: `${BASE}/ja` },
+                { "@type": "ListItem", position: 2, name: c.jaName, item: `${BASE}/${city}` },
+                { "@type": "ListItem", position: 3, name, item: `${BASE}/ja/toilet/${city}/${id}` },
               ],
             },
             {
               "@context": "https://schema.org",
               "@type": "CivicStructure",
               name,
-              url: `${BASE}/toilet/${city}/${id}`,
+              url: `${BASE}/ja/toilet/${city}/${id}`,
+              inLanguage: "ja",
               geo: { "@type": "GeoCoordinates", latitude: toilet.lat, longitude: toilet.lon },
               ...(toilet.address ? { address: toilet.address } : {}),
               ...(toilet.openingHours ? { openingHours: toilet.openingHours } : {}),
