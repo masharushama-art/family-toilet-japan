@@ -30,8 +30,12 @@ const MapFallback = () => (
 
 export default function MapPage() {
   return (
-    <Suspense fallback={<MapFallback />}>
-      <MapPageClient />
-    </Suspense>
+    <>
+      {/* 地図タイル取得のDNS+TLSを先行確立（LCP短縮） */}
+      <link rel="preconnect" href="https://server.arcgisonline.com" />
+      <Suspense fallback={<MapFallback />}>
+        <MapPageClient />
+      </Suspense>
+    </>
   );
 }
