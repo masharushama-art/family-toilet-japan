@@ -96,6 +96,7 @@ export default function KoPage() {
             { slug: "japan-train-travel-with-stroller", icon: "🚅", title: "유모차로 전철・신칸센 타는 팁", desc: "신칸센 좌석 선택・다목적실・택배 활용법" },
             { slug: "japan-family-restaurants-guide", icon: "🍽️", title: "아이와 함께하는 외식 완벽 가이드", desc: "패밀리 레스토랑 비교・회전초밥・우동 체인 공략법" },
             { slug: "traveling-japan-with-toddler-checklist", icon: "🧳", title: "아이와 여행 준비물 체크리스트", desc: "가져갈 것・현지 구매・계절별 준비" },
+            { slug: "summer-festivals-with-kids-japan", icon: "🎆", title: "아기와 함께하는 여름 축제・불꽃놀이", desc: "인파 피하기・열사병 대책・화장실 찾기" },
             { slug: "tokyo-with-baby-winter", icon: "🧣", title: "겨울철 아기와 함께하는 도쿄", desc: "일루미네이션・실내 명소・방한 대책" },
             { slug: "yokohama-family-travel-tips", icon: "🌉", title: "요코하마 가족 여행 가이드", desc: "호빵맨 뮤지엄・미나토미라이・차이나타운" },
             { slug: "osaka-family-travel-tips", icon: "🎡", title: "오사카 가족 여행 가이드", desc: "가족 친화 지역・USJ・유모차 이동 팁" },
