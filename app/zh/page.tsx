@@ -95,6 +95,7 @@ export default function ZhPage() {
             { slug: "japan-train-travel-with-stroller", icon: "🚅", title: "推車搭乘電車・新幹線攻略", desc: "新幹線座位選擇・多功能室・宅配活用術" },
             { slug: "japan-family-restaurants-guide", icon: "🍽️", title: "親子外食完整指南", desc: "連鎖餐廳比較・迴轉壽司・烏龍麵親子攻略" },
             { slug: "traveling-japan-with-toddler-checklist", icon: "🧳", title: "親子旅行行李清單", desc: "攜帶物品・現地採購・季節別準備" },
+            { slug: "summer-festivals-with-kids-japan", icon: "🎆", title: "帶寶寶參加夏日祭典・煙火大會", desc: "避開人潮・防中暑對策・廁所尋找方式" },
             { slug: "tokyo-with-baby-winter", icon: "🧣", title: "冬季帶寶寶遊東京", desc: "燈飾・室內景點・保暖攻略" },
             { slug: "yokohama-family-travel-tips", icon: "🌉", title: "橫濱親子旅遊指南", desc: "麵包超人博物館・港未來・中華街" },
             { slug: "osaka-family-travel-tips", icon: "🎡", title: "大阪親子旅遊指南", desc: "親子友善地區・USJ・推車移動技巧" },

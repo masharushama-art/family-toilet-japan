@@ -38,6 +38,7 @@ const GUIDE_SLUGS = [
   "best-baby-changing-facilities-osaka",
   "japan-family-restaurants-guide",
   "traveling-japan-with-toddler-checklist",
+  "summer-festivals-with-kids-japan",
 ];
 
 const ZH_KO_GUIDE_SLUGS = [
@@ -57,6 +58,7 @@ const ZH_KO_GUIDE_SLUGS = [
   "japan-train-travel-with-stroller",
   "japan-family-restaurants-guide",
   "traveling-japan-with-toddler-checklist",
+  "summer-festivals-with-kids-japan",
 ];
 
 const JA_GUIDE_SLUGS = [
@@ -76,6 +78,7 @@ const JA_GUIDE_SLUGS = [
   "japan-train-travel-with-stroller",
   "japan-family-restaurants-guide",
   "traveling-japan-with-toddler-checklist",
+  "summer-festivals-with-kids-japan",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
