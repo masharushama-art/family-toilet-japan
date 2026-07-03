@@ -80,6 +80,10 @@ def osm_to_records(raw_file, slug, lat_min, lat_max, lon_min, lon_max):
         if tg.get("name"): rec["name"] = tg["name"]
         if tg.get("name:en"): rec["nameEn"] = tg["name:en"]
         if tg.get("opening_hours"): rec["openingHours"] = tg["opening_hours"]
+        # 追加データ強化（ROADMAP P3-11）: 男性トイレ側の交換台有無、階数、オストメイト対応
+        if tg.get("changing_table:location"): rec["changingTableLocation"] = tg["changing_table:location"]
+        if tg.get("level"): rec["level"] = tg["level"]
+        if tg.get("ostomate") == "yes": rec["ostomate"] = True
         out.append(rec)
     return out
 

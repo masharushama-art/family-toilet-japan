@@ -139,6 +139,26 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
             <span className="text-gray-400">{t("no")}</span>
           </Row>
         )}
+        {toilet.changingTable && toilet.changingTableLocation && (
+          <Row icon="🚻" label="Changing table location">
+            <span className="text-sky-600 dark:text-sky-400">
+              {toilet.changingTableLocation === "male" ? "Men's toilet too"
+                : toilet.changingTableLocation === "unisex" ? "Unisex"
+                : toilet.changingTableLocation === "dedicated_room" ? "Dedicated room"
+                : toilet.changingTableLocation}
+            </span>
+          </Row>
+        )}
+        {toilet.level && (
+          <Row icon="🏢" label="Floor">
+            <span>{toilet.level}F</span>
+          </Row>
+        )}
+        {toilet.ostomate && (
+          <Row icon="🩹" label="Ostomate">
+            <span className="text-green-600">✓ {t("yes")}</span>
+          </Row>
+        )}
         <Row icon="♿" label={t("wheelchair")}>
           {toilet.wheelchair
             ? <span className="text-green-600">✓ {t("yes")}</span>

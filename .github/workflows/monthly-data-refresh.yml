@@ -1,0 +1,53 @@
+name: Monthly OSM data refresh
+
+# 毎月1日 3:00 UTC（正午 JST）に実行し、OSMの最新トイレデータを取得して
+# 差分があれば自動でPRを作成する。取り込みミスをそのままmasterに流さないための安全策。
+on:
+  schedule:
+    - cron: "0 3 1 * *"
+  workflow_dispatch: {} # 手動実行も可能にする
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Force-refetch all prefectures from OSM
+        run: python scripts/fetch-all-prefectures.py --force
+        continue-on-error: true # Overpass APIのレート制限等で一部失敗しても続行
+
+      - name: Merge into cities/*.json
+        run: python scripts/merge-all-prefectures.py
+
+      - name: Split by city
+        run: python scripts/split-by-city.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet public/data/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: monthly OSM toilet data refresh"
+          title: "Monthly OSM data refresh (automated)"
+          body: |
+            自動生成PR: OpenStreetMapから最新のトイレデータを再取得しました。
+
+            **必ずマージ前に確認してください:**
+            - `public/data/cities/*.json` の差分件数が異常でないか
+            - `npm run build` が通るか
+            - coverage ページの統計が大きく崩れていないか
+          branch: automated/monthly-data-refresh
+          delete-branch: true
