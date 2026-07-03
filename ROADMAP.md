@@ -3,12 +3,12 @@
 最終更新: 2026-07-03（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
-- ビルド: 1,538ページ（トイレ個別919 / ガイド64 / スポット260 / 都市・カテゴリ ほか）
+- ビルド: 1,676ページ（トイレ個別919 / ガイド65×4言語 / スポット96×4言語 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、OGP画像動的生成済み、ダークモード済み
 - AdSense: 審査中（承認後に `NEXT_PUBLIC_ADSENSE_APPROVED=true` をVercelに設定）
-- 集客: Reddit（japan_travel_dad）でカルマ構築中
-- **GA4イベント計測: 実装済み**（2026-07-03）— `directions_click` `toilet_detail_open` `spot_view` `guide_scroll_complete` 等。`app/lib/analytics.ts`
-- **アフィリエイト土台: 実装済み**（2026-07-03、要ID登録）— `app/components/AffiliateBox.tsx`。下記「有効化手順」参照
+- 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献35、目標50）
+- P1〜P3（収益・コンテンツ・機能強化）はほぼ全項目実装済み。P4（サイト外集客）はサイト側インフラのみ整備、実行はユーザー本人待ち
+- **要ユーザー操作の一覧**: ①楽天/Klook/Amazonアフィリエイト登録 ②Bing Webmaster Tools登録 ③Upstash Redis登録（清潔度投票） ④Pinterest/Reddit/ブログ営業の実行（P4参照）
 
 ---
 
@@ -108,17 +108,33 @@
 - オフラインページ（`app/offline/page.tsx`）は既に実装済みで良好な状態だったため変更なし
 - **screenshots未追加**: PWAインストールプロンプト用のアプリスクリーンショットは、プレビュー環境のスクリーンショットツールが本セッションでタイムアウトし続けたため撮影できず。次回、環境が安定していれば `/map` と `/toilet/tokyo/{id}` の実機スクリーンショットを撮ってmanifestに追加する
 
-## P4: 集客（サイト外）
+## P4: 集客（サイト外・実行はユーザー本人の作業）
 
-### 13. Pinterest 運用
-- 子連れ旅行はPinterestと相性抜群。既存OGP画像324枚をピンとして投稿可能
-- 「Japan with baby」系ボードを作成、ガイドへ誘導
+これらは外部アカウントへの投稿・送信行為なので、Claude Codeでは代行できません。サイト側で実行可能な土台は整備済みで、以下は実行時にそのまま使えるテンプレートです。
 
-### 14. Reddit 継続 + r/JapanTravelTips
-- カルマ50到達後、月1回の「役立つ情報まとめ」投稿（宣伝ではなく情報提供でサイト言及）
+## ✅ 実装済み: Pinterest共有ボタン（2026-07-03・サイト側インフラ）
+- 全スポットページ260枚 ＋ ja/zh/ko ガイド48本に「Pin」ボタンを追加（`ShareButtons` コンポーネント拡張）
+- クリックすると該当ページのOGP画像・URL・説明文が自動セットされたPinterest投稿画面が開く
+- 動作確認済み: `/spot/shinjuku-station` で正しいPin URLを生成することを確認
 
-### 15. ウィジェット営業
-- 子連れ日本旅行系ブログ10件に /widget を紹介するアウトリーチ（被リンク獲得）
+### 13. Pinterest 運用（次回・ユーザー実行）
+- Pinterestアカウントを作成し「Japan with Baby」「Tokyo Family Travel」等のボードを作る
+- 各ガイド・スポットページの「Pin」ボタンをクリックするだけで投稿できる（画像・文言は自動入力される）
+- 優先度が高いページ：夏祭りガイド（季節性）、USJ/ディズニー等のスポットページ（検索ボリューム大）
+
+### 14. Reddit 継続 + r/JapanTravelTips（次回・ユーザー実行）
+- 現状: `japan_travel_dad` アカウント、貢献35（カルマ50到達で r/japanlife 再挑戦）
+- カルマ50到達後の投稿テンプレート（情報提供型、宣伝色を薄める）:
+  > タイトル案: "Mapped every toilet with a baby changing table in Japan (free, no signup) — sharing in case it helps other parents"
+  > 本文の骨子: 個人の子連れ旅行での困りごと→解決のために作った経緯→機能紹介（4言語対応、オフライン対応）→リンクは最後に一度だけ
+- 継続してr/JapanTravelの旅程相談スレッドにコメントし、カルマを積み増す（既存フロー通り）
+
+### 15. ウィジェット営業（次回・ユーザー実行）
+- `/widget` ページの紹介メールテンプレート:
+  > 件名: Free interactive toilet map widget for your Japan travel blog
+  > 本文骨子: ブログを読んだこと（具体的な記事名に言及）→ 悩み（トイレ情報の欠如）に対する解決策として無料ウィジェットを紹介 → 埋め込みコード1行 → 見返りは求めない旨を明記
+- ターゲット候補の探し方: 「japan travel with baby blog」「japan family travel blog」等で検索し、コメント欄が活発な個人ブログ（企業メディアより返信率が高い）を10件ピックアップ
+- 送信は必ず個別にカスタマイズすること（テンプレ丸出しは開封率が下がる）
 
 ---
 
