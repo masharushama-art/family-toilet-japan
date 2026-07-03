@@ -253,6 +253,18 @@ const guides = [
     desc: "What to pack, what to buy in Japan, and seasonal essentials",
     icon: "✅",
   },
+  {
+    href: "/guide/summer-festivals-with-kids-japan",
+    title: "Summer Festivals & Fireworks with Kids",
+    desc: "Crowd avoidance, heatstroke prevention, and finding toilets",
+    icon: "🎆",
+  },
+  {
+    href: "/guide/autumn-foliage-with-kids-japan",
+    title: "Autumn Foliage (Koyo) with Kids",
+    desc: "Best timing, stroller-friendly spots, and layering for the cold",
+    icon: "🍁",
+  },
 ];
 
 const allCities = cityGroups.flatMap(({ region, cities }) =>

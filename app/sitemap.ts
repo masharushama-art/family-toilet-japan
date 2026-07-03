@@ -39,6 +39,7 @@ const GUIDE_SLUGS = [
   "japan-family-restaurants-guide",
   "traveling-japan-with-toddler-checklist",
   "summer-festivals-with-kids-japan",
+  "autumn-foliage-with-kids-japan",
 ];
 
 const ZH_KO_GUIDE_SLUGS = [
@@ -59,6 +60,7 @@ const ZH_KO_GUIDE_SLUGS = [
   "japan-family-restaurants-guide",
   "traveling-japan-with-toddler-checklist",
   "summer-festivals-with-kids-japan",
+  "autumn-foliage-with-kids-japan",
 ];
 
 const JA_GUIDE_SLUGS = [
@@ -79,6 +81,7 @@ const JA_GUIDE_SLUGS = [
   "japan-family-restaurants-guide",
   "traveling-japan-with-toddler-checklist",
   "summer-festivals-with-kids-japan",
+  "autumn-foliage-with-kids-japan",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
