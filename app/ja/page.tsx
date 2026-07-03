@@ -100,6 +100,7 @@ export default function JaPage() {
             { slug: "japan-family-restaurants-guide", icon: "🍽️", title: "子連れ外食完全ガイド", desc: "ファミレス比較・回転寿司・うどんチェーンの子連れ攻略" },
             { slug: "traveling-japan-with-toddler-checklist", icon: "🧳", title: "子連れ旅行の持ち物チェックリスト", desc: "持っていくもの・現地で買うもの・季節別の準備" },
             { slug: "summer-festivals-with-kids-japan", icon: "🎆", title: "子連れ夏祭り・花火大会攻略ガイド", desc: "混雑回避・熱中症対策・トイレの探し方" },
+            { slug: "autumn-foliage-with-kids-japan", icon: "🍁", title: "子連れ紅葉狩りガイド", desc: "見頃の時期・穴場スポット・防寒対策" },
             { slug: "tokyo-with-baby-winter", icon: "🧣", title: "冬の東京を赤ちゃんと楽しむ", desc: "イルミネーション・屋内スポット・防寒対策" },
             { slug: "yokohama-family-travel-tips", icon: "🌉", title: "子連れ横浜観光ガイド", desc: "アンパンマンミュージアム・みなとみらい・中華街" },
             { slug: "osaka-family-travel-tips", icon: "🎡", title: "子連れ大阪観光ガイド", desc: "ファミリー向けエリア・USJ・ベビーカー移動のコツ" },
