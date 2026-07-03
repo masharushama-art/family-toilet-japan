@@ -76,10 +76,12 @@
 
 ## P3: 機能強化（リピーター・滞在時間）
 
-### 8. 清潔度ワンタップ投票（要DB判断）
-- Upstash Redis（無料枠1万コマンド/日）で「Clean / OK / Dirty」集計
-- 個別ページ・詳細パネルに表示。UGCで再訪問動機とページ独自性を作る
-- 実装: Route Handler `/api/vote` + Upstash。個人情報なしなのでプライバシー影響小
+## ✅ 実装済み: 清潔度ワンタップ投票（2026-07-03・要Upstash登録）
+- `app/lib/upstash.ts`（REST API直叩き、追加パッケージ不要）＋ `app/api/vote/route.ts`（GET/POST）
+- `app/components/CleanlinessVote.tsx`: トイレ個別ページ919枚＋地図の詳細パネル両方に設置
+- 環境変数 `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` が未設定の間は `{enabled: false}` を返しUIも自動非表示（AdSense/アフィリエイトと同じ安全パターン）。動作確認済み（ローカルで `enabled: false` を確認）
+- 1端末1トイレ1回まで投票可（localStorageで制御、個人情報は保存しない）
+- **次回のアクション**: [Upstash](https://upstash.com)で無料Redisデータベースを作成 → 発行されたURLとTOKENをVercel環境変数に設定するだけで全ページに投票機能が出現する
 
 ## ✅ 実装済み: データ更新パイプライン自動化（2026-07-03）
 - `.github/workflows/monthly-data-refresh.yml`: 毎月1日正午JSTに自動実行（`workflow_dispatch`で手動実行も可）
