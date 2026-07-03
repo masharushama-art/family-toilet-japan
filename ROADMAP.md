@@ -6,192 +6,116 @@
 - ビルド: 1,676ページ（トイレ個別919 / ガイド65×4言語 / スポット96×4言語 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、OGP画像動的生成済み、ダークモード済み
 - AdSense: 審査中（承認後に `NEXT_PUBLIC_ADSENSE_APPROVED=true` をVercelに設定）
-- 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献35、目標50）
-- P1〜P3（収益・コンテンツ・機能強化）はほぼ全項目実装済み。P4（サイト外集客）はサイト側インフラのみ整備、実行はユーザー本人待ち
-- **要ユーザー操作の一覧**: ①楽天/Klook/Amazonアフィリエイト登録 ②Bing Webmaster Tools登録 ③Upstash Redis登録（清潔度投票） ④Pinterest/Reddit/ブログ営業の実行（P4参照）
+- 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献40、目標50）
+
+## ✅ 完了：収益化3本柱（すべて動作確認済み・稼働中）
+- **楽天トラベル**: `NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID` 設定済み。全ガイドにホテル広告表示中。リンク先は楽天トラベルのトップページ（`dsearch`検索エンドポイントは存在しないため404を修正済み）
+- **Klook**: `NEXT_PUBLIC_KLOOK_AFFILIATE_ID` 設定済み。USJ・ディズニー等8スポットページで検索結果へのアフィリエイトリンクが機能（`aid`+`utm_medium=affiliate-alwayson`のトラッキングを実機確認済み）
+- **Amazonアソシエイト**: `NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG`（`familytoiletj-22`）設定済み。`traveling-japan-with-toddler-checklist` ガイドに実在4商品（ベビーゼンYOYO2/エルゴベビーOMNI Breeze/Ankerモバイルバッテリー/ジップロック）のASINを組み込み済み。税務情報登録も完了
+  - ⚠️ **180日以内に3件の適格販売がないとアカウント自動閉鎖**。現状トラフィックはまだ小規模なため、達成は流入増加次第。閉鎖されても再申請可能なので致命傷ではない
+
+## ✅ 完了：検索エンジン登録
+- **Google Search Console**: 登録済み、サイトマップ送信済み
+- **Bing Webmaster Tools**: GSCからインポートで登録完了。sitemap.xml（730件）・sitemap-toilets.xml（919件）とも処理成功、エラー0件
+- **IndexNow**: Bing公式ツールで生成したキー（`76cee36382e74b6fbcf8a6c0e26db84c`）に統一。`public/`直下にキーファイル設置、`scripts/indexnow.js`で全URL通知、`.github/workflows/indexnow.yml`でデプロイ後自動実行
+
+## ✅ 完了：GA4イベント計測
+- `app/lib/analytics.ts`: `track.*` ヘルパー群（Directionsクリック・トイレ詳細表示・スポット閲覧・ガイド読了など）
+- 数週間データが溜まったら、GA4のカスタムイベントでどの導線が実際に使われているか確認し、今後の優先順位づけに使う
+- 未適用: `how-to-use-japanese-toilet` と `japan-travel-with-baby`（英語ガイド2本、構造が異なるため）
+
+## ✅ 完了：P2 コンテンツ拡張
+- 夏祭り特集ガイド（4言語）
+- スポットFAQ構造化データ（全260ページ）
+- 都市×カテゴリページ刷新（SEO説明文・内部リンク強化）
+- スポット65→96ヶ所に拡張
+
+## ✅ 完了：P3 機能強化
+- **清潔度投票**: 実装済みだが `UPSTASH_REDIS_REST_URL`/`TOKEN` 未設定のため現在は非表示（下記「残タスク」参照）
+- **データ更新自動化**: 月次GitHub Actions（`monthly-data-refresh.yml`）で自動PR作成
+- **フィルター拡張**: `changingTableLocation`（男性トイレ側の交換台）/`level`（階数）/`ostomate` を新規取得対象に追加。既存都市データは次回の月次自動更新で反映
+- **ルート沿いトイレ検索**: 地図に🛣️ボタン、2点間400m以内のトイレに絞り込み。実機確認済み
+- **PWA仕上げ**: manifest強化済み。maskableアイコン・スクリーンショットは簡易対応のみ（下記「残タスク」参照）
+
+## ✅ 完了：P4 サイト外集客インフラ
+- Pinterest共有ボタンを全スポット・ja/zh/koガイドに設置、動作確認済み
+- Reddit・ウィジェット営業の投稿テンプレートは本ファイル末尾に保管
 
 ---
 
-## ✅ 実装済み: GA4イベント計測（2026-07-03）
-- `app/lib/analytics.ts`: `track.*` ヘルパー群
-- `ToiletDetail.tsx`: 詳細パネル表示・Directionsクリック
-- `PageViewTracker.tsx`: SSGページ（トイレ個別・スポット）のビュー計測用の薄いクライアント発火体
-- `GuideScrollTracker.tsx`: ガイド90%スクロールで読了イベント（英語ガイド16本中14本＋ja/zh/ko共通テンプレートに適用済み。`how-to-use-japanese-toilet`と`japan-travel-with-baby`は構造が違うため未適用 — 次回手動で追加）
-- GA4管理画面で「カスタムイベント」からこれらのイベント名を確認できる。数週間データが溜まったら、どの導線が実際にクリックされているか（Directions率、スポット→ガイド遷移率）を見て優先順位を再判断する
+## 🔲 残タスク（優先度順）
 
-## ✅ 実装済み: アフィリエイト土台（2026-07-03・要有効化）
-- `app/components/AffiliateBox.tsx`: `HotelAffiliateBox`（楽天トラベル）/ `ActivityAffiliateBox`（Klook）/ `GearAffiliateBox`（Amazon）
-- `HotelAffiliateBox` は ja/zh/ko ガイドテンプレートの `GuideAreaLinks` 直前に設置済み。都市に紐づかないガイド（旅行基本ガイド等）では自動非表示
-- **未実施＝次回のアクション**:
-  1. 楽天アフィリエイト（楽天トラベル）に登録 → 発行されたIDをVercel環境変数 `NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID` に設定するだけで全ガイドに自動表示される
-  2. Klookアフィリエイトに登録 → `NEXT_PUBLIC_KLOOK_AFFILIATE_ID` を設定。`ActivityAffiliateBox` はまだどのページにも配置していないので、USJ・ディズニー系スポットページ（`app/components/SpotPageView.tsx`）に追加する
-  3. Amazonアソシエイトに登録 → `NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG` を設定。`GearAffiliateBox` は `traveling-japan-with-toddler-checklist` ガイド（持ち物リスト）に配置するのが最適。ASINは商品ページURLから取得
-  4. 各広告に「広告」「PR」表記が言語ごとに入っている（法令・各プログラム規約対応済み）ので追加対応不要
-  5. 登録には運営者情報・銀行口座等が必要（Claude Codeでは代行不可、ユーザー本人の作業）
+### 1. Upstash Redis登録（任意・低優先度）
+清潔度投票機能を有効化したい場合のみ。[upstash.com](https://upstash.com)で無料DB作成し、`UPSTASH_REDIS_REST_URL`/`UPSTASH_REDIS_REST_TOKEN`をVercelに設定するだけ。なくても他機能に影響なし。
 
-## ✅ 実装済み: IndexNow（2026-07-03・要手動確認）
-- キーファイル: `public/e8442e45ff5c4ebd9ce220c08394d63f.txt`
-- 通知スクリプト: `scripts/indexnow.js`（`npm run indexnow` で手動実行可）。sitemap.xml + sitemap-toilets.xmlの全URLをBing/Yandex等に一括通知
-- GitHub Actions: `.github/workflows/indexnow.yml` — masterへのpush（Vercelデプロイ）から3分後に自動実行
-- **未実施＝次回のアクション**:
-  1. デプロイ後、ブラウザで `https://family-toilet-japan.vercel.app/e8442e45ff5c4ebd9ce220c08394d63f.txt` を開いてキーが正しく返るか確認
-  2. [Bing Webmaster Tools](https://www.bing.com/webmasters) にサイトを手動登録（Google Search Consoleと同様の認証が必要、これはユーザー本人の作業）
-  3. GitHub Actionsが正常に動いているかリポジトリの Actions タブで確認
+### 2. Reddit カルマ稼ぎ（継続作業）
+現在貢献40、カルマ50到達で r/japanlife に再挑戦。r/JapanTravelの旅程相談への回答を継続。
 
-## ✅ 実装済み: Klookアフィリエイト配置（2026-07-03・要ID）
-- `SpotPageView.tsx` の `TICKETED_SPOTS` に8スポット（USJ・ディズニー・スカイツリー・首里城等）を指定済み。`NEXT_PUBLIC_KLOOK_AFFILIATE_ID` 設定で自動表示
+### 3. Pinterest運用開始（ユーザー実行）
+アカウント作成 →「Japan with Baby」等のボード作成 → 各ページの「Pin」ボタンで投稿（画像・文言は自動入力）。優先ページ：夏祭りガイド、USJ/ディズニー等のスポットページ。
 
-## ⏸ 保留: Amazonアフィリエイト（ASIN要手動確認）
-- `GearAffiliateBox` は実装済みだが、まだどのガイドにも配置していない
-- 理由: ASIN（Amazon商品コード）を推測すると誤った商品にリンクしてしまうため、実データなしでは設置を見送った
-- **次回のアクション**: Amazon.co.jpで実際に「ベビーゼン YOYO2」「サイベックス Libelle」等を検索し、商品ページURLから正しいASINを取得 → `traveling-japan-with-toddler-checklist` ガイドに `GearAffiliateBox` を追加
+### 4. ウィジェット営業（ユーザー実行）
+`/widget` を子連れ旅行系ブログに紹介。テンプレは下記参照。「japan travel with baby blog」等で検索し個人ブログ10件をピックアップ、必ず個別カスタマイズして送信。
 
-## P2: コンテンツ拡張（検索流入の面を広げる）
+### 5. 季節特集の残り（次回・私が対応）
+- 桜特集：来年1〜2月頃着手が理想（2〜4月に検索急増するため）
+- 紅葉特集：8月頃着手でも間に合う
+- 実装パターンは夏祭り特集と同じ
 
-## ✅ 実装済み: 夏祭り特集ガイド（2026-07-03）
-- `summer-festivals-with-kids-japan` を4言語で追加（英語は個別ファイル、ja/zh/koは共通テンプレート）
-- 混雑回避・屋台グルメ・熱中症/迷子対策・トイレの探し方の4セクション
-- sitemap.ts・4言語トップページ・hreflangすべて反映済み
+### 6. PWA仕上げの残り（次回・私が対応）
+- maskable専用アイコン画像の作成（現在は既存アイコンの流用でクロップされる可能性あり）
+- `/map`・トイレ個別ページの実機スクリーンショット撮影（前回セッションでプレビュー環境のスクリーンショットツールがタイムアウトし続けたため未達成）
 
-### 4. 残りの季節特集（次回）
-- 「桜シーズンの子連れ花見スポットとトイレ」（2〜4月に検索急増、来年の桜シーズン前の1〜2月頃に実装するのが理想）
-- 「紅葉シーズンの京都・日光」（9〜11月。今から数ヶ月あるので8月頃着手でも間に合う）
-- 実装パターンは summer-festivals-with-kids-japan と同じ（英語個別ファイル＋ja/zh/ko共通テンプレートにデータ追加）
-
-## ✅ 実装済み: スポットFAQ構造化データ（2026-07-03）
-- 「新宿駅におむつ交換台はある？」等3問を全260スポットページ（4言語）に実データから自動生成
-- FAQPage JSON-LD ＋ 可視のQ&Aブロック両方を追加（Google PAA枠と実訪問者の両方に対応）
-- `app/components/SpotPageView.tsx` 内 `faqText` オブジェクトで管理。統計値0件の場合は「データなし」の適切な回答文に自動切替
-
-## ✅ 実装済み: 都市×カテゴリページの充実（2026-07-03）
-- `app/[city]/[category]/page.tsx` を全面刷新：カテゴリ別の説明文（SEO対策）、エリアショートカット（スポットページへのリンク）、他カテゴリへのリンク、ダークモード対応、canonical追加
-- おむつ交換台カテゴリでは既存の919個別SSGページへ優先的にリンク（内部リンク強化）
-- AdUnit追加
-
-## ✅ 実装済み: スポット拡張（2026-07-03）65→96ヶ所
-- `app/lib/spots.ts` に31スポット追加：鎌倉・江ノ島・箱根（横浜データ利用）、成田空港、心斎橋・関空・梅田スカイビル（大阪）、錦市場・哲学の道・宇治（京都）、レゴランド・大須（名古屋）、福岡空港・太宰府、小樽・新千歳（札幌データ利用）、宮島・原爆ドーム（広島）、東大寺（奈良）、美ら海水族館（沖縄）、日光東照宮（栃木）、高山・白川郷（岐阜）、下北沢・吉祥寺・谷中・ジブリ美術館・中野ブロードウェイ・築地（東京）など
-- ビルド: 1,543→**1,675ページ**（+132）
-- 注意: `city`フィールドは既存の`CITIES`（toilet-data.ts）のキーと一致させる必要がある（例：鎌倉は"kanagawa"ではなく"yokohama"を使う——神奈川県全体のデータが横浜ファイルに集約されているため）
-- 次回さらに追加する場合の候補: 金沢21世紀美術館、道頓堀以外の大阪スポット、松島（仙台）、湯布院・別府、軽井沢、伊勢神宮、京都嵐山周辺の追加スポット
-
-## P3: 機能強化（リピーター・滞在時間）
-
-## ✅ 実装済み: 清潔度ワンタップ投票（2026-07-03・要Upstash登録）
-- `app/lib/upstash.ts`（REST API直叩き、追加パッケージ不要）＋ `app/api/vote/route.ts`（GET/POST）
-- `app/components/CleanlinessVote.tsx`: トイレ個別ページ919枚＋地図の詳細パネル両方に設置
-- 環境変数 `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` が未設定の間は `{enabled: false}` を返しUIも自動非表示（AdSense/アフィリエイトと同じ安全パターン）。動作確認済み（ローカルで `enabled: false` を確認）
-- 1端末1トイレ1回まで投票可（localStorageで制御、個人情報は保存しない）
-- **次回のアクション**: [Upstash](https://upstash.com)で無料Redisデータベースを作成 → 発行されたURLとTOKENをVercel環境変数に設定するだけで全ページに投票機能が出現する
-
-## ✅ 実装済み: データ更新パイプライン自動化（2026-07-03）
-- `.github/workflows/monthly-data-refresh.yml`: 毎月1日正午JSTに自動実行（`workflow_dispatch`で手動実行も可）
-- `fetch-all-prefectures.py --force` → `merge-all-prefectures.py` → `split-by-city.py` の順で実行し、差分があれば自動でPRを作成（**自動マージはしない**——データ異常の混入を防ぐ安全策）
-- PR本文に確認事項（差分件数・ビルド通過・coverageページの統計）を明記
-
-## ✅ 実装済み: フィルター拡張・データフィールド強化（2026-07-03）
-- `merge-all-prefectures.py`（月次自動更新で使われるスクリプト）が `changing_table:location`（男性トイレ側の交換台）、`level`（階数）、`ostomate`（オストメイト対応）を取り込むよう拡張
-- `Toilet`型に `changingTableLocation` / `level` / `ostomate` を追加（オプショナルなので既存データは影響なし）
-- `ToiletDetail.tsx`（地図の詳細パネル）とトイレ個別ページ（919枚）両方で、データがある場合のみ表示
-- **注意**: 既存の東京・大阪等のデータはこれらのタグをまだ持っていない（次回の月次自動更新でOSMから再取得された時に反映される）。個別の `merge-tokyo-wards.py` 等の手動マージスクリプトは今回未修正——必要なら同様の3行を追加する
-
-## ✅ 実装済み: ルート沿いトイレ検索（2026-07-03）
-- 地図ヘッダーに🛣️ボタン追加 → 出発地・目的地をNominatimで検索（既存の場所検索と同じAPI）
-- 選択後、`lib/distance.ts` の `distancePointToSegment`（点-線分間距離、平面近似）で線分から400m以内のトイレのみに絞り込み
-- オレンジのPolylineと緑（出発）/赤（到着）のピンマーカーを地図に描画、両地点が確定すると自動でfitBounds
-- 出発地・目的地それぞれの最寄り都市データを自動ロード（都市をまたぐルートにも対応）
-- プレビューで実機動作確認済み（Tokyo Station → Ginza でルート成立・Clear routeボタン表示を確認、コンソールエラーなし）
-- P1〜P3の主要項目はこれで**ほぼ全て完了**
-
-## ✅ 実装済み: PWA仕上げ（2026-07-03・一部要フォロー）
-- `manifest.json`: `id`/`scope`/`lang`/`dir`/`categories` 追加、`purpose: "maskable"` アイコンエントリ追加
-- **既知の制約**: maskable用に新規デザインした画像ではなく既存の `icon-512.png` を流用しているため、Android等でロゴがセーフゾーン外にクロップされる可能性がある。理想的には中央80%に収まるロゴの専用maskable画像を用意すべき（次回、画像生成ツールで対応）
-- オフラインページ（`app/offline/page.tsx`）は既に実装済みで良好な状態だったため変更なし
-- **screenshots未追加**: PWAインストールプロンプト用のアプリスクリーンショットは、プレビュー環境のスクリーンショットツールが本セッションでタイムアウトし続けたため撮影できず。次回、環境が安定していれば `/map` と `/toilet/tokyo/{id}` の実機スクリーンショットを撮ってmanifestに追加する
-
-## P4: 集客（サイト外・実行はユーザー本人の作業）
-
-これらは外部アカウントへの投稿・送信行為なので、Claude Codeでは代行できません。サイト側で実行可能な土台は整備済みで、以下は実行時にそのまま使えるテンプレートです。
-
-## ✅ 実装済み: Pinterest共有ボタン（2026-07-03・サイト側インフラ）
-- 全スポットページ260枚 ＋ ja/zh/ko ガイド48本に「Pin」ボタンを追加（`ShareButtons` コンポーネント拡張）
-- クリックすると該当ページのOGP画像・URL・説明文が自動セットされたPinterest投稿画面が開く
-- 動作確認済み: `/spot/shinjuku-station` で正しいPin URLを生成することを確認
-
-### 13. Pinterest 運用（次回・ユーザー実行）
-- Pinterestアカウントを作成し「Japan with Baby」「Tokyo Family Travel」等のボードを作る
-- 各ガイド・スポットページの「Pin」ボタンをクリックするだけで投稿できる（画像・文言は自動入力される）
-- 優先度が高いページ：夏祭りガイド（季節性）、USJ/ディズニー等のスポットページ（検索ボリューム大）
-
-### 14. Reddit 継続 + r/JapanTravelTips（次回・ユーザー実行）
-- 現状: `japan_travel_dad` アカウント、貢献35（カルマ50到達で r/japanlife 再挑戦）
-- カルマ50到達後の投稿テンプレート（情報提供型、宣伝色を薄める）:
-  > タイトル案: "Mapped every toilet with a baby changing table in Japan (free, no signup) — sharing in case it helps other parents"
-  > 本文の骨子: 個人の子連れ旅行での困りごと→解決のために作った経緯→機能紹介（4言語対応、オフライン対応）→リンクは最後に一度だけ
-- 継続してr/JapanTravelの旅程相談スレッドにコメントし、カルマを積み増す（既存フロー通り）
-
-### 15. ウィジェット営業（次回・ユーザー実行）
-- `/widget` ページの紹介メールテンプレート:
-  > 件名: Free interactive toilet map widget for your Japan travel blog
-  > 本文骨子: ブログを読んだこと（具体的な記事名に言及）→ 悩み（トイレ情報の欠如）に対する解決策として無料ウィジェットを紹介 → 埋め込みコード1行 → 見返りは求めない旨を明記
-- ターゲット候補の探し方: 「japan travel with baby blog」「japan family travel blog」等で検索し、コメント欄が活発な個人ブログ（企業メディアより返信率が高い）を10件ピックアップ
-- 送信は必ず個別にカスタマイズすること（テンプレ丸出しは開封率が下がる）
+### 7. データ強化（次回・私が対応、規模大）
+優先順：①OSMタグ拡張（`changing_table:location`/`level`は実装済みなので次は`ostomate`の活用UI等）→②ODPT駅施設データ→③赤ちゃんの駅事業データ→④公園遊具・給水スポットレイヤー。詳細は下記「データ強化候補」参照。
 
 ---
 
-## 実装順の推奨
-1. **GA4イベント計測**（他施策の効果測定に必要、半日）
-2. **アフィリエイト導入**（収益源の複線化、1日）
-3. **スポットFAQ構造化データ**（1ファイル修正で260ページに効く、1時間）
-4. **IndexNow/Bing**（1時間＋手動登録）
-5. **季節特集：夏祭り編**（7月なので今が旬、半日）
-6. 以降 P2→P3 の順
+## 営業テンプレート保管
+
+### Reddit投稿（カルマ50到達後）
+> タイトル案: "Mapped every toilet with a baby changing table in Japan (free, no signup) — sharing in case it helps other parents"
+> 本文の骨子: 個人の子連れ旅行での困りごと→解決のために作った経緯→機能紹介（4言語対応、オフライン対応）→リンクは最後に一度だけ
+
+### ウィジェット営業メール
+> 件名: Free interactive toilet map widget for your Japan travel blog
+> 本文骨子: ブログを読んだこと（具体的な記事名に言及）→ 悩み（トイレ情報の欠如）に対する解決策として無料ウィジェットを紹介 → 埋め込みコード1行 → 見返りは求めない旨を明記
 
 ---
 
-## データ強化: 取得可能な情報源の候補
+## データ強化候補（詳細）
 
-### A. OSMの未取り込みタグ（既存パイプラインの拡張だけで済む・最優先）
-| タグ | 内容 | 使い道 |
+### A. OSMの未取り込みタグ
+| タグ | 内容 | 状態 |
 |---|---|---|
-| `changing_table:location` | 交換台の場所（male/female/unisex/dedicated_room） | 「男性トイレにも交換台」フィルター（差別化の目玉） |
-| `changing_table:count` | 交換台の台数 | 個別ページの詳細表示 |
-| `toilets:wheelchair` / `wheelchair:description` | 車いす詳細 | アクセシビリティ情報の精度向上 |
-| `ostomate` | オストメイト対応 | 多目的トイレ検索の付加価値 |
-| `level` / `indoor` | 階数（3F等） | 「何階にあるか」表示（駅・モールで超有用） |
-| `male` / `female` / `unisex` | 男女区分 | フィルター |
-| `toilets:paper_supplied` | 紙の有無 | 詳細表示 |
-| `description` / `operator` | 説明・運営者 | 個別ページの文章量増（SEO） |
+| `changing_table:location` | 交換台の場所（male/female/unisex等） | ✅ 実装済み（月次更新で反映） |
+| `level` | 階数 | ✅ 実装済み（月次更新で反映） |
+| `ostomate` | オストメイト対応 | ✅ 実装済み（月次更新で反映） |
+| `changing_table:count` | 交換台の台数 | 未着手 |
+| `toilets:wheelchair` / `wheelchair:description` | 車いす詳細 | 未着手 |
+| `toilets:paper_supplied` | 紙の有無 | 未着手 |
+| `description` / `operator` | 説明・運営者（SEO文章量増） | 未着手 |
 
 ### B. OSMの別アメニティ（トイレ以外への拡張）
-- **`changing_table=yes` が付いた店舗・施設**（カフェ、百貨店、高速SA等）→「トイレ以外のおむつ替え場所」として新レイヤー
-- **授乳室**: `amenity=nursing_room`（データ少なめだが存在）
-- **`amenity=drinking_water`**（給水スポット）→ 夏の子連れ需要・季節特集と連動
-- **`leisure=playground`**（公園遊具）→「トイレ×遊び場」のセット表示は子連れに刺さる
-- **駅出入口の `wheelchair` タグ** → エレベーターのある出口案内
+- `changing_table=yes`付き店舗・施設（カフェ、百貨店等）→「トイレ以外のおむつ替え場所」レイヤー
+- `amenity=nursing_room`（授乳室）
+- `amenity=drinking_water`（給水スポット、夏特集と連動）
+- `leisure=playground`（公園遊具、「トイレ×遊び場」セット表示）
 
-### C. 公共オープンデータ（要ライセンス確認だが有望）
-1. **「赤ちゃんの駅」事業データ** — 全国多数の自治体が授乳・おむつ替え可能施設を登録・公開する制度（板橋区発祥）。自治体ごとにCSV/PDF公開。CC-BY系が多い。**授乳室データの本命**
-2. **公共交通オープンデータセンター（ODPT）** — 鉄道各社の駅施設API。トイレ・多機能トイレ・ベビーシート・エレベーター位置を含む。開発者登録無料。**駅データの本命**
-3. **自治体オープンデータカタログの公衆トイレCSV** — 未取り込みの自治体を拾う（現在は主要都市のみ。中核市クラスに多数あり）
-4. **国交省「歩行空間ネットワークデータ」** — バリアフリー経路・段差情報。ルート機能実装時に活用
-5. **東京都「だれでもトイレ」バリアフリー情報** — 都のオープンデータカタログ
-6. **G空間情報センター** — 上記データの横断検索ポータル
+### C. 公共オープンデータ（要ライセンス確認）
+1. **「赤ちゃんの駅」事業データ** — 自治体の授乳・おむつ替え施設登録制度。CC-BY系が多い。**授乳室データの本命**
+2. **公共交通オープンデータセンター（ODPT）** — 鉄道各社の駅施設API。開発者登録無料。**駅データの本命**
+3. 自治体オープンデータの公衆トイレCSV（中核市クラスに未取り込みが多数）
+4. 国交省「歩行空間ネットワークデータ」（バリアフリー経路）
 
-### D. 見送り・注意
-- **Google Places API**: 規約でデータ保存・再配布不可 → 不可
-- **Check A Toilet等のNPO系DB**: ライセンス個別確認が必要
-- **商業施設サイトのスクレイピング**: 規約リスク → 見送り
-- ⚠️ **ODbLの継承条項**: OSMデータと他ソースを「混ぜて1つのDB」にすると全体がODbL継承になる。ソース別に別レイヤー（別JSONファイル・別マーカー）として保持し、出典を分離表示すること
-
-### 実装順の推奨（データ編）
-1. **A: OSMタグ拡張**（取得スクリプト修正のみ。`changing_table:location` と `level` が特に価値大）
-2. **C-2: ODPT駅施設データ**（登録→API取得。スポットページ65駅と直結）
-3. **C-1: 赤ちゃんの駅**（東京23区・政令市から順次。授乳室レイヤー新設）
-4. **B: 遊び場・給水レイヤー**（季節特集と同時期に）
+### D. 見送り
+- Google Places API（規約で保存・再配布不可）
+- 商業施設サイトのスクレイピング（規約リスク）
+- ⚠️ ODbL継承条項に注意：他ソースと混ぜず別レイヤーで保持し出典を分離表示すること
 
 ---
 
-## 保留・見送り
+## 保留・見送り（恒久）
 - 写真掲載（ライセンスリスク）
 - ネイティブアプリ化（PWAで十分）
-- ユーザーアカウント機能（localStorage で足りている）
+- ユーザーアカウント機能（localStorageで足りている）
