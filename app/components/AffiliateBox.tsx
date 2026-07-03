@@ -19,7 +19,8 @@ const LABELS: Record<AffiliateLang, { hotel: string; activity: string; gear: str
 export function HotelAffiliateBox({ cityNameJa, lang }: { cityNameJa: string; lang: AffiliateLang }) {
   if (!RAKUTEN_AFFILIATE_ID || !cityNameJa) return null;
   const t = LABELS[lang];
-  const rakutenUrl = `https://hb.afl.rakuten.co.jp/hgc/${RAKUTEN_AFFILIATE_ID}/?pc=https%3A%2F%2Ftravel.rakuten.co.jp%2Fdsearch%2F%3Ff_keyword%3D${encodeURIComponent(cityNameJa)}`;
+  // 楽天トラベルの検索エンドポイントは非公開のため、404を避けてトップページへ遷移する
+  const rakutenUrl = `https://hb.afl.rakuten.co.jp/hgc/${RAKUTEN_AFFILIATE_ID}/?pc=https%3A%2F%2Ftravel.rakuten.co.jp%2F`;
   return (
     <div className="border border-gray-100 dark:border-gray-800 rounded-xl p-4 my-4">
       <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-2">{t.hotel}</p>
