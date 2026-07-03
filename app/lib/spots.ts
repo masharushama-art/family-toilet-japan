@@ -105,6 +105,78 @@ export const SPOTS: Spot[] = [
   { slug: "shuri-castle", city: "okinawa", lat: 26.217, lon: 127.7195, type: "attraction", names: { en: "Shuri Castle", ja: "首里城", zh: "首里城", ko: "슈리성" } },
 ];
 
+// 追加スポット（65→拡張分）：既存都市の深掘り＋新規カバー都市
+SPOTS.push(
+  // ---- Tokyo 追加 ----
+  { slug: "kamakura", city: "yokohama", lat: 35.3193, lon: 139.5467, type: "attraction", names: { en: "Kamakura", ja: "鎌倉", zh: "鎌倉", ko: "가마쿠라" } },
+  { slug: "enoshima", city: "yokohama", lat: 35.2998, lon: 139.4802, type: "attraction", names: { en: "Enoshima Island", ja: "江の島", zh: "江之島", ko: "에노시마" } },
+  { slug: "shimokitazawa", city: "tokyo", lat: 35.6613, lon: 139.6683, type: "attraction", names: { en: "Shimokitazawa", ja: "下北沢", zh: "下北澤", ko: "시모키타자와" } },
+  { slug: "kichijoji", city: "tokyo", lat: 35.7031, lon: 139.5799, type: "station", names: { en: "Kichijoji", ja: "吉祥寺", zh: "吉祥寺", ko: "기치조지" } },
+  { slug: "yanaka", city: "tokyo", lat: 35.7272, lon: 139.7671, type: "attraction", names: { en: "Yanaka", ja: "谷中", zh: "谷中", ko: "야나카" } },
+  { slug: "ghibli-museum", city: "tokyo", lat: 35.6962, lon: 139.5704, type: "attraction", names: { en: "Ghibli Museum (Mitaka)", ja: "ジブリ美術館（三鷹）", zh: "吉卜力美術館（三鷹）", ko: "지브리 미술관(미타카)" } },
+  { slug: "nakano-broadway", city: "tokyo", lat: 35.7062, lon: 139.6655, type: "attraction", names: { en: "Nakano Broadway", ja: "中野ブロードウェイ", zh: "中野百老匯", ko: "나카노 브로드웨이" } },
+  { slug: "tsukiji-outer-market", city: "tokyo", lat: 35.6654, lon: 139.7707, type: "attraction", names: { en: "Tsukiji Outer Market", ja: "築地場外市場", zh: "築地場外市場", ko: "츠키지 장외시장" } },
+
+  // ---- Yokohama/Kanagawa 追加 ----
+  { slug: "hakone-yumoto", city: "yokohama", lat: 35.2323, lon: 139.1064, type: "station", names: { en: "Hakone-Yumoto", ja: "箱根湯本", zh: "箱根湯本", ko: "하코네유모토" } },
+
+  // ---- Chiba 追加 ----
+  { slug: "narita-airport", city: "chiba", lat: 35.7647, lon: 140.3864, type: "station", names: { en: "Narita Airport", ja: "成田空港", zh: "成田機場", ko: "나리타 공항" } },
+
+  // ---- Osaka 追加 ----
+  { slug: "shinsaibashi", city: "osaka", lat: 34.6745, lon: 135.5013, type: "attraction", names: { en: "Shinsaibashi", ja: "心斎橋", zh: "心齋橋", ko: "신사이바시" } },
+  { slug: "kansai-airport", city: "osaka", lat: 34.4342, lon: 135.2441, type: "station", names: { en: "Kansai Airport (KIX)", ja: "関西国際空港", zh: "關西國際機場", ko: "간사이 국제공항" } },
+  { slug: "umeda-sky-building", city: "osaka", lat: 34.7054, lon: 135.4903, type: "attraction", names: { en: "Umeda Sky Building", ja: "梅田スカイビル", zh: "梅田藍天大廈", ko: "우메다 스카이빌딩" } },
+
+  // ---- Kyoto 追加 ----
+  { slug: "nishiki-market", city: "kyoto", lat: 35.005, lon: 135.7649, type: "attraction", names: { en: "Nishiki Market", ja: "錦市場", zh: "錦市場", ko: "니시키 시장" } },
+  { slug: "philosophers-path", city: "kyoto", lat: 35.0271, lon: 135.7947, type: "attraction", names: { en: "Philosopher's Path", ja: "哲学の道", zh: "哲學之道", ko: "철학의 길" } },
+  { slug: "uji", city: "kyoto", lat: 34.8858, lon: 135.7997, type: "attraction", names: { en: "Uji (Byodo-in)", ja: "宇治（平等院）", zh: "宇治（平等院）", ko: "우지(뵤도인)" } },
+
+  // ---- Nagoya 追加 ----
+  { slug: "legoland-japan", city: "nagoya", lat: 35.0776, lon: 136.8262, type: "attraction", names: { en: "LEGOLAND Japan", ja: "レゴランド・ジャパン", zh: "樂高樂園日本", ko: "레고랜드 재팬" } },
+  { slug: "osu-shopping-street", city: "nagoya", lat: 35.1595, lon: 136.9002, type: "attraction", names: { en: "Osu Shopping District", ja: "大須商店街", zh: "大須商店街", ko: "오스 상점가" } },
+
+  // ---- Fukuoka 追加 ----
+  { slug: "fukuoka-airport", city: "fukuoka", lat: 33.5859, lon: 130.4506, type: "station", names: { en: "Fukuoka Airport", ja: "福岡空港", zh: "福岡機場", ko: "후쿠오카 공항" } },
+  { slug: "dazaifu", city: "fukuoka", lat: 33.5219, lon: 130.5352, type: "attraction", names: { en: "Dazaifu Tenmangu", ja: "太宰府天満宮", zh: "太宰府天滿宮", ko: "다자이후 텐만구" } },
+
+  // ---- Sapporo 追加 ----
+  { slug: "otaru", city: "sapporo", lat: 43.1907, lon: 140.9947, type: "attraction", names: { en: "Otaru", ja: "小樽", zh: "小樽", ko: "오타루" } },
+  { slug: "new-chitose-airport", city: "sapporo", lat: 42.7752, lon: 141.6923, type: "station", names: { en: "New Chitose Airport", ja: "新千歳空港", zh: "新千歲機場", ko: "신치토세 공항" } },
+
+  // ---- Hiroshima 追加 ----
+  { slug: "miyajima", city: "hiroshima", lat: 34.2966, lon: 132.3197, type: "attraction", names: { en: "Miyajima Island", ja: "宮島", zh: "宮島", ko: "미야지마" } },
+  { slug: "atomic-bomb-dome", city: "hiroshima", lat: 34.3955, lon: 132.4536, type: "attraction", names: { en: "Atomic Bomb Dome", ja: "原爆ドーム", zh: "原爆圓頂館", ko: "원폭 돔" } },
+
+  // ---- Nara 追加 ----
+  { slug: "todaiji", city: "nara", lat: 34.6889, lon: 135.8398, type: "attraction", names: { en: "Todai-ji Temple", ja: "東大寺", zh: "東大寺", ko: "도다이지" } },
+
+  // ---- Kobe 追加 ----
+  { slug: "kobe-nunobiki-herb-garden", city: "kobe", lat: 34.7089, lon: 135.1934, type: "attraction", names: { en: "Kobe Nunobiki Herb Garden", ja: "神戸布引ハーブ園", zh: "神戶布引香草園", ko: "고베 누노비키 허브가든" } },
+
+  // ---- Kanazawa 追加 ----
+  { slug: "higashi-chaya", city: "kanazawa", lat: 36.5735, lon: 136.6668, type: "attraction", names: { en: "Higashi Chaya District", ja: "ひがし茶屋街", zh: "東茶屋街", ko: "히가시 차야가이" } },
+
+  // ---- Okinawa 追加 ----
+  { slug: "churaumi-aquarium", city: "okinawa", lat: 26.6942, lon: 127.8781, type: "attraction", names: { en: "Churaumi Aquarium", ja: "美ら海水族館", zh: "美麗海水族館", ko: "츄라우미 수족관" } },
+
+  // ---- 新規都市: 日光（栃木） ----
+  { slug: "nikko-toshogu", city: "tochigi", lat: 36.7581, lon: 139.5992, type: "attraction", names: { en: "Nikko Toshogu Shrine", ja: "日光東照宮", zh: "日光東照宮", ko: "닛코 도쇼구" } },
+
+  // ---- 新規都市: 高山（岐阜） ----
+  { slug: "takayama-old-town", city: "gifu", lat: 36.1408, lon: 137.2528, type: "attraction", names: { en: "Takayama Old Town", ja: "高山陣屋・古い町並み", zh: "高山老街", ko: "다카야마 옛거리" } },
+
+  // ---- 新規都市: 白川郷（岐阜） ----
+  { slug: "shirakawago", city: "gifu", lat: 36.2578, lon: 136.9066, type: "attraction", names: { en: "Shirakawa-go", ja: "白川郷", zh: "白川鄉", ko: "시라카와고" } },
+
+  // ---- 新規都市: 箱根（神奈川、独立エントリ） ----
+  { slug: "hakone-lake-ashi", city: "yokohama", lat: 35.2038, lon: 139.0246, type: "attraction", names: { en: "Lake Ashi (Hakone)", ja: "芦ノ湖（箱根）", zh: "蘆之湖（箱根）", ko: "아시노코(하코네)" } },
+
+  // ---- 新規都市: 富良野・美瑛（北海道） ----
+  { slug: "furano-biei", city: "sapporo", lat: 43.4128, lon: 142.4694, type: "attraction", names: { en: "Furano & Biei", ja: "富良野・美瑛", zh: "富良野・美瑛", ko: "후라노・비에이" } },
+);
+
 export const SPOT_SLUGS = SPOTS.map((s) => s.slug);
 
 export function getSpot(slug: string): Spot | undefined {
