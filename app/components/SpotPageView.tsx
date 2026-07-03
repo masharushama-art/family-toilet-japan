@@ -183,6 +183,59 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
     );
   };
 
+  // FAQ構造化データ用の質問・回答を実データから組み立てる（言語ごと）
+  const faqText: Record<SpotLang, { q1: string; a1: string; q2: string; a2: string; q3: string; a3: string }> = {
+    en: {
+      q1: `Is there a toilet with a baby changing table near ${spotName}?`,
+      a1: stats.ct > 0
+        ? `Yes. There are ${stats.ct} toilets with baby changing tables within 1 km of ${spotName}.`
+        : `We haven't mapped a toilet with a baby changing table within 1 km of ${spotName} yet — check the interactive map for the closest one.`,
+      q2: `How many toilets are near ${spotName}?`,
+      a2: `There are ${stats.total} public toilets within 1 km of ${spotName}, including ${stats.wc} that are wheelchair accessible.`,
+      q3: `Is ${spotName} wheelchair accessible for toilets?`,
+      a3: stats.wc > 0
+        ? `Yes, ${stats.wc} of the nearby toilets are wheelchair accessible.`
+        : `We don't have confirmed wheelchair-accessible toilets near ${spotName} yet — please check the map for the latest data.`,
+    },
+    ja: {
+      q1: `${spotName}周辺におむつ交換台付きのトイレはありますか？`,
+      a1: stats.ct > 0
+        ? `はい。${spotName}から1km圏内に、おむつ交換台付きのトイレが${stats.ct}件あります。`
+        : `${spotName}から1km圏内には、おむつ交換台付きのトイレのデータがまだありません。地図で最寄りの設備をご確認ください。`,
+      q2: `${spotName}周辺にトイレはいくつありますか？`,
+      a2: `${spotName}から1km圏内に${stats.total}件の公衆トイレがあり、うち${stats.wc}件が車いす対応です。`,
+      q3: `${spotName}周辺のトイレは車いすで利用できますか？`,
+      a3: stats.wc > 0
+        ? `はい。周辺トイレのうち${stats.wc}件が車いす対応です。`
+        : `${spotName}周辺で車いす対応が確認されているトイレは現在ありません。最新情報は地図でご確認ください。`,
+    },
+    zh: {
+      q1: `${spotName}附近有設有換尿布台的廁所嗎？`,
+      a1: stats.ct > 0
+        ? `有的，${spotName}方圓1公里內共有${stats.ct}處設有換尿布台的廁所。`
+        : `目前${spotName}方圓1公里內尚未收錄設有換尿布台的廁所資料，請於地圖上查詢最近的設施。`,
+      q2: `${spotName}附近有多少廁所？`,
+      a2: `${spotName}方圓1公里內共有${stats.total}處公共廁所，其中${stats.wc}處為無障礙設施。`,
+      q3: `${spotName}附近的廁所是否有無障礙設施？`,
+      a3: stats.wc > 0
+        ? `是的，附近共有${stats.wc}處廁所設有無障礙設施。`
+        : `目前${spotName}附近尚未確認有無障礙廁所，請於地圖查詢最新資料。`,
+    },
+    ko: {
+      q1: `${spotName} 근처에 기저귀 교환대가 있는 화장실이 있나요?`,
+      a1: stats.ct > 0
+        ? `네. ${spotName} 반경 1km 이내에 기저귀 교환대가 있는 화장실이 ${stats.ct}곳 있습니다.`
+        : `${spotName} 반경 1km 이내에 기저귀 교환대가 있는 화장실 정보가 아직 없습니다. 지도에서 가장 가까운 시설을 확인해 보세요.`,
+      q2: `${spotName} 근처에는 화장실이 몇 곳 있나요?`,
+      a2: `${spotName} 반경 1km 이내에 공중화장실 ${stats.total}곳이 있으며, 그중 ${stats.wc}곳이 휠체어 이용 가능합니다.`,
+      q3: `${spotName} 근처 화장실은 휠체어로 이용할 수 있나요?`,
+      a3: stats.wc > 0
+        ? `네, 근처 화장실 중 ${stats.wc}곳이 휠체어 이용 가능합니다.`
+        : `${spotName} 근처에 휠체어 이용 가능이 확인된 화장실이 아직 없습니다. 최신 정보는 지도에서 확인해 주세요.`,
+    },
+  };
+  const faq = faqText[lang];
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
       <PageViewTracker event="spot_view" params={{ spot_slug: spot.slug, city: spot.city, lang }} />
@@ -252,6 +305,16 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
           </div>
         )}
 
+        {/* FAQ（構造化データと同じ内容を可視表示） */}
+        <div className="mt-8 space-y-3">
+          {[[faq.q1, faq.a1], [faq.q2, faq.a2], [faq.q3, faq.a3]].map(([q, a]) => (
+            <div key={q} className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+              <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">Q. {q}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm">A. {a}</p>
+            </div>
+          ))}
+        </div>
+
         {/* Guides */}
         {guides.length > 0 && (
           <div className="mt-8">
@@ -308,6 +371,15 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
                   geo: { "@type": "GeoCoordinates", latitude: toilet.lat, longitude: toilet.lon },
                 },
               })),
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                { "@type": "Question", name: faq.q1, acceptedAnswer: { "@type": "Answer", text: faq.a1 } },
+                { "@type": "Question", name: faq.q2, acceptedAnswer: { "@type": "Answer", text: faq.a2 } },
+                { "@type": "Question", name: faq.q3, acceptedAnswer: { "@type": "Answer", text: faq.a3 } },
+              ],
             },
           ]),
         }}
