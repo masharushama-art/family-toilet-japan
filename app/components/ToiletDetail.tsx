@@ -9,6 +9,7 @@ import ShareButtons from "./ShareButtons";
 import { isFavorite, toggleFavorite } from "../lib/favorites";
 import { addToHistory } from "../lib/history";
 import { track } from "../lib/analytics";
+import CleanlinessVote from "./CleanlinessVote";
 
 interface Props {
   toilet: Toilet;
@@ -208,6 +209,7 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
             </a>
           </div>
         )}
+        <CleanlinessVote toiletId={toilet.id} />
       </div>
 
       <div className="px-5 py-4 space-y-3">
