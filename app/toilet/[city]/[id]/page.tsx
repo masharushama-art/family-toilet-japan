@@ -12,6 +12,7 @@ import { AdUnit } from "../../../components/AdSense";
 import { getNearbySpots } from "../../../lib/spots";
 import { CITY_GUIDE_SLUGS } from "../../../components/SpotPageView";
 import PageViewTracker from "../../../components/PageViewTracker";
+import CleanlinessVote from "../../../components/CleanlinessVote";
 
 const BASE = "https://family-toilet-japan.vercel.app";
 
@@ -165,6 +166,8 @@ export default async function ToiletPage({ params }: { params: Params }) {
             value={toilet.source === "opendata" ? "Municipal Open Data (CC BY)" : "OpenStreetMap (ODbL)"}
           />
         </div>
+
+        <CleanlinessVote toiletId={toilet.id} />
 
         <AdUnit slot="toilet-detail" />
 
