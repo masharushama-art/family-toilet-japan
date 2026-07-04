@@ -1,6 +1,8 @@
 // 主要駅・観光地のスポットデータ
 // /spot/[slug]（en）と /{lang}/spot/[slug] でエリア別トイレページを自動生成する
 
+import odptStations from "./stations-odpt.json";
+
 export interface Spot {
   slug: string;
   city: string; // CitySlug
@@ -176,6 +178,28 @@ SPOTS.push(
   // ---- 新規都市: 富良野・美瑛（北海道） ----
   { slug: "furano-biei", city: "sapporo", lat: 43.4128, lon: 142.4694, type: "attraction", names: { en: "Furano & Biei", ja: "富良野・美瑛", zh: "富良野・美瑛", ko: "후라노・비에이" } },
 );
+
+// ODPT（公共交通オープンデータセンター）由来の地下鉄駅を統合。
+// 手作業キュレーション分を優先し、slug一致 or 既存スポットから300m以内は除外する。
+{
+  const R = 6371;
+  const distKm = (aLat: number, aLon: number, bLat: number, bLon: number) => {
+    const dLat = ((bLat - aLat) * Math.PI) / 180;
+    const dLon = ((bLon - aLon) * Math.PI) / 180;
+    const x =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((aLat * Math.PI) / 180) * Math.cos((bLat * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+  };
+  const existingSlugs = new Set(SPOTS.map((s) => s.slug));
+  for (const st of odptStations as Spot[]) {
+    if (existingSlugs.has(st.slug)) continue;
+    const tooClose = SPOTS.some((s) => distKm(s.lat, s.lon, st.lat, st.lon) < 0.3);
+    if (tooClose) continue;
+    SPOTS.push(st);
+    existingSlugs.add(st.slug);
+  }
+}
 
 export const SPOT_SLUGS = SPOTS.map((s) => s.slug);
 
