@@ -91,6 +91,32 @@
 
 ---
 
+## 🎯 次期実装: 地下鉄駅スポット自動生成（設計完了・実装待ち）
+
+**背景**: ODPT APIの再調査（2026-07-04）で、東京メトロ186駅＋都営149駅の計335レコードに緯度経度＋6言語駅名（en/ja/ko/zh-Hans/zh-Hant）が入っていることを発見。既存スポットページの仕組みで「〇〇駅 おむつ替え」系検索の受け皿を4言語×約250駅（重複統合後）＝約1,000ページ自動生成できる。
+
+**APIアクセス**（トークンは取得済み・コードにコミットしないこと）:
+- エンドポイント: `https://api.odpt.org/api/v4/odpt:Station?acl:consumerKey={TOKEN}&odpt:operator=odpt.Operator:TokyoMetro`（Toeiも同様）
+- トークンは developer.odpt.org のマイページ（editkeys）で確認できる。スクリプト実行時は環境変数 `ODPT_TOKEN` で渡す
+- 座標があるのはTokyoMetroとToeiのみ（JR東・私鉄各社は駅名のみで使用不可、検証済み）
+
+**実装手順**:
+1. `scripts/fetch-odpt-stations.py` を新規作成:
+   - TokyoMetro/Toei の odpt:Station を取得
+   - **同名駅の統合**: `dc:title`（日本語駅名）が同じレコード（例: 上野=銀座線+日比谷線）は1駅にマージし、座標は平均値
+   - Spot型に変換: `names.en`=stationTitle.en、`ja`=ja、`zh`=**zh-Hant**、`ko`=ko / `type: "station"` / slug=`{en名を小文字ハイフン化}-station`（例: Ueno → `ueno-station`）
+   - `city`: 座標から tokyo/chiba/saitama/yokohama の最寄り（CITIES座標とのユークリッド距離）を割当（西船橋・和光市など都外駅対応）
+   - 出力: `app/lib/stations-odpt.json`（リポジトリにコミットする静的ファイル。ビルド時のAPI依存なし）
+2. `app/lib/spots.ts` を修正:
+   - 生成JSONをimportし、**重複排除してから** SPOTS に結合。除外条件: ①slugが既存と一致 ②既存スポットから300m以内（手作業キュレーション分を優先）
+3. 出典表示: `/attribution` ページに「公共交通オープンデータセンター」のクレジットを追加（ライセンス上必須）
+4. 確認事項: サイトマップ（SPOT_SLUGSから自動）と検索インデックス（/api/search-indexはSPOTSを走査）は**自動で追随する**ので変更不要。`getNearbySpots` が返す候補が増えるためトイレ個別ページの内部リンクも自動で充実する
+5. ビルドして総ページ数増（約+1,000）とスポットページ表示を確認、コミット・プッシュ
+
+**推奨実行環境**: Opus 4.8 + fastモード（定型実装のため。設計判断は本セクションで完了済み）
+
+---
+
 ## 🔲 残タスク（優先度順）
 
 ### 1. Upstash Redis登録（任意・低優先度）
