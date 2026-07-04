@@ -49,6 +49,15 @@ const sources = [
     icon: "🏰",
   },
   {
+    name: "公共交通オープンデータセンター (ODPT) — 東京メトロ／東京都交通局",
+    license: "公共交通オープンデータ基本ライセンス / CC BY 4.0 (Toei)",
+    licenseUrl: "https://developer.odpt.org/terms",
+    url: "https://www.odpt.org/",
+    description:
+      "Subway station names and coordinates for Tokyo Metro and Toei Subway, used to generate station-area toilet pages. Provided via the Public Transportation Open Data Center. Tokyo Metro data under the Public Transportation Open Data Basic License; Toei data under CC BY 4.0.",
+    icon: "🚇",
+  },
+  {
     name: "国土地理院 (GSI) 住所検索 API",
     license: "国土地理院コンテンツ利用規約 (Attribution required)",
     licenseUrl: "https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html",
