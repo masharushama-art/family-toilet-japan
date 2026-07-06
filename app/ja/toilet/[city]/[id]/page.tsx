@@ -39,6 +39,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const name = displayName(toilet, c.jaName);
   const title = `${name} — ${c.jaName}のおむつ替え台付きトイレ | Family Toilet Japan`;
   const description = `${c.jaName}の「${name}」はおむつ交換台あり${toilet.wheelchair ? "・車いす対応" : ""}${toilet.fee === false ? "・無料" : ""}。住所・営業時間・地図・経路案内はこちら。`;
+  // 施設名が無い（汎用プレースホルダーのみ）ページは地図座標以外に固有情報が乏しいため noindex にする。
+  const hasRealName = Boolean(toilet.name || toilet.nameEn);
   return {
     title,
     description,
@@ -50,6 +52,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       },
     },
     openGraph: { title, description, url: `${BASE}/ja/toilet/${city}/${id}` },
+    ...(hasRealName ? {} : { robots: { index: false, follow: true } }),
   };
 }
 

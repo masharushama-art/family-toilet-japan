@@ -1,4 +1,4 @@
-import { getAllDetailPageParams } from "../lib/toilet-data";
+import { getIndexableDetailPageParams } from "../lib/toilet-data";
 
 const BASE = "https://family-toilet-japan.vercel.app";
 
@@ -6,7 +6,8 @@ const BASE = "https://family-toilet-japan.vercel.app";
 export const dynamic = "force-static";
 
 export function GET() {
-  const urls = getAllDetailPageParams()
+  // 施設名の無い（noindex設定済みの）ページはサイトマップに載せない
+  const urls = getIndexableDetailPageParams()
     .map(
       ({ city, id }) =>
         `<url><loc>${BASE}/toilet/${city}/${id}</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>` +
