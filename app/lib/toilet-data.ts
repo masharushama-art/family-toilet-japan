@@ -119,6 +119,15 @@ export function getAllDetailPageParams(): { city: string; id: string }[] {
   );
 }
 
+// サイトマップ用: 施設名の無いページ（noindex対象）は掲載しない
+export function getIndexableDetailPageParams(): { city: string; id: string }[] {
+  return (Object.keys(CITIES) as CitySlug[]).flatMap((city) =>
+    getDetailPageToilets(city)
+      .filter((t) => t.name || t.nameEn)
+      .map((t) => ({ city, id: t.id }))
+  );
+}
+
 export function getNearbyToilets(city: CitySlug, target: Toilet, limit = 5): Toilet[] {
   const dist = (t: Toilet) =>
     (t.lat - target.lat) ** 2 + (t.lon - target.lon) ** 2;
