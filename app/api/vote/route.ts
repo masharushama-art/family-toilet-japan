@@ -1,9 +1,5 @@
 import { hIncrBy, hGetAll, isUpstashConfigured } from "../../lib/upstash";
 
-// Cloudflare Pages（next-on-pages）はNode.js runtimeの動的ルートを許可しないため、
-// fetchのみで完結するこのAPIはedge runtimeで動かす。
-export const runtime = "edge";
-
 // トイレの清潔度ワンタップ投票API（ROADMAP P3-8）
 // Upstash未設定の環境（開発時や本番デプロイ前）では 501 を返す。
 // キー設計: `votes:{toiletId}` の Hash に clean/ok/dirty の件数を保持する。
