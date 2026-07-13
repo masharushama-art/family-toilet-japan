@@ -4,6 +4,11 @@ import { CITIES, getCityStats, type CitySlug } from "../lib/toilet-data";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// ビルド時に静的生成する（fsを使うためedge runtimeでは動かせない）
+export function generateStaticParams() {
+  return Object.keys(CITIES).map((city) => ({ city }));
+}
+
 export default async function Image({ params }: { params: Promise<{ city: string }> }) {
   const { city } = await params;
   const c = CITIES[city as CitySlug];
