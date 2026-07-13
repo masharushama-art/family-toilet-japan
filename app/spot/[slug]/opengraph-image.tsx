@@ -1,9 +1,14 @@
 import { ogCard, OG_SIZE } from "../../lib/og";
-import { getSpot, spotDistanceKm } from "../../lib/spots";
+import { getSpot, spotDistanceKm, SPOT_SLUGS } from "../../lib/spots";
 import { getToiletsByCity, type CitySlug } from "../../lib/toilet-data";
 
 export const size = OG_SIZE;
 export const contentType = "image/png";
+
+// ビルド時に静的生成する（fsを使うためedge runtimeでは動かせない）
+export function generateStaticParams() {
+  return SPOT_SLUGS.map((slug) => ({ slug }));
+}
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
