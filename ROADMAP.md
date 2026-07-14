@@ -1,31 +1,40 @@
 # Family Toilet Japan — 改善ロードマップ
 
-最終更新: 2026-07-13（このファイルは実装のたびに更新する）
+最終更新: 2026-07-14（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
+- **本番URL移行**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.masharu-shama.workers.dev`**（Cloudflare Workers、2026-07-14完了）
 - ビルド: 3,515ページ（トイレ個別2,030 / 駅スポット226×4言語 / ガイド65×4言語 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、ダークモード済み
-- ⚠️ OGP画像: 動的セグメントを含むもの（都市・多言語ガイド・スポット、計8ルート）は2026-07-13にCloudflare Pages移行に伴い一時撤去（下記「Vercel→Cloudflare Pages移行」参照）。個別ガイド等の静的OGP画像は生存
-- AdSense: 2026-07-05に**不承認（有用性の低いコンテンツ）**。原因特定・一次対応済み、再審査済み・結果待ち
-- **ホスティング移行中**: VercelのHobby（無料）プランは商用利用禁止（アフィリエイト・AdSense含む）と判明。Cloudflare Pagesへ移行作業中（下記参照）
+- ⚠️ OGP画像: 動的セグメントを含むもの（都市・多言語ガイド・スポット、計8ルート）は撤去したまま（下記参照）。個別ガイド等の静的OGP画像は生存
+- AdSense: 2026-07-05に不承認（有用性の低いコンテンツ）。原因特定・一次対応済み、再審査済み・結果待ち
+- アフィリエイト（楽天・Klook・Amazon）: 新環境でも動作確認済み
 - 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献65、カルマ2、目標50）
 
-## 🔧 Vercel→Cloudflare Pages移行（2026-07-13・進行中）
-**背景**: VercelのFair Use Guidelinesで「Hobbyプランは非商用利用限定。アフィリエイトリンクが主目的のサイトやAdSense広告掲載は商用利用に該当し、Pro以上のプラン必須」と判明。本サイトはアフィリエイト＋AdSenseを掲載しているため規約違反状態だった。Proプラン課金（月$20）ではなく、無料で商用利用可能なCloudflare Pagesへの移行を選択。
+## ✅ Vercel→Cloudflare移行 完了（2026-07-14）
+**背景**: VercelのFair Use Guidelinesで「Hobbyプランは非商用利用限定。アフィリエイトリンクが主目的のサイトやAdSense広告掲載は商用利用に該当し、Pro以上のプラン必須」と判明。本サイトはアフィリエイト＋AdSenseを掲載しているため規約違反状態だった。Proプラン課金（月$20）ではなく、無料で商用利用可能なCloudflareへの移行を選択。
 
 **進めなかった代替案（記録として）**:
-- 独自ドメイン`office-kuma.jp`のサブドメイン活用 → 業務メール（ロリポップ運用）への影響リスクがあり撤回。当面`*.pages.dev`の無料URLで運用し、必要になれば別途安価な新規ドメインを取得する方針
+- 独自ドメイン`office-kuma.jp`のサブドメイン活用 → 業務メール（ロリポップ運用）への影響リスクがあり撤回。当面`*.workers.dev`の無料URLで運用し、必要になれば別途安価な新規ドメインを取得する方針
 - ムームーDNS → お名前.com管理ドメインの利用にはレジストラ移管が必要と判明し断念
 
-**実施済み**:
-- GitHub連携でCloudflare Pages（`@cloudflare/next-on-pages`アダプター）へ接続、`.npmrc`に`legacy-peer-deps=true`追加（wrangler依存関係の競合対策）
-- 動的セグメントを含むOGP画像ルート8件を削除（`@cloudflare/next-on-pages`は`generateStaticParams`によるSSGと組み合わせても動的セグメント付きOGP画像を扱えない構造的制約のため。アダプター自体が非推奨で公式にOpenNext移行が推奨されている）
-- `/api/vote`にedge runtime指定を追加
+**アダプター選定の紆余曲折**:
+1. `@cloudflare/next-on-pages`（Pages、非推奨アダプター）で試行 → 依存関係競合（`.npmrc`で解決）→ 動的セグメント付きOGP画像がedge runtime要件と衝突（8ルート削除で回避）→ **サイト規模（35,166ルート）でアダプター自体が`Invalid string length`エラーによりクラッシュ、規模的限界と判断し撤退**
+2. **`@opennextjs/cloudflare`（公式推奨・最新アダプター、Workers）に切替 → 成功**。Pagesの「静的出力」ではなくWorkers用スクリプト（`.open-next/worker.js`）を生成する方式のため、プロジェクトごと新規作成が必要だった
+3. 生成された`generateStaticParams`ページ（トイレ個別・スポット等）が404 → OpenNextはSSGページも`.open-next/cache`配下に格納し実行時にincremental cache経由で配信する仕様と判明 → **R2バケット（`family-toilet-japan-cache`、無料枠10GB内）を作成しバインディング設定、Deploy commandを`npx opennextjs-cloudflare deploy`に変更**（`wrangler deploy`単体ではR2へのキャッシュアップロードが行われない点に注意）
 
-**保留・今後の検討事項**:
-- 動的OGP画像（都市・多言語ガイド・スポット）の復活には、より新しい公式アダプター（[OpenNext for Cloudflare](https://opennext.js.org/cloudflare)）への移行が必要。SNSシェア時の見た目に影響するのみで機能的な支障はないため優先度は中〜低
-- デプロイ完了後、Cloudflare Pages側のURL（`*.pages.dev`）でサイト全体の動作確認（地図・検索・多言語切替・広告表示）が必要
-- Vercelプロジェクトの扱い（残すか削除するか）は未決定
+**実施済み・確認済み**:
+- `wrangler.jsonc`・`open-next.config.ts`・`package.json`（`cf:build`/`cf:preview`/`cf:deploy`スクリプト）追加
+- GitHub連携でCloudflare Workersへ自動デプロイ（`master`push→ビルド→デプロイ）
+- 環境変数（楽天・Klook・Amazon）をCloudflare側にも設定、動作確認済み
+- 本番動作確認済み: トップ・地図・検索API・トイレ個別（EN/JA）・駅スポット・都市×カテゴリ・サイトマップ・3アフィリエイトリンクすべて200 OK・正常表示
+- `/api/vote`からedge runtime指定を削除（OpenNextはNode.js runtimeをネイティブサポートするため不要かつ有害だった）
+
+**残タスク**:
+- 動的OGP画像（都市・多言語ガイド・スポット、8ルート）の復活を検討。OpenNext移行後なら技術的には可能なはずだが未検証。SNSシェア時の見た目のみに影響し機能的な支障はないため優先度は中〜低
+- 旧Vercelプロジェクト・旧Cloudflare Pagesプロジェクト（`family-toilet-japan.pages.dev`、next-on-pages時代の残骸）の削除判断
+- Search Console・IndexNow等の送信先URLを新ドメイン（`*.workers.dev`）に更新が必要か確認
+- 独自ドメイン取得の要否は引き続き保留（`*.workers.dev`のままで運用継続中）
 
 ## ⚠️ AdSense不承認への対応（2026-07-05）
 **原因**: AdSenseダッシュボードの「サイト」ページで「有用性の低いコンテンツ」のステータス。診断の結果、トイレ個別ページ1,142件中632件（55%）が施設名の無い汎用プレースホルダー（「Public Toilet in Tokyo」等）で、地図上の座標以外に固有情報が無いことが判明。EN/JA合計で約1,264ページに及び、全体の3割以上を占めていたため、これが有力な原因と判断。
