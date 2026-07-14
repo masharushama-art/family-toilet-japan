@@ -3,7 +3,8 @@
 最終更新: 2026-07-14（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
-- **本番URL移行**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.masharu-shama.workers.dev`**（Cloudflare Workers、2026-07-14完了）
+- **本番URL**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.familytoiletjapan.workers.dev`**（Cloudflare Workers、2026-07-14完了。アカウント共有サブドメインを個人名`masharu-shama`から`familytoiletjapan`に変更済み）
+- AdSense: Vercel版(`vercel.app`)は削除し、新URL(`familytoiletjapan.workers.dev`)を新規サイトとして登録・再審査中（旧Vercel向けの審査結果は待たずそのまま放置でOK）
 - ビルド: 3,515ページ（トイレ個別2,030 / 駅スポット226×4言語 / ガイド65×4言語 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、ダークモード済み
 - ⚠️ OGP画像: 動的セグメントを含むもの（都市・多言語ガイド・スポット、計8ルート）は撤去したまま（下記参照）。個別ガイド等の静的OGP画像は生存
