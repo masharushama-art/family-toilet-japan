@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = CITIES[city as CitySlug];
   const koName = KO_NAMES[city as CitySlug]!;
   const stats = getCityStats(city as CitySlug);
-  const BASE = "https://family-toilet-japan.vercel.app";
+  const BASE = "https://familytoiletjapan.com";
   return {
     title: `${koName} 기저귀 교환대・가족 화장실 ${stats.withChangingTable}곳 | Family Toilet Japan`,
     description: `${koName}에서 기저귀 교환대가 있는 화장실을 지도로 검색. ${stats.total}곳 이상 수록, 무료・회원가입 불필요. 아기와 함께하는 일본 여행 필수 앱.`,
@@ -116,8 +116,8 @@ export default async function KoCityPage({ params }: Props) {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "패밀리 토일렛 재팬", item: "https://family-toilet-japan.vercel.app/ko" },
-              { "@type": "ListItem", position: 2, name: `${koName} 가족 화장실`, item: `https://family-toilet-japan.vercel.app/ko/${city}` },
+              { "@type": "ListItem", position: 1, name: "패밀리 토일렛 재팬", item: "https://familytoiletjapan.com/ko" },
+              { "@type": "ListItem", position: 2, name: `${koName} 가족 화장실`, item: `https://familytoiletjapan.com/ko/${city}` },
             ],
           }),
         }}

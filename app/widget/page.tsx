@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES } from "../lib/toilet-data";
 
-const BASE = "https://family-toilet-japan.vercel.app";
+const BASE = "https://familytoiletjapan.com";
 
 export const metadata: Metadata = {
   title: "Embed a Free Toilet Map Widget — Family Toilet Japan",

@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = CITIES[city as CitySlug];
   const zhName = ZH_NAMES[city as CitySlug]!;
   const stats = getCityStats(city as CitySlug);
-  const BASE = "https://family-toilet-japan.vercel.app";
+  const BASE = "https://familytoiletjapan.com";
   return {
     title: `${zhName}嬰兒換尿布台・親子廁所 ${stats.withChangingTable}處 | Family Toilet Japan`,
     description: `在${zhName}尋找有換尿布台的廁所。收錄${stats.total}處以上，免費使用，無需註冊。帶嬰兒旅遊的必備工具。`,
@@ -116,8 +116,8 @@ export default async function ZhCityPage({ params }: Props) {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "日本家庭廁所", item: "https://family-toilet-japan.vercel.app/zh" },
-              { "@type": "ListItem", position: 2, name: `${zhName}親子廁所`, item: `https://family-toilet-japan.vercel.app/zh/${city}` },
+              { "@type": "ListItem", position: 1, name: "日本家庭廁所", item: "https://familytoiletjapan.com/zh" },
+              { "@type": "ListItem", position: 2, name: `${zhName}親子廁所`, item: `https://familytoiletjapan.com/zh/${city}` },
             ],
           }),
         }}

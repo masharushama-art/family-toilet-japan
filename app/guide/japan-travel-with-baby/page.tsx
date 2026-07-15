@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "family friendly japan",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/japan-travel-with-baby",
+    canonical: "https://familytoiletjapan.com/guide/japan-travel-with-baby",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/japan-travel-with-baby",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/japan-travel-with-baby",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/japan-travel-with-baby",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/japan-travel-with-baby",
+      en: "https://familytoiletjapan.com/guide/japan-travel-with-baby",
+      ja: "https://familytoiletjapan.com/ja/guide/japan-travel-with-baby",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/japan-travel-with-baby",
+      ko: "https://familytoiletjapan.com/ko/guide/japan-travel-with-baby",
     },
   },
 };

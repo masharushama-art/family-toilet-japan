@@ -15,7 +15,7 @@ function getCityCount(slug: string): number {
   }
 }
 
-const OG_IMAGE = "https://family-toilet-japan.vercel.app/og-image.png";
+const OG_IMAGE = "https://familytoiletjapan.com/og-image.png";
 
 export const metadata: Metadata = {
   title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "Family Toilet Japan — Find Family-Friendly Toilets with Baby Changing Tables",
     description: "Free map of 16,000+ family-friendly toilets in Japan. Find toilets with baby changing tables, wheelchair access, and 24-hour facilities in Tokyo, Osaka, Kyoto, Nagoya & Yokohama.",
     type: "website",
-    url: "https://family-toilet-japan.vercel.app",
+    url: "https://familytoiletjapan.com",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Family Toilet Japan" }],
   },
   twitter: {
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
     images: [OG_IMAGE],
   },
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app",
+    canonical: "https://familytoiletjapan.com",
     languages: {
-      "en":        "https://family-toilet-japan.vercel.app",
-      "ja":        "https://family-toilet-japan.vercel.app/ja",
-      "zh-TW":     "https://family-toilet-japan.vercel.app/zh",
-      "ko":        "https://family-toilet-japan.vercel.app/ko",
-      "x-default": "https://family-toilet-japan.vercel.app",
+      "en":        "https://familytoiletjapan.com",
+      "ja":        "https://familytoiletjapan.com/ja",
+      "zh-TW":     "https://familytoiletjapan.com/zh",
+      "ko":        "https://familytoiletjapan.com/ko",
+      "x-default": "https://familytoiletjapan.com",
     },
   },
 };
@@ -500,11 +500,11 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "WebSite",
             name: "Family Toilet Japan",
-            url: "https://family-toilet-japan.vercel.app",
+            url: "https://familytoiletjapan.com",
             description: "Find family-friendly toilets with baby changing tables in Japan",
             potentialAction: {
               "@type": "SearchAction",
-              target: "https://family-toilet-japan.vercel.app/map",
+              target: "https://familytoiletjapan.com/map",
             },
           }),
         }}

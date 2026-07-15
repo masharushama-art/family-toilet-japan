@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "osaka family facilities",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-osaka",
+    canonical: "https://familytoiletjapan.com/guide/best-baby-changing-facilities-osaka",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-osaka",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/best-baby-changing-facilities-osaka",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/best-baby-changing-facilities-osaka",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/best-baby-changing-facilities-osaka",
+      en: "https://familytoiletjapan.com/guide/best-baby-changing-facilities-osaka",
+      ja: "https://familytoiletjapan.com/ja/guide/best-baby-changing-facilities-osaka",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/best-baby-changing-facilities-osaka",
+      ko: "https://familytoiletjapan.com/ko/guide/best-baby-changing-facilities-osaka",
     },
   },
 };

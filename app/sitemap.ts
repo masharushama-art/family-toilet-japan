@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SPOT_SLUGS } from "./lib/spots";
 
-const BASE_URL = "https://family-toilet-japan.vercel.app";
+const BASE_URL = "https://familytoiletjapan.com";
 
 const CITY_SLUGS = [
   "tokyo","yokohama","chiba","saitama","ibaraki","tochigi","gunma",

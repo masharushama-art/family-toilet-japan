@@ -3,7 +3,7 @@
 // 使い方: node scripts/indexnow.js
 //   環境変数 INDEXNOW_HOST が未設定なら本番ホストを使う
 
-const HOST = process.env.INDEXNOW_HOST || "family-toilet-japan.vercel.app";
+const HOST = process.env.INDEXNOW_HOST || "familytoiletjapan.com";
 const KEY = "76cee36382e74b6fbcf8a6c0e26db84c";
 const BASE = `https://${HOST}`;
 

@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "miyagi family travel",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/sendai-family-travel-tips",
+    canonical: "https://familytoiletjapan.com/guide/sendai-family-travel-tips",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/sendai-family-travel-tips",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/sendai-family-travel-tips",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/sendai-family-travel-tips",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/sendai-family-travel-tips",
+      en: "https://familytoiletjapan.com/guide/sendai-family-travel-tips",
+      ja: "https://familytoiletjapan.com/ja/guide/sendai-family-travel-tips",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/sendai-family-travel-tips",
+      ko: "https://familytoiletjapan.com/ko/guide/sendai-family-travel-tips",
     },
   },
 };

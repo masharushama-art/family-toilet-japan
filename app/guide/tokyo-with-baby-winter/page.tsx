@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "japan onsen with baby",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/tokyo-with-baby-winter",
+    canonical: "https://familytoiletjapan.com/guide/tokyo-with-baby-winter",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/tokyo-with-baby-winter",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/tokyo-with-baby-winter",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/tokyo-with-baby-winter",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/tokyo-with-baby-winter",
+      en: "https://familytoiletjapan.com/guide/tokyo-with-baby-winter",
+      ja: "https://familytoiletjapan.com/ja/guide/tokyo-with-baby-winter",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/tokyo-with-baby-winter",
+      ko: "https://familytoiletjapan.com/ko/guide/tokyo-with-baby-winter",
     },
   },
 };

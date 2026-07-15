@@ -15,7 +15,7 @@ import { CITY_GUIDE_SLUGS } from "../../../../components/SpotPageView";
 import PageViewTracker from "../../../../components/PageViewTracker";
 import CleanlinessVote from "../../../../components/CleanlinessVote";
 
-const BASE = "https://family-toilet-japan.vercel.app";
+const BASE = "https://familytoiletjapan.com";
 
 export const dynamicParams = false;
 

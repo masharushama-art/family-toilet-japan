@@ -5,7 +5,7 @@ export const ZH_KO_CITIES = new Set([
   "okinawa","chiba","saitama",
 ]);
 
-export const BASE = "https://family-toilet-japan.vercel.app";
+export const BASE = "https://familytoiletjapan.com";
 
 /** 都市に応じた hreflang languages オブジェクトを返す */
 export function cityAlternates(city: string) {
