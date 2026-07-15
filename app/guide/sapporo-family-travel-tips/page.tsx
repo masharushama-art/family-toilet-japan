@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "odori park baby",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/sapporo-family-travel-tips",
+    canonical: "https://familytoiletjapan.com/guide/sapporo-family-travel-tips",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/sapporo-family-travel-tips",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/sapporo-family-travel-tips",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/sapporo-family-travel-tips",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/sapporo-family-travel-tips",
+      en: "https://familytoiletjapan.com/guide/sapporo-family-travel-tips",
+      ja: "https://familytoiletjapan.com/ja/guide/sapporo-family-travel-tips",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/sapporo-family-travel-tips",
+      ko: "https://familytoiletjapan.com/ko/guide/sapporo-family-travel-tips",
     },
   },
 };

@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     "summer festival toilet japan",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/summer-festivals-with-kids-japan",
+    canonical: "https://familytoiletjapan.com/guide/summer-festivals-with-kids-japan",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/summer-festivals-with-kids-japan",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/summer-festivals-with-kids-japan",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/summer-festivals-with-kids-japan",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/summer-festivals-with-kids-japan",
+      en: "https://familytoiletjapan.com/guide/summer-festivals-with-kids-japan",
+      ja: "https://familytoiletjapan.com/ja/guide/summer-festivals-with-kids-japan",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/summer-festivals-with-kids-japan",
+      ko: "https://familytoiletjapan.com/ko/guide/summer-festivals-with-kids-japan",
     },
   },
 };

@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "kyushu family travel",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/fukuoka-family-travel-tips",
+    canonical: "https://familytoiletjapan.com/guide/fukuoka-family-travel-tips",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/fukuoka-family-travel-tips",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/fukuoka-family-travel-tips",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/fukuoka-family-travel-tips",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/fukuoka-family-travel-tips",
+      en: "https://familytoiletjapan.com/guide/fukuoka-family-travel-tips",
+      ja: "https://familytoiletjapan.com/ja/guide/fukuoka-family-travel-tips",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/fukuoka-family-travel-tips",
+      ko: "https://familytoiletjapan.com/ko/guide/fukuoka-family-travel-tips",
     },
   },
 };

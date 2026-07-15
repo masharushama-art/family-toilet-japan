@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "osaka kids travel tips",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/osaka-family-travel-tips",
+    canonical: "https://familytoiletjapan.com/guide/osaka-family-travel-tips",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/osaka-family-travel-tips",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/osaka-family-travel-tips",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/osaka-family-travel-tips",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/osaka-family-travel-tips",
+      en: "https://familytoiletjapan.com/guide/osaka-family-travel-tips",
+      ja: "https://familytoiletjapan.com/ja/guide/osaka-family-travel-tips",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/osaka-family-travel-tips",
+      ko: "https://familytoiletjapan.com/ko/guide/osaka-family-travel-tips",
     },
   },
 };

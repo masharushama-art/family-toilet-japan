@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!(city in CITIES)) return {};
   const c = CITIES[city as CitySlug];
   const stats = getCityStats(city as CitySlug);
-  const BASE = "https://family-toilet-japan.vercel.app";
+  const BASE = "https://familytoiletjapan.com";
   return {
     title: `${c.jaName}のおむつ替え台・ファミリートイレ ${stats.withChangingTable}件 | Family Toilet Japan`,
     description: `${c.jaName}のおむつ替え台付きトイレ・ファミリートイレを地図で検索。${stats.total}件以上収録、無料・登録不要。赤ちゃん連れ・子連れ旅行に。`,
@@ -128,8 +128,8 @@ export default async function JaCityPage({ params }: Props) {
               "@context": "https://schema.org",
               "@type": "BreadcrumbList",
               itemListElement: [
-                { "@type": "ListItem", position: 1, name: "ファミリートイレジャパン", item: "https://family-toilet-japan.vercel.app/ja" },
-                { "@type": "ListItem", position: 2, name: `${c.jaName}のファミリートイレ`, item: `https://family-toilet-japan.vercel.app/ja/${city}` },
+                { "@type": "ListItem", position: 1, name: "ファミリートイレジャパン", item: "https://familytoiletjapan.com/ja" },
+                { "@type": "ListItem", position: 2, name: `${c.jaName}のファミリートイレ`, item: `https://familytoiletjapan.com/ja/${city}` },
               ],
             },
             {

@@ -152,7 +152,7 @@ export default async function CityPage({ params }: Props) {
         </Link>
         <div className="mt-4 flex justify-center">
           <ShareButtons
-            url={`https://family-toilet-japan.vercel.app/${city}`}
+            url={`https://familytoiletjapan.com/${city}`}
             text={`Find family-friendly toilets in ${c.name}, Japan — ${stats.total}+ locations with baby changing tables 🍼`}
           />
         </div>
@@ -248,8 +248,8 @@ export default async function CityPage({ params }: Props) {
               "@context": "https://schema.org",
               "@type": "BreadcrumbList",
               itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Family Toilet Japan", item: "https://family-toilet-japan.vercel.app" },
-                { "@type": "ListItem", position: 2, name: c.name, item: `https://family-toilet-japan.vercel.app/${city}` },
+                { "@type": "ListItem", position: 1, name: "Family Toilet Japan", item: "https://familytoiletjapan.com" },
+                { "@type": "ListItem", position: 2, name: c.name, item: `https://familytoiletjapan.com/${city}` },
               ],
             },
             {
@@ -257,7 +257,7 @@ export default async function CityPage({ params }: Props) {
               "@type": "WebPage",
               name: `Family Friendly Toilets in ${c.name}`,
               description: `Find ${stats.total}+ family-friendly toilets in ${c.name}, Japan`,
-              url: `https://family-toilet-japan.vercel.app/${city}`,
+              url: `https://familytoiletjapan.com/${city}`,
             },
             {
               "@context": "https://schema.org",

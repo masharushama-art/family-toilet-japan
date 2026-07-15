@@ -722,7 +722,7 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
       {/* embedモード: 出典リンク */}
       {embed && (
         <a
-          href="https://family-toilet-japan.vercel.app"
+          href="https://familytoiletjapan.com"
           target="_blank"
           rel="noopener noreferrer"
           className="absolute top-2 left-2 z-[1000] bg-white/90 text-sky-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm hover:bg-white"

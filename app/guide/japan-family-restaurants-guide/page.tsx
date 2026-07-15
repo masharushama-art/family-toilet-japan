@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "japan convenience store baby food",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/japan-family-restaurants-guide",
+    canonical: "https://familytoiletjapan.com/guide/japan-family-restaurants-guide",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/japan-family-restaurants-guide",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/japan-family-restaurants-guide",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/japan-family-restaurants-guide",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/japan-family-restaurants-guide",
+      en: "https://familytoiletjapan.com/guide/japan-family-restaurants-guide",
+      ja: "https://familytoiletjapan.com/ja/guide/japan-family-restaurants-guide",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/japan-family-restaurants-guide",
+      ko: "https://familytoiletjapan.com/ko/guide/japan-family-restaurants-guide",
     },
   },
 };

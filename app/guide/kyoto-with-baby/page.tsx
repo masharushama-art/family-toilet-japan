@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "kyoto kids travel tips",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/kyoto-with-baby",
+    canonical: "https://familytoiletjapan.com/guide/kyoto-with-baby",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/kyoto-with-baby",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/kyoto-with-baby",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/kyoto-with-baby",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/kyoto-with-baby",
+      en: "https://familytoiletjapan.com/guide/kyoto-with-baby",
+      ja: "https://familytoiletjapan.com/ja/guide/kyoto-with-baby",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/kyoto-with-baby",
+      ko: "https://familytoiletjapan.com/ko/guide/kyoto-with-baby",
     },
   },
 };

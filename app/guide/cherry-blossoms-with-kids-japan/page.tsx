@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     "cherry blossom toilet japan",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/cherry-blossoms-with-kids-japan",
+    canonical: "https://familytoiletjapan.com/guide/cherry-blossoms-with-kids-japan",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/cherry-blossoms-with-kids-japan",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/cherry-blossoms-with-kids-japan",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/cherry-blossoms-with-kids-japan",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/cherry-blossoms-with-kids-japan",
+      en: "https://familytoiletjapan.com/guide/cherry-blossoms-with-kids-japan",
+      ja: "https://familytoiletjapan.com/ja/guide/cherry-blossoms-with-kids-japan",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/cherry-blossoms-with-kids-japan",
+      ko: "https://familytoiletjapan.com/ko/guide/cherry-blossoms-with-kids-japan",
     },
   },
 };

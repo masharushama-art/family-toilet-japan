@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "FAQ — Family Toilet Japan | Find Baby Changing Tables in Japan",
   description: "Frequently asked questions about finding family-friendly toilets and baby changing tables in Japan. How to use the map, what data we have, and tips for traveling with babies.",
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/faq" },
+  alternates: { canonical: "https://familytoiletjapan.com/faq" },
 };
 
 const faqs = [

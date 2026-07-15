@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "ryukyu family travel",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/naha-okinawa-family-travel-tips",
+    canonical: "https://familytoiletjapan.com/guide/naha-okinawa-family-travel-tips",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/naha-okinawa-family-travel-tips",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/naha-okinawa-family-travel-tips",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/naha-okinawa-family-travel-tips",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/naha-okinawa-family-travel-tips",
+      en: "https://familytoiletjapan.com/guide/naha-okinawa-family-travel-tips",
+      ja: "https://familytoiletjapan.com/ja/guide/naha-okinawa-family-travel-tips",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/naha-okinawa-family-travel-tips",
+      ko: "https://familytoiletjapan.com/ko/guide/naha-okinawa-family-travel-tips",
     },
   },
 };

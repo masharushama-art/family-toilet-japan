@@ -10,7 +10,7 @@ import GuideScrollTracker from "../../../components/GuideScrollTracker";
 import { AdUnit } from "../../../components/AdSense";
 import { JA_GUIDES, JA_GUIDE_SLUGS } from "../../../lib/guides-ja";
 
-const BASE = "https://family-toilet-japan.vercel.app";
+const BASE = "https://familytoiletjapan.com";
 
 export const dynamicParams = false;
 

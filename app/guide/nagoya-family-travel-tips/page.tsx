@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "nagoya aquarium baby",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/nagoya-family-travel-tips",
+    canonical: "https://familytoiletjapan.com/guide/nagoya-family-travel-tips",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/nagoya-family-travel-tips",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/nagoya-family-travel-tips",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/nagoya-family-travel-tips",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/nagoya-family-travel-tips",
+      en: "https://familytoiletjapan.com/guide/nagoya-family-travel-tips",
+      ja: "https://familytoiletjapan.com/ja/guide/nagoya-family-travel-tips",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/nagoya-family-travel-tips",
+      ko: "https://familytoiletjapan.com/ko/guide/nagoya-family-travel-tips",
     },
   },
 };

@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "changing table tokyo department store",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-tokyo",
+    canonical: "https://familytoiletjapan.com/guide/best-baby-changing-facilities-tokyo",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/best-baby-changing-facilities-tokyo",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/best-baby-changing-facilities-tokyo",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/best-baby-changing-facilities-tokyo",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/best-baby-changing-facilities-tokyo",
+      en: "https://familytoiletjapan.com/guide/best-baby-changing-facilities-tokyo",
+      ja: "https://familytoiletjapan.com/ja/guide/best-baby-changing-facilities-tokyo",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/best-baby-changing-facilities-tokyo",
+      ko: "https://familytoiletjapan.com/ko/guide/best-baby-changing-facilities-tokyo",
     },
   },
 };

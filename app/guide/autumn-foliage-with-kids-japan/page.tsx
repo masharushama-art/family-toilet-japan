@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     "autumn foliage toilet japan",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/autumn-foliage-with-kids-japan",
+    canonical: "https://familytoiletjapan.com/guide/autumn-foliage-with-kids-japan",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/autumn-foliage-with-kids-japan",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/autumn-foliage-with-kids-japan",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/autumn-foliage-with-kids-japan",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/autumn-foliage-with-kids-japan",
+      en: "https://familytoiletjapan.com/guide/autumn-foliage-with-kids-japan",
+      ja: "https://familytoiletjapan.com/ja/guide/autumn-foliage-with-kids-japan",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/autumn-foliage-with-kids-japan",
+      ko: "https://familytoiletjapan.com/ko/guide/autumn-foliage-with-kids-japan",
     },
   },
 };

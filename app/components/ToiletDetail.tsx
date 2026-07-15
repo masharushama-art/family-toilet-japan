@@ -43,7 +43,7 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
   const [travelMode, setTravelMode] = useState<"walking"|"transit"|"driving">("walking");
   const [copied, setCopied] = useState(false);
 
-  const shareLink = `https://family-toilet-japan.vercel.app/map?id=${toilet.id}${city ? `&city=${city}` : ""}`;
+  const shareLink = `https://familytoiletjapan.com/map?id=${toilet.id}${city ? `&city=${city}` : ""}`;
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareLink);

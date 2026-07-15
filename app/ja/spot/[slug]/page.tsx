@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import SpotPageView from "../../../components/SpotPageView";
 import { getSpot, SPOT_SLUGS } from "../../../lib/spots";
 
-const BASE = "https://family-toilet-japan.vercel.app";
+const BASE = "https://familytoiletjapan.com";
 
 export const dynamicParams = false;
 

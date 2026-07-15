@@ -5,7 +5,7 @@ import { I18nProvider } from "./i18n/provider";
 import InstallBanner from "./components/InstallBanner";
 import CookieConsent from "./components/CookieConsent";
 
-const BASE_URL = "https://family-toilet-japan.vercel.app";
+const BASE_URL = "https://familytoiletjapan.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
