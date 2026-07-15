@@ -18,12 +18,12 @@ export const metadata: Metadata = {
     "japan travel with toddler packing",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/traveling-japan-with-toddler-checklist",
+    canonical: "https://familytoiletjapan.com/guide/traveling-japan-with-toddler-checklist",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/traveling-japan-with-toddler-checklist",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/traveling-japan-with-toddler-checklist",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/traveling-japan-with-toddler-checklist",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/traveling-japan-with-toddler-checklist",
+      en: "https://familytoiletjapan.com/guide/traveling-japan-with-toddler-checklist",
+      ja: "https://familytoiletjapan.com/ja/guide/traveling-japan-with-toddler-checklist",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/traveling-japan-with-toddler-checklist",
+      ko: "https://familytoiletjapan.com/ko/guide/traveling-japan-with-toddler-checklist",
     },
   },
 };

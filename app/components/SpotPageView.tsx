@@ -19,7 +19,7 @@ const TICKETED_SPOTS: Record<string, string> = {
   "arashiyama": "Arashiyama bamboo tour",
 };
 
-const BASE = "https://family-toilet-japan.vercel.app";
+const BASE = "https://familytoiletjapan.com";
 
 export type SpotLang = "en" | "ja" | "zh" | "ko";
 

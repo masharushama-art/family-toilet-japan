@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     "아이와 일본 관광",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/ko",
+    canonical: "https://familytoiletjapan.com/ko",
     languages: {
-      "en":        "https://family-toilet-japan.vercel.app",
-      "ja":        "https://family-toilet-japan.vercel.app/ja",
-      "zh-TW":     "https://family-toilet-japan.vercel.app/zh",
-      "ko":        "https://family-toilet-japan.vercel.app/ko",
-      "x-default": "https://family-toilet-japan.vercel.app",
+      "en":        "https://familytoiletjapan.com",
+      "ja":        "https://familytoiletjapan.com/ja",
+      "zh-TW":     "https://familytoiletjapan.com/zh",
+      "ko":        "https://familytoiletjapan.com/ko",
+      "x-default": "https://familytoiletjapan.com",
     },
   },
 };

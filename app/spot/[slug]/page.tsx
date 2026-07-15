@@ -4,7 +4,7 @@ import SpotPageView from "../../components/SpotPageView";
 import { getSpot, SPOT_SLUGS } from "../../lib/spots";
 import { CITIES, type CitySlug } from "../../lib/toilet-data";
 
-const BASE = "https://family-toilet-japan.vercel.app";
+const BASE = "https://familytoiletjapan.com";
 
 export const dynamicParams = false;
 

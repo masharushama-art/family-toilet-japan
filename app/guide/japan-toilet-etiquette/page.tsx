@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "toilet sound machine japan",
     "otohime japan",
   ],
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/guide/japan-toilet-etiquette" },
+  alternates: { canonical: "https://familytoiletjapan.com/guide/japan-toilet-etiquette" },
 };
 
 const rules = [

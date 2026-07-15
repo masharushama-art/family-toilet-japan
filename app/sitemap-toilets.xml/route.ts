@@ -1,6 +1,6 @@
 import { getIndexableDetailPageParams } from "../lib/toilet-data";
 
-const BASE = "https://family-toilet-japan.vercel.app";
+const BASE = "https://familytoiletjapan.com";
 
 // ビルド時に静的生成（fs はビルド時のみ実行される）
 export const dynamic = "force-static";

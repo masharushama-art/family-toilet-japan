@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     "hiroshima peace park baby",
   ],
   alternates: {
-    canonical: "https://family-toilet-japan.vercel.app/guide/hiroshima-family-travel-tips",
+    canonical: "https://familytoiletjapan.com/guide/hiroshima-family-travel-tips",
     languages: {
-      en: "https://family-toilet-japan.vercel.app/guide/hiroshima-family-travel-tips",
-      ja: "https://family-toilet-japan.vercel.app/ja/guide/hiroshima-family-travel-tips",
-      "zh-TW": "https://family-toilet-japan.vercel.app/zh/guide/hiroshima-family-travel-tips",
-      ko: "https://family-toilet-japan.vercel.app/ko/guide/hiroshima-family-travel-tips",
+      en: "https://familytoiletjapan.com/guide/hiroshima-family-travel-tips",
+      ja: "https://familytoiletjapan.com/ja/guide/hiroshima-family-travel-tips",
+      "zh-TW": "https://familytoiletjapan.com/zh/guide/hiroshima-family-travel-tips",
+      ko: "https://familytoiletjapan.com/ko/guide/hiroshima-family-travel-tips",
     },
   },
 };

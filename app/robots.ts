@@ -8,8 +8,8 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ["/api/", "/_next/"],
     },
     sitemap: [
-      "https://family-toilet-japan.vercel.app/sitemap.xml",
-      "https://family-toilet-japan.vercel.app/sitemap-toilets.xml",
+      "https://familytoiletjapan.com/sitemap.xml",
+      "https://familytoiletjapan.com/sitemap-toilets.xml",
     ],
   };
 }

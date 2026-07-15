@@ -9,7 +9,7 @@ import {
 import { getSpotsByCity } from "../../lib/spots";
 import { AdUnit } from "../../components/AdSense";
 
-const BASE = "https://family-toilet-japan.vercel.app";
+const BASE = "https://familytoiletjapan.com";
 
 interface Props {
   params: Promise<{ city: string; category: string }>;

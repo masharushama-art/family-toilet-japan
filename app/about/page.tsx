@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About Family Toilet Japan — Our Mission & Data Sources",
   description: "Learn about Family Toilet Japan — why we built it, how our data works, and our mission to help families traveling Japan find clean, safe toilets with baby changing facilities.",
-  alternates: { canonical: "https://family-toilet-japan.vercel.app/about" },
+  alternates: { canonical: "https://familytoiletjapan.com/about" },
 };
 
 export default function AboutPage() {
