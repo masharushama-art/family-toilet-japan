@@ -33,7 +33,9 @@
 
 **残タスク**:
 - 動的OGP画像（都市・多言語ガイド・スポット、8ルート）の復活を検討。OpenNext移行後なら技術的には可能なはずだが未検証。SNSシェア時の見た目のみに影響し機能的な支障はないため優先度は中〜低
-- 旧Vercelプロジェクト・旧Cloudflare Pagesプロジェクト（`family-toilet-japan.pages.dev`、next-on-pages時代の残骸）の削除判断
+- ✅ 旧Vercelプロジェクトの削除判断（2026-07-18確認）: `family-toilet-japan.vercel.app`への全パスアクセスが`404 DEPLOYMENT_NOT_FOUND`（Vercelプラットフォーム自身が返すエラー）であることを確認。既に削除済みかドメインのプロダクションエイリアスが解除済みと推定され、実害なし・追加対応不要と判断
+  - 背景: GSCから「重複しています。ユーザーにより、正規ページとして選択されていません」の通知（対象: vercel.app）があり301リダイレクト設定を検討したが、配信先自体が存在せずリダイレクト設定は技術的に不可能と判明。GSCの古いインデックス情報に起因するもので、再クロールにより自然にインデックスから外れるのを待つ方針とした（追加対応なし）
+- 旧Cloudflare Pagesプロジェクト（`family-toilet-japan.pages.dev`、next-on-pages時代の残骸）の削除判断は未確認・未対応のまま
 - Search Console・IndexNow等の送信先URLを新ドメイン（`*.workers.dev`）に更新が必要か確認
 - 独自ドメイン取得の要否は引き続き保留（`*.workers.dev`のままで運用継続中）
 
