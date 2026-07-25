@@ -8,6 +8,7 @@ import {
 } from "../../lib/toilet-data";
 import { getSpotsByCity } from "../../lib/spots";
 import { AdUnit } from "../../components/AdSense";
+import { THIN_PAGES_NOINDEX } from "../../lib/feature-flags";
 
 const BASE = "https://familytoiletjapan.com";
 
@@ -36,6 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `family toilet ${c.name.toLowerCase()}`,
     ],
     alternates: { canonical: `${BASE}/${city}/${category}` },
+    ...(THIN_PAGES_NOINDEX ? { robots: { index: false, follow: true } } : {}),
   };
 }
 

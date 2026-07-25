@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import SpotPageView from "../../../components/SpotPageView";
 import { getSpot, SPOT_SLUGS } from "../../../lib/spots";
+import { THIN_PAGES_NOINDEX } from "../../../lib/feature-flags";
 
 const BASE = "https://familytoiletjapan.com";
 
@@ -29,6 +30,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
         ko: `${BASE}/ko/spot/${slug}`,
       },
     },
+    ...(THIN_PAGES_NOINDEX ? { robots: { index: false, follow: true } } : {}),
   };
 }
 

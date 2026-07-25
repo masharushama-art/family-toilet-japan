@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SPOT_SLUGS } from "./lib/spots";
+import { THIN_PAGES_NOINDEX } from "./lib/feature-flags";
 
 const BASE_URL = "https://familytoiletjapan.com";
 
@@ -97,7 +98,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const categoryPages = CITY_SLUGS.flatMap((city) =>
+  // THIN_PAGES_NOINDEX中は noindex を設定しているためサイトマップからも除外（ROADMAP.md参照）
+  const categoryPages = THIN_PAGES_NOINDEX ? [] : CITY_SLUGS.flatMap((city) =>
     CATEGORY_SLUGS.map((cat) => ({
       url: `${BASE_URL}/${city}/${cat}`,
       lastModified: now,
@@ -155,7 +157,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  const spotPages = SPOT_SLUGS.flatMap((slug) => [
+  // THIN_PAGES_NOINDEX中は noindex を設定しているためサイトマップからも除外（ROADMAP.md参照）
+  const spotPages = THIN_PAGES_NOINDEX ? [] : SPOT_SLUGS.flatMap((slug) => [
     { url: `${BASE_URL}/spot/${slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
     { url: `${BASE_URL}/ja/spot/${slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.6 },
     { url: `${BASE_URL}/zh/spot/${slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.6 },
