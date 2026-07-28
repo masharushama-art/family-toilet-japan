@@ -111,13 +111,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `Family Friendly Toilets in ${c.name} | Family Toilet Japan`,
       description: `Find ${getCityStats(city as CitySlug).total}+ toilets in ${c.name} with baby changing tables and wheelchair access.`,
-      images: [{ url: `${BASE}/${city}/opengraph-image`, width: 1200, height: 630 }],
+      images: [{ url: `${BASE}/og-image.png`, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: `Family Friendly Toilets in ${c.name} | Family Toilet Japan`,
       description: `Find ${getCityStats(city as CitySlug).total}+ toilets in ${c.name} with baby changing tables.`,
-      images: [`${BASE}/${city}/opengraph-image`],
+      images: [`${BASE}/og-image.png`],
     },
   };
 }
