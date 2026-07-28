@@ -2,17 +2,28 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import MapPageClient from "../components/MapPageClient";
 
-export const metadata: Metadata = {
-  title: "Map — Find Family Toilets Near You | Family Toilet Japan",
-  description:
-    "Interactive map of 7,000+ family-friendly toilets in Japan with baby changing tables. Find the nearest clean toilet in Tokyo, Osaka, Kyoto, and Nagoya.",
-  keywords: [
-    "family toilet map japan",
-    "baby changing table map tokyo",
-    "find toilet japan",
-    "nearest toilet japan map",
-  ],
-};
+interface Props {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const params = await searchParams;
+  // id/city付きは単一ピンを表示するだけの薄い派生URLで、Search Consoleで
+  // 「重複しています。ユーザーにより、正規ページとして選択されていません」多発の原因になっていたため非インデックス化
+  const isDeepLink = params.id !== undefined || params.city !== undefined;
+  return {
+    title: "Map — Find Family Toilets Near You | Family Toilet Japan",
+    description:
+      "Interactive map of 7,000+ family-friendly toilets in Japan with baby changing tables. Find the nearest clean toilet in Tokyo, Osaka, Kyoto, and Nagoya.",
+    keywords: [
+      "family toilet map japan",
+      "baby changing table map tokyo",
+      "find toilet japan",
+      "nearest toilet japan map",
+    ],
+    ...(isDeepLink ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 const MapFallback = () => (
   <div className="flex flex-col items-center justify-center h-screen bg-sky-50 px-6 text-center">
