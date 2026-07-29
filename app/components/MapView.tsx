@@ -14,6 +14,7 @@ import { getHistory, clearHistory, formatTimeAgo, type HistoryEntry } from "../l
 import { getNearestCity, CITIES_CONFIG } from "../lib/cities-config";
 import { calcDistance, formatDistance, distancePointToSegment } from "../lib/distance";
 import { requestNotificationPermission, checkProximity } from "../lib/proximity-alert";
+import { toAsciiToiletId } from "../lib/ward-mapping";
 
 // Leafletデフォルトアイコン修正
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -435,10 +436,15 @@ export default function MapView({ initialCenter, city = "tokyo", initialToiletId
   }, [selected, clusterGroup, showList, showFavs, showHistory, showFilter]);
 
   // シェアリンク経由: 指定IDのトイレを自動選択してflyTo
+  // 東京オープンデータ由来トイレは区名を含むIDをASCII化したため（区名が生の日本語だと
+  // OpenNext/Cloudflareで404になる不具合の対策）、旧ID形式で共有された/ブックマークされた
+  // リンクも変換して探す後方互換ルックアップを行う。
   const initialIdHandled = useRef(false);
   useEffect(() => {
     if (!initialToiletId || initialIdHandled.current) return;
-    const found = toilets.find((t) => t.id === initialToiletId);
+    const found =
+      toilets.find((t) => t.id === initialToiletId) ??
+      toilets.find((t) => t.id === toAsciiToiletId(initialToiletId));
     if (!found) return;
     initialIdHandled.current = true;
     setSelected(found);

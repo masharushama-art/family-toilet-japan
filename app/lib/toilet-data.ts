@@ -119,23 +119,11 @@ export function getAllDetailPageParams(): { city: string; id: string }[] {
   );
 }
 
-// 2026-07-28: 東京の自治体オープンデータ由来ページ（opendata_tokyo_*、
-// 千代田区・中央区・新宿区・台東区・目黒区・杉並区・荒川区・板橋区・
-// 江東区・江戸川区の10区、584/1004件）が本番で404を返す不具合を確認
-// （原因未特定。ビルド成果物・データには正しく存在するため、デプロイ/
-// インクリメンタルキャッシュ側の問題と推定）。根本修正までの応急処置として
-// サイトマップ・周辺トイレリンクから除外する。原因判明・修正後はこの関数を
-// 削除して呼び出し元のfilter呼び出しも外すこと。
-function isKnown404Toilet(t: Toilet): boolean {
-  return t.source === "opendata" && t.city === "tokyo";
-}
-
-// サイトマップ用: 施設名の無いページ（noindex対象）・404確認済みページは掲載しない
+// サイトマップ用: 施設名の無いページ（noindex対象）は掲載しない
 export function getIndexableDetailPageParams(): { city: string; id: string }[] {
   return (Object.keys(CITIES) as CitySlug[]).flatMap((city) =>
     getDetailPageToilets(city)
       .filter((t) => t.name || t.nameEn)
-      .filter((t) => !isKnown404Toilet(t))
       .map((t) => ({ city, id: t.id }))
   );
 }
@@ -145,7 +133,6 @@ export function getNearbyToilets(city: CitySlug, target: Toilet, limit = 5): Toi
     (t.lat - target.lat) ** 2 + (t.lon - target.lon) ** 2;
   return getToiletsByCity(city)
     .filter((t) => t.id !== target.id && t.changingTable)
-    .filter((t) => !isKnown404Toilet(t))
     .sort((a, b) => dist(a) - dist(b))
     .slice(0, limit);
 }
