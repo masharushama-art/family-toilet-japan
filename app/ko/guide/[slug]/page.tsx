@@ -53,7 +53,7 @@ export default async function KoGuidePage({ params }: { params: Params }) {
       </div>
 
       <div className="max-w-2xl mx-auto px-6 pt-4">
-        <ShareButtons url={`${BASE}/ko/guide/${slug}`} text={g.title} imageUrl={`${BASE}/ko/guide/${slug}/opengraph-image`} />
+        <ShareButtons url={`${BASE}/ko/guide/${slug}`} text={g.title} imageUrl={`${BASE}/og-image.png`} />
       </div>
 
       <div className="max-w-2xl mx-auto px-6 py-10">
