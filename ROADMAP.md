@@ -1,6 +1,6 @@
 # Family Toilet Japan — 改善ロードマップ
 
-最終更新: 2026-07-25（このファイルは実装のたびに更新する）
+最終更新: 2026-07-29（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
 - **本番URL**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.familytoiletjapan.workers.dev`**（Cloudflare Workers、2026-07-14完了。アカウント共有サブドメインを個人名`masharu-shama`から`familytoiletjapan`に変更済み）
@@ -12,10 +12,16 @@
 - アフィリエイト（楽天・Klook・Amazon）: 新環境でも動作確認済み
 - 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献65、カルマ2、目標50）
 
-## ⚠️ opendata_tokyo由来トイレページの本番404問題（2026-07-28）
-Search Consoleの404検出をきっかけに調査したところ、東京の自治体オープンデータ由来トイレページ（`opendata_tokyo_*`、千代田区・中央区・新宿区・台東区・目黒区・杉並区・荒川区・板橋区・江東区・江戸川区の10区、584/1004件）が本番で100%404を返すことが判明。sitemap-toilets.xml・周辺リンクからは一時除外済み（コミット参照）。
+## ✅ opendata_tokyo由来トイレページの本番404問題（2026-07-28発覚 → 2026-07-29 根本原因特定・修正済み）
+Search Consoleの404検出をきっかけに調査したところ、東京の自治体オープンデータ由来トイレページ（`opendata_tokyo_*`）が本番で100%404を返すことが判明。sitemap-toilets.xml・周辺リンクから一時除外して応急対応した後、根本原因を特定して恒久修正した。
 
-根本原因は未確定だが、R2キャッシュキーが日本語（区名）を含むIDのエンコーディング不整合で一致しない可能性が高いという仮説がある（`x-nextjs-cache: HIT`だが404が返る＝結果自体がキャッシュされている状態を確認済み）。次回対応時は`NEXT_PRIVATE_DEBUG_CACHE`等でのキャッシュキー生成ログ確認、またはR2オブジェクトの直接確認から着手する。
+**対象区数の訂正**: 発覚時のメモでは「千代田区・中央区・新宿区・台東区・目黒区・杉並区・荒川区・板橋区・江東区・江戸川区の10区、584/1004件」と記録したが、これは調査時点のデータスナップショットに基づく誤った記録だった。実際に`scripts/merge-tokyo-wards.py`の`WARD_CSVS`と現行データを照合したところ、対象は**15区・1,668件**で、上記10区に加えて墨田区・品川区・中野区・練馬区・葛飾区の5区が含まれていた。修正時（コミット参照）に15区全件を対象として扱った。
+
+**根本原因**: `@opennextjs/aws`（`@opennextjs/cloudflare`が内部で使用する共有ルーティング層）の`core/routing/matcher.ts`内`handleFallbackFalse()`が、リクエストの生パス（`rawPath`、常にパーセントエンコードされた状態で届く）を、Next.jsのprerender-manifestに格納されたデコード済みUnicode文字列とデコードせずに直接比較していたため。ASCIIのみのIDはパーセントエンコードが恒等変換になるため一致するが、非ASCII文字（日本語区名）を含むIDは常に不一致となり、`dynamicParams = false`と組み合わさって強制的に`/404`へ書き換えられていた。R2キャッシュのキー生成・保存自体は無関係で、`x-nextjs-cache: HIT`はこの強制404書き換え後にNext.js自身の`/404`（`_not-found`）ページが正しくキャッシュからHITしていただけだった。
+
+**恒久修正**: IDに含まれる区名を生の日本語からローマ字（`app/lib/ward-mapping.ts`のマッピング）に変換してASCII化。旧ID→新IDの301リダイレクトを`next.config.ts`に追加し、`/map?id=`の後方互換ルックアップも`MapView.tsx`に実装。
+
+**今後の注意点（OpenNextで非ASCIIな動的ルートを扱う場合）**: OpenNextのルーティング層には非ASCIIパスの解決に既知の制約があることを踏まえ、動的ルートのパラメータには可能な限りASCII文字を使う設計にすること。関連issue: [opennextjs-cloudflare#611](https://github.com/opennextjs/opennextjs-cloudflare/issues/611)（`dynamicParams = false`が他ルートに影響する不具合、同じ`handleFallbackFalse`周りの不具合系統）、[vercel/next.js#17642](https://github.com/vercel/next.js/issues/17642)（Next.js本体でも過去に同種の「`getStaticPaths` fallback:false + 非ASCII/非ラテン文字URLで404」issueがあった。Next.js本体では解決済みだが、OpenNextの独自ルーティング実装で同じクラスの不具合が再発した形）。
 
 ## ✅ Vercel→Cloudflare移行 完了（2026-07-14）
 **背景**: VercelのFair Use Guidelinesで「Hobbyプランは非商用利用限定。アフィリエイトリンクが主目的のサイトやAdSense広告掲載は商用利用に該当し、Pro以上のプラン必須」と判明。本サイトはアフィリエイト＋AdSenseを掲載しているため規約違反状態だった。Proプラン課金（月$20）ではなく、無料で商用利用可能なCloudflareへの移行を選択。
