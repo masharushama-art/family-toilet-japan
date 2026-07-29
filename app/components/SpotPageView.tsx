@@ -257,7 +257,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
           <ShareButtons
             url={`${BASE}${spotHref(lang, spot.slug)}`}
             text={`${spotName} — ${stats.ct} toilets with baby changing tables nearby 🍼`}
-            imageUrl={`${BASE}${spotHref(lang, spot.slug)}/opengraph-image`}
+            imageUrl={`${BASE}/og-image.png`}
           />
         </div>
 
