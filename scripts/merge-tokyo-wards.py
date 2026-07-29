@@ -46,6 +46,28 @@ WARD_CSVS = {
 
 NO_CSV_WARDS = ["港区", "文京区", "大田区", "渋谷区", "北区", "足立区", "世田谷区(XLSXのみ)"]
 
+# 区名→ローマ字マッピング（IDをASCII化するために使用）。
+# 生の日本語区名をIDに含めると、OpenNext(Cloudflare)のルーティング層が非ASCIIな
+# 動的ルートを常に404にしてしまう不具合があるため、IDはローマ字化した区名で構成する。
+# app/lib/ward-mapping.ts の TOKYO_WARD_ROMAJI と内容を同期させること。
+WARD_ROMAJI = {
+    "千代田区": "chiyoda",
+    "中央区": "chuo",
+    "新宿区": "shinjuku",
+    "台東区": "taito",
+    "墨田区": "sumida",
+    "江東区": "koto",
+    "品川区": "shinagawa",
+    "目黒区": "meguro",
+    "中野区": "nakano",
+    "杉並区": "suginami",
+    "荒川区": "arakawa",
+    "板橋区": "itabashi",
+    "練馬区": "nerima",
+    "葛飾区": "katsushika",
+    "江戸川区": "edogawa",
+}
+
 
 def main():
     dry_run = "--dry-run" in sys.argv
@@ -71,8 +93,14 @@ def main():
                 continue
             if not (lat_min <= rec["lat"] <= lat_max and lon_min <= rec["lon"] <= lon_max):
                 continue
-            # id を区名でユニーク化
-            rec["id"] = f"opendata_tokyo_{ward}_{rec['lat']:.6f}_{rec['lon']:.6f}"
+            # id を区名でユニーク化（ASCII化のためローマ字表記を使う。新しい区のCSVを
+            # 追加するときは WARD_ROMAJI にもローマ字表記を追加すること）
+            if ward not in WARD_ROMAJI:
+                raise ValueError(
+                    f"WARD_ROMAJI にローマ字表記がありません: {ward}"
+                    "（scripts/merge-tokyo-wards.py と app/lib/ward-mapping.ts の両方に追加してください）"
+                )
+            rec["id"] = f"opendata_tokyo_{WARD_ROMAJI[ward]}_{rec['lat']:.6f}_{rec['lon']:.6f}"
             rec["ward"] = ward
             newcomers.append(rec)
 
