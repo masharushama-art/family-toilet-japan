@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-06-14T16:41:16Z",
+    "timestamp_osm_base": "2026-08-01T07:25:36Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -35,8 +35,8 @@
     {
       "type": "node",
       "id": 2081761971,
-      "lat": 36.5643833,
-      "lon": 136.6495521,
+      "lat": 36.5644403,
+      "lon": 136.6495989,
       "tags": {
         "amenity": "toilets",
         "tourism": "information"
@@ -492,23 +492,96 @@
       }
     },
     {
-      "type": "way",
-      "id": 183555383,
-      "center": {
-        "lat": 36.5968215,
-        "lon": 136.6566664
-      },
-      "nodes": [
-        1986154801,
-        1986154802,
-        1939561442,
-        1939561441,
-        1986154801
-      ],
+      "type": "node",
+      "id": 13956955467,
+      "lat": 36.5723679,
+      "lon": 136.6658467,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2026-06-21",
+        "fee": "no",
+        "opening_hours": "09:00-17:00",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13980775050,
+      "lat": 36.5630086,
+      "lon": 136.6572462,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13980775051,
+      "lat": 36.5623948,
+      "lon": 136.6576782,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13980890729,
+      "lat": 36.5587147,
+      "lon": 136.6621694,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13980890730,
+      "lat": 36.5587343,
+      "lon": 136.6632675,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14028478457,
+      "lat": 36.5951481,
+      "lon": 136.6588152,
       "tags": {
         "amenity": "toilets",
-        "building": "yes",
-        "source": "Bing"
+        "female": "no",
+        "male": "yes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14028478458,
+      "lat": 36.5951488,
+      "lon": 136.6587722,
+      "tags": {
+        "amenity": "toilets",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14028478459,
+      "lat": 36.5951494,
+      "lon": 136.6587292,
+      "tags": {
+        "amenity": "toilets",
+        "female": "yes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14031227564,
+      "lat": 36.5796356,
+      "lon": 136.6465006,
+      "tags": {
+        "amenity": "toilets"
       }
     },
     {
@@ -625,10 +698,14 @@
         3081209310
       ],
       "tags": {
+        "access": "customers",
         "amenity": "toilets",
         "building": "yes",
-        "check_date": "2024-08-17",
+        "building:levels": "2",
+        "check_date": "2026-06-21",
+        "ele": "49.5",
         "fee": "no",
+        "height": "9.1",
         "mapillary": "136186988495721",
         "source": "GSI/KIBAN 2500; NARO",
         "source_ref": "http://wiki.osm.org/wiki/GSI_KIBAN",
@@ -745,7 +822,10 @@
       "tags": {
         "amenity": "toilets",
         "building": "yes",
+        "building:levels": "2",
+        "ele": "38.6",
         "fee": "no",
+        "height": "19.9",
         "mapillary": "3055384688084212",
         "source": "GSI/KIBAN 2500;NARO",
         "wheelchair": "no"
@@ -904,26 +984,6 @@
       "tags": {
         "amenity": "toilets",
         "building": "yes"
-      }
-    },
-    {
-      "type": "way",
-      "id": 1522241360,
-      "center": {
-        "lat": 36.5516429,
-        "lon": 136.6755141
-      },
-      "nodes": [
-        13881020856,
-        13881020857,
-        13881020858,
-        13881020859,
-        13881020856
-      ],
-      "tags": {
-        "amenity": "toilets",
-        "building": "yes",
-        "building:levels": "2"
       }
     }
   ]
