@@ -1,16 +1,28 @@
 # Family Toilet Japan — 改善ロードマップ
 
-最終更新: 2026-07-29（このファイルは実装のたびに更新する）
+最終更新: 2026-08-03（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
 - **本番URL**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.familytoiletjapan.workers.dev`**（Cloudflare Workers、2026-07-14完了。アカウント共有サブドメインを個人名`masharu-shama`から`familytoiletjapan`に変更済み）
 - AdSense: Vercel版(`vercel.app`)は削除し、新URL(`familytoiletjapan.workers.dev`)を新規サイトとして登録・再審査中（旧Vercel向けの審査結果は待たずそのまま放置でOK）
-- ビルド: 3,515ページ（トイレ個別2,030 / 駅スポット226×4言語 / ガイド65×4言語 / 都市・カテゴリ ほか）
+- ビルド: 3,518ページ（PR #1マージ反映後。トイレ個別2,030 / 駅スポット226×4言語 / ガイド65×4言語 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、ダークモード済み
 - ⚠️ OGP画像: 動的セグメントを含むもの（都市・多言語ガイド・スポット、計8ルート）は撤去したまま（下記参照）。個別ガイド等の静的OGP画像は生存
 - AdSense: 2026-07-05に不承認（有用性の低いコンテンツ）。原因特定・一次対応済み、再審査済み・結果待ち
 - アフィリエイト（楽天・Klook・Amazon）: 新環境でも動作確認済み
 - 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献65、カルマ2、目標50）
+
+## ✅ 月次OSMデータ自動更新: 初回PR作成の失敗原因を解消・検証・マージ完了（2026-08-01自動実行 → 2026-08-03検証・マージ）
+
+**GitHub Actions PR作成失敗の原因と対処**:
+`monthly-data-refresh.yml`（2026-07実装、`peter-evans/create-pull-request@v6`でPR自動作成）がPRを作成できていなかった。原因はワークフローYAML自体の不備ではなく、リポジトリ設定（Settings → Actions → General → Workflow permissions）がデフォルトの「読み取りのみ」になっており、デフォルト`GITHUB_TOKEN`に`pull-requests: write`相当の権限が付与されていなかったこと。ワークフローYAMLに`permissions:`ブロックを明示する対応もあり得たが、今回はリポジトリ設定側を「Read and write permissions」に変更して解消した（API確認: `default_workflow_permissions: "write"`）。2026-08-01の月次自動実行（schedule起動、run ID `30686554275`）で初めて成功し、PR #1が作成された。
+
+**PR #1検証結果（2026-08-03）**:
+- `public/data/cities/*.json`差分: 29都市ファイルで+41件（3,820→3,861）。減少した都市0件、異常な急増（最大+14%、山梨93→106）なし
+- `public/data/toilets.json`合計: 16,277→16,318（+41、上記と一致）
+- `npm run build`: エラー・警告なしで正常終了、3,518ページ生成（master比+2）
+- `/coverage`ページ統計: 合計14,464→14,505（+41）、🍼交換台1,015→1,016（+1）、♿車いす対応2,802→2,810（+8）。比率（交換台約7%・車いす約19%）に大きな変動なし
+- 上記確認の上、`gh pr merge`でマージ完了（マージコミット`a992379`）。次回（2026-09-01予定）の自動実行も同様の手順（差分件数・build・coverage統計の確認）でレビューすること
 
 ## ✅ opendata_tokyo由来トイレページの本番404問題（2026-07-28発覚 → 2026-07-29 根本原因特定・修正済み）
 Search Consoleの404検出をきっかけに調査したところ、東京の自治体オープンデータ由来トイレページ（`opendata_tokyo_*`）が本番で100%404を返すことが判明。sitemap-toilets.xml・周辺リンクから一時除外して応急対応した後、根本原因を特定して恒久修正した。
