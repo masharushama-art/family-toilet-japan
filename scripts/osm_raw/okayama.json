@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-06-14T16:43:25Z",
+    "timestamp_osm_base": "2026-08-01T07:27:36Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -714,11 +714,50 @@
     {
       "type": "node",
       "id": 13860140664,
-      "lat": 34.6521856,
-      "lon": 134.0310739,
+      "lat": 34.6521703,
+      "lon": 134.0311805,
       "tags": {
         "amenity": "toilets",
         "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13976544190,
+      "lat": 34.6608106,
+      "lon": 134.0426899,
+      "tags": {
+        "amenity": "toilets",
+        "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13976544193,
+      "lat": 34.66147,
+      "lon": 134.0399921,
+      "tags": {
+        "amenity": "toilets",
+        "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14026392087,
+      "lat": 34.6780399,
+      "lon": 133.9185417,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2026-07-19"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14028263025,
+      "lat": 34.6576749,
+      "lon": 133.9082569,
+      "tags": {
+        "amenity": "toilets"
       }
     },
     {
@@ -952,40 +991,46 @@
       "type": "way",
       "id": 541485599,
       "center": {
-        "lat": 34.6063864,
-        "lon": 133.9872475
+        "lat": 34.6063991,
+        "lon": 133.9872094
       },
       "nodes": [
+        5236046575,
         5236046572,
         5236046573,
         5236046574,
-        5236046575,
-        5236046572
+        5236046575
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes",
-        "fee": "no"
+        "building": "commercial",
+        "building:levels": "2",
+        "ele": "2.8",
+        "fee": "no",
+        "source": "MLIT_PLATEAU bldg_e2557c0d-7bbb-416d-8f70-4e8ceeef76b0",
+        "start_date": "1990"
       }
     },
     {
       "type": "way",
       "id": 541485659,
       "center": {
-        "lat": 34.6064194,
-        "lon": 133.9808622
+        "lat": 34.6064329,
+        "lon": 133.9808624
       },
       "nodes": [
+        5236047817,
         5236047814,
         5236047815,
         5236047816,
-        5236047817,
-        5236047814
+        5236047817
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes",
-        "fee": "no"
+        "building": "public",
+        "ele": "2.8",
+        "fee": "no",
+        "source": "MLIT_PLATEAU bldg_0b5a2f73-8a34-4817-b08d-da9eb4ddf608"
       }
     },
     {
@@ -1114,20 +1159,22 @@
       "type": "way",
       "id": 670431916,
       "center": {
-        "lat": 34.6861216,
-        "lon": 133.826793
+        "lat": 34.6861321,
+        "lon": 133.8267927
       },
       "nodes": [
         6278333527,
-        6278333524,
-        6278333525,
         6278333526,
+        6278333525,
+        6278333524,
         6278333527
       ],
       "tags": {
         "amenity": "toilets",
         "building": "yes",
-        "source": "Bing"
+        "ele": "5.8",
+        "height": "3.3",
+        "source": "MLIT_PLATEAU bldg_61a39d39-664b-4339-a546-43370a5a0fba"
       }
     },
     {
@@ -1308,27 +1355,31 @@
       "type": "way",
       "id": 1120012069,
       "center": {
-        "lat": 34.6951307,
-        "lon": 133.8714697
+        "lat": 34.6951538,
+        "lon": 133.8714551
       },
       "nodes": [
-        10243742358,
-        10243742359,
-        10243742360,
-        10243742361,
-        10243742362,
+        13967272136,
         10243742363,
         10243742364,
         10243742365,
         10243742366,
         10243742367,
-        10243742358
+        10243742358,
+        10243742359,
+        13967272135,
+        13967272136
       ],
       "tags": {
         "access": "customers",
         "amenity": "toilets",
-        "building": "yes",
+        "building": "retail",
+        "building:levels": "2",
         "check_date": "2026-01-10",
+        "ele": "19.4",
+        "height": "6.4",
+        "source": "MLIT_PLATEAU bldg_2358c8f1-f27e-4cf8-bb6b-f2d042941454",
+        "start_date": "1993",
         "toilets:disposal": "flush",
         "wheelchair": "yes"
       }
@@ -1337,19 +1388,24 @@
       "type": "way",
       "id": 1120012070,
       "center": {
-        "lat": 34.695298,
-        "lon": 133.871686
+        "lat": 34.6953006,
+        "lon": 133.8716877
       },
       "nodes": [
-        10243742368,
-        10243742369,
         10243742370,
         10243742371,
-        10243742368
+        10243742368,
+        10243742369,
+        10243742370
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes",
+        "building": "toilets",
+        "building:levels": "2",
+        "ele": "19.6",
+        "height": "3.5",
+        "source": "MLIT_PLATEAU bldg_dfc27765-6ac9-4b85-a30b-c16f0437dedc",
+        "start_date": "1993",
         "toilets:disposal": "flush"
       }
     },
@@ -1357,32 +1413,40 @@
       "type": "way",
       "id": 1120012792,
       "center": {
-        "lat": 34.6921795,
-        "lon": 133.8737631
+        "lat": 34.6922428,
+        "lon": 133.8737789
       },
       "nodes": [
-        10243763842,
-        10243747932,
-        10243747933,
-        10243747934,
-        10243747935,
-        10243747936,
+        10243763884,
         10243747937,
-        10243747938,
-        10243747939,
-        10243747940,
-        10243747941,
-        10243747942,
-        10243747943,
+        10243747934,
+        13967324383,
+        13967324382,
+        13967324381,
+        10243747933,
+        10243747932,
         10243747945,
-        10243747944,
+        10243747943,
+        10243763842,
         10243763855,
-        10243763842
+        10243747944,
+        10243747942,
+        10243747941,
+        10243747940,
+        10243747939,
+        10243747936,
+        10243763891,
+        10243763884
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "retail",
+        "building": "toilets",
+        "building:levels": "2",
         "changing_table": "yes",
+        "ele": "19.1",
+        "height": "6.9",
+        "source": "MLIT_PLATEAU bldg_52dc8430-c989-4c1a-8bf6-8b49ece42809",
+        "start_date": "1993",
         "toilets:disposal": "flush",
         "wheelchair": "yes"
       }
@@ -1430,8 +1494,8 @@
       "type": "way",
       "id": 1217422170,
       "center": {
-        "lat": 34.606089,
-        "lon": 133.8787736
+        "lat": 34.6060915,
+        "lon": 133.8787692
       },
       "nodes": [
         11280315135,
@@ -1443,8 +1507,10 @@
       "tags": {
         "access": "private",
         "amenity": "toilets",
-        "building": "yes",
+        "building": "public",
         "changing_table": "yes",
+        "ele": "0.8",
+        "source": "MLIT_PLATEAU bldg_b283cb2d-cfb7-478e-bab0-74266b5ed6c1",
         "unisex": "yes",
         "wheelchair": "yes"
       }
@@ -1453,57 +1519,69 @@
       "type": "way",
       "id": 1218731288,
       "center": {
-        "lat": 34.6639738,
-        "lon": 134.006746
+        "lat": 34.6639712,
+        "lon": 134.006747
       },
       "nodes": [
-        11292862603,
         11292862604,
-        11292862605,
+        11292862603,
         11292862606,
-        11292862603
+        11292862605,
+        11292862604
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "ele": "1.8",
+        "source": "MLIT_PLATEAU bldg_9957cc9f-f1ba-4a4e-9663-d0c0a868f63b"
       }
     },
     {
       "type": "way",
       "id": 1290354076,
       "center": {
-        "lat": 34.6228583,
-        "lon": 133.8394111
+        "lat": 34.6228633,
+        "lon": 133.8394104
       },
       "nodes": [
+        11963651531,
+        13946709134,
+        13946709133,
         11963651528,
+        13946709132,
+        13946709131,
+        13946709130,
+        13946709129,
         11963651529,
         11963651530,
-        11963651531,
-        11963651528
+        11963651531
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "public",
+        "ele": "66.5",
+        "source": "MLIT_PLATEAU bldg_d177bb65-6ece-4717-a73b-533205d610ac"
       }
     },
     {
       "type": "way",
       "id": 1291653750,
       "center": {
-        "lat": 34.6422936,
-        "lon": 133.8472559
+        "lat": 34.6422969,
+        "lon": 133.8472604
       },
       "nodes": [
-        11974713229,
-        11974713230,
         11974713231,
         11974713232,
-        11974713229
+        11974713229,
+        11974713230,
+        11974713231
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "ele": "1.8",
+        "source": "MLIT_PLATEAU bldg_8eb33351-a357-48f4-86ce-499bd462fbe7"
       }
     },
     {
@@ -1535,19 +1613,21 @@
       "type": "way",
       "id": 1296816702,
       "center": {
-        "lat": 34.6244346,
-        "lon": 133.9369666
+        "lat": 34.6244339,
+        "lon": 133.9369663
       },
       "nodes": [
+        12016566460,
         12016566457,
         12016566458,
         12016566459,
-        12016566460,
-        12016566457
+        12016566460
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "public",
+        "ele": "1.1",
+        "source": "MLIT_PLATEAU bldg_eb53fb29-9730-4570-a434-b1e8ba79728f"
       }
     },
     {
@@ -1575,19 +1655,22 @@
       "type": "way",
       "id": 1304608925,
       "center": {
-        "lat": 34.6615008,
-        "lon": 134.0115721
+        "lat": 34.6615066,
+        "lon": 134.011573
       },
       "nodes": [
-        12082621373,
-        12082621374,
         12082621375,
         12082621376,
-        12082621373
+        12082621373,
+        12082621374,
+        12082621375
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "toilets",
+        "ele": "1.5",
+        "height": "3.3",
+        "source": "MLIT_PLATEAU bldg_cb802f27-9304-43b4-93a1-9dcb4f85d53a"
       }
     },
     {

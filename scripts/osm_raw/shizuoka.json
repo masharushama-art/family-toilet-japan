@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-06-14T16:42:19Z",
+    "timestamp_osm_base": "2026-08-01T07:26:36Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -131,16 +131,6 @@
       "lon": 138.3955444,
       "tags": {
         "amenity": "toilets"
-      }
-    },
-    {
-      "type": "node",
-      "id": 1422673225,
-      "lat": 34.9740487,
-      "lon": 138.4644783,
-      "tags": {
-        "amenity": "toilets",
-        "wheelchair": "yes"
       }
     },
     {
@@ -1035,15 +1025,6 @@
     },
     {
       "type": "node",
-      "id": 6094788385,
-      "lat": 34.9634456,
-      "lon": 138.4666804,
-      "tags": {
-        "amenity": "toilets"
-      }
-    },
-    {
-      "type": "node",
       "id": 6132351338,
       "lat": 35.0235384,
       "lon": 138.4626313,
@@ -1471,6 +1452,25 @@
     },
     {
       "type": "way",
+      "id": 387666530,
+      "center": {
+        "lat": 34.9739959,
+        "lon": 138.4644915
+      },
+      "nodes": [
+        3909118985,
+        3909118987,
+        3909118986,
+        3909118984,
+        3909118985
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
       "id": 387685883,
       "center": {
         "lat": 34.9881418,
@@ -1539,6 +1539,25 @@
         "building": "yes",
         "building:levels": "1",
         "fee": "no"
+      }
+    },
+    {
+      "type": "way",
+      "id": 389301595,
+      "center": {
+        "lat": 34.9634512,
+        "lon": 138.4667283
+      },
+      "nodes": [
+        3924569325,
+        3924569329,
+        3924569331,
+        3924569330,
+        3924569325
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
       }
     },
     {
