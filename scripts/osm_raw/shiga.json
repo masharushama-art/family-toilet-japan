@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-06-14T16:42:19Z",
+    "timestamp_osm_base": "2026-08-01T07:26:36Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -236,15 +236,6 @@
       "tags": {
         "amenity": "toilets",
         "source": "Bing; survey"
-      }
-    },
-    {
-      "type": "node",
-      "id": 3887528621,
-      "lat": 35.0357609,
-      "lon": 135.9828183,
-      "tags": {
-        "amenity": "toilets"
       }
     },
     {
@@ -563,8 +554,8 @@
     {
       "type": "node",
       "id": 4919885499,
-      "lat": 35.0377366,
-      "lon": 135.9792761,
+      "lat": 35.0375257,
+      "lon": 135.979516,
       "tags": {
         "amenity": "toilets"
       }
@@ -910,6 +901,7 @@
       "lon": 135.9473559,
       "tags": {
         "amenity": "toilets",
+        "check_date": "2026-07-26",
         "male": "yes",
         "toilets:disposal": "flush"
       }
@@ -1034,6 +1026,7 @@
       "tags": {
         "access": "yes",
         "amenity": "toilets",
+        "check_date": "2026-07-26",
         "toilets:disposal": "flush",
         "unisex": "yes"
       }
@@ -1561,6 +1554,16 @@
         "changing_table": "no",
         "check_date": "2026-06-07",
         "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13956972994,
+      "lat": 35.0272766,
+      "lon": 135.999527,
+      "tags": {
+        "amenity": "toilets",
+        "level": "0"
       }
     },
     {
@@ -2336,7 +2339,8 @@
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "fee": "no"
       }
     },
     {
@@ -3189,8 +3193,8 @@
       "type": "way",
       "id": 670701242,
       "center": {
-        "lat": 35.0400735,
-        "lon": 135.980215
+        "lat": 35.0400755,
+        "lon": 135.9802393
       },
       "nodes": [
         6280789393,
@@ -3792,6 +3796,25 @@
         13349053332,
         13349053333,
         13349053330
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1532443348,
+      "center": {
+        "lat": 35.0149827,
+        "lon": 136.0071033
+      },
+      "nodes": [
+        13966258129,
+        13966258130,
+        13966258131,
+        13966258132,
+        13966258129
       ],
       "tags": {
         "amenity": "toilets",
