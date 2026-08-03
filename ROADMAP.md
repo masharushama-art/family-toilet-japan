@@ -24,6 +24,27 @@
 - `/coverage`ページ統計: 合計14,464→14,505（+41）、🍼交換台1,015→1,016（+1）、♿車いす対応2,802→2,810（+8）。比率（交換台約7%・車いす約19%）に大きな変動なし
 - 上記確認の上、`gh pr merge`でマージ完了（マージコミット`a992379`）。次回（2026-09-01予定）の自動実行も同様の手順（差分件数・build・coverage統計の確認）でレビューすること
 
+## 🔍 GSC「重複しています。ユーザーにより、正規ページとして選択されていません」174件の調査（2026-08-03）
+
+**背景**: Search Consoleで、familytoiletjapan.comの一部ページの「Googleが選択した正規URL」が旧Vercelドメイン（`family-toilet-japan.vercel.app`、現在はVercelプラットフォーム自身が返す404で消滅済み）を指しているケースが見つかり、174件の重複エラーの一因ではないかと調査した。
+
+**調査結果**: コード側の原因は見つからなかった。`app/layout.tsx`の`metadataBase`、全42ページの`canonical:`定義、`sitemap.xml`/`sitemap-toilets.xml`、`robots.ts`、hreflang（実ビルドHTMLで確認）まで、いずれも`https://familytoiletjapan.com`に一貫して統一されており、Vercelドメインへの参照は0件。`vercel.json`/`.vercel/`も存在しない。
+
+**是正した2件**（canonicalタグ自体が未設定だった箇所。Vercel誤参照ではなく「未設定」だった）:
+- `app/map/page.tsx`: bare `/map`にcanonical追加（`?id=`/`?city=`付きはbareへ正規化、id/city付きは既存のnoindex設定を維持）
+- `app/guide/how-to-use-japanese-toilet/page.tsx`: 他ガイド同様にcanonical追加
+- `npm run build`・実ビルドHTML（`/map`は`next start`でランタイム確認）・`npx tsc --noEmit`で反映を確認、コミット`474abd8`でpush済み
+
+**174件そのものへの対応方針（コード側対応なし）**: 旧Vercelドメインは配信先自体が存在しない（Vercelプラットフォーム自身の404）ため、こちらから301リダイレクトを設定する技術的手段がない（2026-07-18時点で既に確認済みの制約、下記「Vercel→Cloudflare移行」節参照）。174件はこの制約下での**Search Console側の古いインデックス情報の残存**が主因と判断し、コード追加対応は行わず、**自然な再クロールを待つ方針**とした。
+
+**今回対応を保留した項目**（優先度低、SEO実害なしと判断）:
+| 項目 | 内容 |
+|---|---|
+| canonical追加 | `app/attribution/page.tsx`・`app/privacy/page.tsx`・`app/offline/page.tsx`にはcanonicalタグが未設定のまま |
+| Vercel文言の是正 | `app/privacy/page.tsx`のプライバシーポリシー本文に残る「Vercel — hosting」の記載（実際は2026-07-14以降Cloudflare Workers）が未修正 |
+| OSM取得スクリプトのUser-Agent | `scripts/fetch-{all-prefectures,yokohama,nara,fukuoka,chiba}-osm.py`のOverpass API向けUser-Agentヘッダーが`family-toilet-japan.vercel.app`のまま |
+| indexnow.ymlのコメント | `.github/workflows/indexnow.yml`のコメント・ステップ名が「Vercelデプロイ待ち」のまま（処理自体はホスティング先に依らず機能するため実害なし） |
+
 ## ✅ opendata_tokyo由来トイレページの本番404問題（2026-07-28発覚 → 2026-07-29 根本原因特定・修正済み）
 Search Consoleの404検出をきっかけに調査したところ、東京の自治体オープンデータ由来トイレページ（`opendata_tokyo_*`）が本番で100%404を返すことが判明。sitemap-toilets.xml・周辺リンクから一時除外して応急対応した後、根本原因を特定して恒久修正した。
 
