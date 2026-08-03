@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "How to Use a Japanese Toilet — Complete Guide",
     description: "Everything you need to know about Japanese toilets — washlets, buttons, and tips for families.",
   },
+  alternates: { canonical: "https://familytoiletjapan.com/guide/how-to-use-japanese-toilet" },
 };
 
 const buttons = [

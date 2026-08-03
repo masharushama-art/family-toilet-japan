@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import MapPageClient from "../components/MapPageClient";
 
+const BASE = "https://familytoiletjapan.com";
+
 interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
@@ -21,6 +23,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       "find toilet japan",
       "nearest toilet japan map",
     ],
+    // クエリ付き(id/city)もbareな /map に正規化する(deep linkは上のnoindexと合わせて二重に対策)
+    alternates: { canonical: `${BASE}/map` },
     ...(isDeepLink ? { robots: { index: false, follow: true } } : {}),
   };
 }
