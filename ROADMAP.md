@@ -1,16 +1,29 @@
 # Family Toilet Japan — 改善ロードマップ
 
-最終更新: 2026-08-06（このファイルは実装のたびに更新する）
+最終更新: 2026-08-10（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
 - **本番URL**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.familytoiletjapan.workers.dev`**（Cloudflare Workers、2026-07-14完了。アカウント共有サブドメインを個人名`masharu-shama`から`familytoiletjapan`に変更済み）
 - AdSense: Vercel版(`vercel.app`)は削除し、新URL(`familytoiletjapan.workers.dev`)を新規サイトとして登録・再審査中（旧Vercel向けの審査結果は待たずそのまま放置でOK）
 - ビルド: 3,518ページ（PR #1マージ反映後。トイレ個別2,030 / 駅スポット226×4言語 / ガイド65×4言語 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、ダークモード済み
-- ⚠️ OGP画像: 動的セグメントを含むもの（都市・多言語ガイド・スポット、計8ルート）は撤去したまま（下記参照）。個別ガイド等の静的OGP画像は生存
+- ⚠️ OGP画像: 動的セグメントを含むもの（都市・多言語ガイド・スポット、計8ルート）は撤去済み。撤去前にGoogleがクロール済みだったURLがGSCで404報告された件は`middleware.ts`で410 Goneを返す対応済み（2026-08-10、下記参照）。個別ガイド等の静的OGP画像は生存。og:image自体は全ページ静的`/og-image.png`で正常
 - AdSense: 2026-07-05に不承認（有用性の低いコンテンツ）。原因特定・一次対応済み、2026-08-04 17:00に再審査リクエスト実施・結果待ち(想定期間: 数日〜最大2〜4週間)
 - アフィリエイト（楽天・Klook・Amazon）: 新環境でも動作確認済み
 - 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献65、カルマ2、目標50）
+
+## ✅ opengraph-image動的ルート撤去に伴うGSC 404警告への対応: 410 Gone化（2026-08-10）
+
+family-toilet-japan.comのGSC通知で、2026-07-13（コミット`ba8a4f6`）にnext-on-pages非互換のため撤去した動的OGP画像生成ルート8本（都市ページ・多言語ガイド・多言語スポット）に対応するURL計26件が404として報告された。
+
+**原因**: 撤去前にGoogleがクロール済みだったURLを、削除後の再訪で404検出したもの。og:image自体は`layout.tsx`の静的`/og-image.png`が全ページで正常に機能しており、実害はなかった。
+
+**対応**: `middleware.ts`を新規作成し、該当8パターン（`/:city/opengraph-image`、`/spot/:slug/opengraph-image`、`/{ja,ko,zh}/{guide,spot}/:slug/opengraph-image`）へのアクセスに410 Goneを明示的に返すよう設定。`tsc --noEmit`エラーなし、devサーバーでの実URL検証で「8パターンとも410」「生存中のEN個別ガイドOG画像は200のまま」「実ページのog:image/twitter:imageタグは`/og-image.png`のまま変化なし」を確認済み。
+
+**⚠️ 将来対応事項（今回は対応不要・記録のみ）**: `middleware.ts`はNext.js 16で非推奨。devサーバー起動時に以下の警告が出るが、動作には影響しない：
+> The "middleware" file convention is deprecated. Please use "proxy" instead.
+
+Next.js公式ドキュメント（`node_modules/next/dist/docs/01-app/01-getting-started/16-proxy.md`）によると機能は同一のままで、`proxy.ts`へのリネーム（ファイル名変更＋エクスポート名を`middleware`→`proxy`に変更するのみ）が推奨されている。次回Next.jsアップグレード時、またはこのファイルに触れる機会に対応を検討する。
 
 ## 📝 A8.net: JR西日本(WESTERモール)アフィリエイトプログラム不採用（2026-08-05、出典: ユーザー報告に基づく記録）
 
