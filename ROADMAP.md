@@ -88,13 +88,15 @@ Next.js公式ドキュメント（`node_modules/next/dist/docs/01-app/01-getting
 
 **174件そのものへの対応方針（コード側対応なし）**: 旧Vercelドメインは配信先自体が存在しない（Vercelプラットフォーム自身の404）ため、こちらから301リダイレクトを設定する技術的手段がない（2026-07-18時点で既に確認済みの制約、下記「Vercel→Cloudflare移行」節参照）。174件はこの制約下での**Search Console側の古いインデックス情報の残存**が主因と判断し、コード追加対応は行わず、**自然な再クロールを待つ方針**とした。
 
-**今回対応を保留した項目**（優先度低、SEO実害なしと判断）:
+**対応完了(2026-08-11、このセッションで実施)**:
 | 項目 | 内容 |
 |---|---|
-| canonical追加 | `app/attribution/page.tsx`・`app/privacy/page.tsx`・`app/offline/page.tsx`にはcanonicalタグが未設定のまま |
-| Vercel文言の是正 | `app/privacy/page.tsx`のプライバシーポリシー本文に残る「Vercel — hosting」の記載（実際は2026-07-14以降Cloudflare Workers）が未修正 |
-| OSM取得スクリプトのUser-Agent | `scripts/fetch-{all-prefectures,yokohama,nara,fukuoka,chiba}-osm.py`のOverpass API向けUser-Agentヘッダーが`family-toilet-japan.vercel.app`のまま |
-| indexnow.ymlのコメント | `.github/workflows/indexnow.yml`のコメント・ステップ名が「Vercelデプロイ待ち」のまま（処理自体はホスティング先に依らず機能するため実害なし） |
+| canonical追加 | `app/attribution/page.tsx`・`app/privacy/page.tsx`に`alternates.canonical`を追加。`app/offline/page.tsx`は`"use client"`のため直接metadataをexportできず、新設した`app/offline/layout.tsx`(Server Component)経由でcanonicalを付与。ビルド後のHTML出力(`offline.html`/`privacy.html`/`attribution.html`)で実際に反映されていることを確認済み |
+| Vercel文言の是正 | `app/privacy/page.tsx`のプライバシーポリシー本文の「Vercel — hosting」を「Cloudflare Workers — hosting」に修正 |
+| OSM取得スクリプトのUser-Agent | `scripts/fetch-{all-prefectures,yokohama,nara,fukuoka,chiba}-osm.py`の5ファイル、Overpass API向けUser-Agentヘッダーを`family-toilet-japan.vercel.app`→`familytoiletjapan.com`に修正 |
+| indexnow.ymlのコメント | `.github/workflows/indexnow.yml`のコメント・ステップ名から「Vercelデプロイ待ち」の表現を除去し、本番デプロイが`npm run cf:deploy`による手動CLI実行である旨を明記。**あわせて判明した点**: このワークフローは`master`へのpushをトリガーに180秒待ってIndexNow通知するが、本番デプロイ自体は手動CLI実行のため、pushしただけでは実際のデプロイが伴わない場合がある(コメント修正のみ実施、トリガー設計自体の変更は今回のスコープ外) |
+
+`npx tsc --noEmit`エラーなし、`npm run build`成功(全ページ生成)を確認済み。
 
 ### 追加調査で判明: 174件は正常設計、対応不要（2026-08-04、出典: ユーザー提供のページソース〈view-source〉確認に基づく記録）
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy — Family Toilet Japan",
   description: "Privacy policy for Family Toilet Japan",
+  alternates: { canonical: "https://familytoiletjapan.com/privacy" },
 };
 
 export default function PrivacyPage() {
@@ -80,7 +81,7 @@ export default function PrivacyPage() {
                 <a href="https://policies.google.com/privacy" className="text-sky-600 underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>
                 )
               </li>
-              <li><strong>Vercel</strong> — hosting (standard server access logs only)</li>
+              <li><strong>Cloudflare Workers</strong> — hosting (standard server access logs only)</li>
             </ul>
           </section>
 
