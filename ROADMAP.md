@@ -7,7 +7,8 @@
 - AdSense: Vercel版(`vercel.app`)は削除し、新URL(`familytoiletjapan.workers.dev`)を新規サイトとして登録・再審査中（旧Vercel向けの審査結果は待たずそのまま放置でOK）
 - ビルド: 3,518ページ（PR #1マージ反映後。トイレ個別2,030 / 駅スポット226×4言語 / ガイド65×4言語 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、ダークモード済み
-- ✅ **OGP画像: 動的セグメントを含む8ルート（都市・多言語ガイド・スポット）を復活完了**（2026-08-11、下記「動的OGP画像生成機能の復活」参照）。OpenNext（`@opennextjs/cloudflare`）移行後は旧`next-on-pages`時代のedge runtime制約が解消されていることをローカルpreviewの実URL検証で確認済み。`middleware.ts`（410 Gone対応）は役目を終えたため削除
+- ✅ **OGP画像: 動的セグメントを含む8ルート（都市・多言語ガイド・スポット）を復活・本番反映完了**（2026-08-11、下記「動的OGP画像生成機能の復活」参照）。OpenNext（`@opennextjs/cloudflare`）移行後は旧`next-on-pages`時代のedge runtime制約が解消されていることをローカルpreview・本番(`familytoiletjapan.com`)双方の実URL検証で確認済み。`middleware.ts`（410 Gone対応）は役目を終えたため削除
+- ⚠️ **デプロイ運用の訂正（2026-08-11判明）**: 「GitHub連携でmasterへのpushが本番Cloudflare Workersへの自動デプロイをトリガーする構成」という従来の記載は誤り。実際は`npm run cf:deploy`（`opennextjs-cloudflare build && opennextjs-cloudflare deploy`）による手動CLIデプロイが必要（`wrangler deployments list`のデプロイ履歴で確認、過去のデプロイもすべて手動）。pushしただけでは本番に反映されない
 - AdSense: 2026-07-05に不承認（有用性の低いコンテンツ）。原因特定・一次対応済み、2026-08-04 17:00に再審査リクエスト実施・結果待ち(想定期間: 数日〜最大2〜4週間)。**今回のOGP画像復活はAdSense審査結果と無関係に実施**
 - アフィリエイト（楽天・Klook・Amazon）: 新環境でも動作確認済み
 - 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献65、カルマ2、目標50）
@@ -28,18 +29,27 @@
 
 **検証**: `npx tsc --noEmit`エラーなし。`npm run build`（webpack）・`npx opennextjs-cloudflare build`とも成功（8ルートすべて生成: `/-/opengraph-image`都市47件・`/spot/-/opengraph-image`324件・`{ja,ko,zh}/guide/-/opengraph-image`各19件・`{ja,ko,zh}/spot/-/opengraph-image`各324件）。`opennextjs-cloudflare preview`（ローカルWorkers環境、R2キャッシュ込み）を起動し実URLで検証: 8ルート代表7点(`/tokyo`・`/spot/shinjuku-station`・`/ja/guide/...`・`/ja/spot/...`・`/ko/spot/...`・`/zh/guide/...`・既存の静的`/guide/japan-toilet-etiquette`)すべてHTTP 200・`image/png`・1200×630の正常なPNGを確認。存在しないslugへのアクセスはHTTP 404で正しくフォールバック。修正後は`/tokyo`・`/spot/shinjuku-station`・`/ja/guide/...`いずれも実際の`<meta property="og:image">`タグが新しい動的ルート（コンテンツハッシュ付きURL）を指すことを確認。既存の無関係ページ（トイレ個別詳細・ホーム・既存の静的ガイドOGP画像）に regression がないことも確認済み。
 
-**未実施**: git commitはローカルのみ（このセッションで実施）。**pushは実施していない**（GitHub連携でmasterへのpushが本番Cloudflare Workersへの自動デプロイをトリガーする構成のため、本番反映は別途確認のうえ実施）。
+**本番反映(2026-08-11、追記)**: 別チャットでの検討を経て、これはfamily-toilet-japanの正式な残タスクの実行(2026-08-10の410 Gone対応は応急処置、今回が本来あるべき最終形)と判断し、push・本番デプロイを実施。
 
-## ✅ opengraph-image動的ルート撤去に伴うGSC 404警告への対応: 410 Gone化（2026-08-10）
+- `git push origin master`実施(コミット`ef1711e`)。**発見**: このリポジトリには`.github/workflows/`にデプロイ用ワークフローが存在せず、`wrangler deployments list`で確認したところpush後も新規デプロイが発生しなかった。ROADMAP冒頭で従来「GitHub連携でmasterへのpushが本番Cloudflare Workersへの自動デプロイをトリガーする構成」と記載していたが、**この記載は現状と一致しない**(過去のデプロイ履歴はすべて`wrangler`/`opennextjs-cloudflare deploy`によるCLI手動デプロイのみ)。今後pushだけでは本番反映されない前提で運用すること
+- 上記を踏まえ`npm run cf:deploy`(`opennextjs-cloudflare build && opennextjs-cloudflare deploy`)を手動実行し本番デプロイ完了(Version ID `13ffbe5d-676e-4c4f-970a-34f12f78252a`)
+- **本番実機確認(`familytoiletjapan.com`)**:
+  1. 復活した8ルートすべてHTTP 200・`image/png`・1200×630の正常なPNGを確認(都市10件`tokyo`/`yokohama`/`chiba`/`osaka`/`kyoto`/`nagoya`/`fukuoka`/`nara`/`sapporo`/`sendai`、EN/ja/ko/zhのguide・spot各代表1件)
+  2. 都市ページ(`/tokyo`・`/osaka`)、スポットページ(`/spot/shinjuku-station`・`/ja/spot/...`・`/ko/spot/...`)、多言語ガイド(`/ja/guide/...`・`/zh/guide/...`)いずれも、実際の`<meta property="og:image">`・`<meta name="twitter:image">`タグがコンテンツハッシュ付きの新しい動的ルートを指すことを確認
+  3. GSCで404報告されていた個別URLの一覧はリポジトリ内に保存されておらず(コミット`f52c879`のメッセージには「都市・多言語ガイド・多言語スポットのOGP画像URL26件」という件数のみ記載、個別URL列挙なし)、その個別URL単位での再クロール結果は本セッションでは確認不可。ただし該当する8ルートパターン自体は上記の通りいずれも本番でHTTP 200を返す状態に復旧しており、410 Gone(削除済みマーク)からHTTP 200(実在するページ)への切り替えが完了している。**GSCのインデックス反映(404報告の解消)には今後のGoogle再クロールを待つ必要があり、即時確認はできない**。次回GSC確認時にこの8パターンの404/410報告が消えていることを確認すること
+  4. 既存の無関係ページ(ホーム`/`・トイレ個別詳細`/toilet/tokyo/...`・既存の静的EN guide OGP画像`/guide/japan-toilet-etiquette/opengraph-image`)への影響なし(いずれもHTTP 200)を確認
+
+## ✅ opengraph-image動的ルート撤去に伴うGSC 404警告への対応: 410 Gone化(2026-08-10、応急処置・現在は上記により発展的に解消)
 
 family-toilet-japan.comのGSC通知で、2026-07-13（コミット`ba8a4f6`）にnext-on-pages非互換のため撤去した動的OGP画像生成ルート8本（都市ページ・多言語ガイド・多言語スポット）に対応するURL計26件が404として報告された。
 
 **原因**: 撤去前にGoogleがクロール済みだったURLを、削除後の再訪で404検出したもの。og:image自体は`layout.tsx`の静的`/og-image.png`が全ページで正常に機能しており、実害はなかった。
 
-**対応**: `middleware.ts`を新規作成し、該当8パターン（`/:city/opengraph-image`、`/spot/:slug/opengraph-image`、`/{ja,ko,zh}/{guide,spot}/:slug/opengraph-image`）へのアクセスに410 Goneを明示的に返すよう設定。`tsc --noEmit`エラーなし、devサーバーでの実URL検証で「8パターンとも410」「生存中のEN個別ガイドOG画像は200のまま」「実ページのog:image/twitter:imageタグは`/og-image.png`のまま変化なし」を確認済み。
+**対応(2026-08-10時点、応急処置)**: `middleware.ts`を新規作成し、該当8パターン（`/:city/opengraph-image`、`/spot/:slug/opengraph-image`、`/{ja,ko,zh}/{guide,spot}/:slug/opengraph-image`）へのアクセスに410 Goneを明示的に返すよう設定。`tsc --noEmit`エラーなし、devサーバーでの実URL検証で「8パターンとも410」「生存中のEN個別ガイドOG画像は200のまま」「実ページのog:image/twitter:imageタグは`/og-image.png`のまま変化なし」を確認済み。
 
-**⚠️ 将来対応事項（今回は対応不要・記録のみ）**: `middleware.ts`はNext.js 16で非推奨。devサーバー起動時に以下の警告が出るが、動作には影響しない：
-> The "middleware" file convention is deprecated. Please use "proxy" instead.
+**位置づけの整理(2026-08-11追記)**: この410 Gone対応は、「削除済みURLへの404報告を、意図的な削除であることを示す正しいステータスコードに置き換える」という**応急処置**であり、動的OGP画像機能そのものを諦める決定ではなかった(「残タスク」節に「復活を検討」として記録済み)。2026-08-11、この機能復活に正式着手し本番反映まで完了したことで、410 Goneでの一時しのぎから、機能自体の復旧という本来あるべき最終形に到達した。`middleware.ts`は復活作業の一環として削除済み(下記「動的OGP画像生成機能の復活」参照)。矛盾ではなく、計画されていた2段階の対応(①応急処置→②本復旧)が完了した形。
+
+**⚠️ 将来対応事項として記録していたNext.js 16非推奨警告**: `middleware.ts`自体を削除したため解消(対応不要)。
 
 Next.js公式ドキュメント（`node_modules/next/dist/docs/01-app/01-getting-started/16-proxy.md`）によると機能は同一のままで、`proxy.ts`へのリネーム（ファイル名変更＋エクスポート名を`middleware`→`proxy`に変更するのみ）が推奨されている。次回Next.jsアップグレード時、またはこのファイルに触れる機会に対応を検討する。
 
