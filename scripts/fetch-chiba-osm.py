@@ -19,7 +19,7 @@ def main():
     payload = urllib.parse.urlencode({"data": QUERY}).encode()
     req = urllib.request.Request(OVERPASS_URL, data=payload, headers={
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "FamilyToiletJapan/1.0 (https://family-toilet-japan.vercel.app)",
+        "User-Agent": "FamilyToiletJapan/1.0 (https://familytoiletjapan.com)",
     })
     with urllib.request.urlopen(req, timeout=90) as resp:
         data = json.loads(resp.read())
