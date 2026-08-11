@@ -1,16 +1,34 @@
 # Family Toilet Japan — 改善ロードマップ
 
-最終更新: 2026-08-10（このファイルは実装のたびに更新する）
+最終更新: 2026-08-11（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
 - **本番URL**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.familytoiletjapan.workers.dev`**（Cloudflare Workers、2026-07-14完了。アカウント共有サブドメインを個人名`masharu-shama`から`familytoiletjapan`に変更済み）
 - AdSense: Vercel版(`vercel.app`)は削除し、新URL(`familytoiletjapan.workers.dev`)を新規サイトとして登録・再審査中（旧Vercel向けの審査結果は待たずそのまま放置でOK）
 - ビルド: 3,518ページ（PR #1マージ反映後。トイレ個別2,030 / 駅スポット226×4言語 / ガイド65×4言語 / 都市・カテゴリ ほか）
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、ダークモード済み
-- ⚠️ OGP画像: 動的セグメントを含むもの（都市・多言語ガイド・スポット、計8ルート）は撤去済み。撤去前にGoogleがクロール済みだったURLがGSCで404報告された件は`middleware.ts`で410 Goneを返す対応済み（2026-08-10、下記参照）。個別ガイド等の静的OGP画像は生存。og:image自体は全ページ静的`/og-image.png`で正常
-- AdSense: 2026-07-05に不承認（有用性の低いコンテンツ）。原因特定・一次対応済み、2026-08-04 17:00に再審査リクエスト実施・結果待ち(想定期間: 数日〜最大2〜4週間)
+- ✅ **OGP画像: 動的セグメントを含む8ルート（都市・多言語ガイド・スポット）を復活完了**（2026-08-11、下記「動的OGP画像生成機能の復活」参照）。OpenNext（`@opennextjs/cloudflare`）移行後は旧`next-on-pages`時代のedge runtime制約が解消されていることをローカルpreviewの実URL検証で確認済み。`middleware.ts`（410 Gone対応）は役目を終えたため削除
+- AdSense: 2026-07-05に不承認（有用性の低いコンテンツ）。原因特定・一次対応済み、2026-08-04 17:00に再審査リクエスト実施・結果待ち(想定期間: 数日〜最大2〜4週間)。**今回のOGP画像復活はAdSense審査結果と無関係に実施**
 - アフィリエイト（楽天・Klook・Amazon）: 新環境でも動作確認済み
 - 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献65、カルマ2、目標50）
+
+## ✅ 動的OGP画像生成機能の復活（2026-08-11、AdSense審査結果とは無関係に実施）
+
+「残タスク」記載の動的OGP画像8ルート（都市・多言語ガイド・スポット）を復活。着手前に、旧実装（コミット`ba8a4f6`、2026-07-13削除）と2026-08-10のmiddleware.ts（410 Gone対応）との整合性を確認した。
+
+**着手前の整合性確認結果**:
+- 削除された8ファイルはいずれも`generateStaticParams`によるビルド時静的生成＋`next/og`の`ImageResponse`を使用。共有ヘルパー`app/lib/og.tsx`（`ogCard`/`OG_SIZE`）・参照先lib（`toilet-data.ts`/`spots.ts`/`guides-{ja,ko,zh}.ts`）はいずれも現存・エクスポート名も無変更で、コード自体の復元は可能と確認
+- 削除理由は当時の`@cloudflare/next-on-pages`アダプター（非推奨）が動的セグメント付きopengraph-imageルートに無条件でedge runtimeを要求し、`generateStaticParams`・fs読み込みと衝突していたため。現行スタック（`@opennextjs/cloudflare` 1.20.1、Workers、`nodejs_compat`）にはこの制約が存在しない
+- **⚠️ 明確な競合を発見**: `middleware.ts`が削除済み8ルートと完全に同一の8パスへ無条件で410 Goneを返す設定になっており、Next.jsのmiddlewareはルーティング解決より前に実行されるため、ファイルを復活させるだけでは`middleware.ts`が先にリクエストを横取りし続け、新しいopengraph-image.tsxには到達しない。コード自体の重複はなし
+
+**対応**:
+1. 削除された8ファイルを、旧実装（git履歴）どおりの内容でそのまま復元（`app/[city]/opengraph-image.tsx`・`app/spot/[slug]/opengraph-image.tsx`・`app/{ja,ko,zh}/guide/[slug]/opengraph-image.tsx`・`app/{ja,ko,zh}/spot/[slug]/opengraph-image.tsx`）
+2. `middleware.ts`を削除（この8パスへの410対応以外の用途がなかったため。Next.js 16でも非推奨の仕組みであり、復活後は不要）
+3. **実装中に追加で発見・修正した不具合**: `app/[city]/page.tsx`の`generateMetadata`が`openGraph.images`/`twitter.images`を`/og-image.png`に明示的に上書きしており、Next.jsのファイル規約による自動検出（復活させた`opengraph-image.tsx`）より優先されてしまうため、都市ページだけ実際のog:imageタグには反映されない状態だった。該当の`images:`指定を削除し、ファイル規約の自動検出に委ねる形に修正。他7ルート（spot/[slug]・{ja,ko,zh}/guide/[slug]・{ja,ko,zh}/spot/[slug]）の`page.tsx`は同種の上書きなし（`{ja,ko,zh}/guide/[slug]`の`ShareButtons`コンポーネントの`imageUrl` propは引き続き`/og-image.png`のままだが、これは2026-07-29に調査済みのとおりPinterest「Pin it」ボタンの`media`パラメータのみに影響し、実際のog:image/twitter:imageタグやSNSクローラーには影響しない範囲のため、今回は対象外とした）
+
+**検証**: `npx tsc --noEmit`エラーなし。`npm run build`（webpack）・`npx opennextjs-cloudflare build`とも成功（8ルートすべて生成: `/-/opengraph-image`都市47件・`/spot/-/opengraph-image`324件・`{ja,ko,zh}/guide/-/opengraph-image`各19件・`{ja,ko,zh}/spot/-/opengraph-image`各324件）。`opennextjs-cloudflare preview`（ローカルWorkers環境、R2キャッシュ込み）を起動し実URLで検証: 8ルート代表7点(`/tokyo`・`/spot/shinjuku-station`・`/ja/guide/...`・`/ja/spot/...`・`/ko/spot/...`・`/zh/guide/...`・既存の静的`/guide/japan-toilet-etiquette`)すべてHTTP 200・`image/png`・1200×630の正常なPNGを確認。存在しないslugへのアクセスはHTTP 404で正しくフォールバック。修正後は`/tokyo`・`/spot/shinjuku-station`・`/ja/guide/...`いずれも実際の`<meta property="og:image">`タグが新しい動的ルート（コンテンツハッシュ付きURL）を指すことを確認。既存の無関係ページ（トイレ個別詳細・ホーム・既存の静的ガイドOGP画像）に regression がないことも確認済み。
+
+**未実施**: git commitはローカルのみ（このセッションで実施）。**pushは実施していない**（GitHub連携でmasterへのpushが本番Cloudflare Workersへの自動デプロイをトリガーする構成のため、本番反映は別途確認のうえ実施）。
 
 ## ✅ opengraph-image動的ルート撤去に伴うGSC 404警告への対応: 410 Gone化（2026-08-10）
 
@@ -113,7 +131,7 @@ Search Consoleの404検出をきっかけに調査したところ、東京の自
 - `/api/vote`からedge runtime指定を削除（OpenNextはNode.js runtimeをネイティブサポートするため不要かつ有害だった）
 
 **残タスク**:
-- 動的OGP画像（都市・多言語ガイド・スポット、8ルート）の復活を検討。OpenNext移行後なら技術的には可能なはずだが未検証。SNSシェア時の見た目のみに影響し機能的な支障はないため優先度は中〜低
+- ✅ 動的OGP画像（都市・多言語ガイド・スポット、8ルート）の復活 → 2026-08-11実施・完了（詳細は下記「動的OGP画像生成機能の復活」参照）
 - ✅ 旧Vercelプロジェクトの削除判断（2026-07-18確認）: `family-toilet-japan.vercel.app`への全パスアクセスが`404 DEPLOYMENT_NOT_FOUND`（Vercelプラットフォーム自身が返すエラー）であることを確認。既に削除済みかドメインのプロダクションエイリアスが解除済みと推定され、実害なし・追加対応不要と判断
   - 背景: GSCから「重複しています。ユーザーにより、正規ページとして選択されていません」の通知（対象: vercel.app）があり301リダイレクト設定を検討したが、配信先自体が存在せずリダイレクト設定は技術的に不可能と判明。GSCの古いインデックス情報に起因するもので、再クロールにより自然にインデックスから外れるのを待つ方針とした（追加対応なし）
 - 旧Cloudflare Pagesプロジェクト（`family-toilet-japan.pages.dev`、next-on-pages時代の残骸）の削除判断は未確認・未対応のまま
