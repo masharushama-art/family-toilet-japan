@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Data Sources & Attribution | Family Toilet Japan",
   description: "Open data sources, licenses, and attribution for Family Toilet Japan.",
+  alternates: { canonical: "https://familytoiletjapan.com/attribution" },
 };
 
 const sources = [
