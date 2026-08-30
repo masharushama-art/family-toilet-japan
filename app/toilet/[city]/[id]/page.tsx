@@ -7,6 +7,7 @@ import {
   getNearbyToilets,
   getAllDetailPageParams,
   getToiletAreaContext,
+  isIndexableToilet,
   type CitySlug,
 } from "../../../lib/toilet-data";
 import { AdUnit } from "../../../components/AdSense";
@@ -38,10 +39,11 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const name = displayName(toilet, c.name);
   const title = `${name} — Baby Changing Table in ${c.name} | Family Toilet Japan`;
   const description = `${name} in ${c.name}, Japan has a baby changing table${toilet.wheelchair ? " and wheelchair access" : ""}${toilet.fee === false ? ", free to use" : ""}. Address, opening hours, map and directions.`;
-  // 施設名が無い（汎用プレースホルダーのみ）ページは地図座標以外に固有情報が乏しく、
-  // 大量にインデックスされるとGoogle/AdSenseの「有用性の低いコンテンツ」判定を招くため noindex にする。
+  // 施設名が無い、または実データ（住所・営業時間・車いす対応・運営者情報）が乏しいページは
+  // 地図座標以外に固有情報が乏しく、大量にインデックスされるとGoogle/AdSenseの
+  // 「有用性の低いコンテンツ」判定を招くため noindex にする（詳細はtoilet-data.tsのコメント参照）。
   // ページ自体は削除せず地図からのリンク・共有URLとしては引き続き機能する。
-  const hasRealName = Boolean(toilet.name || toilet.nameEn);
+  const hasRealName = isIndexableToilet(toilet);
   return {
     title,
     description,

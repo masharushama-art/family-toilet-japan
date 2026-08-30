@@ -85,7 +85,7 @@ export default function ZhPage() {
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">實用指南</h2>
+        <h2 id="guides" className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 scroll-mt-20">實用指南</h2>
         <div className="space-y-3 mb-10">
           {[
             { slug: "best-baby-changing-facilities-tokyo", icon: "🗼", title: "東京換尿布台・哺乳室指南", desc: "新宿、澀谷、上野、銀座、東京車站推薦育嬰室" },
