@@ -198,7 +198,7 @@ Search Consoleの404検出をきっかけに調査したところ、東京の自
 
 **検証**: `npx tsc --noEmit`エラーなし。`npm run build`成功（全ページ生成、既存の3,518ページ構成に変更なし）。`next start`でローカル起動し、`/`（EN）に「Read Travel Guides」ボタンと新位置のTravel Guidesセクション、`/tokyo`・`/ja/tokyo`・`/zh/tokyo`・`/ko/tokyo`にそれぞれの言語でガイドセクションが表示されることをHTTP経由で確認。`/sitemap-toilets.xml`のURL数が318件（159×2）であることも確認。アフィリエイト導線（楽天・Klook・Amazon）・多言語hreflang・既存のAdUnit配置には変更を加えていない。
 
-**本番デプロイは未実施**（インストラクション通り、ユーザー判断待ち）。
+**本番デプロイ完了（2026-08-30）**: ユーザー承認を得て`npm run cf:deploy`を実行（Version `6716b720-749a-4729-80ec-f6d48a388449`）。本番実機で`https://familytoiletjapan.com/sitemap-toilets.xml`が318件であること、トップページに「Read Travel Guides」ボタンが表示されることを確認。次のAdSense再審査リクエストは、Googleの再クロールを待ってからユーザー判断で実施すること。
 
 ## ⚠️ AdSense不承認への対応（2026-07-05）
 **原因**: AdSenseダッシュボードの「サイト」ページで「有用性の低いコンテンツ」のステータス。診断の結果、トイレ個別ページ1,142件中632件（55%）が施設名の無い汎用プレースホルダー（「Public Toilet in Tokyo」等）で、地図上の座標以外に固有情報が無いことが判明。EN/JA合計で約1,264ページに及び、全体の3割以上を占めていたため、これが有力な原因と判断。
