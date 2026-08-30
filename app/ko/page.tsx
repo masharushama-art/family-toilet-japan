@@ -86,7 +86,7 @@ export default function KoPage() {
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">유용한 가이드</h2>
+        <h2 id="guides" className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 scroll-mt-20">유용한 가이드</h2>
         <div className="space-y-3 mb-10">
           {[
             { slug: "best-baby-changing-facilities-tokyo", icon: "🗼", title: "도쿄 기저귀 교환대・수유실 가이드", desc: "신주쿠, 시부야, 우에노, 긴자, 도쿄역 추천 육아실" },

@@ -7,6 +7,7 @@ import {
   getNearbyToilets,
   getAllDetailPageParams,
   getToiletAreaContext,
+  isIndexableToilet,
   type CitySlug,
 } from "../../../../lib/toilet-data";
 import { AdUnit } from "../../../../components/AdSense";
@@ -40,7 +41,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const title = `${name} — ${c.jaName}のおむつ替え台付きトイレ | Family Toilet Japan`;
   const description = `${c.jaName}の「${name}」はおむつ交換台あり${toilet.wheelchair ? "・車いす対応" : ""}${toilet.fee === false ? "・無料" : ""}。住所・営業時間・地図・経路案内はこちら。`;
   // 施設名が無い（汎用プレースホルダーのみ）ページは地図座標以外に固有情報が乏しいため noindex にする。
-  const hasRealName = Boolean(toilet.name || toilet.nameEn);
+  // インデックス判定基準はEN版・app/lib/toilet-data.tsのisIndexableToiletと共通（ROADMAP.md参照）
+  const hasRealName = isIndexableToilet(toilet);
   return {
     title,
     description,
