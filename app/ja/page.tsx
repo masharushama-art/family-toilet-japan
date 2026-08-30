@@ -89,7 +89,7 @@ export default function JaPage() {
           ))}
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">お役立ちガイド</h2>
+        <h2 id="guides" className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 scroll-mt-20">お役立ちガイド</h2>
         <div className="space-y-3 mb-10">
           {[
             { slug: "best-baby-changing-facilities-tokyo", icon: "🗼", title: "東京のおむつ替え・授乳室ガイド", desc: "新宿・渋谷・上野・銀座・東京駅のおすすめベビールーム" },

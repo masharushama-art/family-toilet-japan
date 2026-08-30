@@ -297,12 +297,23 @@ export default function Home() {
           <p className="text-sky-100 max-w-md mx-auto mb-7">
             Find family-friendly toilets with baby changing tables across Japan — free &amp; no sign-up.
           </p>
-          <Link
-            href="/map"
-            className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 dark:hover:bg-gray-800 hover:scale-[1.02] transition-all shadow-lg shadow-sky-900/20"
-          >
-            📍 Find Toilets Near Me
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Link
+              href="/map"
+              className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-50 dark:hover:bg-gray-800 hover:scale-[1.02] transition-all shadow-lg shadow-sky-900/20"
+            >
+              📍 Find Toilets Near Me
+            </Link>
+            {/* AdSense 3回連続不承認への対応（2026-08-30、ROADMAP.md参照）:
+                トイレDB検索一辺倒だったファーストビューに、編集的価値のあるガイド記事への
+                導線を同格で追加し、サイトの主目的をDBのみに見せない構成にする */}
+            <Link
+              href="#guides"
+              className="inline-block bg-sky-800/40 border border-white/40 text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-sky-800/60 transition-all"
+            >
+              📖 Read Travel Guides
+            </Link>
+          </div>
           <p className="text-sky-200 text-xs mt-3">Works offline · PWA · No registration</p>
           <CitySearch cities={allCities} />
         </div>
@@ -339,6 +350,35 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        {/* Travel Guides — サイト構造転換（2026-08-30、ROADMAP.md参照）:
+            トイレDB検索（都市一覧・エリア一覧）より前に、独自の編集コンテンツである
+            ガイド記事群を主役として配置する。ファーストビュー直後の最初のコンテンツブロック。 */}
+        <div id="guides" className="mb-12 scroll-mt-20">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">📖 Travel Guides</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            Written by a parent who travels Japan with a toddler — practical, city-by-city advice beyond the toilet map.
+          </p>
+          <div className="space-y-3">
+            {guides.map(({ href, title, desc, icon }) => (
+              <Link
+                key={href}
+                href={href}
+                className="flex items-center gap-4 border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-2xl px-5 py-4 transition-colors"
+              >
+                <span className="text-3xl">{icon}</span>
+                <div>
+                  <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{title}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{desc}</p>
+                </div>
+                <span className="text-gray-400 ml-auto">›</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Ad */}
+        <AdUnit slot="7391048265" label="Top page — between guides and toilet map" />
 
         {/* 人気スポット */}
         <div className="mb-12">
@@ -443,28 +483,6 @@ export default function Home() {
                 })}
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Ad */}
-        <AdUnit slot="7391048265" label="Top page — between regions and guides" />
-
-        {/* Guides */}
-        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Travel Guides</h2>
-        <div className="space-y-3 mb-12">
-          {guides.map(({ href, title, desc, icon }) => (
-            <Link
-              key={href}
-              href={href}
-              className="flex items-center gap-4 border border-gray-100 dark:border-gray-800 hover:border-sky-300 hover:bg-sky-50 dark:hover:bg-gray-800 rounded-2xl px-5 py-4 transition-colors"
-            >
-              <span className="text-3xl">{icon}</span>
-              <div>
-                <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{title}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{desc}</p>
-              </div>
-              <span className="text-gray-400 ml-auto">›</span>
-            </Link>
           ))}
         </div>
 
