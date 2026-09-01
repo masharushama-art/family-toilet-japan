@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-06-14T23:47:30Z",
+    "timestamp_osm_base": "2026-09-01T08:10:48Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -46,7 +46,10 @@
       "lon": 139.667118,
       "tags": {
         "amenity": "toilets",
-        "fee": "no"
+        "check_date": "2026-08-18",
+        "check_date:wheelchair": "2026-08-18",
+        "fee": "no",
+        "wheelchair": "yes"
       }
     },
     {
@@ -371,6 +374,7 @@
       "tags": {
         "amenity": "toilets",
         "fee": "no",
+        "opening_hours": "Mo-Su,PH 09:00-17:00",
         "operator": "さいたま市",
         "toilets:disposal": "flush",
         "wheelchair": "yes"
@@ -586,9 +590,12 @@
       "tags": {
         "access": "yes",
         "amenity": "toilets",
+        "check_date": "2026-06-30",
+        "check_date:opening_hours": "2026-06-30",
         "fee": "no",
         "female": "yes",
         "male": "yes",
+        "opening_hours": "24/7",
         "toilets:disposal": "flush",
         "toilets:position": "seated;urinal",
         "wheelchair": "yes"
@@ -626,15 +633,6 @@
         "name": "屋外トイレ",
         "operator": "さいたま市桜環境センター",
         "toilets:disposal": "flush"
-      }
-    },
-    {
-      "type": "node",
-      "id": 4829408332,
-      "lat": 35.9817337,
-      "lon": 139.6530123,
-      "tags": {
-        "amenity": "toilets"
       }
     },
     {
@@ -1323,8 +1321,36 @@
       "lat": 35.8224917,
       "lon": 139.5742375,
       "tags": {
+        "access": "yes",
+        "addr:postcode": "352-0001",
         "amenity": "toilets",
+        "charge": "0",
+        "check_date": "2026-07-25",
+        "ele": "18.9",
+        "fee": "no",
+        "level": "0",
+        "name": "志木駅南口公衆トイレ",
+        "name:ar": "دورة مياه عامة (مخرج محطة شيكي الجنوبي)",
+        "name:en": "Shiki Station South Exit Public Restroom",
+        "name:es": "Baño público de la salida sur de la estación Shiki",
+        "name:fr": "Toilettes publiques de la sortie sud de la gare de Shiki",
+        "name:hi": "सार्वजनिक शौचालय (शिकी स्टेशन दक्षिण निकास)",
+        "name:id": "Toilet Umum Pintu Keluar Selatan Stasiun Shiki",
+        "name:ja": "志木駅南口公衆トイレ",
+        "name:ja-Hira": "しきえきみなみぐち　こうしゅうトイレ",
+        "name:ko": "공중 화장실(시기역 남쪽 출입구)",
+        "name:pt": "Banheiro público da saída sul da estação Shiki",
+        "name:th": "ห้องน้ำสาธารณะ (สถานีชิกิ ทางออกทิศใต้)",
+        "name:vi": "Nhà vệ sinh công cộng (Lối ra phía Nam ga Shiki)",
+        "name:zh": "公共洗手間(志木站南出口)",
+        "opening_hours": "24/7",
+        "operator": "新座市",
+        "portable": "no",
         "source": "survey",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:menstrual_products": "no",
+        "toilets:position": "seated;inside;urinal",
         "wheelchair": "yes"
       }
     },
@@ -1473,6 +1499,7 @@
       "lon": 139.6514153,
       "tags": {
         "amenity": "toilets",
+        "fee": "no",
         "wheelchair": "limited"
       }
     },
@@ -1943,6 +1970,7 @@
       "tags": {
         "amenity": "toilets",
         "check_date": "2026-03-23",
+        "fee": "no",
         "level": "0"
       }
     },
@@ -1985,6 +2013,38 @@
       "id": 13915804853,
       "lat": 35.8699119,
       "lon": 139.6425394,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13976358432,
+      "lat": 36.0390083,
+      "lon": 139.5585681,
+      "tags": {
+        "amenity": "toilets",
+        "changing_table": "no",
+        "male": "yes",
+        "toilets:handwashing": "yes",
+        "unisex": "yes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14086175169,
+      "lat": 35.9219977,
+      "lon": 139.6662732,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14090480738,
+      "lat": 35.8940461,
+      "lon": 139.6050373,
       "tags": {
         "amenity": "toilets"
       }
@@ -2051,7 +2111,10 @@
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "building:levels": "1",
+        "ele": "7.7",
+        "height": "3.5"
       }
     },
     {
@@ -2497,7 +2560,9 @@
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes"
       }
     },
     {
@@ -3047,7 +3112,9 @@
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes"
       }
     },
     {
@@ -3155,7 +3222,9 @@
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes"
       }
     },
     {
@@ -3694,28 +3763,6 @@
     },
     {
       "type": "way",
-      "id": 1097141980,
-      "center": {
-        "lat": 35.8224883,
-        "lon": 139.5742474
-      },
-      "nodes": [
-        12732945883,
-        12732945886,
-        12732945885,
-        12732945884,
-        12732945883
-      ],
-      "tags": {
-        "amenity": "toilets",
-        "building": "yes",
-        "ele": "18.9",
-        "height": "3.5",
-        "source": "MLIT_PLATEAU 11230-bldg-55640"
-      }
-    },
-    {
-      "type": "way",
       "id": 1160855906,
       "center": {
         "lat": 35.9314306,
@@ -3981,7 +4028,9 @@
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes"
       }
     },
     {
@@ -4162,6 +4211,7 @@
       "tags": {
         "amenity": "toilets",
         "building": "yes",
+        "fee": "no",
         "female": "yes",
         "male": "yes"
       }
@@ -4373,6 +4423,31 @@
         "toilets:disposal": "flush",
         "unisex": "yes",
         "wheelchair": "limited"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1533185876,
+      "center": {
+        "lat": 35.8802306,
+        "lon": 139.6080611
+      },
+      "nodes": [
+        13971904354,
+        13971904355,
+        13971904356,
+        13971904357,
+        13971904358,
+        13971904359,
+        13971904360,
+        13971904354
+      ],
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "female": "yes",
+        "male": "yes"
       }
     }
   ]
