@@ -431,7 +431,7 @@ export const THIN_PAGES_NOINDEX = true;
 
 ### 6. PWA仕上げの残り
 - ✅ maskableアイコン画像: 完了（2026-07-03）。既存の`icon-192.png`/`icon-512.png`が実は中身のない水色の正方形だったバグを発見し、🚽絵文字デザインに差し替え。セーフゾーン内に収まる余白付き
-- ✅ `/map`・トイレ個別ページのスクリーンショット撮影: 完了（2026-09-03）。`npm install puppeteer --no-save`（package.json/lockは無変更のまま一時的にローカルnode_modulesへ導入、作業後にuninstall済み）でヘッドレスChromeを起動し、devサーバー（`npm run dev`、localhost:3000）に対して4枚を撮影: `/map`のモバイル版（390×844）・デスクトップ版（1280×800）、トイレ個別ページのモバイル版（390×844、`osm-node-366818868`＝実名ありの東京都立目黒区駒場東大前駅公衆便所）、トップページのデスクトップ版（1280×800）。撮影前にCookie同意バナーは自動でAcceptしてから撮る処理を追加（`/map`の位置情報拒否バナーはheadless環境の制約でそのまま残るが、実害のある表示ではないため許容）。`public/screenshots/`に保存し、`public/manifest.json`の`screenshots`フィールド（`form_factor: narrow`×2、`wide`×2、各`label`付き）に登録。JSON構文チェック済み
+- ✅ `/map`・トイレ個別ページのスクリーンショット撮影: 完了（2026-09-03）。`npm run cf:deploy`で本番反映済み（Version ID `2c008779-6840-49fa-b61a-5c3342901c3c`）、`https://familytoiletjapan.com/manifest.json`にscreenshots 4件が反映されていることを確認。`npm install puppeteer --no-save`（package.json/lockは無変更のまま一時的にローカルnode_modulesへ導入、作業後にuninstall済み）でヘッドレスChromeを起動し、devサーバー（`npm run dev`、localhost:3000）に対して4枚を撮影: `/map`のモバイル版（390×844）・デスクトップ版（1280×800）、トイレ個別ページのモバイル版（390×844、`osm-node-366818868`＝実名ありの東京都立目黒区駒場東大前駅公衆便所）、トップページのデスクトップ版（1280×800）。撮影前にCookie同意バナーは自動でAcceptしてから撮る処理を追加（`/map`の位置情報拒否バナーはheadless環境の制約でそのまま残るが、実害のある表示ではないため許容）。`public/screenshots/`に保存し、`public/manifest.json`の`screenshots`フィールド（`form_factor: narrow`×2、`wide`×2、各`label`付き）に登録。JSON構文チェック済み
 
 ### 7. データ強化（次回・私が対応、規模大）
 ✅ ostomateフィルターは実装済み（2026-07-03）。ODPT駅施設データ・赤ちゃんの駅事業データはいずれも調査の結果見送り（詳細は下記「データ強化候補」参照）。残るは①OSMの他アメニティ（授乳室・給水スポット・公園遊具）の新規レイヤー化 →②自治体オープンデータの公衆トイレCSV取り込み。いずれも規模が大きいため着手前に方向性の確認が必要。
