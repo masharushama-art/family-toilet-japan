@@ -60,5 +60,35 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/map-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Find toilets near you on the map"
+    },
+    {
+      "src": "/screenshots/toilet-detail-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Detailed info: baby changing table, wheelchair access, and more"
+    },
+    {
+      "src": "/screenshots/map-wide.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "5,000+ toilets mapped across Tokyo"
+    },
+    {
+      "src": "/screenshots/home-wide.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Family Toilet Japan — works offline, no sign-up"
+    }
   ]
 }
