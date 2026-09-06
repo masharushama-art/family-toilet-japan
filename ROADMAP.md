@@ -33,6 +33,10 @@
 4. **都市ページ4言語（`app/[city]`・`app/ja/[city]`・`app/zh/[city]`・`app/ko/[city]`）でTravel Guidesセクションをヒーロー直後・統計/カテゴリ/エリア（DB由来）より前に移動**。トイレページ除外後はインデックスの最大グループが都市ページ（124件、約57%）になり、次に指摘されうる箇所のため
 5. `app/lib/guides.ts`を新設し`getGuidesForCity(city)`を実装。専用ガイドの無い都市（47都市中37都市）でも、同じ地方の都市向けガイド→汎用ガイド（4言語すべてに存在する4本）の順で最大3本を表示する。従来の「`/#guides`への汎用リンク1本」への縮退を廃止
 
+**本番デプロイ完了（2026-09-06、コミット`222c62c`）**: `npm run cf:deploy`実行（Version `816a1895-1c37-4d39-93fb-44fb2f9ef723`）。本番`familytoiletjapan.com`で以下を実機確認済み — (a)トイレ個別ページEN/JAに`<meta name="robots" content="noindex, follow">`、(b)`/sitemap-toilets.xml`が404、(c)`robots.txt`から参照除去、(d)`/sitemap.xml`は**213 URL・トイレURL 0件**（ガイド78+都市124+静的8+言語3）、(e)`/tokyo`でGuidesが統計より前・専用ガイド2本のみ、`/saitama`・`/ibaraki`・`/ja/saitama`・`/zh/chiba`・`/ko/chiba`でフォールバック3本表示（saitamaは東京2本+横浜1本と同地方優先が機能）。トップ・`/map`・ガイド・`/ja`・`/coverage`は200で回帰なし。
+
+**補足（調査時の注意点）**: 着手前に「本番sitemap-toilets.xmlが418件に増えている」と判断していたが、これはWebFetch（要約用の小型モデル）がXMLのURL数を数え間違えたもので、`curl | grep -c "<loc>"`で直接数えると318件（リポジトリ算出値と一致、乖離なし）だった。件数などの定量確認はWebFetchの要約に頼らず直接カウントすること。また本番`robots.txt`にはCloudflareが自動付与する「Cloudflare Managed content」ブロック（Content-Signal・AI学習クローラーのDisallow）が先頭に挿入されているが、Googlebot・Mediapartners-Googleは対象外のため検索・AdSenseには影響しない。
+
 **運用**: ユーザー作業として、Search Consoleで旧`sitemap-toilets.xml`を削除・`sitemap.xml`を再送信。Googleの再クロールを1〜2週間待ってからAdSense再審査をリクエストする（即時申請はしない）。
 
 **4回目も不承認だった場合の次の手**: (a) ガイド記事の追加執筆（編集コンテンツ78ページは正直少ない）、(b) 都市ページのうちガイド無し・ZH/KO版（計30件）のnoindex化。
