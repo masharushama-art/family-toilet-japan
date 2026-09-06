@@ -7,9 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/_next/"],
     },
-    sitemap: [
-      "https://familytoiletjapan.com/sitemap.xml",
-      "https://familytoiletjapan.com/sitemap-toilets.xml",
-    ],
+    sitemap: ["https://familytoiletjapan.com/sitemap.xml"],
   };
 }
