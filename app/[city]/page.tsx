@@ -6,7 +6,7 @@ import { cityAlternates, BASE } from "../lib/lang-cities";
 import ShareButtons from "../components/ShareButtons";
 import { AdUnit } from "../components/AdSense";
 import { getSpotsByCity } from "../lib/spots";
-import { CITY_GUIDE_SLUGS } from "../components/SpotPageView";
+import { getGuidesForCity, guideHref } from "../lib/guides";
 
 const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
   tokyo: {
@@ -157,8 +157,26 @@ export default async function CityPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="max-w-2xl mx-auto px-6 py-10">
+        {/* Travel guides — 編集コンテンツを機械的なデータ表（統計/カテゴリ/エリア）より前に置く。
+            都市専用ガイドが無い都市でも同じ地方・汎用のガイドを出す（app/lib/guides.ts、ROADMAP.md参照） */}
+        <div className="mb-10">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">📖 {c.name} Travel Guides</h2>
+          <div className="space-y-2">
+            {getGuidesForCity(city).map((g) => (
+              <Link
+                key={g.slug}
+                href={guideHref("en", g.slug)}
+                className="flex items-center justify-between border border-sky-100 dark:border-sky-900/40 bg-sky-50/50 dark:bg-sky-900/10 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-xl px-5 py-4 transition-colors"
+              >
+                <span className="text-sm font-medium text-gray-800 dark:text-gray-100">{g.en}</span>
+                <span className="text-gray-400">›</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Stats */}
         <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
           {c.name} Toilet Stats
         </h2>
@@ -218,37 +236,6 @@ export default async function CityPage({ params }: Props) {
             </div>
           </div>
         )}
-
-        {/* Related travel guides — AdSense 3回連続不承認への対応（2026-08-30、ROADMAP.md参照）:
-            サイト構造をトイレDB主体からガイド記事主体へ転換する一環として、
-            機械的なデータ表(カテゴリ/統計/エリア一覧)ばかりだった都市ページに、
-            編集的価値のあるガイド記事への導線を追加する。都市に紐づくガイドが無い場合は
-            全ガイド一覧（/guide の入口である /#guides）への汎用リンクを表示する。 */}
-        <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">📖 {c.name} Travel Guides</h2>
-          {(CITY_GUIDE_SLUGS[city]?.length ?? 0) > 0 ? (
-            <div className="space-y-2">
-              {CITY_GUIDE_SLUGS[city]!.map((g) => (
-                <Link
-                  key={g.slug}
-                  href={`/guide/${g.slug}`}
-                  className="flex items-center justify-between border border-sky-100 dark:border-sky-900/40 bg-sky-50/50 dark:bg-sky-900/10 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-xl px-5 py-4 transition-colors"
-                >
-                  <span className="text-sm font-medium text-gray-800 dark:text-gray-100">{g.en}</span>
-                  <span className="text-gray-400">›</span>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <Link
-              href="/#guides"
-              className="flex items-center justify-between border border-sky-100 dark:border-sky-900/40 bg-sky-50/50 dark:bg-sky-900/10 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-xl px-5 py-4 transition-colors"
-            >
-              <span className="text-sm font-medium text-gray-800 dark:text-gray-100">Browse all family travel guides for Japan</span>
-              <span className="text-gray-400">›</span>
-            </Link>
-          )}
-        </div>
 
         {/* Ad */}
         <AdUnit slot="2847361905" label="City page — between categories and tips" />
