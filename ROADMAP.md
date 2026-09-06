@@ -9,10 +9,37 @@
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、ダークモード済み
 - ✅ **OGP画像: 動的セグメントを含む8ルート（都市・多言語ガイド・スポット）を復活・本番反映完了**（2026-08-11、下記「動的OGP画像生成機能の復活」参照）。OpenNext（`@opennextjs/cloudflare`）移行後は旧`next-on-pages`時代のedge runtime制約が解消されていることをローカルpreview・本番(`familytoiletjapan.com`)双方の実URL検証で確認済み。`middleware.ts`（410 Gone対応）は役目を終えたため削除
 - ⚠️ **デプロイ運用の訂正（2026-08-11判明）**: 「GitHub連携でmasterへのpushが本番Cloudflare Workersへの自動デプロイをトリガーする構成」という従来の記載は誤り。実際は`npm run cf:deploy`（`opennextjs-cloudflare build && opennextjs-cloudflare deploy`）による手動CLIデプロイが必要（`wrangler deployments list`のデプロイ履歴で確認、過去のデプロイもすべて手動）。pushしただけでは本番に反映されない
-- AdSense: 3回連続不承認（07-05・08-14・08-27、いずれも「有用性の低いコンテンツ」）。**2026-09-06にトイレ個別ページを全件noindex化し、インデックス対象をガイド記事+都市ページ+静的ページに限定する根本対策を実施**（下記「AdSense根本対策」参照）。Google再クロール後にユーザー判断で4回目の再審査をリクエストする
+- AdSense: 3回連続不承認（07-05・08-14・08-27、いずれも「有用性の低いコンテンツ」）。**2026-09-06にトイレ個別ページを全件noindex化（第1弾）し、さらにサイト全体監査で共通ヘッダー/フッター新設・薄いページのnoindex・Consent Mode v2・運営者情報の構造化データ等を実施（第2弾）**。インデックス対象は181 URL（ガイド78・都市94・静的/言語9）。Google再クロール後にユーザー判断で4回目の再審査をリクエストする
 - ガイド記事の実数: **EN 21本 + JA/ZH/KO 各19本 = 78ページ**（sitemap.tsと完全一致、登録漏れなし）。過去の記録にある「164本」は誤記
 - アフィリエイト（楽天・Klook・Amazon）: 新環境でも動作確認済み
 - 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献65、カルマ2、目標50）
+
+## ✅ AdSense対策 第2弾: サイト全体監査で「有用性の低いコンテンツ」以外の不承認要因を排除（2026-09-06）
+
+トイレ個別ページのnoindex化（下記第1弾）の後、4回目の再審査リクエスト前にサイト全体を再監査し、コンテンツ比率以外でAdSense審査に落ちうる要因を洗い出して対処した。
+
+**監査で判明した問題（重要度順）**:
+1. **サイト共通のヘッダー/フッターが存在しない**。`app/layout.tsx`は`I18nProvider`でchildrenを包むだけで、About・Privacy・FAQ・お問い合わせ（Googleフォーム）へのリンクはAbout/Privacy/Widgetの3ページからしか辿れず、ホーム・全ガイド・全都市ページ・/mapに一切無かった。`/ja`・`/zh`・`/ko`配下にはポリシーページ自体が無い。AdSenseの「ナビゲーション」「プライバシーポリシーへの到達性」要件を直撃する、最も機械的に検出される不備
+2. **薄いユーティリティページがインデックス対象**: `/map`（`MapPageClient`が`dynamic(ssr:false)`で地図を読み込むため、SSRのHTMLは`loading`の「Loading map...」＋都市リンク4つ＝約12語。sitemap優先度0.9）、`/coverage`（47都市×4列の数値表）、`/widget`（埋め込みHTML断片が主体）、`/offline`（PWA用、robots未設定）
+3. **都市ページの近似重複**: JA/ZH/KOの各都市ページは約85%が同一テキスト（都市名と数値3つのみ差し替え）。JAは全都市で同一内容のFAQを`FAQPage`構造化データとして47ページに出力（構造化データの大量重複はスパム信号）
+4. **Cookie同意バナーが飾り**: Declineを押してもGA4・AdSenseスクリプトは無条件でロード。Consent Mode未実装、CMP未導入
+5. **noindexの薄いページ（トイレ詳細・スポット・カテゴリ、計2,500ページ超）に`AdUnit`が配線済み**。現在は`NEXT_PUBLIC_ADSENSE_APPROVED`未設定で非表示だが、承認後に有効化した瞬間「コンテンツのないページへの広告」ポリシー違反になる
+6. **運営者の識別情報が無い**: `Organization`/`WebSite`構造化データ無し、連絡手段はGoogleフォームのみ
+
+問題なしと確認した項目: `ads.txt`（正しい`pub-9686216801075877`）、AdSense設置スニペット（`layout.tsx`）、プレースホルダー文言、アフィリエイト（現在は環境変数未設定で非表示。表示時は各ボックスに開示文あり）、ガイド記事の中身（JA/ZH/KOは本物の翻訳。監査時にcurlの`wc -w`で「JAガイド23語」等と出たのは空白区切りでCJKを数えた計測ミスで、実際は京都ガイドがJA 2,930字・ZH 2,420字・KO 3,390字）
+
+**実装内容**（ユーザー承認: 基本対策4点、ZH/KO都市noindex+JAのFAQ/スキーマ除去、/map本文追加、Consent Mode v2、すべて推奨案を採用）:
+- `app/components/SiteHeader.tsx`・`SiteFooter.tsx`を新設し`app/layout.tsx`で全ページに配置。`usePathname`で4言語を判定し、ホーム・地図・ガイド・FAQ・About・Privacy・データ出典・お問い合わせ（Googleフォーム）へのリンク、AdSense/アフィリエイト利用の開示文、データ出典、©表記を各言語で表示。JA/ZH/KOはポリシーページが英語である旨を注記。`/map`と`/offline`は全画面アプリのため非表示（ウィジェット埋め込みの`/map?embed=1`にも出ない）
+- `app/layout.tsx`: `Organization`+`WebSite`のJSON-LD（連絡先＝Googleフォーム）を`<head>`に追加。**Google Consent Mode v2**を導入 — `beforeInteractive`の`consent-default`スクリプトでGA4/AdSenseより前に`ad_storage`/`ad_user_data`/`ad_personalization`/`analytics_storage`の既定値を設定（localStorageに`accepted`があれば`granted`、それ以外は`denied`、`wait_for_update:500`）。`CookieConsent.tsx`のAccept/Declineで`gtag('consent','update')`を呼ぶよう修正
+- `/map`: 説明文（地図に載っている情報・使い方・データ出典・都市/ガイドへの導線、約250語）を`app/components/MapIntro.tsx`に切り出し、`MapPageClient`の`dynamic`の`loading`として出力。**ページ側のSuspenseフォールバックに書いてもSSRのHTMLには出ない**（`dynamic(ssr:false)`の`loading`が出力されるため。最初はSuspense側に書いて12語のままだった）。sitemap優先度0.9→0.7
+- `/coverage`・`/widget`・`app/offline/layout.tsx`にnoindex、`/coverage`・`/widget`をsitemapから除外
+- `app/zh/[city]`・`app/ko/[city]`（計30件）にnoindex、sitemapから除外（`ZH_KO_CITIES`定数と`zhCityPages`/`koCityPages`を削除）。hreflangは言語切替用に維持
+- `app/ja/[city]`: 可視FAQブロックと`FAQPage`JSON-LDを除去（`BreadcrumbList`のみ残す）
+- `AdUnit`を`app/toilet/[city]/[id]`・`app/ja/toilet/[city]/[id]`・`SpotPageView.tsx`・`app/[city]/[category]`から撤去（承認後に広告を出すのはインデックス対象の編集ページのみ）
+
+**結果**: `sitemap.xml`は213→**181 URL**（ガイド78・都市EN47+JA47・静的6・言語3）。ローカルビルド（4,917ページ、tsc/eslintエラーなし）＋`next start`で、共通ヘッダー/フッターと各言語ラベル、/mapの非表示と本文255語、noindex×6、インデックス維持×9、JAのFAQ/スキーマ除去、sitemap構成、Consent既定値、Organization/WebSite JSON-LD、埋め込み/ディープリンクの挙動、既存ページの回帰なし、をすべて確認済み。
+
+**未対応（承認後・ユーザー作業）**: AdSense管理画面「プライバシーとメッセージ」でのCMP（同意メッセージ）設定。Consent Mode v2はコード側で導入済みなので、CMPを有効化すればそのまま連動する。
 
 ## ✅ AdSense根本対策: トイレ個別ページ全件noindex化・都市ページをガイド優先構造へ転換（2026-09-06）
 

@@ -7,7 +7,6 @@ import {
   type CitySlug, type CategorySlug,
 } from "../../lib/toilet-data";
 import { getSpotsByCity } from "../../lib/spots";
-import { AdUnit } from "../../components/AdSense";
 import { THIN_PAGES_NOINDEX } from "../../lib/feature-flags";
 
 const BASE = "https://familytoiletjapan.com";
@@ -104,7 +103,7 @@ export default async function CityCategory({ params }: Props) {
           </div>
         )}
 
-        <AdUnit slot="city-category-top" />
+        {/* 広告ユニットは撤去（noindexの薄いページに広告を出すとポリシー違反になるため、2026-09-06） */}
 
         {/* List */}
         <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">

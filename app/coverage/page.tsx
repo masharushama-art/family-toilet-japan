@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: "Data Coverage — Toilet Counts by City | Family Toilet Japan",
   description: "How many family-friendly toilets we cover in each Japanese city — total locations, baby changing tables, and wheelchair-accessible facilities, updated with every data refresh.",
   alternates: { canonical: `${BASE}/coverage` },
+  // 47都市×4列の数値表が主体で編集的価値が乏しいため noindex（2026-09-06、AdSense対策・ROADMAP.md参照）
+  robots: { index: false, follow: true },
 };
 
 export default function CoveragePage() {

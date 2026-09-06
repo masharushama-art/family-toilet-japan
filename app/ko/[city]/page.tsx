@@ -46,6 +46,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `${koName}에서 기저귀 교환대가 있는 화장실 ${stats.withChangingTable}곳을 지도로 검색.`,
       url: `${BASE}/ko/${city}`,
     },
+    // 15都市ページの約85%が同一テキストの近似重複のため noindex（2026-09-06、ZH版と同様・ROADMAP.md参照）
+    robots: { index: false, follow: true },
   };
 }
 

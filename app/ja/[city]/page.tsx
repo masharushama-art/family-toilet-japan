@@ -101,33 +101,9 @@ export default async function JaCityPage({ params }: Props) {
           ))}
         </div>
 
-        {/* よくある質問 */}
-        <h2 className="text-xl font-bold text-gray-800 mb-4">よくある質問</h2>
-        <div className="space-y-3 mb-10">
-          {[
-            {
-              q: `${c.jaName}でおむつ替え台があるトイレはどこ？`,
-              a: `地図を開いて現在地ボタンを押すと、${c.jaName}近くのおむつ替え台付きトイレが青いピンで表示されます。現在${stats.withChangingTable}件収録済みです。`,
-            },
-            {
-              q: `${c.jaName}のファミリートイレ情報は最新ですか？`,
-              a: "データはOpenStreetMapと自治体オープンデータをもとに定期的に更新しています。情報が古い場合はOpenStreetMapから修正できます。",
-            },
-            {
-              q: "オフラインでも使えますか？",
-              a: "PWAとしてインストールすれば、一度開いたエリアはオフラインでも地図が表示されます。海外のSIMでも安心。",
-            },
-            {
-              q: "無料で使えますか？",
-              a: "完全無料・会員登録不要です。",
-            },
-          ].map(({ q, a }) => (
-            <div key={q} className="border border-gray-100 rounded-xl p-4">
-              <p className="font-semibold text-gray-800 text-sm mb-1">Q. {q}</p>
-              <p className="text-gray-600 text-sm leading-relaxed">A. {a}</p>
-            </div>
-          ))}
-        </div>
+        {/* 旧「よくある質問」ブロックは47都市で本文が同一（都市名のみ差し替え）の近似重複だったため、
+            FAQPage構造化データともども除去（2026-09-06、AdSense対策・ROADMAP.md参照）。
+            サイト共通のFAQは /faq を参照 */}
 
         {/* 英語版リンク */}
         <div className="bg-gray-50 rounded-2xl p-5 text-center text-sm text-gray-500">
@@ -141,32 +117,14 @@ export default async function JaCityPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            {
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                { "@type": "ListItem", position: 1, name: "ファミリートイレジャパン", item: "https://familytoiletjapan.com/ja" },
-                { "@type": "ListItem", position: 2, name: `${c.jaName}のファミリートイレ`, item: `https://familytoiletjapan.com/ja/${city}` },
-              ],
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: [
-                {
-                  "@type": "Question",
-                  name: `${c.jaName}でおむつ替え台があるトイレはどこ？`,
-                  acceptedAnswer: { "@type": "Answer", text: `地図を開いて現在地ボタンを押すと、${c.jaName}近くのおむつ替え台付きトイレが青いピンで表示されます。現在${stats.withChangingTable}件収録済みです。` },
-                },
-                {
-                  "@type": "Question",
-                  name: "オフラインでも使えますか？",
-                  acceptedAnswer: { "@type": "Answer", text: "PWAとしてインストールすれば、一度開いたエリアはオフラインでも地図が表示されます。" },
-                },
-              ],
-            },
-          ]),
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "ファミリートイレジャパン", item: "https://familytoiletjapan.com/ja" },
+              { "@type": "ListItem", position: 2, name: `${c.jaName}のファミリートイレ`, item: `https://familytoiletjapan.com/ja/${city}` },
+            ],
+          }),
         }}
       />
     </div>
