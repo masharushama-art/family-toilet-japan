@@ -18,7 +18,7 @@ const CITY_SLUGS = [
 
 const CATEGORY_SLUGS = ["changing-table", "wheelchair", "free"];
 
-const ZH_KO_CITIES = ["tokyo","osaka","kyoto","nagoya","yokohama","fukuoka","sapporo","nara","kobe","hiroshima","sendai","kanazawa","okinawa","chiba","saitama"];
+// ZH/KO都市ページ(各15件)は近似重複のため noindex 化し、サイトマップからも除外（2026-09-06、ROADMAP.md参照）
 
 const GUIDE_SLUGS = [
   "how-to-use-japanese-toilet",
@@ -143,20 +143,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const zhCityPages = ZH_KO_CITIES.map((city) => ({
-    url: `${BASE_URL}/zh/${city}`,
-    lastModified: now,
-    changeFrequency: "weekly" as const,
-    priority: 0.6,
-  }));
-
-  const koCityPages = ZH_KO_CITIES.map((city) => ({
-    url: `${BASE_URL}/ko/${city}`,
-    lastModified: now,
-    changeFrequency: "weekly" as const,
-    priority: 0.6,
-  }));
-
   // THIN_PAGES_NOINDEX中は noindex を設定しているためサイトマップからも除外（ROADMAP.md参照）
   const spotPages = THIN_PAGES_NOINDEX ? [] : SPOT_SLUGS.flatMap((slug) => [
     { url: `${BASE_URL}/spot/${slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
@@ -174,13 +160,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: BASE_URL, lastModified: now, changeFrequency: "daily", priority: 1.0 },
-    { url: `${BASE_URL}/map`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    { url: `${BASE_URL}/map`, lastModified: now, changeFrequency: "daily", priority: 0.7 },
     { url: `${BASE_URL}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/privacy`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/attribution`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${BASE_URL}/coverage`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
-    { url: `${BASE_URL}/widget`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    // /coverage・/widget は noindex 化したため除外（2026-09-06）
     ...langPages,
     ...guidePages,
     ...jaGuidePages,
@@ -189,8 +174,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...spotPages,
     ...cityPages,
     ...jaCityPages,
-    ...zhCityPages,
-    ...koCityPages,
     ...categoryPages,
   ];
 }

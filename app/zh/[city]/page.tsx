@@ -46,6 +46,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `在${zhName}尋找有換尿布台的廁所，共${stats.withChangingTable}處。`,
       url: `${BASE}/zh/${city}`,
     },
+    // 15都市ページの約85%が同一テキスト（都市名と数値のみ差し替え）の近似重複のため noindex
+    // （2026-09-06、AdSense対策・ROADMAP.md参照）。ページ自体は言語切替・地図導線として残す
+    robots: { index: false, follow: true },
   };
 }
 

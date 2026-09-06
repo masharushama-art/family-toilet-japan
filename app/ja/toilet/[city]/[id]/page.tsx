@@ -9,7 +9,6 @@ import {
   getToiletAreaContext,
   type CitySlug,
 } from "../../../../lib/toilet-data";
-import { AdUnit } from "../../../../components/AdSense";
 import { getNearbySpots, spotDistanceKm } from "../../../../lib/spots";
 import { CITY_GUIDE_SLUGS } from "../../../../components/SpotPageView";
 import PageViewTracker from "../../../../components/PageViewTracker";
@@ -208,7 +207,7 @@ export default async function JaToiletPage({ params }: { params: Params }) {
 
         <CleanlinessVote toiletId={toilet.id} />
 
-        <AdUnit slot="toilet-detail" />
+        {/* 広告ユニットは撤去（noindexの薄いページに広告を出すとポリシー違反になるため、2026-09-06） */}
 
         {/* 近くのトイレ */}
         {nearby.length > 0 && (

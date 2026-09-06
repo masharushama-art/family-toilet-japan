@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: "Embed a Free Toilet Map Widget — Family Toilet Japan",
   description: "Embed a free, interactive map of family-friendly toilets in Japan on your travel blog or website. No sign-up, no API key — just copy one line of HTML.",
   alternates: { canonical: `${BASE}/widget` },
+  // 埋め込み用HTMLスニペットが主体のユーティリティページのため noindex（2026-09-06、AdSense対策・ROADMAP.md参照）
+  robots: { index: false, follow: true },
 };
 
 const EXAMPLE_CITIES = ["tokyo", "osaka", "kyoto", "yokohama", "fukuoka", "sapporo"] as const;

@@ -2,17 +2,14 @@
 
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
+import MapIntro from "./MapIntro";
 
+// ssr:false のため、サーバー出力（＝クローラーが見るHTML）にはこの loading が出る。
+// 以前の「Loading map...」だけだと /map が最も薄いインデックス対象になっていたため、
+// 地図の説明文（MapIntro）をここに置く。地図JSの読み込み完了後は地図に置き換わる。
 const MapView = dynamic(() => import("./MapView"), {
   ssr: false,
-  loading: () => (
-    <div className="flex items-center justify-center h-screen bg-sky-50">
-      <div className="text-center">
-        <div className="text-4xl mb-4">🗺️</div>
-        <p className="text-sky-600 font-medium">Loading map...</p>
-      </div>
-    </div>
-  ),
+  loading: () => <MapIntro />,
 });
 
 const CITY_CENTERS: Record<string, [number, number]> = {

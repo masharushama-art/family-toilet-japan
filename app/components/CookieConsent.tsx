@@ -5,6 +5,16 @@ import Link from "next/link";
 
 const CONSENT_KEY = "ftj_cookie_consent";
 
+// Google Consent Mode v2: layout.tsx の consent-default(既定 denied)を、
+// ユーザーの選択に応じて更新する。これが無いとバナーは飾りで、
+// Decline してもGA4/AdSenseが通常どおり動作してしまう(2026-09-06修正)。
+function updateConsent(granted: boolean) {
+  const v = granted ? "granted" : "denied";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const g = (window as any).gtag as ((...args: unknown[]) => void) | undefined;
+  g?.("consent", "update", { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
+}
+
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
@@ -14,11 +24,13 @@ export default function CookieConsent() {
 
   const accept = () => {
     localStorage.setItem(CONSENT_KEY, "accepted");
+    updateConsent(true);
     setVisible(false);
   };
 
   const decline = () => {
     localStorage.setItem(CONSENT_KEY, "declined");
+    updateConsent(false);
     setVisible(false);
   };
 

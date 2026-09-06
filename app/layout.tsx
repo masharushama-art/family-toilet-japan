@@ -4,8 +4,33 @@ import "./globals.css";
 import { I18nProvider } from "./i18n/provider";
 import InstallBanner from "./components/InstallBanner";
 import CookieConsent from "./components/CookieConsent";
+import SiteHeader from "./components/SiteHeader";
+import SiteFooter, { CONTACT_FORM_URL } from "./components/SiteFooter";
 
 const BASE_URL = "https://familytoiletjapan.com";
+
+// 運営者の識別情報（AdSense対策・ROADMAP.md参照）
+const SITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: "Family Toilet Japan",
+      url: BASE_URL,
+      logo: `${BASE_URL}/icons/icon-192.png`,
+      contactPoint: { "@type": "ContactPoint", contactType: "customer support", url: CONTACT_FORM_URL },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      url: BASE_URL,
+      name: "Family Toilet Japan",
+      publisher: { "@id": `${BASE_URL}/#organization` },
+      inLanguage: ["en", "ja", "zh-TW", "ko"],
+    },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -57,9 +82,22 @@ export default function RootLayout({
         {["tokyo","osaka","kyoto","nagoya","yokohama","fukuoka","sapporo","nara"].map((c) => (
           <link key={c} rel="prefetch" href={`/data/cities/${c}.json`} as="fetch" crossOrigin="anonymous" />
         ))}
+        {/* Google Consent Mode v2 — GA4/AdSenseより前に既定値を設定する。
+            未同意(または拒否)なら denied、過去にAcceptしていれば granted。
+            CookieConsent.tsx の Accept/Decline で gtag('consent','update') を呼ぶ。 */}
+        <Script id="consent-default" strategy="beforeInteractive">{`
+          window.dataLayer=window.dataLayer||[];
+          function gtag(){dataLayer.push(arguments);}
+          var c=null;try{c=localStorage.getItem('ftj_cookie_consent');}catch(e){}
+          var g=(c==='accepted')?'granted':'denied';
+          gtag('consent','default',{ad_storage:g,ad_user_data:g,ad_personalization:g,analytics_storage:g,wait_for_update:500});
+        `}</Script>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_JSON_LD) }} />
       </head>
       <body className="min-h-full flex flex-col">
+        <SiteHeader />
         <I18nProvider>{children}</I18nProvider>
+        <SiteFooter />
         <InstallBanner />
         <CookieConsent />
         {/* GA4 — afterInteractive でメインスレッドをブロックしない */}

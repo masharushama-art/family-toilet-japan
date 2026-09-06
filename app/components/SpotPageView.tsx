@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { Spot } from "../lib/spots";
 import { spotDistanceKm, getSpotsByCity } from "../lib/spots";
 import { CITIES, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
-import { AdUnit } from "./AdSense";
 import PageViewTracker from "./PageViewTracker";
 import { ActivityAffiliateBox } from "./AffiliateBox";
 import ShareButtons from "./ShareButtons";
@@ -304,7 +303,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
           </div>
         )}
 
-        <AdUnit slot="spot-page" />
+        {/* 広告ユニットは撤去（noindexの薄いページに広告を出すとポリシー違反になるため、2026-09-06） */}
 
         {/* Others */}
         {others.length > 0 && (
