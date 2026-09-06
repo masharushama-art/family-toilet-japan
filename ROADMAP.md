@@ -39,6 +39,8 @@
 
 **結果**: `sitemap.xml`は213→**181 URL**（ガイド78・都市EN47+JA47・静的6・言語3）。ローカルビルド（4,917ページ、tsc/eslintエラーなし）＋`next start`で、共通ヘッダー/フッターと各言語ラベル、/mapの非表示と本文255語、noindex×6、インデックス維持×9、JAのFAQ/スキーマ除去、sitemap構成、Consent既定値、Organization/WebSite JSON-LD、埋め込み/ディープリンクの挙動、既存ページの回帰なし、をすべて確認済み。
 
+**本番デプロイ完了（2026-09-06、コミット`8515cb8`、Version `5db1bbce-3da6-43f0-a710-28c0a65a3f5f`）**: 本番`familytoiletjapan.com`で41項目を実機確認済み — 共通ヘッダー/フッターとPrivacy/お問い合わせリンクが`/`・EN/JA/ZH/KO都市ページ・EN/JAガイド・/faq・/aboutに存在、各言語のフッターラベル、`/map`は本文255語・ヘッダー/フッター無し・インデックス維持・`?embed=1`は200、noindex×8（/coverage・/widget・/offline・ZH/KO都市・トイレ詳細・スポット・カテゴリ）、インデックス維持×11（ホーム・EN/JA都市・FAQ・About・Privacy・3言語ガイド・/zh・/ko）、JA都市のFAQ本文/FAQPage除去、`sitemap.xml`181件で除外対象を含まず`/map`優先度0.7、Consent既定値スクリプト、Organization/WebSite JSON-LD、robots.txt、既存ページの回帰なし。
+
 **未対応（承認後・ユーザー作業）**: AdSense管理画面「プライバシーとメッセージ」でのCMP（同意メッセージ）設定。Consent Mode v2はコード側で導入済みなので、CMPを有効化すればそのまま連動する。
 
 ## ✅ AdSense根本対策: トイレ個別ページ全件noindex化・都市ページをガイド優先構造へ転換（2026-09-06）
