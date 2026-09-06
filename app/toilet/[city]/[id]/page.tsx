@@ -7,7 +7,6 @@ import {
   getNearbyToilets,
   getAllDetailPageParams,
   getToiletAreaContext,
-  isIndexableToilet,
   type CitySlug,
 } from "../../../lib/toilet-data";
 import { AdUnit } from "../../../components/AdSense";
@@ -39,11 +38,11 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const name = displayName(toilet, c.name);
   const title = `${name} — Baby Changing Table in ${c.name} | Family Toilet Japan`;
   const description = `${name} in ${c.name}, Japan has a baby changing table${toilet.wheelchair ? " and wheelchair access" : ""}${toilet.fee === false ? ", free to use" : ""}. Address, opening hours, map and directions.`;
-  // 施設名が無い、または実データ（住所・営業時間・車いす対応・運営者情報）が乏しいページは
-  // 地図座標以外に固有情報が乏しく、大量にインデックスされるとGoogle/AdSenseの
-  // 「有用性の低いコンテンツ」判定を招くため noindex にする（詳細はtoilet-data.tsのコメント参照）。
-  // ページ自体は削除せず地図からのリンク・共有URLとしては引き続き機能する。
-  const hasRealName = isIndexableToilet(toilet);
+  // トイレ個別ページは全件noindex（2026-09-06、ROADMAP.md参照）。
+  // 本文は「施設名+座標+アメニティ+定型文」のテンプレートで固有の文章がほぼ無く、
+  // AdSense「有用性の低いコンテンツ」3回連続不承認の主因と判断したため、
+  // 検索インデックスの対象を「ガイド記事+都市ページ+静的ページ」に限定する。
+  // ページ自体は削除せず、/map からのリンク・共有URLとしては引き続き機能する。
   return {
     title,
     description,
@@ -55,7 +54,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       },
     },
     openGraph: { title, description, url: `${BASE}/toilet/${city}/${id}` },
-    ...(hasRealName ? {} : { robots: { index: false, follow: true } }),
+    robots: { index: false, follow: true },
   };
 }
 

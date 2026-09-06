@@ -8,8 +8,8 @@ const KEY = "76cee36382e74b6fbcf8a6c0e26db84c";
 const BASE = `https://${HOST}`;
 
 async function main() {
-  // sitemap.xml と sitemap-toilets.xml の両方からURLを収集
-  const sitemapUrls = [`${BASE}/sitemap.xml`, `${BASE}/sitemap-toilets.xml`];
+  // sitemap.xml からURLを収集（トイレ個別ページは全件noindexのためサイトマップ自体が無い）
+  const sitemapUrls = [`${BASE}/sitemap.xml`];
   const urls = new Set();
 
   for (const sm of sitemapUrls) {

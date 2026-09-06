@@ -119,42 +119,6 @@ export function getAllDetailPageParams(): { city: string; id: string }[] {
   );
 }
 
-// AdSense 3回連続不承認（2026-08-30調査、ROADMAP.md参照）への対応:
-// 「施設名がある」だけでは実質的な情報量が乏しい（施設名+座標+アメニティ絵文字+定型文のみ）ページが
-// 大量に残ってしまうため、実データの充実度でさらに絞り込む。
-// 対象1,004件（施設名あり510件×EN/JA）を、住所・営業時間・車いす対応・運営者情報の4項目で
-// スコアリングしたところ、スコア分布は 0点152件/1点199件/2点157件/3点2件（4点0件）だった。
-// スコア2点以上（159件、全体の約31%）を「複数の実データが揃っている」の閾値とした。
-// これによりインデックス対象は159件×EN/JA=318件（約1,004件→約318件、約68%削減）となり、
-// 目安として提示されていた「上位100〜300件程度」の範囲に収まる。
-// スコア1点以下（351件）は「施設名+座標+アメニティのみ」の薄いページとして noindex を維持する。
-export function getToiletRichnessScore(t: Toilet): number {
-  let score = 0;
-  if (t.address) score++;
-  if (t.openingHours) score++;
-  if (t.wheelchair) score++;
-  if (t.operator) score++;
-  return score;
-}
-
-export const RICH_DATA_MIN_SCORE = 2;
-
-// インデックス対象の判定: 施設名があり、かつ実データの充実度が閾値以上のページのみ。
-// sitemap-toilets.xml生成・各ページのgenerateMetadataの両方でこの関数を共通利用すること
-// （判定基準がずれるとサイトマップとnoindexタグが矛盾する）。
-export function isIndexableToilet(t: Toilet): boolean {
-  return Boolean(t.name || t.nameEn) && getToiletRichnessScore(t) >= RICH_DATA_MIN_SCORE;
-}
-
-// サイトマップ用: 上記基準を満たさないページ（noindex対象）は掲載しない
-export function getIndexableDetailPageParams(): { city: string; id: string }[] {
-  return (Object.keys(CITIES) as CitySlug[]).flatMap((city) =>
-    getDetailPageToilets(city)
-      .filter(isIndexableToilet)
-      .map((t) => ({ city, id: t.id }))
-  );
-}
-
 export function getNearbyToilets(city: CitySlug, target: Toilet, limit = 5): Toilet[] {
   const dist = (t: Toilet) =>
     (t.lat - target.lat) ** 2 + (t.lon - target.lon) ** 2;

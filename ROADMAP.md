@@ -1,6 +1,6 @@
 # Family Toilet Japan — 改善ロードマップ
 
-最終更新: 2026-08-11（このファイルは実装のたびに更新する）
+最終更新: 2026-09-06（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
 - **本番URL**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.familytoiletjapan.workers.dev`**（Cloudflare Workers、2026-07-14完了。アカウント共有サブドメインを個人名`masharu-shama`から`familytoiletjapan`に変更済み）
@@ -9,9 +9,33 @@
 - 4言語対応（en/ja/zh-TW/ko）、hreflang済み、ダークモード済み
 - ✅ **OGP画像: 動的セグメントを含む8ルート（都市・多言語ガイド・スポット）を復活・本番反映完了**（2026-08-11、下記「動的OGP画像生成機能の復活」参照）。OpenNext（`@opennextjs/cloudflare`）移行後は旧`next-on-pages`時代のedge runtime制約が解消されていることをローカルpreview・本番(`familytoiletjapan.com`)双方の実URL検証で確認済み。`middleware.ts`（410 Gone対応）は役目を終えたため削除
 - ⚠️ **デプロイ運用の訂正（2026-08-11判明）**: 「GitHub連携でmasterへのpushが本番Cloudflare Workersへの自動デプロイをトリガーする構成」という従来の記載は誤り。実際は`npm run cf:deploy`（`opennextjs-cloudflare build && opennextjs-cloudflare deploy`）による手動CLIデプロイが必要（`wrangler deployments list`のデプロイ履歴で確認、過去のデプロイもすべて手動）。pushしただけでは本番に反映されない
-- AdSense: 2026-07-05に不承認（有用性の低いコンテンツ）。原因特定・一次対応済み、2026-08-04 17:00に再審査リクエスト実施・結果待ち(想定期間: 数日〜最大2〜4週間)。**今回のOGP画像復活はAdSense審査結果と無関係に実施**
+- AdSense: 3回連続不承認（07-05・08-14・08-27、いずれも「有用性の低いコンテンツ」）。**2026-09-06にトイレ個別ページを全件noindex化し、インデックス対象をガイド記事+都市ページ+静的ページに限定する根本対策を実施**（下記「AdSense根本対策」参照）。Google再クロール後にユーザー判断で4回目の再審査をリクエストする
+- ガイド記事の実数: **EN 21本 + JA/ZH/KO 各19本 = 78ページ**（sitemap.tsと完全一致、登録漏れなし）。過去の記録にある「164本」は誤記
 - アフィリエイト（楽天・Klook・Amazon）: 新環境でも動作確認済み
 - 集客: Reddit（japan_travel_dad）でカルマ構築中（貢献65、カルマ2、目標50）
+
+## ✅ AdSense根本対策: トイレ個別ページ全件noindex化・都市ページをガイド優先構造へ転換（2026-09-06）
+
+**経緯**: 08-30の是正（リッチネススコア≥2で318件に絞り込み・ガイド導線追加）を踏まえ、4回目の再審査リクエスト前に、Claude Codeで根本原因を再調査した。
+
+**調査で判明した事実**:
+- 編集コンテンツは実質ガイド21本×4言語=78ページのみ（「164本」は誤記）。インデックス構成は非トイレ約216件（ガイド78+都市124+静的等）vs トイレ詳細318件で、**絞り込み後もトイレDBページが全体の約6割**を占めていた
+- トイレ詳細ページの固有文章は1ページあたり実質10〜15語（施設名・最寄駅・距離の数値スロットのみ）。残りは共通テンプレート+都市統計の使い回し
+- 絞り込みはスコア閾値方式で上限が無く、月次OSM更新でスコア≥2のトイレが増えるたびにインデックス対象も際限なく増える設計だった（今回の調査時点では本番318件で増加は未発生。9月分の自動更新PRは未マージ）
+- 「都市ごと上位3件」のような中間案では比率が60%→57%にしか動かず、審査結果が変わらないリスクが高いと判断
+
+**決定（ユーザー判断）**: サイトの位置づけを**「ガイド主体の旅行情報サイト＋トイレ検索ツール（/map）」**として明確化し、トイレ個別ページは検索インデックスから全件外す。トイレDBは/mapと直リンク・共有URLで従来通り完全に機能する。薄いページ経由の検索流入は元々ほぼ無いため、失うものは実質ない。
+
+**実装内容**:
+1. `app/toilet/[city]/[id]/page.tsx`・`app/ja/toilet/[city]/[id]/page.tsx`: `generateMetadata`で常に`robots: {index:false, follow:true}`を返す（`follow`は維持し、内部リンク経由のリンクジュースは流す）。`generateStaticParams`は変更なし（ページ自体は引き続き生成・アクセス可能）
+2. `app/sitemap-toilets.xml/route.ts`を削除、`app/robots.ts`・`scripts/indexnow.js`から参照を除去
+3. `app/lib/toilet-data.ts`: 呼び出し元の無くなった`getToiletRichnessScore`/`RICH_DATA_MIN_SCORE`/`isIndexableToilet`/`getIndexableDetailPageParams`を削除
+4. **都市ページ4言語（`app/[city]`・`app/ja/[city]`・`app/zh/[city]`・`app/ko/[city]`）でTravel Guidesセクションをヒーロー直後・統計/カテゴリ/エリア（DB由来）より前に移動**。トイレページ除外後はインデックスの最大グループが都市ページ（124件、約57%）になり、次に指摘されうる箇所のため
+5. `app/lib/guides.ts`を新設し`getGuidesForCity(city)`を実装。専用ガイドの無い都市（47都市中37都市）でも、同じ地方の都市向けガイド→汎用ガイド（4言語すべてに存在する4本）の順で最大3本を表示する。従来の「`/#guides`への汎用リンク1本」への縮退を廃止
+
+**運用**: ユーザー作業として、Search Consoleで旧`sitemap-toilets.xml`を削除・`sitemap.xml`を再送信。Googleの再クロールを1〜2週間待ってからAdSense再審査をリクエストする（即時申請はしない）。
+
+**4回目も不承認だった場合の次の手**: (a) ガイド記事の追加執筆（編集コンテンツ78ページは正直少ない）、(b) 都市ページのうちガイド無し・ZH/KO版（計30件）のnoindex化。
 
 ## ✅ 動的OGP画像生成機能の復活（2026-08-11、AdSense審査結果とは無関係に実施）
 

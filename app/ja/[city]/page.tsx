@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, getCityStats, type CitySlug } from "../../lib/toilet-data";
 import { cityAlternates, BASE } from "../../lib/lang-cities";
-import { CITY_GUIDE_SLUGS } from "../../components/SpotPageView";
+import { getGuidesForCity, guideHref } from "../../lib/guides";
 
 interface Props {
   params: Promise<{ city: string }>;
@@ -69,6 +69,23 @@ export default async function JaCityPage({ params }: Props) {
       </div>
 
       <div className="max-w-2xl mx-auto px-5 py-10">
+        {/* 関連ガイド記事 — 編集コンテンツを統計・FAQより前に置く（app/lib/guides.ts、ROADMAP.md参照） */}
+        <div className="mb-10">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">📖 {c.jaName}の旅行ガイド</h2>
+          <div className="space-y-2">
+            {getGuidesForCity(city).map((g) => (
+              <Link
+                key={g.slug}
+                href={guideHref("ja", g.slug)}
+                className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
+              >
+                <span className="text-sm font-medium text-gray-800">{g.ja}</span>
+                <span className="text-gray-400">›</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* 統計 */}
         <div className="grid grid-cols-3 gap-3 mb-10">
           {[
@@ -82,33 +99,6 @@ export default async function JaCityPage({ params }: Props) {
               <div className="text-xs text-gray-600 mt-0.5">{label}</div>
             </div>
           ))}
-        </div>
-
-        {/* 関連ガイド記事 — AdSense対応、ガイド記事主体への構造転換の一環（ROADMAP.md参照） */}
-        <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">📖 {c.jaName}の旅行ガイド</h2>
-          {(CITY_GUIDE_SLUGS[city]?.length ?? 0) > 0 ? (
-            <div className="space-y-2">
-              {CITY_GUIDE_SLUGS[city]!.map((g) => (
-                <Link
-                  key={g.slug}
-                  href={`/ja/guide/${g.slug}`}
-                  className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
-                >
-                  <span className="text-sm font-medium text-gray-800">{g.ja}</span>
-                  <span className="text-gray-400">›</span>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <Link
-              href="/ja#guides"
-              className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
-            >
-              <span className="text-sm font-medium text-gray-800">子連れ日本旅行ガイド一覧を見る</span>
-              <span className="text-gray-400">›</span>
-            </Link>
-          )}
         </div>
 
         {/* よくある質問 */}

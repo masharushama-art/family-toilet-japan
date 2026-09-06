@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, getCityStats, type CitySlug } from "../../lib/toilet-data";
 import { cityAlternates, BASE } from "../../lib/lang-cities";
-import { CITY_GUIDE_SLUGS } from "../../components/SpotPageView";
+import { getGuidesForCity, guideHref } from "../../lib/guides";
 
 const KO_NAMES: Partial<Record<CitySlug, string>> = {
   tokyo: "도쿄", osaka: "오사카", kyoto: "교토", nagoya: "나고야",
@@ -74,6 +74,23 @@ export default async function KoCityPage({ params }: Props) {
       </div>
 
       <div className="max-w-2xl mx-auto px-5 py-10">
+        {/* 관련 여행 가이드 — 편집 콘텐츠를 통계・FAQ보다 앞에 배치（app/lib/guides.ts、ROADMAP.md） */}
+        <div className="mb-10">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">📖 {koName} 여행 가이드</h2>
+          <div className="space-y-2">
+            {getGuidesForCity(city).map((g) => (
+              <Link
+                key={g.slug}
+                href={guideHref("ko", g.slug)}
+                className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
+              >
+                <span className="text-sm font-medium text-gray-800">{g.ko}</span>
+                <span className="text-gray-400">›</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-3 gap-3 mb-10">
           {[
             { label: "기저귀 교환대", value: stats.withChangingTable, icon: "🍼" },
@@ -86,33 +103,6 @@ export default async function KoCityPage({ params }: Props) {
               <div className="text-xs text-gray-600 mt-0.5">{label}</div>
             </div>
           ))}
-        </div>
-
-        {/* 관련 여행 가이드 — AdSense 대응, 가이드 기사 중심 구조 전환의 일환（ROADMAP.md 참조） */}
-        <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">📖 {koName} 여행 가이드</h2>
-          {(CITY_GUIDE_SLUGS[city]?.length ?? 0) > 0 ? (
-            <div className="space-y-2">
-              {CITY_GUIDE_SLUGS[city]!.map((g) => (
-                <Link
-                  key={g.slug}
-                  href={`/ko/guide/${g.slug}`}
-                  className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
-                >
-                  <span className="text-sm font-medium text-gray-800">{g.ko}</span>
-                  <span className="text-gray-400">›</span>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <Link
-              href="/ko#guides"
-              className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
-            >
-              <span className="text-sm font-medium text-gray-800">일본 가족 여행 가이드 전체 보기</span>
-              <span className="text-gray-400">›</span>
-            </Link>
-          )}
         </div>
 
         <h2 className="text-xl font-bold text-gray-800 mb-4">자주 묻는 질문</h2>

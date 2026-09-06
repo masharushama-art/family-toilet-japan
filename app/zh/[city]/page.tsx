@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, getCityStats, type CitySlug } from "../../lib/toilet-data";
 import { cityAlternates, BASE } from "../../lib/lang-cities";
-import { CITY_GUIDE_SLUGS } from "../../components/SpotPageView";
+import { getGuidesForCity, guideHref } from "../../lib/guides";
 
 const ZH_NAMES: Partial<Record<CitySlug, string>> = {
   tokyo: "東京", osaka: "大阪", kyoto: "京都", nagoya: "名古屋",
@@ -74,6 +74,23 @@ export default async function ZhCityPage({ params }: Props) {
       </div>
 
       <div className="max-w-2xl mx-auto px-5 py-10">
+        {/* 相關旅遊指南 — 將編輯內容置於統計・FAQ之前（app/lib/guides.ts、ROADMAP.md） */}
+        <div className="mb-10">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">📖 {zhName}旅遊指南</h2>
+          <div className="space-y-2">
+            {getGuidesForCity(city).map((g) => (
+              <Link
+                key={g.slug}
+                href={guideHref("zh", g.slug)}
+                className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
+              >
+                <span className="text-sm font-medium text-gray-800">{g.zh}</span>
+                <span className="text-gray-400">›</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-3 gap-3 mb-10">
           {[
             { label: "換尿布台", value: stats.withChangingTable, icon: "🍼" },
@@ -86,33 +103,6 @@ export default async function ZhCityPage({ params }: Props) {
               <div className="text-xs text-gray-600 mt-0.5">{label}</div>
             </div>
           ))}
-        </div>
-
-        {/* 相關旅遊指南 — AdSense對應、轉型為以指南文章為主體的網站結構的一環（詳見ROADMAP.md） */}
-        <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">📖 {zhName}旅遊指南</h2>
-          {(CITY_GUIDE_SLUGS[city]?.length ?? 0) > 0 ? (
-            <div className="space-y-2">
-              {CITY_GUIDE_SLUGS[city]!.map((g) => (
-                <Link
-                  key={g.slug}
-                  href={`/zh/guide/${g.slug}`}
-                  className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
-                >
-                  <span className="text-sm font-medium text-gray-800">{g.zh}</span>
-                  <span className="text-gray-400">›</span>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <Link
-              href="/zh#guides"
-              className="flex items-center justify-between border border-sky-100 bg-sky-50/50 hover:bg-sky-50 rounded-xl px-5 py-4 transition-colors"
-            >
-              <span className="text-sm font-medium text-gray-800">查看所有親子日本旅遊指南</span>
-              <span className="text-gray-400">›</span>
-            </Link>
-          )}
         </div>
 
         <h2 className="text-xl font-bold text-gray-800 mb-4">常見問題</h2>
