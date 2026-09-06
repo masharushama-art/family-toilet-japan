@@ -83,6 +83,22 @@ const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
   },
 };
 
+// 39/47都市がCITY_METAを持たず、完全に同一の汎用Tipsを表示していた近似重複を解消するため、
+// 各都市が実際に持っている統計値(getCityStats)から都市固有の文章を組み立てる
+// （2026-09-06、AdSense対策 第3弾・ROADMAP.md参照）。手書きTipsが無い都市でも、
+// 数値が違う分だけページごとに本当に異なる本文になる。
+function buildDataDrivenTips(cityName: string, stats: ReturnType<typeof getCityStats>): string[] {
+  const pct = (n: number) => Math.round((n / Math.max(stats.total, 1)) * 100);
+  return [
+    `${cityName} has ${stats.total.toLocaleString()} public toilets mapped here, including ${stats.withChangingTable.toLocaleString()} with a baby changing table — look for the 🍼 icon on the map.`,
+    `${pct(stats.wheelchair)}% of mapped toilets in ${cityName} (${stats.wheelchair.toLocaleString()} of ${stats.total.toLocaleString()}) are wheelchair accessible.`,
+    stats.free === stats.total
+      ? `All ${stats.total.toLocaleString()} toilets we've mapped in ${cityName} are free to use.`
+      : `${stats.free.toLocaleString()} of the toilets in ${cityName} are free to use; a small number in tourist areas charge a fee.`,
+    "Convenience stores (7-Eleven, Lawson, FamilyMart) are open 24 hours and almost always have a usable toilet.",
+  ];
+}
+
 interface Props {
   params: Promise<{ city: string }>;
 }
@@ -244,12 +260,7 @@ export default async function CityPage({ params }: Props) {
         <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-5">
           <h3 className="font-bold text-amber-800 dark:text-amber-200 mb-2">💡 Tips for families in {c.name}</h3>
           <ul className="text-sm text-amber-700 dark:text-amber-300 space-y-1">
-            {(CITY_META[city]?.tips ?? [
-              "Department stores and shopping malls have the best facilities",
-              "Train station toilets are clean and usually free",
-              "Look for the 🍼 icon to find baby changing tables",
-              "Convenience stores (7-Eleven, Lawson, FamilyMart) are always open",
-            ]).map((tip) => (
+            {(CITY_META[city]?.tips ?? buildDataDrivenTips(c.name, stats)).map((tip) => (
               <li key={tip}>• {tip}</li>
             ))}
           </ul>
