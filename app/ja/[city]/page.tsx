@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CITIES, getCityStats, type CitySlug } from "../../lib/toilet-data";
+import { JA_CITY_TIPS, buildDataDrivenTipsJa } from "../../lib/city-tips-ja";
 import { cityAlternates, BASE } from "../../lib/lang-cities";
 import { getGuidesForCity, guideHref } from "../../lib/guides";
 
@@ -87,8 +88,9 @@ export default async function JaCityPage({ params }: Props) {
         </div>
 
         {/* 統計 */}
-        <div className="grid grid-cols-3 gap-3 mb-10">
+        <div className="grid grid-cols-2 gap-3 mb-10">
           {[
+            { label: "収録トイレ数", value: stats.total, icon: "🚽" },
             { label: "おむつ替え台あり", value: stats.withChangingTable, icon: "🍼" },
             { label: "車椅子対応", value: stats.wheelchair, icon: "♿" },
             { label: "無料トイレ", value: stats.free, icon: "💚" },
@@ -104,6 +106,17 @@ export default async function JaCityPage({ params }: Props) {
         {/* 旧「よくある質問」ブロックは47都市で本文が同一（都市名のみ差し替え）の近似重複だったため、
             FAQPage構造化データともども除去（2026-09-06、AdSense対策・ROADMAP.md参照）。
             サイト共通のFAQは /faq を参照 */}
+
+        {/* Tips — EN版(app/[city]/page.tsx)と同じ考え方で、手書きTips未設定の都市には
+            実際の統計値から都市固有の文章を生成する（2026-09-15、AdSense対策） */}
+        <div className="mb-10 bg-amber-50 border border-amber-200 rounded-2xl p-5">
+          <h3 className="font-bold text-amber-800 mb-2">💡 {c.jaName}で子連れ旅行する際のヒント</h3>
+          <ul className="text-sm text-amber-700 space-y-1">
+            {(JA_CITY_TIPS[city] ?? buildDataDrivenTipsJa(c.jaName, stats)).map((tip) => (
+              <li key={tip}>• {tip}</li>
+            ))}
+          </ul>
+        </div>
 
         {/* 英語版リンク */}
         <div className="bg-gray-50 rounded-2xl p-5 text-center text-sm text-gray-500">
