@@ -1,6 +1,6 @@
 # Family Toilet Japan — 改善ロードマップ
 
-最終更新: 2026-09-17（このファイルは実装のたびに更新する）
+最終更新: 2026-09-21（このファイルは実装のたびに更新する）
 
 ## 現状スナップショット
 - **本番URL**: `family-toilet-japan.vercel.app` → **`family-toilet-japan.familytoiletjapan.workers.dev`**（Cloudflare Workers、2026-07-14完了。アカウント共有サブドメインを個人名`masharu-shama`から`familytoiletjapan`に変更済み）
@@ -66,6 +66,16 @@
 「検出-インデックス未登録」の大幅減少（335→112）はGoogleのクロール・処理が明確に進んでいることを示す。404も1件減少、noindex除外も増加しており、これまでの対策（第1〜3弾・JA都市ページTips追加）が着実に反映されつつある。登録済みページ数の微減（327→314）はnoindex反映過程での一時的な動きと判断し、悪化とは捉えていない。
 
 **次のアクション**: 引き続きAdSenseの審査結果を待つ。Search Console側は良い方向に動き始めているため、次回確認時にさらなる改善（404減少・noindex反映の完了）があるか注視する。
+
+## ✅ http→https 301リダイレクトの有効化（2026-09-21）
+
+Search Consoleから「代替ページ（適切な canonical タグあり）」の修正検証結果メール（ユーザー転送、Message type: WNC-10031170）を受け、対象URL 4件（`/`、`/saga`、`/hiroshima`、`/guide/japan-family-restaurants-guide`のhttp版）を調査。
+
+**原因**: `curl -I http://familytoiletjapan.com/...`で確認したところ、http版が301リダイレクトされず直接200 OKを返していた。Cloudflareの「常にHTTPSを使用」設定が無効になっており、http/https両方が生きたページとして応答し、Googleが両方をクロールしていた。canonicalタグは正しくhttps側を指しているためGoogle側では実害なく「代替ページ・問題なし」に分類されていたが、本来はサーバー側で301リダイレクトすべき状態だった。AdSense審査（コンテンツ品質を見るプロセス）とは無関係の、純粋に技術的なURL正規化の話であることをユーザーに確認済み。
+
+**対応**: Cloudflareダッシュボード → familytoiletjapan.com → SSL/TLS → エッジ証明書 → 「常にHTTPSを使用」を有効化（ユーザー承認の上、コード変更・デプロイ不要のダッシュボード設定のみ）。
+
+**検証**: 有効化直後に4件すべて`curl -I`で`301 Moved Permanently`＋`Location: https://...`を確認。
 
 ## ✅ AdSense対策 第3弾: 最終見直しで見つかったEN都市ページの残存重複を解消（2026-09-06）
 
