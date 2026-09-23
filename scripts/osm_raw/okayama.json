@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-08-01T07:27:36Z",
+    "timestamp_osm_base": "2026-09-01T08:18:02Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -1810,7 +1810,7 @@
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "train_station",
+        "building": "toilets",
         "ele": "33.7",
         "source": "MLIT_PLATEAU bldg_43db2128-32b4-4d1f-ac6e-344e99cb48e8"
       }
