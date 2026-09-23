@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-08-01T07:25:36Z",
+    "timestamp_osm_base": "2026-09-01T08:12:57Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -191,8 +191,8 @@
     {
       "type": "node",
       "id": 4365724190,
-      "lat": 35.5955955,
-      "lon": 138.5860443,
+      "lat": 35.5957438,
+      "lon": 138.5862535,
       "tags": {
         "amenity": "toilets",
         "opening_hours": "Mo-Su 09:00-18:00"
@@ -616,7 +616,9 @@
       "lat": 35.6838499,
       "lon": 138.542028,
       "tags": {
-        "amenity": "toilets"
+        "amenity": "toilets",
+        "fee": "no",
+        "wheelchair": "yes"
       }
     },
     {
