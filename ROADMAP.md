@@ -40,24 +40,25 @@
 
 **本番反映（2026-09-15）**: `npm run cf:deploy`実行、Version ID `1209d7fe-fb91-4665-8b1e-c6473f17bfb3`。本番（`familytoiletjapan.com/ja/sendai`・`/ja/tokyo`）で新しいTipsセクションが表示されることを確認済み。
 
-## ✅ アフィリエイト有効化: 楽天・Amazon（2026-09-23）
+## ✅ アフィリエイト有効化: 楽天・Amazon・Klook（2026-09-23）
 
 方針の柱2（AdSenseを待たずに収益化）の実施。これまで実装済みだったが環境変数未設定で本番では非表示だったアフィリエイトボックスを有効化した。
 
 **ID**（Chrome拡張でユーザーのログイン済みセッションから確認。アフィリエイトIDはリンクURLに露出する公開情報）:
 - 楽天アフィリエイト: `NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID=5571c2be.9e0c6ecb.5571c2bf.bf105866`
 - Amazonアソシエイト: `NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG=familytoiletj-22`
-- Klook: アフィリエイト管理画面が未ログインで未確認。ログイン後にIDを確認して追加する
+- Klook: `NEXT_PUBLIC_KLOOK_AFFILIATE_ID=126117`（同日追記。ユーザーがChromeでログイン後、Link converterで`https://www.klook.com/en-US/`のリンクを1件生成し、生成URLの`aid`から取得。この生成リンクはKlookの「Ad List」に`ad_id=1446583`として保存されている。登録サイト名は「Family Toilet Japan」）
 
 **設定場所**: `NEXT_PUBLIC_*`はビルド時にインライン化されるため、`npm run cf:deploy`を実行するローカルマシンの`.env.local`（gitignore対象、リポジトリには含まれない）に設定。**別のマシンからデプロイする場合は`.env.local`を用意しないとアフィリエイトが消える**ので注意。必要なキーは`.env.local.example`に記載した。
 
 **表示箇所**（既存設計のまま、スコープは広げていない）:
 - 楽天トラベル（`HotelAffiliateBox`）: JA/ZH/KOの都市別ガイド記事
 - Amazon（`GearAffiliateBox`）: EN/JAの持ち物チェックリスト記事（4商品）
+- Klook（`ActivityAffiliateBox`）: チケット需要のある大型観光施設8件のスポットページ×4言語（`SpotPageView.tsx`の`TICKETED_SPOTS`）。スポットページは現在noindexのため検索流入は限定的だが、地図・都市ページからの導線経由で表示される
 
 **同時に修正**: Amazonの商品`B0BGLVWT63`の実商品が「Stokke YOYO3」になっていたのに、リンク表記が「Babyzen YOYO2 / ベビーゼン YOYO2」のままだったため、表記を実商品に合わせた（記事本文の機種紹介は編集コンテンツなので据え置き）。他3商品（エルゴベビー OMNI Breeze・Anker 10000mAh・ジップロック M）は表記どおりの実商品であることを確認。
 
-**検証**: tsc・eslint クリーン、`npm run cf:deploy`成功（Version ID `c435453e-2ce7-4e6a-8313-7a439bde0b22`、ビルドログで`.env.local`の読込を確認）。本番で`/ja/guide/kyoto-with-baby`・`/zh/`・`/ko/`版に楽天リンク、EN/JAチェックリストに`tag=familytoiletj-22`付きAmazonリンク4件が出力されること、楽天リンクが楽天トラベルへ302リダイレクトすることを確認。
+**検証**: tsc・eslint クリーン、`npm run cf:deploy`成功（Version ID `c435453e-2ce7-4e6a-8313-7a439bde0b22`、ビルドログで`.env.local`の読込を確認）。本番で`/ja/guide/kyoto-with-baby`・`/zh/`・`/ko/`版に楽天リンク、EN/JAチェックリストに`tag=familytoiletj-22`付きAmazonリンク4件が出力されること、楽天リンクが楽天トラベルへ302リダイレクトすることを確認。Klook追加分は再デプロイ（Version ID `ad1fe399-29dc-4bdf-8de7-1e28b5d2befe`）後、`/spot/tokyo-skytree`・`/ja/spot/universal-studios-japan`に`aid=126117`付きリンクが出力されること、楽天・Amazonリンクに回帰がないことを確認。
 
 **注意（Amazon）**: Amazonアソシエイトには、登録後一定期間内に一定件数の売上が無いとアカウントが閉鎖される規約がある（一般に180日以内。正確な期限・件数はアソシエイト・セントラルで要確認）。管理画面では直近30日のクリック1件・売上0件。
 
@@ -110,8 +111,8 @@
 
 ### 直近のアクション
 1. ✅ ユーザー: 方針の承認（2026-09-23、基準値は提案どおり）
-2. ✅ 楽天・Amazonの登録状況をChrome拡張で確認（2026-09-23）。両社ともログイン済みでID取得済み。Klookは未ログインのため未確認（ユーザーのログイン待ち）
-3. ✅ 楽天・Amazonを有効化してデプロイ（2026-09-23、下記「アフィリエイト有効化」参照）。Klookは確認後に追加
+2. ✅ 楽天・Amazonの登録状況をChrome拡張で確認（2026-09-23）。両社ともログイン済みでID取得済み。Klookはユーザーのログイン後に確認
+3. ✅ 楽天・Amazon・Klookの3社すべてを有効化してデプロイ（2026-09-23、下記「アフィリエイト有効化」参照）
 4. 毎月1回（目安: 月初）: Search Console数値・記事公開数をROADMAPに記録し、申請基準の達成状況を判定
 
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）
