@@ -88,7 +88,7 @@ export default async function JaGuidePage({ params }: { params: Params }) {
           <GearAffiliateBox
             lang="ja"
             items={[
-              { name: "ベビーゼン YOYO2 ベビーカー", asin: "B0BGLVWT63" },
+              { name: "ストッケ YOYO3 ベビーカー", asin: "B0BGLVWT63" },
               { name: "エルゴベビー OMNI Breeze 抱っこ紐", asin: "B093L84C7H" },
               { name: "Anker モバイルバッテリー 10,000mAh", asin: "B0CQX67KTW" },
               { name: "ジップロック フリーザーバッグ M", asin: "B0DYYMMBQD" },

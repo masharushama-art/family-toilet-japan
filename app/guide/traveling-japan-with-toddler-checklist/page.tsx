@@ -108,7 +108,7 @@ export default function ToddlerChecklistPage() {
         <GearAffiliateBox
           lang="en"
           items={[
-            { name: "Babyzen YOYO2 Stroller", asin: "B0BGLVWT63" },
+            { name: "Stokke YOYO3 Stroller", asin: "B0BGLVWT63" },
             { name: "Ergobaby OMNI Breeze Carrier", asin: "B093L84C7H" },
             { name: "Anker 10,000mAh Power Bank", asin: "B0CQX67KTW" },
             { name: "Ziploc Freezer Bags (M)", asin: "B0DYYMMBQD" },
