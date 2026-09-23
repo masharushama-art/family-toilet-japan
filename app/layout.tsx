@@ -5,7 +5,8 @@ import { I18nProvider } from "./i18n/provider";
 import InstallBanner from "./components/InstallBanner";
 import CookieConsent from "./components/CookieConsent";
 import SiteHeader from "./components/SiteHeader";
-import SiteFooter, { CONTACT_FORM_URL } from "./components/SiteFooter";
+import SiteFooter from "./components/SiteFooter";
+import { CONTACT_FORM_URL } from "./lib/contact";
 
 const BASE_URL = "https://familytoiletjapan.com";
 
