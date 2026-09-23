@@ -27,6 +27,14 @@ jobs:
       - name: Split by city
         run: python scripts/split-by-city.py
 
+      # データレポート（/coverage）の更新履歴用に集計値を app/lib/data-history.json へ追記する
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Record data snapshot for the report
+        run: node scripts/data-snapshot.mjs --date "$(date -u +%F)"
+
       - name: Check for changes
         id: diff
         run: |

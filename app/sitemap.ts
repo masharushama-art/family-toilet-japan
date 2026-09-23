@@ -165,7 +165,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/privacy`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/attribution`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    // /coverage・/widget は noindex 化したため除外（2026-09-06）
+    // /widget は noindex のため除外。/coverage はデータレポートに作り替えてインデックス対象に戻した（2026-09-23）
+    { url: `${BASE_URL}/coverage`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE_URL}/ja/coverage`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     ...langPages,
     ...guidePages,
     ...jaGuidePages,
