@@ -95,7 +95,9 @@
 
 **検証**: tsc・eslint クリーン、`npm run build`成功。`next start`で両ページのインデックス可否（robots無し）、canonical、hreflang、`Dataset` JSON-LD、sitemap掲載、フッターリンク、`contactPoint.url`の出力を確認。スマホ幅（375px）でページ全体の横はみ出しがなく、広い表は枠内スクロールになることを確認。
 
-**未実施**: コミット・push・本番デプロイ（ユーザー確認待ち）。
+**本番反映（2026-09-23）**: コミット`aecd39e`（月次データ更新のマージ`40d1860`を含む）をpushし、`npm run cf:deploy`でデプロイ（Version ID `7da63819-e850-49bf-996a-9df53244ff2d`）。本番で`/coverage`・`/ja/coverage`がインデックス可・`Dataset` JSON-LD付きで表示されること、データ更新日2026-09-01と増減文の反映、sitemap 183 URL、`contactPoint.url`の出力、JAフッターのリンク、既存のアフィリエイト（楽天・Klook）と`/map`に回帰がないことを確認。
+
+**次のアクション**: Search Consoleで`/coverage`・`/ja/coverage`のインデックス登録をリクエスト（任意）。以後は月次データ更新PRのレビュー・マージ・デプロイでレポートが自動的に更新される。
 
 ## 🧭 方針修正: 一次情報の記事を書かない前提での再設計（2026-09-23、同日ユーザー承認）
 
