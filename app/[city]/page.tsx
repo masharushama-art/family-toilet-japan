@@ -7,6 +7,8 @@ import ShareButtons from "../components/ShareButtons";
 import { AdUnit } from "../components/AdSense";
 import { getSpotsByCity } from "../lib/spots";
 import { getGuidesForCity, guideHref } from "../lib/guides";
+import { getCityFreshness } from "../lib/data-report";
+import DataFreshness from "../components/DataFreshness";
 
 const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
   tokyo: {
@@ -210,6 +212,7 @@ export default async function CityPage({ params }: Props) {
             </div>
           ))}
         </div>
+        <DataFreshness lang="en" freshness={getCityFreshness(city)} />
 
         {/* Categories */}
         <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Browse by Feature</h2>
