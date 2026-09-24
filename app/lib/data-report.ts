@@ -69,3 +69,25 @@ export function getDataReport(): DataReport {
   const history = historyJson as Snapshot[];
   return { rows, totals, history, latest: history[history.length - 1], previous: history[history.length - 2] };
 }
+
+export interface CityFreshness {
+  total: number;
+  delta: number;
+  updatedDate: string;
+}
+
+// 都市ページに「最終更新日」「今月の増減」を出すための軽量版。
+// getDataReport()と違い public/data/cities/*.json を全件読まないので、都市ページ(3,500超)のビルドでも重くならない
+export function getCityFreshness(slug: string): CityFreshness | undefined {
+  const history = historyJson as Snapshot[];
+  const latest = history[history.length - 1];
+  const latestCity = latest?.cities[slug];
+  if (!latest || !latestCity) return undefined;
+  const previous = history[history.length - 2];
+  const previousCity = previous?.cities[slug];
+  return {
+    total: latestCity.total,
+    delta: previousCity ? latestCity.total - previousCity.total : 0,
+    updatedDate: latest.date,
+  };
+}
