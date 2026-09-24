@@ -4,6 +4,8 @@ import fs from "fs";
 import path from "path";
 import CitySearch from "./components/CitySearch";
 import { AdUnit } from "./components/AdSense";
+import SeasonalGuides from "./components/SeasonalGuides";
+import { getSeasonalSlugs } from "./lib/seasonal-guides";
 
 function getCityCount(slug: string): number {
   try {
@@ -350,6 +352,8 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        <SeasonalGuides lang="en" initialSlugs={getSeasonalSlugs(new Date())} />
 
         {/* Travel Guides — サイト構造転換（2026-08-30、ROADMAP.md参照）:
             トイレDB検索（都市一覧・エリア一覧）より前に、独自の編集コンテンツである

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SeasonalGuides from "../components/SeasonalGuides";
+import { getSeasonalSlugs } from "../lib/seasonal-guides";
 
 export const metadata: Metadata = {
   title: "日本親子廁所地圖・換尿布台查詢 | Family Toilet Japan",
@@ -84,6 +86,8 @@ export default function ZhPage() {
             </Link>
           ))}
         </div>
+
+        <SeasonalGuides lang="zh" initialSlugs={getSeasonalSlugs(new Date())} />
 
         <h2 id="guides" className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 scroll-mt-20">實用指南</h2>
         <div className="space-y-3 mb-10">

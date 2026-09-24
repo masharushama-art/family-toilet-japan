@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SeasonalGuides from "../components/SeasonalGuides";
+import { getSeasonalSlugs } from "../lib/seasonal-guides";
 
 export const metadata: Metadata = {
   title: "日本のファミリートイレ・おむつ替え台マップ | Family Toilet Japan",
@@ -88,6 +90,8 @@ export default function JaPage() {
             </Link>
           ))}
         </div>
+
+        <SeasonalGuides lang="ja" initialSlugs={getSeasonalSlugs(new Date())} />
 
         <h2 id="guides" className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 scroll-mt-20">お役立ちガイド</h2>
         <div className="space-y-3 mb-10">
