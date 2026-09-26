@@ -1036,5 +1036,351 @@
         "opendata": 0
       }
     }
+  },
+  {
+    "date": "2026-09-26",
+    "total": 16367,
+    "changingTable": 1144,
+    "wheelchair": 3191,
+    "osm": 13714,
+    "opendata": 2653,
+    "cities": {
+      "akita": {
+        "total": 65,
+        "changingTable": 2,
+        "wheelchair": 12,
+        "osm": 65,
+        "opendata": 0
+      },
+      "aomori": {
+        "total": 44,
+        "changingTable": 0,
+        "wheelchair": 9,
+        "osm": 44,
+        "opendata": 0
+      },
+      "chiba": {
+        "total": 497,
+        "changingTable": 8,
+        "wheelchair": 65,
+        "osm": 497,
+        "opendata": 0
+      },
+      "ehime": {
+        "total": 52,
+        "changingTable": 1,
+        "wheelchair": 6,
+        "osm": 52,
+        "opendata": 0
+      },
+      "fukui": {
+        "total": 46,
+        "changingTable": 1,
+        "wheelchair": 4,
+        "osm": 46,
+        "opendata": 0
+      },
+      "fukuoka": {
+        "total": 300,
+        "changingTable": 4,
+        "wheelchair": 38,
+        "osm": 300,
+        "opendata": 0
+      },
+      "fukushima": {
+        "total": 57,
+        "changingTable": 1,
+        "wheelchair": 6,
+        "osm": 57,
+        "opendata": 0
+      },
+      "gifu": {
+        "total": 58,
+        "changingTable": 0,
+        "wheelchair": 3,
+        "osm": 58,
+        "opendata": 0
+      },
+      "gunma": {
+        "total": 72,
+        "changingTable": 3,
+        "wheelchair": 2,
+        "osm": 72,
+        "opendata": 0
+      },
+      "hiroshima": {
+        "total": 150,
+        "changingTable": 3,
+        "wheelchair": 28,
+        "osm": 150,
+        "opendata": 0
+      },
+      "ibaraki": {
+        "total": 39,
+        "changingTable": 1,
+        "wheelchair": 6,
+        "osm": 39,
+        "opendata": 0
+      },
+      "iwate": {
+        "total": 48,
+        "changingTable": 1,
+        "wheelchair": 4,
+        "osm": 48,
+        "opendata": 0
+      },
+      "kagawa": {
+        "total": 119,
+        "changingTable": 0,
+        "wheelchair": 13,
+        "osm": 119,
+        "opendata": 0
+      },
+      "kagoshima": {
+        "total": 141,
+        "changingTable": 7,
+        "wheelchair": 59,
+        "osm": 141,
+        "opendata": 0
+      },
+      "kanazawa": {
+        "total": 71,
+        "changingTable": 7,
+        "wheelchair": 10,
+        "osm": 71,
+        "opendata": 0
+      },
+      "kobe": {
+        "total": 212,
+        "changingTable": 8,
+        "wheelchair": 36,
+        "osm": 212,
+        "opendata": 0
+      },
+      "kochi": {
+        "total": 133,
+        "changingTable": 0,
+        "wheelchair": 4,
+        "osm": 133,
+        "opendata": 0
+      },
+      "kumamoto": {
+        "total": 95,
+        "changingTable": 5,
+        "wheelchair": 10,
+        "osm": 95,
+        "opendata": 0
+      },
+      "kyoto": {
+        "total": 531,
+        "changingTable": 17,
+        "wheelchair": 78,
+        "osm": 531,
+        "opendata": 0
+      },
+      "mie": {
+        "total": 63,
+        "changingTable": 0,
+        "wheelchair": 2,
+        "osm": 63,
+        "opendata": 0
+      },
+      "miyazaki": {
+        "total": 98,
+        "changingTable": 0,
+        "wheelchair": 9,
+        "osm": 98,
+        "opendata": 0
+      },
+      "nagano": {
+        "total": 129,
+        "changingTable": 0,
+        "wheelchair": 38,
+        "osm": 129,
+        "opendata": 0
+      },
+      "nagasaki": {
+        "total": 87,
+        "changingTable": 3,
+        "wheelchair": 12,
+        "osm": 87,
+        "opendata": 0
+      },
+      "nagoya": {
+        "total": 1310,
+        "changingTable": 81,
+        "wheelchair": 261,
+        "osm": 451,
+        "opendata": 859
+      },
+      "nara": {
+        "total": 156,
+        "changingTable": 5,
+        "wheelchair": 26,
+        "osm": 156,
+        "opendata": 0
+      },
+      "niigata": {
+        "total": 69,
+        "changingTable": 2,
+        "wheelchair": 10,
+        "osm": 69,
+        "opendata": 0
+      },
+      "oita": {
+        "total": 127,
+        "changingTable": 0,
+        "wheelchair": 16,
+        "osm": 127,
+        "opendata": 0
+      },
+      "okayama": {
+        "total": 120,
+        "changingTable": 8,
+        "wheelchair": 14,
+        "osm": 120,
+        "opendata": 0
+      },
+      "okinawa": {
+        "total": 229,
+        "changingTable": 1,
+        "wheelchair": 17,
+        "osm": 229,
+        "opendata": 0
+      },
+      "osaka": {
+        "total": 647,
+        "changingTable": 44,
+        "wheelchair": 320,
+        "osm": 521,
+        "opendata": 126
+      },
+      "other": {
+        "total": 1813,
+        "changingTable": 127,
+        "wheelchair": 359,
+        "osm": 1813,
+        "opendata": 0
+      },
+      "saga": {
+        "total": 92,
+        "changingTable": 5,
+        "wheelchair": 6,
+        "osm": 92,
+        "opendata": 0
+      },
+      "saitama": {
+        "total": 292,
+        "changingTable": 12,
+        "wheelchair": 73,
+        "osm": 292,
+        "opendata": 0
+      },
+      "sapporo": {
+        "total": 496,
+        "changingTable": 3,
+        "wheelchair": 59,
+        "osm": 496,
+        "opendata": 0
+      },
+      "sendai": {
+        "total": 325,
+        "changingTable": 1,
+        "wheelchair": 14,
+        "osm": 325,
+        "opendata": 0
+      },
+      "shiga": {
+        "total": 260,
+        "changingTable": 5,
+        "wheelchair": 15,
+        "osm": 260,
+        "opendata": 0
+      },
+      "shimane": {
+        "total": 90,
+        "changingTable": 6,
+        "wheelchair": 10,
+        "osm": 90,
+        "opendata": 0
+      },
+      "shizuoka": {
+        "total": 155,
+        "changingTable": 1,
+        "wheelchair": 30,
+        "osm": 155,
+        "opendata": 0
+      },
+      "tochigi": {
+        "total": 76,
+        "changingTable": 9,
+        "wheelchair": 11,
+        "osm": 76,
+        "opendata": 0
+      },
+      "tokushima": {
+        "total": 58,
+        "changingTable": 0,
+        "wheelchair": 3,
+        "osm": 58,
+        "opendata": 0
+      },
+      "tokyo": {
+        "total": 5194,
+        "changingTable": 723,
+        "wheelchair": 1245,
+        "osm": 3526,
+        "opendata": 1668
+      },
+      "tottori": {
+        "total": 61,
+        "changingTable": 1,
+        "wheelchair": 4,
+        "osm": 61,
+        "opendata": 0
+      },
+      "toyama": {
+        "total": 48,
+        "changingTable": 0,
+        "wheelchair": 5,
+        "osm": 48,
+        "opendata": 0
+      },
+      "wakayama": {
+        "total": 94,
+        "changingTable": 1,
+        "wheelchair": 3,
+        "osm": 94,
+        "opendata": 0
+      },
+      "yamagata": {
+        "total": 24,
+        "changingTable": 1,
+        "wheelchair": 1,
+        "osm": 24,
+        "opendata": 0
+      },
+      "yamaguchi": {
+        "total": 33,
+        "changingTable": 4,
+        "wheelchair": 4,
+        "osm": 33,
+        "opendata": 0
+      },
+      "yamanashi": {
+        "total": 108,
+        "changingTable": 1,
+        "wheelchair": 13,
+        "osm": 108,
+        "opendata": 0
+      },
+      "yokohama": {
+        "total": 1383,
+        "changingTable": 31,
+        "wheelchair": 218,
+        "osm": 1383,
+        "opendata": 0
+      }
+    }
   }
 ]
