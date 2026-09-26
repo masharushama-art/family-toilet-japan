@@ -21,16 +21,25 @@ export async function generateStaticParams() {
   );
 }
 
+// 「public toilet near me」等の近隣検索クエリで掲載順位7位前後まで来ているのにCTR 0%だったため、
+// "near you"の意図に応える文言に変更（2026-09-26、CTR改善施策・ROADMAP.md参照）
+const NEAR_YOU_LABEL: Record<CategorySlug, string> = {
+  "changing-table": "Toilets with a Baby Changing Table",
+  wheelchair: "Wheelchair-Accessible Toilets",
+  free: "Free Toilets",
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { city, category } = await params;
   if (!(city in CITIES) || !(category in CATEGORIES)) return {};
   const c = CITIES[city as CitySlug];
-  const cat = CATEGORIES[category as CategorySlug];
   const count = getToiletsByCityAndCategory(city as CitySlug, category as CategorySlug).length;
+  const label = NEAR_YOU_LABEL[category as CategorySlug];
   return {
-    title: `${cat.name} in ${c.name} Japan — ${count} locations | Family Toilet Japan`,
-    description: `Find ${count} toilets with ${cat.description.toLowerCase()} in ${c.name}, Japan. Free interactive map for families and tourists.`,
+    title: `${label} Near You in ${c.name} — ${count} Locations | Family Toilet Japan`,
+    description: `Find the nearest ${label.toLowerCase()} in ${c.name}, Japan — ${count} locations with GPS directions on our free interactive map. Updated monthly, no app or sign-up needed.`,
     keywords: [
+      `${category.replace("-", " ")} near me ${c.name.toLowerCase()}`,
       `${category.replace("-", " ")} ${c.name.toLowerCase()} japan`,
       `baby changing room ${c.name.toLowerCase()} japan`,
       `family toilet ${c.name.toLowerCase()}`,
