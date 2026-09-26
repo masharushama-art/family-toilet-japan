@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-06-14T16:44:30Z",
+    "timestamp_osm_base": "2026-09-26T15:17:51Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -436,6 +436,16 @@
       }
     },
     {
+      "type": "node",
+      "id": 14121624766,
+      "lat": 33.2560234,
+      "lon": 131.5487133,
+      "tags": {
+        "amenity": "toilets",
+        "name": "Public Toilets"
+      }
+    },
+    {
       "type": "way",
       "id": 193164227,
       "center": {
@@ -759,21 +769,17 @@
         4151918702
       ],
       "tags": {
+        "addr:block_number": "10",
         "addr:city": "別府市",
         "addr:country": "JP",
-        "addr:full": "大分県別府市浜町10 公衆トイレ（仲良公園）",
-        "addr:housenumber": "10",
+        "addr:housename": "仲良公園",
+        "addr:neighbourhood": "浜町",
         "addr:postcode": "874-0945",
-        "addr:prefecture": "大分県",
-        "addr:street": "浜町",
+        "addr:province": "大分県",
         "amenity": "toilets",
         "building": "yes",
         "building:colour": "#6e7683",
         "building:levels": "1.5",
-        "name": "公衆トイレ（仲良公園）",
-        "name:en": "Public Toilet (Nakayoshi Park)",
-        "name:ja": "公衆トイレ（仲良公園）",
-        "name:ja-Latn": "Kōshū Toire (Nakayoshi Kōen)",
         "roof:colour": "#b8b2b5",
         "toilets:female": "yes",
         "toilets:male": "yes",
@@ -797,13 +803,14 @@
         4215298653
       ],
       "tags": {
+        "addr:block_number": "9",
         "addr:city": "別府市",
         "addr:country": "JP",
         "addr:full": "大分県別府市楠町9-1",
-        "addr:housenumber": "9-1",
+        "addr:housenumber": "1",
+        "addr:neighbourhood": "楠町",
         "addr:postcode": "874-0943",
-        "addr:prefecture": "大分県",
-        "addr:street": "楠町",
+        "addr:province": "大分県",
         "amenity": "toilets",
         "building": "yes",
         "building:colour": "#e4dccc",
