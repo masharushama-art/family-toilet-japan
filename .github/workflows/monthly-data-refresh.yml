@@ -1,11 +1,18 @@
 name: Monthly OSM data refresh
 
-# 毎月1日 3:00 UTC（正午 JST）に実行し、OSMの最新トイレデータを取得して
-# 差分があれば自動でPRを作成する。取り込みミスをそのままmasterに流さないための安全策。
+# 毎月1日 3:00 UTC（正午 JST）に実行し、OSMの最新トイレデータを取得してPRを作成する。
+# 件数変化のsanity check・npm run buildが両方通った場合のみ自動マージし、
+# 異常な変化やビルド失敗を検知した場合はPRを開いたままにして人間の確認に回す
+# （2026-09-26、旧・常時手動レビュー方式から変更。ROADMAP.md参照）。
+# 自動マージ後も本番デプロイ（npm run cf:deploy）は引き続き手動実行が必要な点に注意。
 on:
   schedule:
     - cron: "0 3 1 * *"
   workflow_dispatch: {} # 手動実行も可能にする
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   refresh:
@@ -45,6 +52,7 @@ jobs:
           fi
 
       - name: Create Pull Request
+        id: cpr
         if: steps.diff.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
@@ -53,9 +61,37 @@ jobs:
           body: |
             自動生成PR: OpenStreetMapから最新のトイレデータを再取得しました。
 
-            **必ずマージ前に確認してください:**
-            - `public/data/cities/*.json` の差分件数が異常でないか
-            - `npm run build` が通るか
-            - coverage ページの統計が大きく崩れていないか
+            件数の変化が正常範囲内で、かつビルドが通れば自動マージされます。
+            異常な変化を検出した場合、またはビルドが失敗した場合はこのPRを開いたままにするので、
+            `public/data/cities/*.json` の差分・coverageページの統計を確認してから手動でマージしてください。
           branch: automated/monthly-data-refresh
           delete-branch: true
+
+      # Overpass APIの一時的な取得失敗や重複バグ等で件数が異常変動していないかを機械的にチェックする。
+      # 「取り込みミスをそのままmasterに流さない」という元々の安全策を、自動マージ後も維持するための関門
+      - name: Sanity-check data change
+        id: sanity
+        if: steps.diff.outputs.changed == 'true'
+        run: node scripts/check-data-sanity.mjs
+
+      - name: Install dependencies
+        if: steps.diff.outputs.changed == 'true'
+        run: npm ci
+
+      # ビルドが通らないデータ更新をそのままマージしないための関門。ここが失敗すると
+      # 後続の自動マージステップは実行されず、PRは手動確認待ちのまま残る
+      - name: Build check
+        if: steps.diff.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Auto-merge if change is within normal range
+        if: steps.diff.outputs.changed == 'true' && steps.sanity.outputs.safe == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge "${{ steps.cpr.outputs.pull-request-number }}" --squash --delete-branch
+
+      - name: Comment when auto-merge is skipped
+        if: steps.diff.outputs.changed == 'true' && steps.sanity.outputs.safe == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr comment "${{ steps.cpr.outputs.pull-request-number }}" --body "${{ steps.sanity.outputs.summary }}"
