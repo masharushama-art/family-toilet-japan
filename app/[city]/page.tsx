@@ -113,10 +113,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { city } = await params;
   if (!(city in CITIES)) return {};
   const c = CITIES[city as CitySlug];
+  const stats = getCityStats(city as CitySlug);
   return {
-    title: `Family Friendly Toilets in ${c.name}, Japan | Family Toilet Japan`,
-    description: `Find clean, family-friendly toilets with baby changing tables in ${c.name}, Japan. Free map with ${getCityStats(city as CitySlug).total}+ locations including wheelchair access.`,
+    // 「toilet near me」等の近隣検索クエリでは掲載順位7〜8位まで来ているのにCTR 0%だったため、
+    // "near you"の意図に応える文言に変更（2026-09-26、CTR改善施策・ROADMAP.md参照）
+    title: `Toilets Near You in ${c.name}, Japan — ${stats.total}+ Locations | Family Toilet Japan`,
+    description: `Find the nearest public toilet in ${c.name}, Japan with our free interactive map — ${stats.total}+ locations with GPS directions, baby changing tables, and wheelchair access. Updated monthly.`,
     keywords: [
+      `toilet near me ${c.name.toLowerCase()}`,
       `family friendly toilet ${c.name.toLowerCase()}`,
       `baby changing room ${c.name.toLowerCase()}`,
       `public toilet ${c.name.toLowerCase()} japan`,
@@ -128,13 +132,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: cityAlternates(city),
     },
     openGraph: {
-      title: `Family Friendly Toilets in ${c.name} | Family Toilet Japan`,
-      description: `Find ${getCityStats(city as CitySlug).total}+ toilets in ${c.name} with baby changing tables and wheelchair access.`,
+      title: `Toilets Near You in ${c.name}, Japan — ${stats.total}+ Locations | Family Toilet Japan`,
+      description: `Find the nearest public toilet in ${c.name} — ${stats.total}+ locations with GPS directions, baby changing tables, and wheelchair access.`,
     },
     twitter: {
       card: "summary_large_image",
-      title: `Family Friendly Toilets in ${c.name} | Family Toilet Japan`,
-      description: `Find ${getCityStats(city as CitySlug).total}+ toilets in ${c.name} with baby changing tables.`,
+      title: `Toilets Near You in ${c.name}, Japan | Family Toilet Japan`,
+      description: `Find the nearest public toilet in ${c.name} — ${stats.total}+ locations with GPS directions.`,
     },
   };
 }
