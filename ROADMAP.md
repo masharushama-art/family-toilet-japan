@@ -83,6 +83,13 @@
 
 **対応**: CLAUDE.mdの運用メモを「masterへのpushで自動デプロイされる」に訂正。`npm run cf:deploy`の手動実行は「即座に反映したい場合の補助手段」という位置づけに変更した。今後はpush後にCloudflareダッシュボードの「デプロイ」タブか本番URLで反映を確認すれば十分で、手動`cf:deploy`は省略できる。
 
+**横展開調査**: 同じCloudflareアカウント上の他5プロジェクト（zenkoku-otoriyose・office-kuma-site・otoriyose-api・teiten・teiten-worker）についても、Cloudflareダッシュボードの「設定」→「ビルド」を全件確認した。
+- zenkoku-otoriyose・office-kuma-site（いずれもCloudflare Pages）は「自動デプロイが有効です」の表示どおりGit連携・自動デプロイが有効。ただしPagesはGit連携時に自動デプロイが標準仕様であり、想定通りの挙動（zenkoku-otoriyoseは日次リフレッシュコミットの自動反映が前提で運用中）
+- otoriyose-api・teiten-worker（Workers）はいずれもGitリポジトリ未接続（「接続」ボタンのみ）、teiten（Pages）も「Git接続がありません」表示で、自動デプロイは無い
+- 各プロジェクトのローカル`CLAUDE.md`（zenkoku-otoriyose・office-kuma-site・定点TEITEN）も確認したが、family-toilet-japanのように「push時自動デプロイは無い」と明記していたものは他になく、訂正が必要な誤記載は見つからなかった（定点TEITENの`npx wrangler pages deploy`/`npx wrangler deploy`という手動デプロイコマンドの記載は実態と一致）
+
+結論: 今回の「ドキュメントと実態の食い違い」はfamily-toilet-japan固有の問題で、他プロジェクトへの横展開修正は不要と判断。
+
 ## ✅ 月次データ更新PRの自動マージ整備（2026-09-26）
 
 過去に`automated/monthly-data-refresh`ブランチ（2026-09-01分、+12件+1おむつ交換台）が1ヶ月以上マージされず、本番データが2026-08-01時点のまま古くなっていた事故があった（2026-09-23、データレポート実装時に発覚・手動マージ済み、上記「データ分析ページ」セクション参照）。「常に人間がレビュー」という運用だと、レビューを忘れた瞬間にデータが止まるリスクがあるため、機械的に安全性を判定できる部分は自動化することにした。
