@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-09-01T08:11:54Z",
+    "timestamp_osm_base": "2026-10-01T09:40:51Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -395,8 +395,8 @@
     {
       "type": "node",
       "id": 11668361927,
-      "lat": 36.5663627,
-      "lon": 136.6553544,
+      "lat": 36.5663783,
+      "lon": 136.6553423,
       "tags": {
         "access": "yes",
         "amenity": "toilets",
@@ -582,6 +582,91 @@
       "lon": 136.6465006,
       "tags": {
         "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14204098619,
+      "lat": 36.5773833,
+      "lon": 136.6473824,
+      "tags": {
+        "access": "yes",
+        "addr:floor": "1F",
+        "addr:postcode": "920-0858",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2026-09-24",
+        "fee": "no",
+        "level": "0",
+        "opening_hours": "08:30-22:00",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "website": "https://www.100bangai.co.jp/info/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212358724,
+      "lat": 36.5778635,
+      "lon": 136.6481526,
+      "tags": {
+        "access": "customers",
+        "addr:floor": "M2",
+        "addr:postcode": "920-0858",
+        "amenity": "toilets",
+        "check_date": "2026-09-25",
+        "fee": "no",
+        "name": "新幹線改札内",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "website": "https://eki.jr-odekake.net/premises?id=0541449",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212358727,
+      "lat": 36.578276,
+      "lon": 136.6476037,
+      "tags": {
+        "access": "customers",
+        "addr:floor": "M2",
+        "addr:postcode": "920-0858",
+        "amenity": "toilets",
+        "check_date": "2026-09-25",
+        "fee": "no",
+        "name": "在来線改札内",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "website": "https://eki.jr-odekake.net/premises?id=0541449",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212358734,
+      "lat": 36.5783545,
+      "lon": 136.6477077,
+      "tags": {
+        "access": "yes",
+        "addr:floor": "1F",
+        "addr:postcode": "920-0858",
+        "amenity": "toilets",
+        "check_date": "2026-09-25",
+        "fee": "no",
+        "level": "0",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "wheelchair": "yes"
       }
     },
     {
