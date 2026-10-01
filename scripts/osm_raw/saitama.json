@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-09-01T08:10:48Z",
+    "timestamp_osm_base": "2026-10-01T09:39:51Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -2047,6 +2047,71 @@
       "lon": 139.6050373,
       "tags": {
         "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14222385787,
+      "lat": 35.8221391,
+      "lon": 139.5752805,
+      "tags": {
+        "access": "customers",
+        "addr:floor": "2",
+        "addr:postcode": "352-0001",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2026-09-27",
+        "fee": "no",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "urinal;seated",
+        "website": "https://www.tobu.co.jp/railway/guide/station/insidemap/7308/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14225480587,
+      "lat": 35.8234827,
+      "lon": 139.5736997,
+      "tags": {
+        "access": "yes",
+        "addr:floor": "3,4,5,6,7",
+        "addr:postcode": "353-0004",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2026-09-28",
+        "description": "3階は赤ちゃん休憩室なし。7階のみ9-21時使用可能。",
+        "fee": "no",
+        "opening_hours": "09:00-21:00",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14225480588,
+      "lat": 35.823215,
+      "lon": 139.5741032,
+      "tags": {
+        "access": "yes",
+        "addr:floor": "1,8",
+        "addr:postcode": "353-0004",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2026-09-28",
+        "description": "8階は8:30-22:00使用可能。",
+        "fee": "no",
+        "opening_hours": "08:30-22:00",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "wheelchair": "yes"
       }
     },
     {
