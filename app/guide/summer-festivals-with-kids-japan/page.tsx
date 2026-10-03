@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import GuideAreaLinks from "../../components/GuideAreaLinks";
+import GuideGearBox from "../../components/GuideGearBox";
 import GuideScrollTracker from "../../components/GuideScrollTracker";
 
 export const metadata: Metadata = {
@@ -101,6 +102,7 @@ export default function SummerFestivalsPage() {
           </div>
         ))}
 
+        <GuideGearBox slug="summer-festivals-with-kids-japan" lang="en" />
         <GuideAreaLinks slug="summer-festivals-with-kids-japan" lang="en" />
 
         <div className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 mb-8">
