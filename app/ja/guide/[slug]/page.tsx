@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HotelAffiliateBox, GearAffiliateBox } from "../../../components/AffiliateBox";
+import { HotelAffiliateBox } from "../../../components/AffiliateBox";
+import GuideGearBox from "../../../components/GuideGearBox";
 import { getCityForGuideSlug } from "../../../components/GuideAreaLinks";
 import { CITIES, type CitySlug } from "../../../lib/toilet-data";
 import ShareButtons from "../../../components/ShareButtons";
@@ -84,17 +85,7 @@ export default async function JaGuidePage({ params }: { params: Params }) {
 
         <HotelAffiliateBox cityNameJa={(() => { const c = getCityForGuideSlug(slug); return c ? CITIES[c as CitySlug].jaName : ""; })()} lang="ja" />
 
-        {slug === "traveling-japan-with-toddler-checklist" && (
-          <GearAffiliateBox
-            lang="ja"
-            items={[
-              { name: "ストッケ YOYO3 ベビーカー", asin: "B0BGLVWT63" },
-              { name: "エルゴベビー OMNI Breeze 抱っこ紐", asin: "B093L84C7H" },
-              { name: "Anker モバイルバッテリー 10,000mAh", asin: "B0CQX67KTW" },
-              { name: "ジップロック フリーザーバッグ M", asin: "B0DYYMMBQD" },
-            ]}
-          />
-        )}
+        <GuideGearBox slug={slug} lang="ja" />
 
         <GuideAreaLinks slug={slug} lang="ja" />
 
