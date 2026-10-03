@@ -8,6 +8,7 @@ import {
 } from "../../lib/toilet-data";
 import { getSpotsByCity } from "../../lib/spots";
 import { THIN_PAGES_NOINDEX } from "../../lib/feature-flags";
+import NearestToiletCta from "../../components/NearestToiletCta";
 
 const BASE = "https://familytoiletjapan.com";
 
@@ -82,12 +83,7 @@ export default async function CityCategory({ params }: Props) {
         <p className="text-sky-100 text-sm">
           {toilets.length} locations found
         </p>
-        <Link
-          href={`/map?city=${city}&filter=${category}`}
-          className="mt-5 inline-block bg-white text-sky-600 font-bold px-6 py-3 rounded-full text-sm hover:bg-sky-50"
-        >
-          📍 View on Map
-        </Link>
+        <NearestToiletCta city={city} lang="en" variant="hero" href={`/map?city=${city}&filter=${category}`} />
       </div>
 
       <div className="max-w-2xl mx-auto px-4 py-8">

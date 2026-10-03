@@ -7,6 +7,7 @@ import { cityAlternates, BASE } from "../../lib/lang-cities";
 import { getGuidesForCity, guideHref } from "../../lib/guides";
 import { getCityFreshness } from "../../lib/data-report";
 import DataFreshness from "../../components/DataFreshness";
+import NearestToiletCta from "../../components/NearestToiletCta";
 
 interface Props {
   params: Promise<{ city: string }>;
@@ -63,12 +64,7 @@ export default async function JaCityPage({ params }: Props) {
           {c.jaName}のおむつ替え台付きトイレ・多目的トイレを地図で検索。
           赤ちゃん連れ・子連れ旅行をもっと快適に。
         </p>
-        <Link
-          href={`/map?city=${city}`}
-          className="inline-block bg-white text-sky-600 font-bold px-7 py-3.5 rounded-full text-base hover:bg-sky-50 transition-colors"
-        >
-          📍 地図で探す
-        </Link>
+        <NearestToiletCta city={city} lang="ja" variant="hero" />
       </div>
 
       <div className="max-w-2xl mx-auto px-5 py-10">
@@ -105,6 +101,7 @@ export default async function JaCityPage({ params }: Props) {
           ))}
         </div>
         <DataFreshness lang="ja" freshness={getCityFreshness(city)} />
+        <NearestToiletCta city={city} lang="ja" variant="card" />
 
         {/* 旧「よくある質問」ブロックは47都市で本文が同一（都市名のみ差し替え）の近似重複だったため、
             FAQPage構造化データともども除去（2026-09-06、AdSense対策・ROADMAP.md参照）。

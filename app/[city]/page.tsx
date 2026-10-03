@@ -9,6 +9,7 @@ import { getSpotsByCity } from "../lib/spots";
 import { getGuidesForCity, guideHref } from "../lib/guides";
 import { getCityFreshness } from "../lib/data-report";
 import DataFreshness from "../components/DataFreshness";
+import NearestToiletCta from "../components/NearestToiletCta";
 
 const CITY_META: Record<string, { keywords: string[]; tips: string[] }> = {
   tokyo: {
@@ -165,12 +166,7 @@ export default async function CityPage({ params }: Props) {
           Find clean, safe toilets with baby changing facilities in {c.name}, Japan.
           Perfect for families traveling with young children.
         </p>
-        <Link
-          href={`/map?city=${city}`}
-          className="mt-6 inline-block bg-white text-sky-600 font-bold px-8 py-3 rounded-full hover:bg-sky-50 dark:hover:bg-gray-800 transition-colors"
-        >
-          📍 Open Map
-        </Link>
+        <NearestToiletCta city={city} lang="en" variant="hero" />
         <div className="mt-4 flex justify-center">
           <ShareButtons
             url={`https://familytoiletjapan.com/${city}`}
@@ -217,6 +213,7 @@ export default async function CityPage({ params }: Props) {
           ))}
         </div>
         <DataFreshness lang="en" freshness={getCityFreshness(city)} />
+        <NearestToiletCta city={city} lang="en" variant="card" />
 
         {/* Categories */}
         <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Browse by Feature</h2>
