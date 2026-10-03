@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import GuideGearBox from "../../components/GuideGearBox";
 
 export const metadata: Metadata = {
   title: "Japan Travel with Baby & Toddler — Complete Family Guide | Family Toilet Japan",
@@ -122,6 +123,8 @@ export default function JapanTravelWithBaby() {
             ))}
           </div>
         </section>
+
+        <GuideGearBox slug="japan-travel-with-baby" lang="en" />
 
         <section className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 text-center">
           <p className="font-medium text-gray-800 dark:text-gray-100 mb-1">Find changing tables & family toilets near you</p>

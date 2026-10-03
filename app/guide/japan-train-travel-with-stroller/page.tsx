@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import GuideAreaLinks from "../../components/GuideAreaLinks";
+import GuideGearBox from "../../components/GuideGearBox";
 import GuideScrollTracker from "../../components/GuideScrollTracker";
 
 export const metadata: Metadata = {
@@ -104,6 +105,7 @@ export default function TrainStrollerPage() {
           </div>
         ))}
 
+        <GuideGearBox slug="japan-train-travel-with-stroller" lang="en" />
         <GuideAreaLinks slug="japan-train-travel-with-stroller" lang="en" />
 
         <div className="bg-gray-50 dark:bg-gray-800/40 rounded-2xl p-6 mb-8">
