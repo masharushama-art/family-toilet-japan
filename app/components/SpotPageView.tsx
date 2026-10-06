@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Spot } from "../lib/spots";
 import { spotDistanceKm, getSpotsByCity } from "../lib/spots";
 import { CITIES, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
+import { getSpotEditorial } from "../lib/spot-editorial";
 import PageViewTracker from "./PageViewTracker";
 import { ActivityAffiliateBox } from "./AffiliateBox";
 import ShareButtons from "./ShareButtons";
@@ -134,6 +135,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
   const c = CITIES[spot.city as CitySlug];
   const cityName = lang === "ja" ? c.jaName : c.name;
   const spotName = spot.names[lang];
+  const editorial = lang === "ja" ? getSpotEditorial(spot.slug) : undefined;
 
   const all = getToiletsByCity(spot.city as CitySlug)
     .map((toilet) => ({ toilet, d: spotDistanceKm(spot.lat, spot.lon, toilet.lat, toilet.lon) }))
@@ -265,6 +267,35 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
           <span className="bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 px-2.5 py-1 rounded-full font-medium">🍼 {stats.ct} {t.changingTables}</span>
           <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 px-2.5 py-1 rounded-full font-medium">♿ {stats.wc} {t.wheelchair}</span>
         </div>
+
+        {/* 公式情報で確認した授乳室・ベビー休憩室（日本語・厳選スポットのみ。app/lib/spot-editorial.ts） */}
+        {editorial && (
+          <section className="mt-6">
+            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{editorial.intro}</p>
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 mt-5 mb-3">🍼 公式サイトで確認できた授乳室・ベビー休憩室</h2>
+            <ul className="space-y-3">
+              {editorial.facilities.map((f) => (
+                <li key={f.name} className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+                  <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">{f.name}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{f.kind}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">場所: {f.where}</p>
+                  {f.note && <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{f.note}</p>}
+                  <a
+                    href={f.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    className="text-[11px] text-sky-600 dark:text-sky-400 underline mt-2 inline-block"
+                  >
+                    公式情報を見る
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-3">
+              {editorial.verifiedAt}時点で各公式ページを確認した内容です。営業時間や設備は変更されることがあるため、お出かけ前に公式サイトでご確認ください。
+            </p>
+          </section>
+        )}
 
         {/* Mini map */}
         <div className="mt-5 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700">
