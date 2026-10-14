@@ -386,7 +386,9 @@ Search Console「ページのインデックス登録」の未登録715件を理
 - キャッシュ書き込みが必要な機能（ISR・`revalidateTag`等）を将来追加すると使えない
 - 切り替えは1回のデプロイが必要（R2への書き込みは今後なくなる）
 
-**実装（2026-10-14）**: `open-next.config.ts`のincrementalCacheをR2方式から`static-assets-incremental-cache`に変更し、`wrangler.jsonc`から`r2_buckets`を削除。`npx tsc --noEmit`・`npm run cf:build`成功。ローカルプレビュー（R2バインディングなし・`env.ASSETS`のみ）で`/`・`/tokyo`・`/ja/tokyo`・`/tokyo/free`・`/spot/…`・`/ja/spot/…`・`/toilet/tokyo/<id>`・ガイド（EN/JA）・`/api/search-index`・`/sitemap.xml`がすべて200、存在しないURLは404、日本語スポットページの公式情報セクションも表示されることを確認。本番反映（push→Workers Builds）と、R2バケット`family-toilet-japan-cache`の削除（ユーザー作業）は未完了。バケット削除までは、45日削除ルールが残るが、切り替え後は本番がR2を参照しないため404の心配はない。
+**実装（2026-10-14）**: `open-next.config.ts`のincrementalCacheをR2方式から`static-assets-incremental-cache`に変更し、`wrangler.jsonc`から`r2_buckets`を削除。`npx tsc --noEmit`・`npm run cf:build`成功。ローカルプレビュー（R2バインディングなし・`env.ASSETS`のみ）で`/`・`/tokyo`・`/ja/tokyo`・`/tokyo/free`・`/spot/…`・`/ja/spot/…`・`/toilet/tokyo/<id>`・ガイド（EN/JA）・`/api/search-index`・`/sitemap.xml`がすべて200、存在しないURLは404、日本語スポットページの公式情報セクションも表示されることを確認。**本番反映（2026-10-14）**: コミット`be5482b`をpushし、Workers Builds（自動ビルド・デプロイ）が成功。本番で`/`・`/tokyo`・`/ja/tokyo`・`/tokyo/free`・`/spot/…`・`/ja/spot/…`・`/toilet/tokyo/<id>`・ガイド・`/api/search-index`・`/sitemap.xml`が200（ローカルプレビューとバイト数が一致）、存在しないURLは404、日本語スポットの公式情報セクションの表示も確認。
+**判明した根本原因**: Workers Buildsはpushのたびにビルド・デプロイを実行する（ビルド履歴は75件）。ドキュメントだけのコミットでもR2に約674MB分のキャッシュを書き込んでいたため、デプロイを控えるだけでは防げなかった。静的アセット方式への切り替えで、pushごとのR2書き込みもなくなった。
+**残作業（ユーザー作業）**: R2バケット`family-toilet-japan-cache`（約52GB）は本番から参照されなくなったが、バケットが残る限り保存料金（無料枠10GB超過分、月約$0.6）がかかり続ける。ダッシュボード→R2→該当バケット→設定→「バケットを空にする」→「バケットを削除する」で削除する（データの完全削除のため私は実施しない）。削除後、45日削除ルールも不要になる。次回請求（2026-11-13頃）で$0になることを確認する。
 
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）
 
