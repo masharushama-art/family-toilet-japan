@@ -386,6 +386,8 @@ Search Console「ページのインデックス登録」の未登録715件を理
 - キャッシュ書き込みが必要な機能（ISR・`revalidateTag`等）を将来追加すると使えない
 - 切り替えは1回のデプロイが必要（R2への書き込みは今後なくなる）
 
+**実装（2026-10-14）**: `open-next.config.ts`のincrementalCacheをR2方式から`static-assets-incremental-cache`に変更し、`wrangler.jsonc`から`r2_buckets`を削除。`npx tsc --noEmit`・`npm run cf:build`成功。ローカルプレビュー（R2バインディングなし・`env.ASSETS`のみ）で`/`・`/tokyo`・`/ja/tokyo`・`/tokyo/free`・`/spot/…`・`/ja/spot/…`・`/toilet/tokyo/<id>`・ガイド（EN/JA）・`/api/search-index`・`/sitemap.xml`がすべて200、存在しないURLは404、日本語スポットページの公式情報セクションも表示されることを確認。本番反映（push→Workers Builds）と、R2バケット`family-toilet-japan-cache`の削除（ユーザー作業）は未完了。バケット削除までは、45日削除ルールが残るが、切り替え後は本番がR2を参照しないため404の心配はない。
+
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）
 
 4回目再審査（2026-09-13申請）の結果とSearch Consoleの状況を2026-09-09〜09-16の間繰り返し確認したが、AdSense側は「準備中・審査待ち」のまま、Search Consoleの「ページのインデックス登録」レポートも2026/09/04時点のデータで12日間更新が止まっている状態が継続。クラウドの定期実行エージェントはSearch Console/AdSenseへのブラウザアクセス（ユーザーのログイン済みセッション）を持てないため、実際の確認はローカルのClaude Codeセッション（Chrome操作可能）で行う必要がある。そのため、2026-09-17 09:00（Asia/Tokyo）に一度だけ発火する**通知専用**のクラウドルーティン（`trig_01NVt9aKPhZ4bUMCLQxg8rEN`）を作成した。ルーティン自体はブラウザ操作・コード変更を行わず、「ユーザーに確認を促すメッセージを伝えるだけ」に限定している。
