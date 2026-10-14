@@ -411,6 +411,8 @@ Search Console「ページのインデックス登録」の未登録715件を理
 4. OpenStreetMap wiki: 日本のトイレ関連ページ（例: `Japan` の`Toilets`関連、`Key:changing_table`の利用事例）にサイトとデータセットを掲載（要OSMアカウント。宣伝色を抑え、事実と出典のみ）
 5. 各投稿・登録の文面は私が下書きできる（投稿自体はユーザー）
 
+**実施状況（2026-10-14）**: ①GitHubリポジトリのAbout（説明文・トピック8件・Websiteを`https://familytoiletjapan.com`に更新。旧値は`family-toilet-japan.vercel.app`）は設定済み。②Zenodo: GitHub連携の許可（OAuth）とリポジトリのトグルON、③Kaggle・④OSMコミュニティ投稿はユーザー作業待ち（アカウント作成・承認・最終投稿は私は行わない）。Zenodoは、トグルON後にGitHubでリリースを作ると自動でDOIが発行される。
+
 **効果測定**: GSCの「リンク」レポートで外部リンク数、GA4の参照元、GitHubのスター・フォーク数を月次ログに記録する。
 
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）
