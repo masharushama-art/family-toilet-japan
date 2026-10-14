@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below and keep the OpenStreetMap / open-data attribution (ODbL 1.0)."
+title: "Japan Family Toilets Dataset"
+type: dataset
+authors:
+  - name: "Family Toilet Japan"
+abstract: "Locations of public toilets in Japan with baby changing table, wheelchair access and fee attributes, compiled from OpenStreetMap and municipal open data (Tokyo, Osaka, Nagoya). Updated monthly."
+keywords:
+  - toilets
+  - baby changing table
+  - accessibility
+  - OpenStreetMap
+  - Japan
+  - open data
+license: ODbL-1.0
+url: "https://familytoiletjapan.com"
+repository-code: "https://github.com/masharushama-art/family-toilet-japan"
