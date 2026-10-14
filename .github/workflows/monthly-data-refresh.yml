@@ -42,6 +42,10 @@ jobs:
       - name: Record data snapshot for the report
         run: node scripts/data-snapshot.mjs --date "$(date -u +%F)"
 
+      # 外部公開用データセット（dataset/、CSV・GeoJSON）も同じデータから再生成してPRに含める
+      - name: Build public dataset
+        run: node scripts/build-dataset.mjs --date "$(date -u +%F)"
+
       - name: Check for changes
         id: diff
         run: |

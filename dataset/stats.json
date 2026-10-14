@@ -1,0 +1,14 @@
+{
+  "generated": "2026-10-14",
+  "total": 16388,
+  "cities": 48,
+  "changing_table_true": 1148,
+  "wheelchair_true": 3200,
+  "free_true": 13711,
+  "by_source": {
+    "opendata_nagoya": 859,
+    "opendata_osaka": 126,
+    "opendata_tokyo": 1668,
+    "osm": 13735
+  }
+}
