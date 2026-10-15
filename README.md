@@ -14,7 +14,7 @@ The toilet data is published as an open dataset (CSV and GeoJSON, 16,000+ toilet
 **[`dataset/`](dataset/)** — see [`dataset/README.md`](dataset/README.md) for the schema, how to read the attributes, and the license.
 
 - License: [ODbL 1.0](https://opendatacommons.org/licenses/odbl/) — © OpenStreetMap contributors, plus municipal open data (CC BY 4.0) for parts of Tokyo, Osaka and Nagoya
-- Citation: [`dataset/CITATION.cff`](dataset/CITATION.cff)
+- Citation: [`CITATION.cff`](CITATION.cff) · DOI: [10.5281/zenodo.23396111](https://doi.org/10.5281/zenodo.23396111) (Zenodo)
 
 The data comes from [OpenStreetMap](https://www.openstreetmap.org/) volunteers and municipal open data. If a toilet near you is
 missing or wrong, you can fix it directly on OpenStreetMap — the next monthly update will include the change.

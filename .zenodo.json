@@ -1,0 +1,11 @@
+{
+  "title": "Japan Family Toilets Dataset",
+  "upload_type": "dataset",
+  "description": "Open dataset of public toilets in Japan with baby changing table, wheelchair access and fee attributes, compiled from OpenStreetMap and municipal open data (parts of Tokyo, Osaka and Nagoya) for https://familytoiletjapan.com. Files: dataset/japan-family-toilets.csv, dataset/japan-family-toilets.geojson, dataset/README.md. Note: for OpenStreetMap records, true means the tag is explicitly yes; false means not marked as yes (unknown or unmapped), not confirmed absence. License: ODbL 1.0, (c) OpenStreetMap contributors; records with license=CC-BY-4.0 come from municipal open data. See dataset/README.md for details and attribution.",
+  "creators": [{ "name": "Family Toilet Japan" }],
+  "license": "odc-odbl",
+  "keywords": ["OpenStreetMap", "public toilets", "baby changing table", "accessibility", "Japan", "open data"],
+  "related_identifiers": [
+    { "relation": "isSupplementTo", "identifier": "https://github.com/masharushama-art/family-toilet-japan", "scheme": "url" }
+  ]
+}

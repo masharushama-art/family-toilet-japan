@@ -413,6 +413,8 @@ Search Console「ページのインデックス登録」の未登録715件を理
 
 **実施状況（2026-10-14）**: ①GitHubリポジトリのAbout（説明文・トピック8件・Websiteを`https://familytoiletjapan.com`に更新。旧値は`family-toilet-japan.vercel.app`）は設定済み。②Zenodo: GitHub連携の許可（OAuth）とリポジトリのトグルON、③Kaggle・④OSMコミュニティ投稿はユーザー作業待ち（アカウント作成・承認・最終投稿は私は行わない）。Zenodoは、トグルON後にGitHubでリリースを作ると自動でDOIが発行される。
 
+**Zenodo登録完了（2026-10-15）**: ユーザーがZenodoにGitHubでログイン・承認し、私が連携スイッチをON、GitHubリリース`v2026.10.14`を作成（ユーザー確認済み）。ZenodoがDOIを自動発行: **バージョンDOI `10.5281/zenodo.23396112`、全バージョンを指すDOI（引用用）`10.5281/zenodo.23396111`**、レコード https://zenodo.org/records/23396112 。初回は`CITATION.cff`が`dataset/`内にあったためZenodoが読めず、種類=Software・作者=GitHubユーザー名・ライセンス=CC BY 4.0（Zenodoの初期値で誤り）で登録されたため、Zenodoの編集画面で種類=Dataset・作者=「Family Toilet Japan」（団体）・ライセンス=ODC ODbL v1.0・キーワード6件に修正して再公開（DOIは不変）。今後のリリースで初期値に戻らないよう、リポジトリ直下に`.zenodo.json`を追加し、`CITATION.cff`をリポジトリ直下へ移動してDOIを記載、READMEにDOIを掲載。**注意**: DOIは削除できない（更新は新バージョン）。Zenodoのレコードにはリポジトリ全体のスナップショット（約300ファイル、4.9MB）が含まれる。次回以降は月次などでGitHubリリースを作ると新バージョンが登録される（必須ではない）。
+
 **効果測定**: GSCの「リンク」レポートで外部リンク数、GA4の参照元、GitHubのスター・フォーク数を月次ログに記録する。
 
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）

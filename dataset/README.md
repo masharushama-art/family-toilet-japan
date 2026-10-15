@@ -21,7 +21,7 @@ OpenStreetMap と自治体のオープンデータから作成し、毎月更新
 | `japan-family-toilets.csv` | All records, one row per toilet (UTF-8, comma-separated, header row) |
 | `japan-family-toilets.geojson` | Same records as a GeoJSON FeatureCollection (Point geometries, `[lon, lat]`) |
 | `stats.json` | Record counts and generation date |
-| `CITATION.cff` | Citation metadata |
+| `../CITATION.cff` | Citation metadata (repository root) |
 
 ## Columns
 
@@ -83,11 +83,11 @@ Details: https://familytoiletjapan.com/attribution
 ## Citation
 
 ```
-Family Toilet Japan. (2026). Japan Family Toilets Dataset [Data set]. https://github.com/masharushama-art/family-toilet-japan/tree/master/dataset
+Family Toilet Japan. (2026). Japan Family Toilets Dataset [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23396111
 Contains information from OpenStreetMap, © OpenStreetMap contributors, ODbL 1.0.
 ```
 
-See also [`CITATION.cff`](CITATION.cff).
+See also [`CITATION.cff`](../CITATION.cff).
 
 ## Regenerating
 
