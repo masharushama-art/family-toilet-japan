@@ -421,6 +421,27 @@ Search Console「ページのインデックス登録」の未登録715件を理
 
 **効果測定**: GSCの「リンク」レポートで外部リンク数、GA4の参照元、GitHubのスター・フォーク数を月次ログに記録する。
 
+## 🚨 Workers CPU時間超過（2026-10-20）の原因調査（2026-10-22、調査のみ・対策は承認待ち）
+
+**きっかけ**: Cloudflareから「Workers の CPU 制限を超過しました」メール（10/21 23:54着）。副業ハブ側の集計で、10/20は正常9,095件・`exceededResources` 5,883件（全体の約4割）、10/14〜19は超過0〜168件/日、10/21は14件で収束。リクエスト総数は平常の約5倍。
+
+**原因（特定済み）**: **Anthropic社の検索用クローラー`Claude-SearchBot`が`/map`を大量に取得した**ため。Cloudflareダッシュボード（ゾーンのAnalytics、7日間、IP `216.73.216.56`で絞り込み）で確認:
+- User-Agent: `Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Claude-SearchBot/1.0; +searchbot@anthropic.com)`、IP `216.73.216.56`（米国Columbus）
+- 7日間で12.76k件（サイト全体37.97kの約34%）。うち`/map`が7.58k件。この bot への応答の43.7%（5.57k件）が503（Workers CPU超過）。10/20の`exceededResources`5,883件とほぼ一致
+- 直近24h（10/21〜22）もこのIPが4.85k件（全体7.9kの約6割）で、5xx率35%。**収束してはいない**
+- Googlebotは7日で214件、クロール統計（Search Console）でも1日最大約280件で原因ではない。中国発7.47k件・他IPの急増も一部あるが未精査
+- robots.txtにはCloudflareの管理ルール（AI学習系: ClaudeBot・GPTBot・anthropic-ai等はDisallow）が入っているが、検索用の`Claude-SearchBot`は`Content-Signal: search=yes`で許可のまま
+
+**CPUを食っているルート**: `/map`。ビルド結果で唯一の動的ルート（`ƒ /map`、`searchParams`を`generateMetadata`で読むため）。ほかのページは事前生成だが、応答にCloudflareのキャッシュヒットはほぼ無く（キャッシュヒット率5〜11%）、毎回Workerが動く（`s-maxage`が付いていてもWorkerの応答は既定ではキャッシュされない）。成功リクエストのCPUもp50 20ms/p99 638msで無料枠の10msを超えている。サイト内に`/map?…`へのリンクが多数ある（13ファイル）。
+
+**対策案（無料のまま。実施はユーザー承認後）**:
+1. **robots.txtで`/map?`（クエリ付き）をDisallow**（`app/robots.ts`、コード変更・無料）。`/map?id=…`等は元々noindex・canonical=`/map`で価値がなく、Googleのクロール重複（GSC「重複・ユーザー未指定」173件）の対策にもなる。ただしbotが反映するまで時間差があり、守る保証はない
+2. **CloudflareのWAFカスタムルール（無料枠5件）でUA`Claude-SearchBot`の`/map*`をBlock**（Cloudflare設定変更）。WAFはWorkerより前で止めるのでCPUを使わない。Googlebot・Bingbotなど他のbotには影響させない
+3. **`/map`の静的化**（コード変更）: `generateMetadata`の`searchParams`依存をやめて事前生成にする（deep linkのnoindexは、canonicalまたはX-Robots-Tagで代替）。動的ルートがなくなり、`/map`のCPUがほかの静的ページ並みになる
+4. **Worker前段でCache APIを使う**（コード変更・やや大きい）: 静的ページのHTMLをエッジキャッシュに乗せ、Worker起動を減らす。全ページのCPU対策になる
+
+**判断メモ**: AdSense再審査中のため、本物のユーザーやGoogle（Mediapartners/Googlebot）にエラーを返す時間を作らないこと。Workers Paid（月$5）へのアップグレードはユーザー判断事項で、提案のみ（「請求を発生させない」最大ルールにも反するため非推奨）。
+
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）
 
 4回目再審査（2026-09-13申請）の結果とSearch Consoleの状況を2026-09-09〜09-16の間繰り返し確認したが、AdSense側は「準備中・審査待ち」のまま、Search Consoleの「ページのインデックス登録」レポートも2026/09/04時点のデータで12日間更新が止まっている状態が継続。クラウドの定期実行エージェントはSearch Console/AdSenseへのブラウザアクセス（ユーザーのログイン済みセッション）を持てないため、実際の確認はローカルのClaude Codeセッション（Chrome操作可能）で行う必要がある。そのため、2026-09-17 09:00（Asia/Tokyo）に一度だけ発火する**通知専用**のクラウドルーティン（`trig_01NVt9aKPhZ4bUMCLQxg8rEN`）を作成した。ルーティン自体はブラウザ操作・コード変更を行わず、「ユーザーに確認を促すメッセージを伝えるだけ」に限定している。
