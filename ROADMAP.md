@@ -443,6 +443,12 @@ Search Console「ページのインデックス登録」の未登録715件を理
 3. **`/map`の静的化**（コード変更）: `generateMetadata`の`searchParams`依存をやめて事前生成にする（deep linkのnoindexは、canonicalまたはX-Robots-Tagで代替）。動的ルートがなくなり、`/map`のCPUがほかの静的ページ並みになる
 4. **Worker前段でCache APIを使う**（コード変更・やや大きい）: 静的ページのHTMLをエッジキャッシュに乗せ、Worker起動を減らす。全ページのCPU対策になる
 
+**実施結果（2026-10-22、ユーザー承認済み）**: 対策①②を実施。
+- ② CloudflareのWAFカスタムルールを作成・有効化（ゾーン`familytoiletjapan.com`→セキュリティ→セキュリティルール、無料枠5件のうち1件）: 名前`Block Claude-SearchBot on /map (CPU limit)`、式`(http.user_agent contains "Claude-SearchBot" and starts_with(http.request.uri.path, "/map"))`、アクション=ブロック。本番で検証: botのUAで`/map`・`/map?…`=403、`/tokyo`・`/robots.txt`・`/sitemap.xml`=200、通常アクセスとGooglebot UAの`/map`=200（影響なし）
+- ① `app/robots.ts`に`Disallow: /map?`と、`Claude-SearchBot`向けグループ（`Disallow: /api/ /_next/ /map?`＋`Crawl-delay: 30`）を追加（コミット`92ba202`）。GitHubの障害（Cloudflareへのpushイベントの遅延）で自動ビルドが約1時間遅れたが、その後に本番へ反映され、`robots.txt`の内容を確認済み
+- 今後の確認: 数日後にCloudflare Analyticsで`Claude-SearchBot`のリクエスト数・503率と、Workersの`exceededResources`が減ったかを見る。③`/map`の静的化・④エッジキャッシュは、減らなければ検討する。ルールが不要になれば（botが`/map?`を避けるようになれば）WAFルールは削除してよい
+- 注意: 上記の遅延で、ビルド・デプロイ中に別のビルドが走っている間は、手動の`npm run cf:deploy`をしない（古いビルドが後から本番を上書きしうる）
+
 **判断メモ**: AdSense再審査中のため、本物のユーザーやGoogle（Mediapartners/Googlebot）にエラーを返す時間を作らないこと。Workers Paid（月$5）へのアップグレードはユーザー判断事項で、提案のみ（「請求を発生させない」最大ルールにも反するため非推奨）。
 
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）
