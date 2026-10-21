@@ -432,6 +432,9 @@ Search Console「ページのインデックス登録」の未登録715件を理
 - Googlebotは7日で214件、クロール統計（Search Console）でも1日最大約280件で原因ではない。中国発7.47k件・他IPの急増も一部あるが未精査
 - robots.txtにはCloudflareの管理ルール（AI学習系: ClaudeBot・GPTBot・anthropic-ai等はDisallow）が入っているが、検索用の`Claude-SearchBot`は`Content-Signal: search=yes`で許可のまま
 
+**正体の確認（2026-10-22）**: 攻撃ではなく、Anthropic社の正規クローラーと確認した。①Cloudflare Radarのボット一覧に`Claude-SearchBot`が掲載（運営=Anthropic、種別=Search、**Verified**、直接アクセス）。②Anthropic公式ヘルプ（support.claude.com「Does Anthropic crawl data from the web…」）の公開IP一覧 https://claude.com/crawling/bots.json （作成日2026-10-20）に`216.73.216.0/22`があり、`216.73.216.56`はその範囲内。③公式ヘルプによれば、Anthropicのbotは`robots.txt`の指示を守り、非標準の`Crawl-delay`にも対応する。「IPアドレスでブロックすると`robots.txt`を読めなくなり、オプトアウトを確実に反映できないことがある」とも明記。問い合わせ先は`claudebot@anthropic.com`（ドメインのメールから）。UAのみの判定はなりすましの可能性があるが、IP範囲とも一致するため、正規のbotとして扱ってよい。
+**このことから対策案を修正**: IPでのブロックは非推奨。`robots.txt`の`Disallow: /map?`と`Crawl-delay`で穏便に抑える方針を主とし、WAFは「UA＝Claude-SearchBot かつ パスが`/map`から始まる」だけを止める（`robots.txt`など他のパスは止めない。IPでは止めない）。なお`Claude-SearchBot`を完全に拒否するとClaudeの検索結果への掲載が減る（トラフィック源になりうる）ため、全面拒否はしない。
+
 **CPUを食っているルート**: `/map`。ビルド結果で唯一の動的ルート（`ƒ /map`、`searchParams`を`generateMetadata`で読むため）。ほかのページは事前生成だが、応答にCloudflareのキャッシュヒットはほぼ無く（キャッシュヒット率5〜11%）、毎回Workerが動く（`s-maxage`が付いていてもWorkerの応答は既定ではキャッシュされない）。成功リクエストのCPUもp50 20ms/p99 638msで無料枠の10msを超えている。サイト内に`/map?…`へのリンクが多数ある（13ファイル）。
 
 **対策案（無料のまま。実施はユーザー承認後）**:
