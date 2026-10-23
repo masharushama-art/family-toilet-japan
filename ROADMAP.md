@@ -460,7 +460,8 @@ Search Console「ページのインデックス登録」の未登録715件を理
 - 米国`23.251.146.115`（7日で1.39k件・867訪問）: Linux Chromeで、ページのJS・`manifest.json`・`locales/en/common.json`・favicon まで読み込む動き。クラウド（Google Cloud帯）上のページ速度測定・死活監視の類とみられる。5xx 57件(4%)は10/20の急増の一部とみられる → 様子見
 - `216.244.66.231`（24hで76件）: 検索/SEO系クローラーのIP帯。Bingbot・Applebot・Yandexは少量で通常どおり
 - 結論: 負荷の主役は`Claude-SearchBot`の`/map`取得とフランスの脆弱性スキャン（どちらも対策済み）。その他は少量で5xxなし、追加対策は不要。リクエストの大半は自動アクセスで、実際の利用者数の把握にはGA4の方が実態に近い
-- 今後の検討: 1ページあたりの読み込みファイルが多いため、静的ファイル（`/_next/static/…`等）がWorkerを通らず静的アセットとして配信されているかを確認する（Worker呼び出し回数の削減）
+- **静的ファイルの配信を確認（2026-10-23、応答ヘッダー）**: `/_next/static/…`のJS・`manifest.json`・`locales/en/common.json`・`favicon.ico`・`data/cities/*.json`・`og-image.png`は**Workerを通らず静的アセットとして配信**（`x-opennext`ヘッダーなし、Cloudflareのキャッシュ`cf-cache-status`=HIT/MISS）。Workerを通るのはHTMLページ本体（`/`・`/tokyo`・`/ja/spot/…`、`Cache-Control: s-maxage=31536000`だがエッジキャッシュされない）、`/map`（`private, no-cache`）、`robots.txt`、`sitemap.xml`のみ。したがってWorker呼び出し回数のこれ以上の削減余地は小さく、さらに減らすならHTMLをエッジキャッシュに載せる案④（Worker前段のCache API、コード変更）になる
+- **再確認の基準値と予定（2026-10-23時点、直近24h）**: 総リクエスト4.53k、`/map`158件、5xx 383件（率8.45%、すべてフランスのスキャナー`185.177.72.9`）、`Claude-SearchBot`のIPは0件。**2026-10-27に再確認**する項目: ①5xx率（目標: 1%未満）②`Claude-SearchBot`（IP帯`216.73.216.0/22`）のリクエスト数と`/map`への到達 ③`/map`のリクエスト数 ④新たな大量アクセス元（IP・国・UA）とWAFルールのイベント数（セキュリティ→セキュリティルール）。Cloudflareのダッシュボードにログインした状態（Chrome）で、同じ手順（Analytics→フィルタ）で確認できる
 
 **判断メモ**: AdSense再審査中のため、本物のユーザーやGoogle（Mediapartners/Googlebot）にエラーを返す時間を作らないこと。Workers Paid（月$5）へのアップグレードはユーザー判断事項で、提案のみ（「請求を発生させない」最大ルールにも反するため非推奨）。
 
