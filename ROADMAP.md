@@ -449,6 +449,11 @@ Search Console「ページのインデックス登録」の未登録715件を理
 - 今後の確認: 数日後にCloudflare Analyticsで`Claude-SearchBot`のリクエスト数・503率と、Workersの`exceededResources`が減ったかを見る。③`/map`の静的化・④エッジキャッシュは、減らなければ検討する。ルールが不要になれば（botが`/map?`を避けるようになれば）WAFルールは削除してよい
 - 注意: 上記の遅延で、ビルド・デプロイ中に別のビルドが走っている間は、手動の`npm run cf:deploy`をしない（古いビルドが後から本番を上書きしうる）
 
+**効果確認（2026-10-23、対策の約1日後）**: Cloudflare Analytics（直近24h）で、`Claude-SearchBot`のIP `216.73.216.56`は**0件**（前24hは4.85k件）。`/map`は4.05k→158件、5xxは2.79k件(率35%)→383件(率8.45%)、総リクエスト7.9k→4.53kに減少。
+**残った5xxの正体と追加対策**: 残る5xx 383件は**すべて1つのIP `185.177.72.9`（フランス、UA=`curl`）**で、全970件が脆弱性スキャン（`/.env`・`/keys.json`・`/.bitbucket/.env`・`/.dockerignore`・`/awstats/.env`など秘密ファイルを探す一般的なスキャン）。該当ファイルはサイトに存在せず情報漏えいはない（404）が、存在しないページの応答もWorkerが作るため、数が多いとCPU超過の503になる。
+- **WAFカスタムルール2件目**を作成・有効化（無料枠5件のうち2件目、ユーザー承認済み）: 名前`Block dotfile and secret-file scanner probes`、式`(lower(http.request.uri.path) contains "%2e") or (lower(http.request.uri.path) contains "/." and not starts_with(lower(http.request.uri.path), "/.well-known/"))`、アクション=ブロック。本番で検証: `/.env`・`/%2eenv`・`/.git/config`・`/.bitbucket/.env`・`/awstats/%2eenv`・`/.dockerignore`=403。`/`・`/tokyo`・`/ja/spot/…`・`/sitemap.xml`・`/robots.txt`・小数点を含むIDの正規ページ（`/toilet/tokyo/opendata_tokyo_chiyoda_35.683995_139.744508`、日本語版も）=200、`/.well-known/`は除外（ファイルが無いので404）。なおCloudflareは`%2e`をデコードして評価するため、`/keys.json`のような「隠しファイルではない」スキャンは止まらない（件数は10件ほどで無視）
+- 今後: スキャナーは別IP・別パスで繰り返し来うる。5xxが再び増えたら、アナリティクスのIP/UAを確認して、同様にルールを追加（無料枠5件、残り3件）。それでも足りなければ`/map`の静的化（案③）やエッジキャッシュ（案④）を検討
+
 **判断メモ**: AdSense再審査中のため、本物のユーザーやGoogle（Mediapartners/Googlebot）にエラーを返す時間を作らないこと。Workers Paid（月$5）へのアップグレードはユーザー判断事項で、提案のみ（「請求を発生させない」最大ルールにも反するため非推奨）。
 
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）
