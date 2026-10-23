@@ -454,6 +454,14 @@ Search Console「ページのインデックス登録」の未登録715件を理
 - **WAFカスタムルール2件目**を作成・有効化（無料枠5件のうち2件目、ユーザー承認済み）: 名前`Block dotfile and secret-file scanner probes`、式`(lower(http.request.uri.path) contains "%2e") or (lower(http.request.uri.path) contains "/." and not starts_with(lower(http.request.uri.path), "/.well-known/"))`、アクション=ブロック。本番で検証: `/.env`・`/%2eenv`・`/.git/config`・`/.bitbucket/.env`・`/awstats/%2eenv`・`/.dockerignore`=403。`/`・`/tokyo`・`/ja/spot/…`・`/sitemap.xml`・`/robots.txt`・小数点を含むIDの正規ページ（`/toilet/tokyo/opendata_tokyo_chiyoda_35.683995_139.744508`、日本語版も）=200、`/.well-known/`は除外（ファイルが無いので404）。なおCloudflareは`%2e`をデコードして評価するため、`/keys.json`のような「隠しファイルではない」スキャンは止まらない（件数は10件ほどで無視）
 - 今後: スキャナーは別IP・別パスで繰り返し来うる。5xxが再び増えたら、アナリティクスのIP/UAを確認して、同様にルールを追加（無料枠5件、残り3件）。それでも足りなければ`/map`の静的化（案③）やエッジキャッシュ（案④）を検討
 
+**その他の発信元の分析（2026-10-23、Cloudflare Analytics、読み取りのみ）**:
+- 中国（複数IP、24hで1.64k件・訪問43）: 決まった10ページ前後（`/`・`/about`・`/faq`・ガイド2本・`/map`・`/attribution`・`/data/cities/tokyo.json`等）を順に取得する自動巡回。UAは一般のブラウザ。5xx 0件で負荷は軽微 → 様子見
+- 英国（`198.244.x`・`51.195.x`、24hで694件、昨日比+150%）: ホスティング事業者のIPから、各国語のスポットページとOGP画像を列挙して取得するクローラー。5xx 0件 → 様子見
+- 米国`23.251.146.115`（7日で1.39k件・867訪問）: Linux Chromeで、ページのJS・`manifest.json`・`locales/en/common.json`・favicon まで読み込む動き。クラウド（Google Cloud帯）上のページ速度測定・死活監視の類とみられる。5xx 57件(4%)は10/20の急増の一部とみられる → 様子見
+- `216.244.66.231`（24hで76件）: 検索/SEO系クローラーのIP帯。Bingbot・Applebot・Yandexは少量で通常どおり
+- 結論: 負荷の主役は`Claude-SearchBot`の`/map`取得とフランスの脆弱性スキャン（どちらも対策済み）。その他は少量で5xxなし、追加対策は不要。リクエストの大半は自動アクセスで、実際の利用者数の把握にはGA4の方が実態に近い
+- 今後の検討: 1ページあたりの読み込みファイルが多いため、静的ファイル（`/_next/static/…`等）がWorkerを通らず静的アセットとして配信されているかを確認する（Worker呼び出し回数の削減）
+
 **判断メモ**: AdSense再審査中のため、本物のユーザーやGoogle（Mediapartners/Googlebot）にエラーを返す時間を作らないこと。Workers Paid（月$5）へのアップグレードはユーザー判断事項で、提案のみ（「請求を発生させない」最大ルールにも反するため非推奨）。
 
 ## 📌 AdSense審査確認リマインダー設定（2026-09-16）
