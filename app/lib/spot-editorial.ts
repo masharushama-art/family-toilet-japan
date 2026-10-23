@@ -22,6 +22,8 @@ export interface SpotEditorial {
   verifiedAt: string;
 }
 
+import { getSpot, type Spot } from "./spots";
+
 const VERIFIED = "2026-10-06";
 
 const UENO_STATION: EditorialFacility[] = [
@@ -247,6 +249,13 @@ export const SPOT_EDITORIAL: Record<string, SpotEditorial> = {
 
 export function getSpotEditorial(slug: string): SpotEditorial | undefined {
   return SPOT_EDITORIAL[slug];
+}
+
+/** 公式情報つきで index 対象の日本語スポット。city を渡すとその都市のみ（内部リンク用） */
+export function getEditorialSpots(city?: string, excludeSlug?: string): Spot[] {
+  return Object.keys(SPOT_EDITORIAL)
+    .map((slug) => getSpot(slug))
+    .filter((s): s is Spot => !!s && s.slug !== excludeSlug && (!city || s.city === city));
 }
 
 /** 日本語ページを index 対象にするスポット（sitemap・robots 判定に使う） */

@@ -3,6 +3,7 @@ import type { Spot } from "../lib/spots";
 import { spotDistanceKm, getSpotsByCity } from "../lib/spots";
 import { CITIES, getToiletsByCity, type CitySlug } from "../lib/toilet-data";
 import { getSpotEditorial } from "../lib/spot-editorial";
+import EditorialSpotLinks from "./EditorialSpotLinks";
 import PageViewTracker from "./PageViewTracker";
 import { ActivityAffiliateBox } from "./AffiliateBox";
 import ShareButtons from "./ShareButtons";
@@ -296,6 +297,9 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
             </p>
           </section>
         )}
+
+        {/* 公式情報つきの他の駅・エリア（index対象ページどうしの内部リンク） */}
+        {editorial && <EditorialSpotLinks excludeSlug={spot.slug} heading="他の駅・エリアの授乳室ガイド" className="mt-8 mb-2" />}
 
         {/* Mini map */}
         <div className="mt-5 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700">

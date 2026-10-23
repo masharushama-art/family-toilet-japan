@@ -8,6 +8,7 @@ import { getGuidesForCity, guideHref } from "../../lib/guides";
 import { getCityFreshness } from "../../lib/data-report";
 import DataFreshness from "../../components/DataFreshness";
 import NearestToiletCta from "../../components/NearestToiletCta";
+import EditorialSpotLinks from "../../components/EditorialSpotLinks";
 
 interface Props {
   params: Promise<{ city: string }>;
@@ -102,6 +103,7 @@ export default async function JaCityPage({ params }: Props) {
         </div>
         <DataFreshness lang="ja" freshness={getCityFreshness(city)} />
         <NearestToiletCta city={city} lang="ja" variant="card" />
+        <EditorialSpotLinks city={city} />
 
         {/* 旧「よくある質問」ブロックは47都市で本文が同一（都市名のみ差し替え）の近似重複だったため、
             FAQPage構造化データともども除去（2026-09-06、AdSense対策・ROADMAP.md参照）。

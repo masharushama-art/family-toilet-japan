@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SeasonalGuides from "../components/SeasonalGuides";
+import EditorialSpotLinks from "../components/EditorialSpotLinks";
 import { getSeasonalSlugs } from "../lib/seasonal-guides";
 
 export const metadata: Metadata = {
@@ -90,6 +91,8 @@ export default function JaPage() {
             </Link>
           ))}
         </div>
+
+        <EditorialSpotLinks />
 
         <SeasonalGuides lang="ja" initialSlugs={getSeasonalSlugs(new Date())} />
 
