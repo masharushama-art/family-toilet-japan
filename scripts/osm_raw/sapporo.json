@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-09-01T08:09:50Z",
+    "timestamp_osm_base": "2026-11-01T09:57:05Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -134,16 +134,6 @@
         "fee": "no",
         "toilets:wheelchair": "yes",
         "wheelchair": "yes"
-      }
-    },
-    {
-      "type": "node",
-      "id": 794322580,
-      "lat": 43.0559139,
-      "lon": 141.3633332,
-      "tags": {
-        "amenity": "toilets",
-        "ele": "55.0000000"
       }
     },
     {
@@ -937,8 +927,8 @@
     {
       "type": "node",
       "id": 4186744076,
-      "lat": 42.9950819,
-      "lon": 141.3544131,
+      "lat": 42.9950657,
+      "lon": 141.3544615,
       "tags": {
         "amenity": "toilets"
       }
@@ -2740,7 +2730,12 @@
       "lat": 43.024042,
       "lon": 141.4259413,
       "tags": {
-        "amenity": "toilets"
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2026-10-24",
+        "check_date:wheelchair": "2026-10-24",
+        "fee": "no",
+        "wheelchair": "no"
       }
     },
     {
@@ -2894,24 +2889,6 @@
     },
     {
       "type": "node",
-      "id": 6432534135,
-      "lat": 43.0656103,
-      "lon": 141.3551311,
-      "tags": {
-        "access": "yes",
-        "amenity": "toilets",
-        "changing_table": "yes",
-        "fee": "no",
-        "level": "0",
-        "opening_hours": "24/7",
-        "toilets:access": "yes",
-        "toilets:position": "seated;urinal",
-        "toilets:wheelchair": "yes",
-        "wheelchair": "yes"
-      }
-    },
-    {
-      "type": "node",
       "id": 6436452258,
       "lat": 43.0520922,
       "lon": 141.3519182,
@@ -2937,17 +2914,6 @@
         "fee": "no",
         "level": "0",
         "wheelchair": "yes"
-      }
-    },
-    {
-      "type": "node",
-      "id": 6436452406,
-      "lat": 43.0550651,
-      "lon": 141.3140206,
-      "tags": {
-        "access": "yes",
-        "amenity": "toilets",
-        "fee": "no"
       }
     },
     {
@@ -3459,6 +3425,28 @@
         "amenity": "toilets",
         "check_date": "2026-07-12",
         "level": "-1"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14200661612,
+      "lat": 43.0721836,
+      "lon": 141.4969741,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2026-09-20",
+        "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14206306728,
+      "lat": 43.0458922,
+      "lon": 141.3958703,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2026-09-22",
+        "level": "0"
       }
     },
     {
@@ -4168,29 +4156,6 @@
     },
     {
       "type": "way",
-      "id": 380966440,
-      "center": {
-        "lat": 43.0206769,
-        "lon": 141.4235597
-      },
-      "nodes": [
-        3842559544,
-        3842559545,
-        3842559547,
-        3842559546,
-        3842559544
-      ],
-      "tags": {
-        "access": "yes",
-        "amenity": "toilets",
-        "building": "yes",
-        "fee": "no",
-        "source": "GSImaps/std",
-        "wheelchair": "no"
-      }
-    },
-    {
-      "type": "way",
       "id": 381727975,
       "center": {
         "lat": 43.039936,
@@ -4225,10 +4190,14 @@
         3853862876
       ],
       "tags": {
+        "access": "yes",
         "amenity": "toilets",
         "building": "yes",
+        "changing_table": "no",
+        "check_date": "2026-10-11",
         "fee": "no",
         "source": "GSImaps/std",
+        "toilets:disposal": "flush",
         "wheelchair": "no"
       }
     },
@@ -5539,27 +5508,6 @@
     },
     {
       "type": "way",
-      "id": 692373953,
-      "center": {
-        "lat": 43.0559136,
-        "lon": 141.3633244
-      },
-      "nodes": [
-        6499275952,
-        6499275953,
-        6499275954,
-        6499275955,
-        6499275952
-      ],
-      "tags": {
-        "amenity": "toilets",
-        "building": "yes",
-        "name": "橋台広場第一公園トイレ",
-        "source": "Bing"
-      }
-    },
-    {
-      "type": "way",
       "id": 704299839,
       "center": {
         "lat": 42.9627794,
@@ -6017,8 +5965,8 @@
       "type": "way",
       "id": 961277065,
       "center": {
-        "lat": 43.0428547,
-        "lon": 141.4192269
+        "lat": 43.0428439,
+        "lon": 141.4192542
       },
       "nodes": [
         8892246757,
@@ -6554,6 +6502,31 @@
         11645056257,
         11645056258,
         11645056253
+      ],
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "building:levels": "1",
+        "changing_table": "no",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1296663028,
+      "center": {
+        "lat": 43.0550652,
+        "lon": 141.3140217
+      },
+      "nodes": [
+        12015213913,
+        12015213912,
+        12015213911,
+        6436452406,
+        12015213913
       ],
       "tags": {
         "access": "yes",

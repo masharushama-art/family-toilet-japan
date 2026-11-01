@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-09-01T08:10:48Z",
+    "timestamp_osm_base": "2026-11-01T10:00:05Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -233,16 +233,6 @@
         "operator": "伊達市役所",
         "toilets:disposal": "flush",
         "unisex": "yes"
-      }
-    },
-    {
-      "type": "node",
-      "id": 4744600877,
-      "lat": 37.77025,
-      "lon": 140.4651422,
-      "tags": {
-        "amenity": "toilets",
-        "toilets:disposal": "pitlatrine"
       }
     },
     {
@@ -483,11 +473,29 @@
       }
     },
     {
+      "type": "node",
+      "id": 14219208045,
+      "lat": 37.854707,
+      "lon": 140.4216208,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14219208088,
+      "lat": 37.850672,
+      "lon": 140.4284464,
+      "tags": {
+        "amenity": "toilets"
+      }
+    },
+    {
       "type": "way",
       "id": 239521702,
       "center": {
-        "lat": 37.7666435,
-        "lon": 140.468275
+        "lat": 37.7666538,
+        "lon": 140.4682653
       },
       "nodes": [
         2472999842,
@@ -612,6 +620,27 @@
         "amenity": "toilets",
         "building": "yes",
         "source": "GSImaps/ort"
+      }
+    },
+    {
+      "type": "way",
+      "id": 345804688,
+      "center": {
+        "lat": 37.7428783,
+        "lon": 140.4763457
+      },
+      "nodes": [
+        3524601600,
+        3524601601,
+        3524601486,
+        3524601595,
+        3524601600
+      ],
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "source": "GSI/KIBAN 2500",
+        "source_ref": "http://wiki.osm.org/wiki/GSI_KIBAN"
       }
     },
     {

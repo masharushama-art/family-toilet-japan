@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-09-01T08:11:54Z",
+    "timestamp_osm_base": "2026-11-01T10:03:07Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -317,6 +317,154 @@
         "access": "yes",
         "amenity": "toilets",
         "female": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212432871,
+      "lat": 36.0608465,
+      "lon": 136.2224408,
+      "tags": {
+        "access": "yes",
+        "addr:floor": "1F",
+        "addr:postcode": "910-0006",
+        "amenity": "toilets",
+        "check_date": "2026-09-26",
+        "fee": "no",
+        "level": "0",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "website": "https://curu-f.jp/floor/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212559516,
+      "lat": 36.0622711,
+      "lon": 136.2235235,
+      "tags": {
+        "access": "customers",
+        "addr:floor": "M2",
+        "addr:postcode": "910-0006",
+        "amenity": "toilets",
+        "check_date": "2026-09-25",
+        "fee": "no",
+        "name": "在来線改札内",
+        "name:en": "Inside the conventional line gates",
+        "name:ja": "在来線改札内",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "website": "https://eki.jr-odekake.net/premises?id=0541430",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212559517,
+      "lat": 36.0621242,
+      "lon": 136.2236811,
+      "tags": {
+        "access": "customers",
+        "addr:floor": "1F",
+        "addr:postcode": "910-0006",
+        "amenity": "toilets",
+        "check_date": "2026-09-25",
+        "fee": "no",
+        "level": "0",
+        "name": "新幹線A改札内",
+        "name:en": "Inside the Shinkansen A gates",
+        "name:ja": "新幹線A改札内",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "website": "https://eki.jr-odekake.net/premises?id=0541430",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212559519,
+      "lat": 36.0615471,
+      "lon": 136.2233337,
+      "tags": {
+        "access": "customers",
+        "addr:floor": "1F",
+        "addr:postcode": "910-0006",
+        "amenity": "toilets",
+        "check_date": "2026-09-25",
+        "fee": "no",
+        "level": "0",
+        "name": "新幹線B改札内",
+        "name:en": "Inside the Shinkansen B gates",
+        "name:ja": "新幹線B改札内",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "website": "https://eki.jr-odekake.net/premises?id=0541430",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212559526,
+      "lat": 36.0622691,
+      "lon": 136.2241106,
+      "tags": {
+        "access": "yes",
+        "addr:floor": "1F",
+        "addr:postcode": "910-0006",
+        "amenity": "toilets",
+        "check_date": "2026-10-31",
+        "fee": "no",
+        "level": "0",
+        "opening_hours": "06:00-23:25",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14212559528,
+      "lat": 36.0621905,
+      "lon": 136.2239383,
+      "tags": {
+        "access": "customers",
+        "addr:floor": "1F",
+        "addr:postcode": "910-0006",
+        "amenity": "toilets",
+        "check_date": "2026-09-26",
+        "fee": "no",
+        "level": "0",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14219651217,
+      "lat": 36.2138471,
+      "lon": 136.2335811,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "toilets:position": "seated",
+        "unisex": "yes",
+        "wheelchair": "designated"
       }
     },
     {
