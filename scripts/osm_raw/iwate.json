@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-10-01T09:38:51Z",
+    "timestamp_osm_base": "2026-11-01T09:57:05Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -325,6 +325,17 @@
       "tags": {
         "amenity": "toilets",
         "changing_table": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14280530600,
+      "lat": 39.7360465,
+      "lon": 141.080052,
+      "tags": {
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
       }
     },
     {

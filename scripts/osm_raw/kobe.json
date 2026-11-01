@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-06-14T23:48:45Z",
+    "timestamp_osm_base": "2026-11-01T10:07:14Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -475,7 +475,10 @@
       "lat": 34.7350818,
       "lon": 135.2776116,
       "tags": {
-        "amenity": "toilets"
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2026-10-12",
+        "toilets:disposal": "flush"
       }
     },
     {
@@ -559,10 +562,11 @@
     {
       "type": "node",
       "id": 6332289486,
-      "lat": 34.7633694,
-      "lon": 135.24597,
+      "lat": 34.7632563,
+      "lon": 135.2460727,
       "tags": {
-        "amenity": "toilets"
+        "amenity": "toilets",
+        "check_date": "2026-10-11"
       }
     },
     {
@@ -1294,6 +1298,49 @@
       "lon": 135.1899334,
       "tags": {
         "amenity": "toilets"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13955117156,
+      "lat": 34.6862251,
+      "lon": 135.1722674,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2026-06-21"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13955193411,
+      "lat": 34.6814288,
+      "lon": 135.1753043,
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2026-06-21",
+        "description": "社務所内にあります",
+        "toilets:disposal": "flush"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14296865701,
+      "lat": 34.642506,
+      "lon": 135.1192874,
+      "tags": {
+        "amenity": "toilets",
+        "opening_hours": "24/7"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14296867101,
+      "lat": 34.6418403,
+      "lon": 135.1130564,
+      "tags": {
+        "amenity": "toilets",
+        "opening_hours": "Mo-Su 09:00-17:00"
       }
     },
     {
@@ -3120,7 +3167,8 @@
       ],
       "tags": {
         "amenity": "toilets",
-        "building": "yes"
+        "building": "yes",
+        "building:levels": "1"
       }
     },
     {
