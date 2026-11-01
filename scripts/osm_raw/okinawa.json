@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-10-01T09:44:56Z",
+    "timestamp_osm_base": "2026-11-01T10:15:20Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -1100,26 +1100,6 @@
       "lon": 127.8238758,
       "tags": {
         "amenity": "toilets"
-      }
-    },
-    {
-      "type": "node",
-      "id": 13816404542,
-      "lat": 26.253493,
-      "lon": 127.766606,
-      "tags": {
-        "amenity": "toilets",
-        "name": "女"
-      }
-    },
-    {
-      "type": "node",
-      "id": 13816404545,
-      "lat": 26.2535015,
-      "lon": 127.7665804,
-      "tags": {
-        "amenity": "toilets",
-        "name": "男"
       }
     },
     {
@@ -3019,6 +2999,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "yes",
+        "indoor": "yes",
         "level": "0;1;2",
         "wheelchair": "no"
       }
@@ -3042,6 +3023,7 @@
       "tags": {
         "amenity": "toilets",
         "building": "yes",
+        "indoor": "yes",
         "level": "0;1;2",
         "male": "yes",
         "wheelchair": "no"
@@ -3066,6 +3048,7 @@
       "tags": {
         "amenity": "toilets",
         "building": "yes",
+        "indoor": "yes",
         "level": "0",
         "unisex": "yes",
         "wheelchair": "yes"
@@ -3075,20 +3058,22 @@
       "type": "way",
       "id": 1453494622,
       "center": {
-        "lat": 26.247723,
-        "lon": 127.7679226
+        "lat": 26.2477195,
+        "lon": 127.7679241
       },
       "nodes": [
-        13329889680,
+        13329655642,
         13733983796,
         12762197748,
         13329655638,
+        13329889683,
         13329889681,
-        13329889680
+        13329655642
       ],
       "tags": {
         "amenity": "toilets",
         "building": "yes",
+        "indoor": "yes",
         "level": "0",
         "unisex": "yes",
         "wheelchair": "yes"
@@ -3103,6 +3088,7 @@
       },
       "nodes": [
         13329655626,
+        13330284725,
         13329655639,
         13329655607,
         13329655605,
@@ -3112,6 +3098,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "no",
+        "indoor": "yes",
         "level": "0;2;4",
         "male": "yes"
       }
@@ -3125,7 +3112,9 @@
       },
       "nodes": [
         13329655626,
+        13330284725,
         13329655639,
+        14330482145,
         13329655607,
         13329655605,
         13329655626
@@ -3134,6 +3123,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "yes",
+        "indoor": "yes",
         "level": "1;3",
         "male": "no"
       }
@@ -3143,7 +3133,7 @@
       "id": 1453509454,
       "center": {
         "lat": 26.2478759,
-        "lon": 127.7682466
+        "lon": 127.7682464
       },
       "nodes": [
         13329655636,
@@ -3157,6 +3147,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "yes",
+        "indoor": "yes",
         "level": "0;1;2;3",
         "male": "no"
       }
@@ -3180,6 +3171,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "no",
+        "indoor": "yes",
         "level": "0;1;2;3",
         "male": "yes"
       }
@@ -3203,6 +3195,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "yes",
+        "indoor": "yes",
         "level": "1;2",
         "male": "no"
       }
@@ -3226,6 +3219,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "no",
+        "indoor": "yes",
         "level": "1;2",
         "male": "yes"
       }
@@ -3250,6 +3244,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "no",
+        "indoor": "yes",
         "level": "0;1;2;3;4",
         "male": "yes"
       }
@@ -3275,6 +3270,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "yes",
+        "indoor": "yes",
         "level": "0;1;2;3;4",
         "male": "no"
       }
@@ -3283,7 +3279,7 @@
       "type": "way",
       "id": 1453786532,
       "center": {
-        "lat": 26.2480369,
+        "lat": 26.248037,
         "lon": 127.7673743
       },
       "nodes": [
@@ -3296,6 +3292,7 @@
       "tags": {
         "amenity": "toilets",
         "building": "yes",
+        "indoor": "yes",
         "level": "0",
         "unisex": "yes",
         "wheelchair": "yes"
@@ -3322,6 +3319,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "yes",
+        "indoor": "yes",
         "level": "1;2;3;4;5",
         "male": "no"
       }
@@ -3347,6 +3345,7 @@
         "amenity": "toilets",
         "building": "yes",
         "female": "no",
+        "indoor": "yes",
         "level": "1;2;3;4;5",
         "male": "yes"
       }
@@ -3411,6 +3410,7 @@
       "nodes": [
         13373264320,
         13373264332,
+        14311445352,
         13373264322,
         13375377312,
         13373264339,
@@ -3441,6 +3441,7 @@
         13375377316,
         13373264332,
         13373264322,
+        14311445355,
         13373264349,
         13373264328
       ],
@@ -3468,6 +3469,7 @@
         13375377316,
         13373264332,
         13373264322,
+        14311445355,
         13373264349,
         13373264328
       ],

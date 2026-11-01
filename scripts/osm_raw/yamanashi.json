@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API 0.7.62.11 87bfad18",
   "osm3s": {
-    "timestamp_osm_base": "2026-09-26T15:00:40Z",
+    "timestamp_osm_base": "2026-11-01T10:04:09Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -462,8 +462,8 @@
     {
       "type": "node",
       "id": 13786013588,
-      "lat": 35.6088084,
-      "lon": 138.5415278,
+      "lat": 35.6087946,
+      "lon": 138.541497,
       "tags": {
         "amenity": "toilets",
         "check_date": "2026-05-02"
@@ -647,6 +647,38 @@
         "toilets:handwashing": "yes",
         "toilets:position": "seated;urinal",
         "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14222465336,
+      "lat": 35.6670737,
+      "lon": 138.5691965,
+      "tags": {
+        "access": "customers",
+        "addr:floor": "2F",
+        "addr:postcode": "400-0031",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2026-09-27",
+        "fee": "no",
+        "level": "1",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated;urinal",
+        "website": "https://www.jreast.co.jp/estation/stations/671.html",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 14324433479,
+      "lat": 35.6082438,
+      "lon": 138.5411508,
+      "tags": {
+        "amenity": "toilets",
+        "check_date": "2026-10-28"
       }
     },
     {
@@ -1599,6 +1631,31 @@
         "female": "yes",
         "male": "yes",
         "wheelchair": "designated"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1573303305,
+      "center": {
+        "lat": 35.6038279,
+        "lon": 138.5183539
+      },
+      "nodes": [
+        14330623938,
+        14330623939,
+        14330623940,
+        14330623941,
+        14330623938
+      ],
+      "tags": {
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "check_date": "2026-10-29",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "wheelchair": "limited"
       }
     }
   ]
