@@ -483,7 +483,7 @@ Search Console「ページのインデックス登録」の未登録715件を理
 - 消せないもの: すでに誰かが取得（clone）したコピー、検索エンジンやアーカイブの控え（存在するかも不明）
 - **今後**: GitHubの Settings → Emails で「Keep my email addresses private」と「Block command line pushes that expose my email」をONにする（ユーザー作業）。別のPC（会社PC）にこのリポジトリのコピーがあれば、**取り直し（再clone）が必要**（履歴が書き換わったため）
 - **追記（2026-11-09）再漏えいと修復**: 履歴の書き換え後に積んだ記録コミット`a31fc2c`の作成者が、このPCのグローバルgit設定（Gmail）になっていた。リポジトリ限定のuser.emailをnoreplyに設定し、`git commit --amend --reset-author`＋`git push --force-with-lease=master:a31fc2c`で`0be1962`に置き換えた（リモートの作成者・コミッタともnoreplyを確認）。許可ルール用の`.claude/settings.local.json`は削除済み。GitHubサポート依頼には旧SHA`a31fc2c403cf753554863c08291dbd8fdc0086cc`も加えること。この記録を書いたコミットの作成者もnoreplyであることを確認する。
-- **追記2（2026-11-09）GitHub側の対応**: ①Settings→Emailsで「Keep my email addresses private」と「Block command line pushes that expose my email」をONにした。②GitHubサポートへ依頼チケットを送信済み（リポジトリ→リポジトリの機能→ブランチ、種類=エラー・問題。内容: `refs/pull/1〜5/head`の削除と旧コミット（`a31fc2c`含む）のキャッシュ消去。Gmailアドレス自体は本文に書いていない）。返信はGitHubアカウントのメール宛に届く。**返信待ち**。数日たっても無ければ、チケット一覧で状況を確認する。③残り: この PC のグローバルgit設定のメールをnoreplyにする（ユーザー作業）、別PCの再clone。
+- **追記2（2026-11-09）GitHub側の対応**: ①Settings→Emailsで「Keep my email addresses private」と「Block command line pushes that expose my email」をONにした。②GitHubサポートへ依頼チケットを送信済み（リポジトリ→リポジトリの機能→ブランチ、種類=エラー・問題。内容: `refs/pull/1〜5/head`の削除と旧コミット（`a31fc2c`含む）のキャッシュ消去。Gmailアドレス自体は本文に書いていない）。チケット番号#4977342（受付確認メールを2026-11-09 23:18に受信）。返信はGitHubアカウントのメール宛に届く。**返信待ち**。数日たっても無ければ、チケット一覧で状況を確認する。③残り: この PC のグローバルgit設定のメールをnoreplyにする（ユーザー作業）、別PCの再clone。
 - **OSM投稿の方針**: GitHubリンクを載せず、サイト（`familytoiletjapan.com`）とZenodoのDOI（`doi.org/10.5281/zenodo.23396111`）だけを載せる。投稿者のOSMアカウント名に本名が入っていないかを確認する
 
 ## 📈 本丸（人間の一般アクセス）を増やす施策（2026-10-23〜）
