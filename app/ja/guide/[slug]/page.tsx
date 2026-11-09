@@ -68,8 +68,23 @@ export default async function JaGuidePage({ params }: { params: Params }) {
           <p className="text-sm text-sky-800 dark:text-sky-200">{g.intro}</p>
         </div>
 
+        {/* この記事でわかること — 既存の見出し・項目名から自動生成（新しい主張は足さない）。要点を先に示し、各セクションへ移動できる */}
+        <nav aria-label="この記事でわかること" className="border border-gray-100 dark:border-gray-800 rounded-2xl p-5 mb-8">
+          <h2 className="font-bold text-gray-800 dark:text-gray-100 text-sm mb-3">この記事でわかること</h2>
+          <ul className="space-y-2">
+            {g.sections.map(({ title, icon, items }, i) => (
+              <li key={title} className="text-sm">
+                <a href={`#section-${i}`} className="font-medium text-sky-700 dark:text-sky-300 hover:underline">
+                  {icon} {title}
+                </a>
+                <span className="text-gray-500 dark:text-gray-400">：{items.map((it) => it.name).join("、")}</span>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
         {g.sections.map(({ title, icon, items }, sectionIndex) => (
-          <div key={title} className="mb-10">
+          <div key={title} id={`section-${sectionIndex}`} className="mb-10 scroll-mt-20">
             <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">{icon} {title}</h2>
             <div className="space-y-3">
               {items.map(({ name, desc }) => (

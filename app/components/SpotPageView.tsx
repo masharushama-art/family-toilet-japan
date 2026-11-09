@@ -239,6 +239,30 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
   };
   const faq = faqText[lang];
 
+  // 公式情報つきスポット（日本語・厳選ページ）の「先に結論」と質問形式の回答。
+  // すべて spot-editorial.ts に載せた、公式ページで確認ずみの事実だけから組み立てる（新しい主張は足さない）。
+  const facilityNames = editorial?.facilities.map((f) => f.name) ?? [];
+  const maleOk = editorial?.facilities.filter((f) => /男性も/.test(f.note ?? "")) ?? [];
+  const summaryText = editorial
+    ? `${spotName}周辺で、公式サイトの案内から授乳室・ベビー休憩室・おむつ替え設備を確認できたのは${facilityNames.length}か所です（${facilityNames.join("、")}）。`
+    : "";
+  const extraFaq: [string, string][] = editorial
+    ? [
+        [
+          `${spotName}で授乳室・ベビー休憩室はどこにありますか？`,
+          `公式サイトで確認できたのは、${editorial.facilities.map((f) => `${f.name}（${f.where}）`).join("、")}です。`,
+        ],
+        ...(maleOk.length > 0
+          ? ([
+              [
+                `${spotName}周辺で、パパ（男性）も使える授乳・おむつ替えの設備はありますか？`,
+                `公式の案内で男性も利用できるとされているのは、${maleOk.map((f) => f.name).join("、")}です。授乳室そのものは女性専用の場合があるため、各施設の案内をご確認ください。`,
+              ],
+            ] as [string, string][])
+          : []),
+      ]
+    : [];
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
       <PageViewTracker event="spot_view" params={{ spot_slug: spot.slug, city: spot.city, lang }} />
@@ -272,6 +296,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
         {/* 公式情報で確認した授乳室・ベビー休憩室（日本語・厳選スポットのみ。app/lib/spot-editorial.ts） */}
         {editorial && (
           <section className="mt-6">
+            <p className="text-sm font-semibold text-sky-800 dark:text-sky-200 bg-sky-50 dark:bg-sky-900/20 rounded-xl p-4 leading-relaxed mb-4">{summaryText}</p>
             <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{editorial.intro}</p>
             <h2 className="font-bold text-gray-800 dark:text-gray-100 mt-5 mb-3">🍼 公式サイトで確認できた授乳室・ベビー休憩室</h2>
             <ul className="space-y-3">
@@ -350,7 +375,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
 
         {/* FAQ（構造化データと同じ内容を可視表示） */}
         <div className="mt-8 space-y-3">
-          {[[faq.q1, faq.a1], [faq.q2, faq.a2], [faq.q3, faq.a3]].map(([q, a]) => (
+          {[...extraFaq, [faq.q1, faq.a1], [faq.q2, faq.a2], [faq.q3, faq.a3]].map(([q, a]) => (
             <div key={q} className="border border-gray-100 dark:border-gray-800 rounded-xl p-4">
               <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-1">Q. {q}</p>
               <p className="text-gray-600 dark:text-gray-300 text-sm">A. {a}</p>
@@ -419,6 +444,7 @@ export default function SpotPageView({ spot, lang }: { spot: Spot; lang: SpotLan
               "@context": "https://schema.org",
               "@type": "FAQPage",
               mainEntity: [
+                ...extraFaq.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
                 { "@type": "Question", name: faq.q1, acceptedAnswer: { "@type": "Answer", text: faq.a1 } },
                 { "@type": "Question", name: faq.q2, acceptedAnswer: { "@type": "Answer", text: faq.a2 } },
                 { "@type": "Question", name: faq.q3, acceptedAnswer: { "@type": "Answer", text: faq.a3 } },
