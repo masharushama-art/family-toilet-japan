@@ -482,6 +482,7 @@ Search Console「ページのインデックス登録」の未登録715件を理
 - **対応**: GitHubサポート（Contact Support → 「Remove sensitive data」/ 個人情報の削除依頼）に、(a)リポジトリ名`masharushama-art/family-toilet-japan` (b)プルリクエスト#1〜#5の内部ref（`refs/pull/N/head`）と、書き換え前の古いコミットのキャッシュ表示の削除 (c)理由（履歴に個人メールアドレスが含まれていたため、履歴を書き換え済み）を伝える。`git gc`と、キャッシュされたビューの削除をGitHub側が行う
 - 消せないもの: すでに誰かが取得（clone）したコピー、検索エンジンやアーカイブの控え（存在するかも不明）
 - **今後**: GitHubの Settings → Emails で「Keep my email addresses private」と「Block command line pushes that expose my email」をONにする（ユーザー作業）。別のPC（会社PC）にこのリポジトリのコピーがあれば、**取り直し（再clone）が必要**（履歴が書き換わったため）
+- **追記（2026-11-09）再漏えいと修復**: 履歴の書き換え後に積んだ記録コミット`a31fc2c`の作成者が、このPCのグローバルgit設定（Gmail）になっていた。リポジトリ限定のuser.emailをnoreplyに設定し、`git commit --amend --reset-author`＋`git push --force-with-lease=master:a31fc2c`で`0be1962`に置き換えた（リモートの作成者・コミッタともnoreplyを確認）。許可ルール用の`.claude/settings.local.json`は削除済み。GitHubサポート依頼には旧SHA`a31fc2c403cf753554863c08291dbd8fdc0086cc`も加えること。この記録を書いたコミットの作成者もnoreplyであることを確認する。
 - **OSM投稿の方針**: GitHubリンクを載せず、サイト（`familytoiletjapan.com`）とZenodoのDOI（`doi.org/10.5281/zenodo.23396111`）だけを載せる。投稿者のOSMアカウント名に本名が入っていないかを確認する
 
 ## 📈 本丸（人間の一般アクセス）を増やす施策（2026-10-23〜）
