@@ -44,6 +44,10 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
   const [copied, setCopied] = useState(false);
 
   const shareLink = `https://familytoiletjapan.com/map?id=${toilet.id}${city ? `&city=${city}` : ""}`;
+  // 私たちのID（osm-node-123 / osm-way-123 / osm-relation-123）から、OSMのURLに使う種類と番号を取り出す。
+  // 以前は ID をそのままURLに入れていて、リンクが404になっていた（2026-11-09修正）
+  const osmMatch = /^osm-(node|way|relation)-(\d+)$/.exec(toilet.id);
+  const osm = osmMatch ? { type: osmMatch[1], num: osmMatch[2] } : null;
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareLink);
@@ -193,14 +197,16 @@ export default function ToiletDetail({ toilet, userPos, city, onClose }: Props) 
           <span className="text-gray-400 text-xs">
             {toilet.source === "opendata"
               ? "Municipal Open Data (CC BY)"
-              : <a href={`https://www.openstreetmap.org/node/${toilet.id}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">OpenStreetMap (ODbL)</a>}
+              : osm
+                ? <a href={`https://www.openstreetmap.org/${osm.type}/${osm.num}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">OpenStreetMap (ODbL)</a>
+                : "OpenStreetMap (ODbL)"}
             {toilet.geocoded && " · 国土地理院 (GSI)"}
           </span>
         </Row>
-        {toilet.source !== "opendata" && (
+        {toilet.source !== "opendata" && osm && (
           <div className="py-2">
             <a
-              href={`https://www.openstreetmap.org/edit?node=${toilet.id}`}
+              href={`https://www.openstreetmap.org/edit?${osm.type}=${osm.num}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-gray-400 hover:text-sky-600 transition-colors"
