@@ -466,6 +466,24 @@ Search Console「ページのインデックス登録」の未登録715件を理
 **判断メモ**: AdSense再審査中のため、本物のユーザーやGoogle（Mediapartners/Googlebot）にエラーを返す時間を作らないこと。Workers Paid（月$5）へのアップグレードはユーザー判断事項で、提案のみ（「請求を発生させない」最大ルールにも反するため非推奨）。
 **定期確認（2026-10-25、自動実行・読み取りのみ）**: 日別exceededResources(UTC)は10/22=0、10/23=396（スキャナー起因、WAF 2件目は10/23対応）、10/24=0、10/25=0（途中）。`Claude-SearchBot`の`/map`は403、通常/Googlebot UAは200、robots.txtにCrawl-delay: 30あり。対策は有効で、10/24以降は平常値以下。
 
+## 🔒 Gitの履歴から個人メールアドレスを除去（2026-11-09、ユーザー承認済み）
+
+**きっかけ**: OSMコミュニティ投稿（GitHubへのリンクを載せる）の前に「個人情報が流出しないか」を確認したところ、**公開リポジトリのGit履歴に、ユーザーのGmailアドレスが残っている**ことを発見した。①古い88件のコミットの作成者メール（新しいコミットはGitHubの匿名`noreply`アドレス）②2026-06のサイトの`app/about/page.tsx`・`app/privacy/page.tsx`に直書きされていたメール（コミット`1e07fdf`・`40093fd`で追加、`a0169e3`でフォームのリンクに置き換え済み。現在の中身には無い）。
+
+**実施（履歴の書き換え）**:
+- バックアップ: 書き換え前の完全なミラーを作業用の一時フォルダに作成（`scratchpad/backup.git`、258コミット、master=`b216db7`、タグ=`20d3ecf`）。ローカルPCの一時フォルダのみ（メールが含まれる。不要になったら削除してよい）
+- `git filter-branch`（新しいツールは入れず標準機能で）で、作成者・コミッタのメールを`289864819+masharushama-art@users.noreply.github.com`に置換し、`app/about/page.tsx`・`app/privacy/page.tsx`の履歴中のアドレスを`contact@example.invalid`に置換
+- 検証: コミット数258のまま。**先頭（最新）のファイルの内容（ツリー）は書き換え前と完全に一致**（master・タグとも）。作成者・コミッタ・メッセージ・中身のいずれにもgmailは0件
+- `git push --force-with-lease`で master（`b216db7`→**`09921cd`**）と、タグ`v2026.10.14`（`20d3ecf`→**`30417e0`**）を更新。GitHubのリリースはタグに付いたまま（Zenodoの新しい版・DOIは増えない・変わらない）。Zenodoのレコードも変化なし。手元の作業フォルダも`origin/master`に合わせ、古いコミットはreflog期限切れ＋gcで削除。本番サイトは正常（200）、Cloudflareの自動ビルドは新しい履歴で動く
+
+**まだ残っているもの（要・GitHubサポートへの依頼）**:
+- `refs/pull/1〜5/head`（月次データ更新のプルリクエスト#1〜#5の内部の記録）が、書き換え前の古い履歴を指したまま。ここ経由で古いコミットのgmailが見える（新規cloneで`refs/pull/*`を取得すると、作成者等で143件・中身で6件）
+- 古いコミットのSHAを直接指定したURL（例: `…/commit/<古いSHA>.patch`）が、まだ表示できる（HTTP 200）
+- **対応**: GitHubサポート（Contact Support → 「Remove sensitive data」/ 個人情報の削除依頼）に、(a)リポジトリ名`masharushama-art/family-toilet-japan` (b)プルリクエスト#1〜#5の内部ref（`refs/pull/N/head`）と、書き換え前の古いコミットのキャッシュ表示の削除 (c)理由（履歴に個人メールアドレスが含まれていたため、履歴を書き換え済み）を伝える。`git gc`と、キャッシュされたビューの削除をGitHub側が行う
+- 消せないもの: すでに誰かが取得（clone）したコピー、検索エンジンやアーカイブの控え（存在するかも不明）
+- **今後**: GitHubの Settings → Emails で「Keep my email addresses private」と「Block command line pushes that expose my email」をONにする（ユーザー作業）。別のPC（会社PC）にこのリポジトリのコピーがあれば、**取り直し（再clone）が必要**（履歴が書き換わったため）
+- **OSM投稿の方針**: GitHubリンクを載せず、サイト（`familytoiletjapan.com`）とZenodoのDOI（`doi.org/10.5281/zenodo.23396111`）だけを載せる。投稿者のOSMアカウント名に本名が入っていないかを確認する
+
 ## 📈 本丸（人間の一般アクセス）を増やす施策（2026-10-23〜）
 
 **基準値（2026-10-23）**:
